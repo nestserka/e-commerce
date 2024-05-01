@@ -16,7 +16,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.js'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.сjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -24,7 +24,7 @@ module.exports = {
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: "./tsconfig.json",
+    project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
   plugins: ['@typescript-eslint', '@stylistic/ts', 'import', 'react', 'react-hooks', 'react-refresh'],

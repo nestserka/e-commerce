@@ -1,0 +1,19 @@
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'type-enum': [
+      2,
+      'always',
+      ['feat', 'fix', 'refactor', 'style', 'test', 'chore', 'docs', 'wip', 'revert', 'perf', 'security'],
+    ],
+    'subject-case': [0],
+    'subject-full-stop': [0],
+    'header-max-length': [0],
+    'subject-starts-with': [2, 'always', 'NASA-'],
+    'subject-matches': [
+      2,
+      'always',
+      '^NASA-\\d+ (feat|doc|fix|refactor|style|test|chore|docs|wip|revert|perf|security): .+$',
+    ],
+  },
+};
