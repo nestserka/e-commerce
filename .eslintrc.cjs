@@ -1,6 +1,11 @@
 module.exports = {
   root: true,
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    es6: true,
+    jest: true,
+    node: true,
+  },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -9,9 +14,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:import/recommended',
     'plugin:react-hooks/recommended',
-    'prettier'
+    'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -19,8 +24,6 @@ module.exports = {
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: true,
-    tsconfigRootDir: __dirname,
   },
   plugins: ['@typescript-eslint', '@stylistic/ts', 'import', 'react', 'react-hooks', 'react-refresh'],
   rules: {
@@ -114,7 +117,7 @@ module.exports = {
       {
         selector: 'default',
         // ?
-        format: ['strictCamelCase','PascalCase'],
+        format: ['strictCamelCase', 'PascalCase'],
         leadingUnderscore: 'forbid',
         trailingUnderscore: 'forbid',
       },
@@ -249,10 +252,7 @@ module.exports = {
         next: ['switch', 'while', 'try', 'return', 'if', 'interface', 'type', 'function'],
       },
     ],
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'comma-dangle': ['error', 'only-multiline'],
@@ -268,4 +268,10 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
   },
-}
+  settings: {
+    react: {
+      pragma: 'React',
+      version: 'detect',
+    },
+  },
+};
