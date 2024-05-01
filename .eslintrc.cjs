@@ -24,6 +24,7 @@ module.exports = {
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: "./tsconfig.json",
     tsconfigRootDir: __dirname,
   },
   plugins: ['@typescript-eslint', '@stylistic/ts', 'import', 'react', 'react-hooks', 'react-refresh'],
