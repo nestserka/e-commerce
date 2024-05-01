@@ -16,7 +16,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.сjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -95,20 +95,6 @@ module.exports = {
       'error',
       {
         default: 'array',
-      },
-    ],
-    // ?
-    '@typescript-eslint/explicit-member-accessibility': [
-      'error',
-      {
-        accessibility: 'explicit',
-        overrides: {
-          accessors: 'explicit',
-          constructors: 'off',
-          methods: 'explicit',
-          parameterProperties: 'explicit',
-          properties: 'explicit',
-        },
       },
     ],
     '@typescript-eslint/explicit-function-return-type': 'error',
