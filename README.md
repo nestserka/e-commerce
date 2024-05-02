@@ -16,7 +16,8 @@ In addition to its ecommerce functionalities, the NASA Ecommerce Project also of
 
 1. [Features](#features)
 2. [Technologies Used](#technologies-used)
-3. [Authors](#authors)
+3. [Available Scripts](#available-scripts)
+4. [Authors](#authors)
 
 ## Features
 
@@ -51,12 +52,26 @@ In addition to its ecommerce functionalities, the NASA Ecommerce Project also of
   - 🧪 Jest
   - 🧪 Vitest
   - 🧪 Testing Library (Jest-DOM, React)
-
+ 
 - Design and Project Management Tools:
   - 🎨 [Figma](https://www.figma.com/file/7cGwEtz80z2Kw5Rc7YQ7Ku/E-comm-Mockups?type=design&node-id=3-10&mode=design&t=HdRoSWX4h4thPlYq-0)
   - 📊 [Jira](https://e-commerce-001.atlassian.net/jira/software/projects/NASA/boards/1?atlOrigin=eyJpIjoiNjI0ZGM2YTI3Y2Q3NGEyYjljMGE3NDM5ODU2NjNkZTkiLCJwIjoiaiJ9)
+ 
+## Available Scripts
 
+In the project directory, you can run:
 
+1. To run the Vite development server, use: `npm run dev`
+2. To run the Vite preview, use: `npm run preview`
+3. To build the project, use: `npm run build`
+4. To format code using Prettier, use: `npm run format`
+5. To lint TypeScript and TypeScript React files using ESLint, use: `npm run lint`
+6. To fix linting issues in TypeScript and TypeScript React files using ESLint, use: `npm run lint:fix`
+7. To prepare the project for Husky Git hooks, use: `npm run prepare`
+8. To run Vitest tests, use: `npm test`
+9. To run Vitest tests in UI mode, use: `npm run test:ui`
+10. To run Vitest tests with coverage, use: `npm run coverage`
+11. To remove the `dist` directory, use: `npm run clear`
 
 ## Authors
 
