@@ -1,0 +1,1 @@
+npx validate-branch-name -r '(NASA-\d+(-\d+)*-[a-z-]+)+' && npm run lint
