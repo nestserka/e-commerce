@@ -16,7 +16,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
