@@ -7,14 +7,14 @@
     "dev": "vite",
     "preview": "vite preview",
     "build": "tsc && vite build",
-    "clear": "rd /s /q dist",
     "format": "prettier ./src --write",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint ./src --fix --color",
     "prepare": "node .husky/install.mjs",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage "
+    "coverage": "vitest run --coverage ",
+    "clear": "rd /s /q dist"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^6.4.2",
