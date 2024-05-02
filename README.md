@@ -1,7 +1,5 @@
 # NASA E-commerce Project
 
-NASA E-commerce group project
-
 ## Description
 
 Welcome to the NASA Ecommerce Project! This project is a culmination of the efforts of students from the RS School, driven by a shared passion for space exploration and technology.
@@ -16,8 +14,10 @@ In addition to its ecommerce functionalities, the NASA Ecommerce Project also of
 
 1. [Features](#features)
 2. [Technologies Used](#technologies-used)
-3. [Available Scripts](#available-scripts)
-4. [Authors](#authors)
+3. [Setup Instructions](#setup-instructions)
+4. [Available Scripts](#available-scripts)
+5. [Authors](#authors)
+6. [License](#license)
 
 ## Features
 
@@ -56,6 +56,58 @@ In addition to its ecommerce functionalities, the NASA Ecommerce Project also of
 - Design and Project Management Tools:
   - 🎨 [Figma](https://www.figma.com/file/7cGwEtz80z2Kw5Rc7YQ7Ku/E-comm-Mockups?type=design&node-id=3-10&mode=design&t=HdRoSWX4h4thPlYq-0)
   - 📊 [Jira](https://e-commerce-001.atlassian.net/jira/software/projects/NASA/boards/1?atlOrigin=eyJpIjoiNjI0ZGM2YTI3Y2Q3NGEyYjljMGE3NDM5ODU2NjNkZTkiLCJwIjoiaiJ9)
+
+## Setup Instructions
+
+1. **Install Node.js**
+
+2. **Obtain the Project Files:**
+   You have two options for obtaining the project files:
+   
+   - **Fork the Repository:**  
+     If you plan to contribute to the project or make changes to the code, it's recommended to fork the repository. This will create a copy of the repository under your GitHub account.
+     [Fork the repository](https://github.com/nestserka/e-commerce/fork) to create a copy under your account.
+   
+   - **Download the Repository:**  
+     If you only intend to use the project locally and don't plan to contribute changes, you can simply download the repository as a ZIP file.
+     [Download the repository](https://github.com/nestserka/e-commerce/archive/refs/heads/main.zip) as a ZIP file and extract it to your local machine.
+
+3. **Clone the Repository (if Forked):**
+   If you forked the repository, clone your newly created repo to your local machine using the following command:
+   ```bash
+   git clone https://github.com/your-username/e-commerce.git
+
+4. **Navigate to the Project Directory:**
+   Once you have obtained the project files (either by forking or downloading), navigate to the project directory:
+   ```bash
+   cd e-commerce
+   ```
+5. **To install all dependencies use:**
+    ```bash
+   npm install
+   ```
+6. **Create a .env file in the root directory of the project and add the following environment variables with your own values:**
+```bash
+CTP_PROJECT_KEY=your_project_key
+CTP_CLIENT_SECRET=your_client_secret
+CTP_CLIENT_ID=your_client_id
+CTP_AUTH_URL=your_auth_url
+CTP_API_URL=your_api_url
+CTP_SCOPES=your_scopes
+```
+7. **Build the Project:**
+   To build the project, use the following command:
+```bash
+   npm run build
+   ```
+8. **Preview the Project:**
+To preview the project, use the following command:
+```bash
+   npm run preview
+   ```
+9. **Troubleshooting:**
+   If you encounter any issues during the setup process or while running the project, please don't hesitate to reach out to the authors for assistance.
+
  
 ## Available Scripts
 
@@ -78,3 +130,8 @@ In the project directory, you can run:
 [![marblehands](./public/assets/github-pics/github_pic_marblehands.png)](https://github.com/marblehands)
 [![nestserka](./public/assets/github-pics/github_pic_nestserka.png)](https://github.com/nestserka)
 [![craftsw0man](./public/assets/github-pics/github_pic_craftsw0man.png)](https://github.com/CRAFTSW0MAN/)
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
