@@ -32,6 +32,7 @@ module.exports = {
     complexity: ['error', 10],
     curly: 'error',
     'default-case': 'error',
+    'no-console': 'off',
     'max-depth': ['error', 4],
     'max-lines-per-function': [
       'error',
