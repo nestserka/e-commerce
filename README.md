@@ -62,7 +62,7 @@ In addition to its ecommerce functionalities, the NASA Ecommerce Project also of
 1. **Install Node.js**
 
 2. **Obtain the Project Files:**
-   You have two options for obtaining the project files:
+   you have two options for obtaining the project files:
    
    - **Fork the Repository:**  
      If you plan to contribute to the project or make changes to the code, it's recommended to fork the repository. This will create a copy of the repository under your GitHub account.
@@ -73,42 +73,36 @@ In addition to its ecommerce functionalities, the NASA Ecommerce Project also of
      [Download the repository](https://github.com/nestserka/e-commerce/archive/refs/heads/main.zip) as a ZIP file and extract it to your local machine.
 
 3. **Clone the Repository (if Forked):**
-   If you forked the repository, clone your newly created repo to your local machine using the following command:
+   if you forked the repository, clone your newly created repo to your local machine using the following command:
    ```bash
    git clone https://github.com/your-username/e-commerce.git
+   ```
 
 4. **Navigate to the Project Directory:**
-   Once you have obtained the project files (either by forking or downloading), navigate to the project directory:
+   once you have obtained the project files (either by forking or downloading), navigate to the project directory:
    ```bash
    cd e-commerce
    ```
 5. **To install all dependencies use:**
-    ```bash
+   ```bash
    npm install
    ```
-6. **Create a .env file in the root directory of the project and add the following environment variables with your own values:**
-```bash
-CTP_PROJECT_KEY=your_project_key
-CTP_CLIENT_SECRET=your_client_secret
-CTP_CLIENT_ID=your_client_id
-CTP_AUTH_URL=your_auth_url
-CTP_API_URL=your_api_url
-CTP_SCOPES=your_scopes
-```
-7. **Build the Project:**
-   To build the project, use the following command:
-```bash
+6. **Create a .env file in the root directory of the project:**
+   refer to the `.env.example` file as a reference or template for configuring .env file and add the environment variables with your own values.
+   
+8. **Build the Project:**
+   to build the project, use the following command:
+   ```bash
    npm run build
    ```
 8. **Preview the Project:**
-To preview the project, use the following command:
-```bash
+   to preview the project, use the following command:
+   ```bash
    npm run preview
    ```
 9. **Troubleshooting:**
-   If you encounter any issues during the setup process or while running the project, please don't hesitate to reach out to the authors for assistance.
+   if you encounter any issues during the setup process or while running the project, please don't hesitate to reach out to the authors for assistance.
 
- 
 ## Available Scripts
 
 In the project directory, you can run:
