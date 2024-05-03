@@ -1,0 +1,12 @@
+@use '../assets/styles/mixins.scss' as *;
+
+.app {
+  @include page-layout-container;
+
+  .logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+}
