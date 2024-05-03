@@ -1,6 +1,6 @@
-1. Issue ticket number and link: [Ticket Number](https://e-commerce-001.atlassian.net/jira/software/projects/NASA/boards/1)
+1.Issue ticket number and link: [Ticket Number](https://e-commerce-001.atlassian.net/jira/software/projects/NASA/boards/1)
 
-2. Type of change:
+2.Type of change:
 
 Please delete options that are not relevant.
 
@@ -10,18 +10,19 @@ Please delete options that are not relevant.
 - [ ] This change requires a documentation update
 
 3. Description:
+   **Implemented:**
 
- **Implemented:**
    - Feature 1: [Description]
    - Feature 2: [Description]
    - ...
 
    **Not Implemented:**
+
    - Feature 3: [Optional: reason for not implementing]
    - Feature 4: [Optional: reason for not implementing]
    - ...
 
-4. Checklist before requesting a review:
+4.Checklist before requesting a review:
 
 - [ ] My code follows the style guidelines of this project
 - [ ] I have performed a self-review of my code

@@ -1,0 +1,31 @@
+@import '../node_modules/normalize-scss/sass/normalize';
+@import 'fonts.scss';
+@import 'variables.scss';
+
+:root {
+  font-family: Cyberpank, sans-serif;
+  line-height: 1.5;
+  font-weight: 900;
+
+  color-scheme: light dark;
+  color: $font-color-primary-one;
+  background-color: $background-color-primary-one;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// @media (prefers-color-scheme: light) {
+//   :root {
+//     color: #213547;
+//     background-color: #ffffff;
+//   }
+//   a:hover {
+//     color: #747bff;
+//   }
+//   button {
+//     background-color: #f9f9f9;
+//   }
+// }
