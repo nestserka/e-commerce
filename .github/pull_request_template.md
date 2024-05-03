@@ -1,4 +1,4 @@
-1. Issue ticket number and link: [Ticket Number](https://e-commerce-001.atlassian.net/jira/software/projects/NASA/boards/1?selectedIssue=NASA-6)
+1. Issue ticket number and link: [Ticket Number](https://e-commerce-001.atlassian.net/jira/software/projects/NASA/boards/1)
 
 2. Type of change:
 
