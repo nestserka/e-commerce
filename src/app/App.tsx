@@ -8,11 +8,10 @@ import { useCounter } from '../state/state';
 export default function App(): JSX.Element {
   // const [count, setCount]: [number, Dispatch<SetStateAction<number>>] = useState(0);
 
-  const {count:zustandCount, increment: zustandIncrement} = useCounter()
+  const { count: zustandCount, increment: zustandIncrement } = useCounter();
 
   return (
     <div className={style.app} data-testid="app">
-
       <h1>Vite + React</h1>
       <div className="card">
         <button
@@ -22,11 +21,9 @@ export default function App(): JSX.Element {
         >
           Count is {zustandCount}
         </button>
-        <p>
-          count is {zustandCount}
-        </p>
+        <p>count is {zustandCount}</p>
       </div>
-      <p >Click on the Vite and React logos to learn more</p>
+      <p>Click on the Vite and React logos to learn more</p>
     </div>
   );
 }
