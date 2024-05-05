@@ -1,10 +1,10 @@
 @import '../../assets/styles/mixins';
 
-.footer {
+.header {
   @include flex-center;
 }
 
-.rs-logo {
-  width: 80px;
-  height: 40px;
+.ns-logo {
+  width: 110px;
+  height: 30px;
 }
