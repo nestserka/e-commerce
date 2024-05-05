@@ -1,3 +1,10 @@
 .footer {
-  color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-between;
+  color: rgb(255 255 255);
+}
+
+.rs-logo {
+  width: 80px;
+  height: 40px;
 }
