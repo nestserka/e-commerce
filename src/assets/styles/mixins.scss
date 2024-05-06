@@ -20,18 +20,8 @@
   }
 }
 
-@mixin flex-center-space-between {
+@mixin flex-center {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-@mixin flex-justify-center {
-  display: flex;
-  justify-content: center;
-}
-
-@mixin flex-right {
-  display: flex;
-  justify-content: flex-end;
 }
