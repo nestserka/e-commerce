@@ -1,7 +1,7 @@
 @import '../../assets/styles/mixins';
 
 .header {
-  @include flex-center;
+  @include flex-center-space-between;
 }
 
 .ns-logo {
