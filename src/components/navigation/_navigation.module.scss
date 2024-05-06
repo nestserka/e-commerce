@@ -1,8 +1,16 @@
 @import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.nav {
+  @include flex-justify-center;
+
+  flex-grow: 1;
+}
 
 .nav-list {
   display: flex;
 
+  width: fit-content;
   margin: 0;
   padding: 12px;
 
