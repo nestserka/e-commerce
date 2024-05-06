@@ -1,18 +1,18 @@
 @import '../node_modules/normalize-scss/sass/normalize';
-@import 'fonts';
-@import 'variables';
+@import 'fonts.scss';
+@import 'variables.scss';
 
 :root {
-  font-family: Display, sans-serif;
-  font-weight: 900;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: Cyberpank, sans-serif;
   line-height: 1.5;
-  color: $font-color-primary-one;
-  text-rendering: optimizelegibility;
+  font-weight: 900;
 
   color-scheme: light dark;
+  color: $font-color-primary-one;
   background-color: $background-color-primary-one;
 
   font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
