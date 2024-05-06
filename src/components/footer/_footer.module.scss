@@ -1,22 +1,10 @@
 @import '../../assets/styles/mixins';
 
 .footer {
-  @include flex-center-space-between;
+  @include flex-center;
 }
 
 .rs-logo {
   width: 80px;
   height: 40px;
-}
-
-.footer-section {
-  flex-basis: calc(100% / 3);
-}
-
-.footer .footer-section:last-child {
-  @include flex-right;
-}
-
-.footer .footer-section:nth-child(2) {
-  @include flex-justify-center;
 }
