@@ -9,9 +9,6 @@ export default function Header(): JSX.Element {
         <img src={logo} className="ns-logo" alt="NASA Store logotype" />
       </section>
       <Navigation />
-      <section className={style['icon-placeholder']}>
-        <span className={style.dot}></span>
-      </section>
     </header>
   );
 }
