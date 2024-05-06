@@ -1,6 +1,5 @@
 // import { useState } from 'react';
 
-import Footer from '../components/footer/Footer';
 import style from './_app.module.scss';
 import { useCounter } from '../state/state';
 
@@ -25,7 +24,6 @@ export default function App(): JSX.Element {
         <p>count is {zustandCount}</p>
       </div>
       <p>Click on the Vite and React logos to learn more</p>
-      <Footer />
     </div>
   );
 }
