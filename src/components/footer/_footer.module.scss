@@ -1,7 +1,7 @@
-@import '../../assets/styles/mixins';
-
 .footer {
-  @include flex-center;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(255 255 255);
 }
 
 .rs-logo {
