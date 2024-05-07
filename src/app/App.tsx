@@ -3,6 +3,7 @@ import style from './_app.module.scss';
 import Footer from '../components/footer/Footer.tsx';
 import Header from '../components/header/Header.tsx';
 import { useCounter } from '../state/state';
+import { NAVLINKS } from '../constants/constants.tsx';
 
 // import type { Dispatch, SetStateAction } from 'react';
 
@@ -13,7 +14,7 @@ export default function App(): JSX.Element {
 
   return (
     <div className={style.app} data-testid="app">
-      <Header />
+      <Header links={NAVLINKS} />
       <h1>NASA store</h1>
       <div className="card">
         <button
