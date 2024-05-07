@@ -1,6 +1,6 @@
-import { type NavLink } from '../types/interfaces.tsx';
+import type { NavigationLink } from '../components/navigation/types';
 
-export const NAVLINKS: NavLink[] = [
+export const NAVLINKS: NavigationLink[] = [
   { linkTitle: 'Home', route: '/home' },
   { linkTitle: 'Sign In', route: '/signin' },
   { linkTitle: 'Sign Up', route: '/signup' },

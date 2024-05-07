@@ -1,11 +1,8 @@
 import { type ReactNode } from 'react';
 
-export interface HeaderProps {
-  links: NavLink[];
-  children?: ReactNode;
-}
+import { type NavigationLink } from '../navigation/types.tsx';
 
-export interface NavLink {
-  linkTitle: string;
-  route: string;
+export interface HeaderProps {
+  links: NavigationLink[];
+  children?: ReactNode;
 }

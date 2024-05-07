@@ -1,7 +1,8 @@
 import style from './_navigation.module.scss';
-import { type NavLink } from '../../types/interfaces.tsx';
 
-export default function Navigation({ links }: { links: NavLink[] }): JSX.Element {
+import type { NavigationLink } from './types';
+
+export default function Navigation({ links }: { links: NavigationLink[] }): JSX.Element {
   return (
     <nav className={style.nav} data-testid="navigation">
       <ul className={style['nav-list']}>
