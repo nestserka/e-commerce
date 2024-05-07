@@ -3,7 +3,8 @@ import style from './_app.module.scss';
 import Footer from '../components/footer/Footer.tsx';
 import Header from '../components/header/Header.tsx';
 import { useCounter } from '../state/state';
-import { type NavLink } from '../components/navigation/types.tsx';
+
+import type { NavLink } from '../types/interfaces.tsx';
 
 // import type { Dispatch, SetStateAction } from 'react';
 

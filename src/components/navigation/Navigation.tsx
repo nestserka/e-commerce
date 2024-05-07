@@ -1,5 +1,5 @@
 import style from './_navigation.module.scss';
-import { type NavLink } from './types.tsx';
+import { type NavLink } from '../../types/interfaces.tsx';
 
 export default function Navigation({ links }: { links: NavLink[] }): JSX.Element {
   return (
