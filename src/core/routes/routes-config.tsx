@@ -1,17 +1,18 @@
-import AboutUsPage from '../../pages/aboutUsPage/AboutUsPage.tsx';
-import CartPage from '../../pages/cartPage/CartPage.tsx';
-import CatalogPage from '../../pages/catalogPage/CatalogPage.tsx';
-import CategoryPage from '../../pages/category/Category.tsx';
-import LoginPage from '../../pages/loginPage/LoginPage.tsx';
-import Layout from '../../pages/layout/Layout.tsx';
-import MainPage from '../../pages/mainPage/MainPage.tsx';
-import NotFoundPage from '../../pages/notFoundPage/NotFoundPage.tsx';
-import ProductPage from '../../pages/productPage/ProductPage.tsx';
-import ProfilePage from '../../pages/profilePage/ProfilePage.tsx';
-import RegistrationPage from '../../pages/registrationPage.tsx/RegistrationPage.tsx';
-import { ROUTES } from './types';
+import { type RouteObject, createBrowserRouter } from 'react-router-dom';
 
-import type { RouteObject } from 'react-router-dom';
+import AboutUsPage from '../../pages/aboutUsPage/AboutUsPage';
+import CartPage from '../../pages/cartPage/CartPage';
+import CatalogPage from '../../pages/catalogPage/CatalogPage';
+import CategoryPage from '../../pages/category/Category';
+import LoginPage from '../../pages/loginPage/LoginPage';
+import Layout from '../../pages/layout/Layout';
+import MainPage from '../../pages/mainPage/MainPage';
+import NotFoundPage from '../../pages/notFoundPage/NotFoundPage';
+import ProductPage from '../../pages/productPage/ProductPage';
+import ProfilePage from '../../pages/profilePage/ProfilePage';
+import RegistrationPage from '../../pages/registrationPage.tsx/RegistrationPage';
+import { ProtectedRouteForAuth, ProtectedRouteForCart, ProtectedRouteForNotAuth } from './protected-route';
+import { ROUTES } from '../../constants/constants';
 
 export const routesConfig: RouteObject[] = [
   {
@@ -20,27 +21,15 @@ export const routesConfig: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <NotFoundPage />,
-      },
-      {
-        path: ROUTES.START,
         element: <MainPage />,
-        children: [
-          {
-            path: ROUTES.PRODUCT_BESTSELLER,
-            element: <ProductPage />,
-          },
-        ],
       },
       {
         path: ROUTES.MAIN,
         element: <MainPage />,
-        children: [
-          {
-            path: ROUTES.PRODUCT_BESTSELLER,
-            element: <ProductPage />,
-          },
-        ],
+      },
+      {
+        path: ROUTES.PRODUCT_BESTSELLER,
+        element: <ProductPage />,
       },
       {
         path: ROUTES.ABOUT_US,
@@ -49,38 +38,54 @@ export const routesConfig: RouteObject[] = [
       {
         path: ROUTES.CATALOG,
         element: <CatalogPage />,
-        children: [
-          {
-            path: ROUTES.CATEGORY,
-            element: <CategoryPage />,
-            children: [
-              {
-                path: ROUTES.PRODUCT,
-                element: <ProductPage />,
-              },
-            ],
-          },
-        ],
+      },
+      {
+        path: ROUTES.CATEGORY,
+        element: <CategoryPage />,
+      },
+      {
+        path: ROUTES.PRODUCT,
+        element: <ProductPage />,
       },
       {
         path: ROUTES.CART,
-        element: <CartPage />,
+        element: (
+          <ProtectedRouteForCart>
+            <CartPage />
+          </ProtectedRouteForCart>
+        ),
       },
       {
         path: ROUTES.CART_CUSTOMER,
-        element: <CartPage />,
+        element: (
+          <ProtectedRouteForCart>
+            <CartPage />
+          </ProtectedRouteForCart>
+        ),
       },
       {
         path: ROUTES.PROFILE,
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRouteForNotAuth>
+            <ProfilePage />
+          </ProtectedRouteForNotAuth>
+        ),
       },
       {
         path: ROUTES.LOGIN,
-        element: <LoginPage />,
+        element: (
+          <ProtectedRouteForAuth>
+            <LoginPage />
+          </ProtectedRouteForAuth>
+        ),
       },
       {
         path: ROUTES.REGISTRATION,
-        element: <RegistrationPage />,
+        element: (
+          <ProtectedRouteForAuth>
+            <RegistrationPage />
+          </ProtectedRouteForAuth>
+        ),
       },
       {
         path: ROUTES.NOT_FOUND,
@@ -89,3 +94,5 @@ export const routesConfig: RouteObject[] = [
     ],
   },
 ];
+
+export const routeRender = createBrowserRouter(routesConfig);
