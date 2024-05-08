@@ -105,7 +105,6 @@ module.exports = {
       'error',
       {
         selector: 'default',
-        // ?
         format: ['strictCamelCase', 'PascalCase'],
         leadingUnderscore: 'forbid',
         trailingUnderscore: 'forbid',

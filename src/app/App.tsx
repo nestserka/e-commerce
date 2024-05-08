@@ -1,29 +1,19 @@
 // import { useState } from 'react';
 
+import { RouterProvider } from 'react-router';
+import { createBrowserRouter } from 'react-router-dom';
+
 import style from './_app.module.scss';
-import { useCounter } from '../state/state';
+import { routesConfig } from '../core/routes/routes-config.tsx';
 
 // import type { Dispatch, SetStateAction } from 'react';
 
 export default function App(): JSX.Element {
-  // const [count, setCount]: [number, Dispatch<SetStateAction<number>>] = useState(0);
-
-  const { count: zustandCount, increment: zustandIncrement } = useCounter();
+  const routeRender = createBrowserRouter(routesConfig);
 
   return (
     <div className={style.app} data-testid="app">
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          onClick={() => {
-            zustandIncrement();
-          }}
-        >
-          Count is {zustandCount}
-        </button>
-        <p>count is {zustandCount}</p>
-      </div>
-      <p>Click on the Vite and React logos to learn more</p>
+      <RouterProvider router={routeRender} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import style from './_header.scss';
+import style from './_header.module.scss';
 
 export default function Header(): JSX.Element {
   return (

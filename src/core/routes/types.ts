@@ -1,0 +1,15 @@
+export enum ROUTES {
+  START = '/',
+  MAIN = '/main',
+  PRODUCT_BESTSELLER = 'main/:productId',
+  LOGIN = '/login',
+  REGISTRATION = 'registration',
+  ABOUT_US = 'about-us',
+  CATALOG = 'catalog',
+  CATEGORY = ':category',
+  PRODUCT = ':productId',
+  PROFILE = '/profile/:customerId',
+  CART = '/cart',
+  CART_CUSTOMER = '/cart/:customerId',
+  NOT_FOUND = '*',
+}
