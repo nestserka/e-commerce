@@ -29,9 +29,9 @@ export function ProtectedRouteForNotAuth({ children }: Protected): JSX.Element {
 
 export function ProtectedRouteForCart({ children }: Protected): JSX.Element {
   const { isAuth, customerId } = useUserData();
-  console.log(children);
 
   if (isAuth) {
+    console.log(children);
     const newRoute: string = `${ROUTES.CART}/${customerId}`;
 
     return <Navigate to={newRoute} replace />;

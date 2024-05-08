@@ -1,0 +1,33 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.nav {
+  @include flex-justify-center;
+
+  flex-grow: 1;
+}
+
+.nav-list {
+  display: flex;
+  gap: 0.5em;
+
+  width: fit-content;
+  margin: 0;
+  padding: 12px;
+
+  list-style: none;
+
+  border: 1px solid $border-color-default;
+  border-radius: 36px;
+}
+
+.nav-item {
+  cursor: pointer;
+  display: block;
+  padding: 10px 14px;
+
+  &:hover {
+    background-color: $background-color-accent;
+    border-radius: 24px;
+  }
+}

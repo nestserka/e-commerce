@@ -1,17 +1,29 @@
 @import '../node_modules/normalize-scss/sass/normalize';
 @import 'fonts';
 @import 'variables';
+@import 'mixins';
 
 :root {
+  font-family: Display, sans-serif;
   font-weight: 900;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
-  color: $font-color-primary-one;
+  color: $font-color-primary;
   text-rendering: optimizelegibility;
 
   color-scheme: light dark;
   background-color: $background-color-primary-one;
 
   font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  padding: 24px 48px 0;
 }

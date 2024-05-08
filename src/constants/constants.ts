@@ -1,3 +1,5 @@
+import { type NavLink } from '../types/interfaces';
+
 export const ROUTES = {
   START: '/',
   MAIN: '/main',
@@ -13,3 +15,11 @@ export const ROUTES = {
   CART_CUSTOMER: '/cart/:customerId',
   NOT_FOUND: '*',
 } as const;
+
+export const NAVLINKS: NavLink[] = [
+  { linkTitle: 'Home', route: '/home' },
+  { linkTitle: 'Sign In', route: '/signin' },
+  { linkTitle: 'Sign Up', route: '/signup' },
+  { linkTitle: 'Catalog', route: '/catalog' },
+  { linkTitle: 'About', route: '/about' },
+];
