@@ -1,11 +1,11 @@
-import { type NavLink } from '../types/interfaces';
+import type { NavLinkProps } from '../components/navigation/types';
 
 export const ROUTES = {
   START: '/',
-  MAIN: '/main',
+  MAIN: '/home',
   PRODUCT_BESTSELLER: 'main/:productId',
-  LOGIN: '/login',
-  REGISTRATION: '/auth',
+  LOGIN: '/signin',
+  REGISTRATION: '/signup',
   ABOUT_US: '/about',
   CATALOG: '/catalog',
   CATEGORY: '/catalog/:category',
@@ -16,10 +16,10 @@ export const ROUTES = {
   NOT_FOUND: '*',
 } as const;
 
-export const NAVLINKS: NavLink[] = [
-  { linkTitle: 'Home', route: '/home' },
-  { linkTitle: 'Sign In', route: '/signin' },
-  { linkTitle: 'Sign Up', route: '/signup' },
-  { linkTitle: 'Catalog', route: '/catalog' },
-  { linkTitle: 'About', route: '/about' },
+export const NAVLINKS: NavLinkProps[] = [
+  { title: 'Home', route: ROUTES.MAIN },
+  { title: 'Sign In', route: ROUTES.LOGIN },
+  { title: 'Sign Up', route: ROUTES.REGISTRATION },
+  { title: 'Catalog', route: ROUTES.CATALOG },
+  { title: 'About', route: ROUTES.ABOUT_US },
 ];
