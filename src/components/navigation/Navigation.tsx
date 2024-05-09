@@ -1,14 +1,16 @@
-import style from './_navigation.module.scss';
-import { type NavLink } from '../../types/interfaces';
+import { NavLink } from 'react-router-dom';
 
-export default function Navigation({ links }: { links: NavLink[] }): JSX.Element {
+import style from './_navigation.module.scss';
+import { type NavLinkProps } from './types';
+
+export default function Navigation({ links }: { links: NavLinkProps[] }): JSX.Element {
   return (
     <nav className={style.nav} data-testid="navigation">
       <ul className={style['nav-list']}>
-        {links.map(({ linkTitle }) => (
-          <li key={linkTitle} className={style['nav-item']}>
-            {linkTitle}
-          </li>
+        {links.map(({ title, route }) => (
+          <NavLink to={route} className={style['nav-item']}>
+            {title}
+          </NavLink>
         ))}
       </ul>
     </nav>

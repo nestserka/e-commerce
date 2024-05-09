@@ -2,7 +2,7 @@ import style from './_header.module.scss';
 import Navigation from '../navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
 
-import type { HeaderProps } from '../../types/interfaces';
+import type { HeaderProps } from './types';
 
 export default function Header({ links, children }: HeaderProps): JSX.Element {
   return (
@@ -12,7 +12,7 @@ export default function Header({ links, children }: HeaderProps): JSX.Element {
       </section>
       <Navigation links={links} />
       <section className={style['icon-placeholder']}>
-        <span className={style.dot}>pop</span>
+        <span className={style.dot} />
       </section>
       {children}
     </header>
