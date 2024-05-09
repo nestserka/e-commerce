@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from './_input.modul.scss';
+import styles from './_input.module.scss';
 
 interface InputProps {
   type: string;
@@ -7,8 +7,8 @@ interface InputProps {
   id: string;
   placeholder: string;
   label: string;
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 export default function Input({ type, name, id, placeholder, label, value, onChange }: InputProps): JSX.Element {
@@ -17,11 +17,13 @@ export default function Input({ type, name, id, placeholder, label, value, onCha
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setInputValue(newValue);
-    onChange(newValue);
+    if (onChange) {
+      onChange(newValue);
+    }
   };
 
   return (
-    <>
+    <section className={styles['input-wrapper']}>
       <label htmlFor={id} className={styles.label}>
         {label}
       </label>
@@ -34,6 +36,6 @@ export default function Input({ type, name, id, placeholder, label, value, onCha
         onChange={handleChange}
         className={styles.input}
       ></input>
-    </>
+    </section>
   );
 }
