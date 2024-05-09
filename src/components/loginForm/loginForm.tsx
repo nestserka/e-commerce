@@ -2,42 +2,57 @@ import style from './_loginform.module.scss';
 import Input from '../ui/input/input';
 import { useLoginData } from '../../core/state/loginState';
 
+import type { ReactNode } from 'react';
+
 export default function LoginForm(): JSX.Element {
-  const { setValueEmail, setValuePassword, valueEmail, valuePassword } = useLoginData();
+  const { setValueEmail, setValuePassword } = useLoginData();
 
-  const handleInputEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(valueEmail);
-    const newValue = e.target.value;
-    setValueEmail(newValue);
-    console.log(valueEmail);
-  };
+  const handleInputChange =
+    (setValue: (value: string) => void) =>
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const newValue = e.target.value;
+      setValue(newValue);
+    };
 
-  const handleInputPasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    console.log(valuePassword);
-    const newValue = e.target.value;
-    setValuePassword(newValue);
-    console.log(valuePassword);
-  };
+  const inputProps = [
+    {
+      type: 'email',
+      id: 'email',
+      name: 'email',
+      placeholder: 'Type email address here',
+      label: 'Email: *',
+      autocomplete: 'email',
+      onChange: setValueEmail,
+    },
+
+    {
+      type: 'password',
+      id: 'password',
+      name: 'password',
+      placeholder: 'Create a strong password',
+      label: 'Password: *',
+      autocomplete: 'off',
+      onChange: setValuePassword,
+    },
+  ];
 
   return (
     <form className={style['login-form']} data-testid="login">
       <h1>Login</h1>
-      <Input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Type email here"
-        label="Email: *"
-        onChange={handleInputEmailChange}
-      />
-      <Input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Create a strong password"
-        label="Password: *"
-        onChange={handleInputPasswordChange}
-      />
+      {inputProps.map(
+        ({ type, id, name, placeholder, label, autocomplete, onChange }): ReactNode => (
+          <Input
+            key={name}
+            type={type}
+            id={id}
+            name={name}
+            placeholder={placeholder}
+            label={label}
+            autocomplete={autocomplete}
+            onChange={handleInputChange(onChange)}
+          />
+        ),
+      )}
       <button type="submit">Login Your Account</button>
       <section>
         <p>Don’t have an account?</p>
