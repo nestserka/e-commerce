@@ -1,5 +1,6 @@
 import style from './_loginform.module.scss';
 import Input from '../ui/input/input';
+import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
 
 import type { ReactNode } from 'react';
@@ -38,7 +39,7 @@ export default function LoginForm(): JSX.Element {
 
   return (
     <form className={style['login-form']} data-testid="login">
-      <h1>Login</h1>
+      <FormTitle title="Login" />
       {inputProps.map(
         ({ type, id, name, placeholder, label, autocomplete, onChange }): ReactNode => (
           <Input
