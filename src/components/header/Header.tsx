@@ -12,7 +12,7 @@ export default function Header({ links, children }: HeaderProps): JSX.Element {
       </section>
       <Navigation links={links} />
       <section className={style['icon-placeholder']}>
-        <span className={style.dot}></span>
+        <span className={style.dot} />
       </section>
       {children}
     </header>
