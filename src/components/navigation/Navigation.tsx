@@ -8,7 +8,7 @@ export default function Navigation({ links }: { links: NavLinkProps[] }): JSX.El
     <nav className={style.nav} data-testid="navigation">
       <ul className={style['nav-list']}>
         {links.map(({ title, route }) => (
-          <NavLink to={route} className={style['nav-item']}>
+          <NavLink to={route} key={title} className={style['nav-item']}>
             {title}
           </NavLink>
         ))}
