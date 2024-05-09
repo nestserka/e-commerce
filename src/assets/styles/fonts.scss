@@ -9,6 +9,11 @@
 }
 
 @font-face {
-  font-family: Display;
+  font-family: DisplayRegular;
   src: url('../../../public/styles/fonts/display-regular.ttf') format(truetype);
+}
+
+@font-face {
+  font-family: DisplayMedium;
+  src: url('../../../public/styles/fonts/display-medium.ttf') format(truetype);
 }
