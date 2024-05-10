@@ -1,5 +1,7 @@
 @import './variables';
 
+// Layout
+
 @mixin page-layout-container {
   display: flex;
   flex: 1 1 auto;
@@ -34,4 +36,39 @@
 @mixin flex-right {
   display: flex;
   justify-content: flex-end;
+}
+
+// Gradients
+
+@mixin form-background-gradient {
+  background: linear-gradient(45deg, rgb(41 43 59 / 40%) 32%, rgb(41 43 59 / 100%) 100%);
+}
+
+// Typography
+
+@mixin font-default-regular {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin font-default-medium {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@mixin font-default-bold {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Transitions
+
+@mixin background-color-on-hover {
+  transition: background-color 0.5 ease;
 }

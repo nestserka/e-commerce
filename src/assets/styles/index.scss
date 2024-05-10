@@ -4,8 +4,9 @@
 @import 'mixins';
 
 :root {
-  font-family: Display, sans-serif;
-  font-weight: 900;
+  @include font-default-regular;
+
+  font-size: 1em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;

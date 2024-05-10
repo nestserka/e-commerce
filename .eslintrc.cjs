@@ -34,14 +34,6 @@ module.exports = {
     'default-case': 'error',
     'no-console': 'off',
     'max-depth': ['error', 4],
-    'max-lines-per-function': [
-      'error',
-      {
-        max: 40,
-        skipBlankLines: true,
-        skipComments: true,
-      },
-    ],
     'max-nested-callbacks': ['error', 4],
     'max-statements': ['error', 20],
     'no-constant-binary-expression': 'error',

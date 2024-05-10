@@ -1,0 +1,41 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+input[type='email'],
+input[type='password'] {
+  padding: 1.5em;
+
+  font: 0.875em;
+
+  background-color: $background-color-secondary;
+  border: 1px solid $background-color-secondary;
+  border-radius: 0.5em;
+  outline: none;
+}
+
+.input:focus,
+.input:active {
+  background-color: $background-color-secondary;
+  border: 1px solid $border-color-active;
+}
+
+.input::placeholder {
+  color: $font-color-primary-60;
+}
+
+.label {
+  font:
+    1em DisplayMedium,
+    sans-serif;
+}
+
+.label .required {
+  font: inherit;
+  color: $font-color-warning;
+}
