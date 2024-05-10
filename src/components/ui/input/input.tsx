@@ -1,6 +1,6 @@
 import styles from './_input.module.scss';
 
-interface InputProps {
+export interface InputProps {
   type: string;
   name: string;
   id: string;
