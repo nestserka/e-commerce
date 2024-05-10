@@ -1,3 +1,7 @@
-.login {
-  color: rgb(255, 255, 255);
+@import '../../assets/styles/mixins';
+
+.login-content-wrapper {
+  @include flex-justify-center;
+
+  padding: 2em 0;
 }

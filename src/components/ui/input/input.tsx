@@ -14,7 +14,7 @@ export default function Input({ type, name, id, placeholder, label, autocomplete
   return (
     <section className={styles['input-wrapper']}>
       <label htmlFor={id} className={styles.label}>
-        {label}
+        {label} <span className={styles.required}>*</span>
       </label>
       <input
         type={type}
