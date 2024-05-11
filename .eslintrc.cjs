@@ -232,12 +232,26 @@ module.exports = {
         next: ['switch', 'while', 'try', 'return', 'if', 'interface', 'type', 'function'],
       },
     ],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: {
+          attributes: false,
+        },
+      },
+    ],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'comma-dangle': ['error', 'only-multiline'],
     'react/prop-types': 'off',
     'react/display-name': 'off',
+    'react/jsx-props-no-spreading': [
+      'error',
+      {
+        html: 'ignore',
+      },
+    ],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/ban-ts-comment': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',

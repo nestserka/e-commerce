@@ -1,59 +1,60 @@
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import style from './_loginform.module.scss';
 import Input from '../ui/input/input';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
+import { getInputProps } from '../../utils/utils';
+import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA } from '../../constants/constants';
 
-import type { ReactNode } from 'react';
+const schema = z.object({
+  email: EMAIL_VALIDATION_SCHEMA,
+  password: PASSWORD_VALIDATION_SCHEMA,
+});
+
+type LoginFormValues = z.infer<typeof schema>;
 
 export default function LoginForm(): JSX.Element {
   const { setValueEmail, setValuePassword } = useLoginData();
+  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({ resolver: zodResolver(schema) });
+  const { errors } = formState;
 
-  const handleInputChange =
-    (setValue: (value: string) => void) =>
-    (e: React.ChangeEvent<HTMLInputElement>): void => {
-      const newValue = e.target.value;
-      setValue(newValue);
-    };
+  const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
+  const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
 
-  const inputProps = [
-    {
-      type: 'email',
-      id: 'email',
-      name: 'email',
-      placeholder: 'Type email address here',
-      label: 'Email ',
-      autocomplete: 'email',
-      onChange: setValueEmail,
-    },
-
-    {
-      type: 'password',
-      id: 'password',
-      name: 'password',
-      placeholder: 'Create a strong password',
-      label: 'Password ',
-      autocomplete: 'off',
-      onChange: setValuePassword,
-    },
-  ];
+  const onSubmit = (data: LoginFormValues): void => {
+    setValueEmail(data.email.toLowerCase());
+    setValuePassword(data.password);
+    console.log(data);
+    reset();
+  };
 
   return (
-    <form className={style['login-form']} data-testid="login">
+    <form onSubmit={handleSubmit(onSubmit)} className={style['login-form']} data-testid="login-form" noValidate>
       <FormTitle title="Login" />
-      {inputProps.map(
-        ({ type, id, name, placeholder, label, autocomplete, onChange }): ReactNode => (
-          <Input
-            key={name}
-            type={type}
-            id={id}
-            name={name}
-            placeholder={placeholder}
-            label={label}
-            autocomplete={autocomplete}
-            onChange={handleInputChange(onChange)}
-          />
-        ),
-      )}
+      <section className={style['input-section']}>
+        <Input
+          inputProps={{
+            ...register('email'),
+            ...inputEmailProps,
+          }}
+          label="E-mail "
+        />
+        {errors.email && <ErrorMessage message={errors.email.message} />}
+      </section>
+      <section className={style['input-section']}>
+        <Input
+          inputProps={{
+            ...register('password'),
+            ...inputPasswordProps,
+          }}
+          label="Password "
+        />
+        {errors.password && <ErrorMessage message={errors.password.message} />}
+      </section>
       <button type="submit">Login Your Account</button>
       <section>
         <p>Don’t have an account?</p>

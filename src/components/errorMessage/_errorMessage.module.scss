@@ -1,0 +1,21 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+.error-message-wrapper {
+  display: flex;
+  gap: 0.5em;
+
+  padding: 8px;
+
+  font-size: 0.75em;
+  color: $font-color-warning;
+
+  background-color: $font-color-warning-10;
+  border-radius: 8px;
+}
+
+.error-message-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+}
