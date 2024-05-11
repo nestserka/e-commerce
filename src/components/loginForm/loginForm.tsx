@@ -4,6 +4,7 @@ import { useLoginData } from '../../core/state/loginState';
 import { useForm } from 'react-hook-form';
 import LoginFormValues from './types';
 import Input from '../ui/input/input';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
 export default function LoginForm(): JSX.Element {
   const { setValueEmail, setValuePassword } = useLoginData();
@@ -65,23 +66,26 @@ export default function LoginForm(): JSX.Element {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style['login-form']} data-testid="login-form" noValidate>
       <FormTitle title="Login" />
-      <Input
-        inputProps={{
-          ...register('email', emailValidation),
-          ...inputEmailProps,
-        }}
-        label="E-mail "
-      />
-      <span>{errors.email?.message}</span>
-      <Input
-        inputProps={{
-          ...register('password', passwordValidation),
-          ...inputPasswordProps,
-        }}
-        label="Password "
-      />
-      <span>{errors.password?.message}</span>
-
+      <section className={style['input-section']}>
+        <Input
+          inputProps={{
+            ...register('email', emailValidation),
+            ...inputEmailProps,
+          }}
+          label="E-mail "
+        />
+        {errors.email && <ErrorMessage message={errors.email.message} />}
+      </section>
+      <section className={style['input-section']}>
+        <Input
+          inputProps={{
+            ...register('password', passwordValidation),
+            ...inputPasswordProps,
+          }}
+          label="Password "
+        />
+        {errors.password && <ErrorMessage message={errors.password.message} />}
+      </section>
       <button>Login Your Account</button>
       <section>
         <p>Don’t have an account?</p>
