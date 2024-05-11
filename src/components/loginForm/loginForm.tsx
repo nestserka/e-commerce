@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import style from './_loginform.module.scss';
 import Input from '../ui/input/input';
@@ -6,15 +8,18 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
 import { getInputProps } from '../../utils/utils';
+import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA } from '../../constants/constants';
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+const schema = z.object({
+  email: EMAIL_VALIDATION_SCHEMA,
+  password: PASSWORD_VALIDATION_SCHEMA,
+});
+
+type LoginFormValues = z.infer<typeof schema>;
 
 export default function LoginForm(): JSX.Element {
   const { setValueEmail, setValuePassword } = useLoginData();
-  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>();
+  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({ resolver: zodResolver(schema) });
   const { errors } = formState;
 
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
@@ -26,39 +31,13 @@ export default function LoginForm(): JSX.Element {
     reset();
   };
 
-  const emailValidation = {
-    required: {
-      value: true,
-      message: 'Email field is required',
-    },
-    pattern: {
-      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      message: 'Invalid email format: no whitespaces, should contain domain and @ sign.',
-    },
-  };
-
-  const passwordValidation = {
-    required: {
-      value: true,
-      message: 'Password field is required',
-    },
-    minLength: {
-      value: 8,
-      message: 'Password should contain minimum 8 characters.',
-    },
-    pattern: {
-      value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
-      message: 'Password should contain a number, uppercase and lowercase letters, and may contain special characters.',
-    },
-  };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={style['login-form']} data-testid="login-form" noValidate>
       <FormTitle title="Login" />
       <section className={style['input-section']}>
         <Input
           inputProps={{
-            ...register('email', emailValidation),
+            ...register('email'),
             ...inputEmailProps,
           }}
           label="E-mail "
@@ -68,7 +47,7 @@ export default function LoginForm(): JSX.Element {
       <section className={style['input-section']}>
         <Input
           inputProps={{
-            ...register('password', passwordValidation),
+            ...register('password'),
             ...inputPasswordProps,
           }}
           label="Password "
