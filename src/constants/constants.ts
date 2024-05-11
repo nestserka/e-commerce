@@ -29,7 +29,7 @@ export const NAVLINKS: NavLinkProps[] = [
 export const PASSWORD_VALIDATION_SCHEMA = z
   .string()
   .min(8)
-  .refine((value) => /^[a-zA-Z0-9!@#$%^&*]*$/.test(value), {
+  .refine((value) => /^[a-zA-Z0-9\s!@#$%^&*]*$/.test(value), {
     message: 'Password must contain only Latin characters, numbers and special characters (e.g., !@#$%^&*).',
   })
   .refine((value) => /[A-Z]/.test(value), {
@@ -98,7 +98,7 @@ export const EMAIL_VALIDATION_SCHEMA = z
 
         const domainParts = parts[1].split('.');
 
-        if (domainParts[1].length !== 2) {
+        if (domainParts.length !== 2) {
           return false;
         }
       }
