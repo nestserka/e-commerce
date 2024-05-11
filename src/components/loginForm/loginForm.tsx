@@ -1,13 +1,16 @@
 import { useForm } from 'react-hook-form';
 
+import style from './_loginform.module.scss';
 import Input from '../ui/input/input';
 import ErrorMessage from '../errorMessage/ErrorMessage';
-import style from './_loginform.module.scss';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
 import { getInputProps } from '../../utils/utils';
 
-import type LoginFormValues from './types';
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 export default function LoginForm(): JSX.Element {
   const { setValueEmail, setValuePassword } = useLoginData();
