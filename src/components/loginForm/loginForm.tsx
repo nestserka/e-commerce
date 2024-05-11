@@ -10,7 +10,7 @@ import type LoginFormValues from './types';
 
 export default function LoginForm(): JSX.Element {
   const { setValueEmail, setValuePassword } = useLoginData();
-  const { register, handleSubmit, formState } = useForm<LoginFormValues>();
+  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>();
   const { errors } = formState;
 
   const getInputProps = (
@@ -32,6 +32,7 @@ export default function LoginForm(): JSX.Element {
   const onSubmit = (data: LoginFormValues): void => {
     setValueEmail(data.email.toLowerCase());
     setValuePassword(data.password);
+    reset();
   };
 
   const emailValidation = {
