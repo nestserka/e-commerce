@@ -62,7 +62,6 @@ export default function LoginForm(): JSX.Element {
   };
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form onSubmit={handleSubmit(onSubmit)} className={style['login-form']} data-testid="login-form" noValidate>
       <FormTitle title="Login" />
       <section className={style['input-section']}>
