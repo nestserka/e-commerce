@@ -1,38 +1,35 @@
+import { useForm } from 'react-hook-form';
+
+import Input from '../ui/input/input';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import style from './_loginform.module.scss';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
-import { useForm } from 'react-hook-form';
-import LoginFormValues from './types';
-import Input from '../ui/input/input';
-import ErrorMessage from '../errorMessage/ErrorMessage';
+
+import type LoginFormValues from './types';
 
 export default function LoginForm(): JSX.Element {
   const { setValueEmail, setValuePassword } = useLoginData();
   const { register, handleSubmit, formState } = useForm<LoginFormValues>();
   const { errors } = formState;
 
-  // const handleInputChange =
-  //   (setValue: (value: string) => void) =>
-  //   (e: React.ChangeEvent<HTMLInputElement>): void => {
-  //     const newValue = e.target.value;
-  //     setValue(newValue);
-  //   };
-
-  const getInputProps = (type: string, id: string, placeholder: string, autocomplete: string) => {
-    return {
-      type: type,
-      id: id,
-      placeholder: placeholder,
-      autoComplete: autocomplete,
-    };
-  };
+  const getInputProps = (
+    type: string,
+    id: string,
+    placeholder: string,
+    autocomplete: string,
+  ): { type: string; id: string; placeholder: string; autoComplete: string } => ({
+    type,
+    id,
+    placeholder,
+    autoComplete: autocomplete,
+  });
 
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
 
   const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
 
-  const onSubmit = (data: LoginFormValues) => {
-    console.log('form submitted', data);
+  const onSubmit = (data: LoginFormValues): void => {
     setValueEmail(data.email.toLowerCase());
     setValuePassword(data.password);
   };
@@ -64,6 +61,7 @@ export default function LoginForm(): JSX.Element {
   };
 
   return (
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <form onSubmit={handleSubmit(onSubmit)} className={style['login-form']} data-testid="login-form" noValidate>
       <FormTitle title="Login" />
       <section className={style['input-section']}>
@@ -86,7 +84,7 @@ export default function LoginForm(): JSX.Element {
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
       </section>
-      <button>Login Your Account</button>
+      <button type="submit">Login Your Account</button>
       <section>
         <p>Don’t have an account?</p>
         <p>Sign Up</p>

@@ -1,5 +1,6 @@
-import styles from './_input.module.scss';
 import { type InputHTMLAttributes, useId } from 'react';
+
+import styles from './_input.module.scss';
 
 interface InputProps {
   inputProps: InputHTMLAttributes<HTMLInputElement>;

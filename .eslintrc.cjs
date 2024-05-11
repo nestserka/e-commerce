@@ -239,7 +239,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/display-name': 'off',
     'react/jsx-props-no-spreading': [
-      'enabled',
+      'error',
       {
         html: 'ignore',
       },
