@@ -28,7 +28,7 @@ export const NAVLINKS: NavLinkProps[] = [
 
 export const PASSWORD_VALIDATION_SCHEMA = z
   .string()
-  .min(8)
+  .min(8, 'Password must be at least 8 characters long.')
   .refine((value) => /^[a-zA-Z0-9\s!@#$%^&*]*$/.test(value), {
     message: 'Password must contain only Latin characters, numbers and special characters (e.g., !@#$%^&*).',
   })

@@ -28,6 +28,7 @@ export default function LoginForm(): JSX.Element {
   const onSubmit = (data: LoginFormValues): void => {
     setValueEmail(data.email.toLowerCase());
     setValuePassword(data.password);
+    console.log(data);
     reset();
   };
 
