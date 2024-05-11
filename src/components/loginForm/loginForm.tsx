@@ -5,6 +5,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import style from './_loginform.module.scss';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
+import { getInputProps } from '../../utils/utils';
 
 import type LoginFormValues from './types';
 
@@ -13,20 +14,7 @@ export default function LoginForm(): JSX.Element {
   const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>();
   const { errors } = formState;
 
-  const getInputProps = (
-    type: string,
-    id: string,
-    placeholder: string,
-    autocomplete: string,
-  ): { type: string; id: string; placeholder: string; autoComplete: string } => ({
-    type,
-    id,
-    placeholder,
-    autoComplete: autocomplete,
-  });
-
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
-
   const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
 
   const onSubmit = (data: LoginFormValues): void => {
