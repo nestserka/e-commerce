@@ -20,7 +20,10 @@ type LoginFormValues = z.infer<typeof schema>;
 
 export default function LoginForm(): JSX.Element {
   const { setValueEmail, setValuePassword } = useLoginData();
-  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({
+    resolver: zodResolver(schema),
+    mode: 'onChange',
+  });
   const { errors } = formState;
 
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
