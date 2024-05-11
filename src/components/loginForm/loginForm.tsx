@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -8,7 +9,7 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
 import { getInputProps } from '../../utils/utils';
-import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA } from '../../constants/constants';
+import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -28,7 +29,6 @@ export default function LoginForm(): JSX.Element {
   const onSubmit = (data: LoginFormValues): void => {
     setValueEmail(data.email.toLowerCase());
     setValuePassword(data.password);
-    console.log(data);
     reset();
   };
 
@@ -58,7 +58,7 @@ export default function LoginForm(): JSX.Element {
       <button type="submit">Login Your Account</button>
       <section>
         <p>Don’t have an account?</p>
-        <p>Sign Up</p>
+        <Link to={ROUTES.REGISTRATION}>Sign Up</Link>
       </section>
     </form>
   );
