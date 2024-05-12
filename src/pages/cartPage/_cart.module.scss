@@ -1,3 +1,5 @@
+@use '../../assets/styles/mixins' as *;
+
 .cart {
-  color: rgb(255 255 255);
+  @include page-layout-container;
 }

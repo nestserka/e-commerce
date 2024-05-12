@@ -1,13 +1,12 @@
 import { Outlet } from 'react-router';
 
-import Footer from '../../components/footer/Footer';
-import Header from '../../components/header/Header';
-import { NAVLINKS } from '../../constants/constants';
+import Header from '../../domain/header/Header';
+import Footer from '../../domain/footer/Footer';
 
 export default function Layout(): JSX.Element {
   return (
     <>
-      <Header links={NAVLINKS} />
+      <Header />
       <Outlet />
       <Footer />
     </>
