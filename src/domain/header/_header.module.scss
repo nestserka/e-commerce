@@ -1,7 +1,14 @@
-@import '../../assets/styles/mixins';
+@use '../../assets/styles/mixins' as *;
+
+@import '../../assets/styles/variables';
 
 .header {
   @include flex-center-space-between;
+
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: $background-color-primary-one;
 }
 
 .ns-logo {

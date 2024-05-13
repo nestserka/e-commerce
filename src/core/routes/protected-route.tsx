@@ -1,41 +1,52 @@
 import { Navigate } from 'react-router';
 
-import { useUserData } from '../state/state';
 import { ROUTES } from '../../constants/constants';
+import { useLoginData } from '../state/loginState';
 
 export interface Protected {
   children: JSX.Element;
 }
 
 export function ProtectedRouteForAuth({ children }: Protected): JSX.Element {
-  const { isAuth } = useUserData();
+  const { isAuth } = useLoginData();
 
   if (isAuth) {
-    return <Navigate to={ROUTES.MAIN} replace />;
+    return <Navigate to={ROUTES.HOME} replace />;
   }
 
   return children;
 }
 
 export function ProtectedRouteForNotAuth({ children }: Protected): JSX.Element {
-  const { isAuth } = useUserData();
+  const { isAuth } = useLoginData();
 
   if (isAuth) {
     return children;
   }
 
-  return <Navigate to={ROUTES.LOGIN} replace />;
+  return <Navigate to={ROUTES.SING_IN} replace />;
 }
 
-export function ProtectedRouteForCart({ children }: Protected): JSX.Element {
-  const { isAuth, customerId } = useUserData();
+export function ProtectedRouteForCartForAuth({ children }: Protected): JSX.Element {
+  const { isAuth, customerId } = useLoginData();
 
   if (isAuth) {
-    console.log(children);
     const newRoute: string = `${ROUTES.CART}/${customerId}`;
 
     return <Navigate to={newRoute} replace />;
   }
 
-  return <Navigate to={ROUTES.CART} replace />;
+  return children;
+}
+
+export function ProtectedRouteForCartNotAuth({ children }: Protected): JSX.Element {
+  const { isAuth } = useLoginData();
+
+  if (isAuth) {
+    return children;
+  }
+
+  const newRoute: string = `${ROUTES.CART}`;
+
+  return <Navigate to={newRoute} replace />;
 }
