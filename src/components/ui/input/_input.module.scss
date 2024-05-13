@@ -16,6 +16,7 @@
   flex-grow: 1;
 }
 
+input[type='text'],
 input[type='email'],
 input[type='password'] {
   padding: 1.5em;
@@ -64,6 +65,7 @@ input[type='password'] {
 
   background-color: transparent;
   border: none;
+  outline: none;
 }
 
 .eye-icon {

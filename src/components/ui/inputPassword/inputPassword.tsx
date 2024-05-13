@@ -24,17 +24,15 @@ export default function InputPassword({ inputProps, label }: InputProps): JSX.El
         {label} <span className={stylesInput.required}>*</span>
       </label>
       <section className={stylesInput['input-icon-wrapper']}>
-        <input {...inputProps} className={stylesInput.input} />
+        <input {...inputProps} className={stylesInput.input} type={show ? 'text' : 'password'} />
 
-        {inputProps.type === 'password' && (
-          <button type="button" aria-label="Show password" onClick={handleShow} className={stylesInput['btn-eye-icon']}>
-            {show ? (
-              <img src={iconVisible} className={stylesInput['eye-icon']} alt="" />
-            ) : (
-              <img src={iconInvisible} className={stylesInput['eye-icon']} alt="" />
-            )}
-          </button>
-        )}
+        <button type="button" aria-label="Show password" onClick={handleShow} className={stylesInput['btn-eye-icon']}>
+          {show ? (
+            <img src={iconVisible} className={stylesInput['eye-icon']} alt="" />
+          ) : (
+            <img src={iconInvisible} className={stylesInput['eye-icon']} alt="" />
+          )}
+        </button>
       </section>
     </section>
   );
