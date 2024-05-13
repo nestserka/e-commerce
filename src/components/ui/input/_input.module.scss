@@ -49,9 +49,23 @@ input[type='password'] {
   color: $font-color-warning;
 }
 
-.eye-icon {
+.btn-eye-icon {
+  cursor: pointer;
+
   position: absolute;
   top: 50%;
   right: 18px;
   transform: translateY(-50%);
+
+  display: flex;
+
+  width: 24px;
+  height: 24px;
+
+  background-color: transparent;
+  border: none;
+}
+
+.eye-icon {
+  display: block;
 }

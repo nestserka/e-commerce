@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import style from './_loginform.module.scss';
 import Input from '../ui/input/input';
+import InputPassword from '../ui/inputPassword/inputPassword';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
@@ -49,7 +50,7 @@ export default function LoginForm(): JSX.Element {
         {errors.email && <ErrorMessage message={errors.email.message} />}
       </section>
       <section className={style['input-section']}>
-        <Input
+        <InputPassword
           inputProps={{
             ...register('password'),
             ...inputPasswordProps,
