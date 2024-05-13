@@ -1,11 +1,31 @@
+import { useForm } from 'react-hook-form';
+// import { Link } from 'react-router-dom';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+
 import style from './_registrationForm.module.scss';
-// import Input from '../../../components/ui/input/input';
+import Input from '../../../components/ui/input/input';
 // import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
+import { getInputProps } from '../../../utils/utils';
+import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA } from '../../../constants/constants';
+import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 // import { useLoginData } from '../../../core/state/loginState';
 // import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 
+const schema = z.object({
+  email: EMAIL_VALIDATION_SCHEMA,
+  password: PASSWORD_VALIDATION_SCHEMA,
+});
+
+type LoginFormValues = z.infer<typeof schema>;
+
 export default function RegistrationForm(): JSX.Element {
+  const { register, formState } = useForm<LoginFormValues>({ resolver: zodResolver(schema) });
+  const { errors } = formState;
+
+  const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
+  const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
   // const { setValueEmail, setValuePassword } = useLoginData();
 
   // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -23,25 +43,26 @@ export default function RegistrationForm(): JSX.Element {
   return (
     <form className={style['registration-form']} data-testid="registration">
       <FormTitle title="Register" />
-      {/* <div className={style['form-group']}> <Input
-        type="email"
-        id="email"
-        name="email"
-        placeholder="Type email address here"
-        label="Email "
-        autocomplete="email"
-        onChange={handleEmailChange}
-      />
-      <Input
-        type="password"
-        id="password"
-        name="password"
-        placeholder="Create a strong password"
-        label="Password "
-        autocomplete="off"
-        onChange={handlePasswordChange}
-      /></div>
-       <FormSubTitle subTitle="Personal Info" />
+      <div className={style['form-group']}>
+        {' '}
+        <Input
+          inputProps={{
+            ...register('email'),
+            ...inputEmailProps,
+          }}
+          label="E-mail "
+        />
+        {errors.email && <ErrorMessage message={errors.email.message} />}
+        <Input
+          inputProps={{
+            ...register('password'),
+            ...inputPasswordProps,
+          }}
+          label="Password "
+        />
+        {errors.password && <ErrorMessage message={errors.password.message} />}
+      </div>
+      {/* <FormSubTitle subTitle="Personal Info" />
        <div className={style['form-group']}> <Input
         type="firstName"
         id="firstName"

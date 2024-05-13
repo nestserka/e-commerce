@@ -3,7 +3,7 @@ import style from './_registration.module.scss';
 
 export default function RegistrationPage(): JSX.Element {
   return (
-    <section className={style.registration} data-testid="registration">
+    <section className={style['registration-content-wrapper']} data-testid="registration">
       <RegistrationForm />
     </section>
   );
