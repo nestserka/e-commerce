@@ -1,3 +1,5 @@
+@import '../../assets/styles/mixins';
+
 .registration-content-wrapper {
   @include flex-justify-center;
 
