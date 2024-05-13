@@ -8,24 +8,44 @@ import Input from '../../../components/ui/input/input';
 // import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
 import { getInputProps } from '../../../utils/utils';
-import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA } from '../../../constants/constants';
+import {
+  EMAIL_VALIDATION_SCHEMA,
+  FIRST_NAME_VALIDATION_SCHEMA,
+  LAST_NAME_VALIDATION_SCHEMA,
+  PASSWORD_VALIDATION_SCHEMA
+} from '../../../constants/constants';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 // import { useLoginData } from '../../../core/state/loginState';
-// import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
+import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
   password: PASSWORD_VALIDATION_SCHEMA,
+  firstName: FIRST_NAME_VALIDATION_SCHEMA,
+  lastName: LAST_NAME_VALIDATION_SCHEMA,
 });
 
-type LoginFormValues = z.infer<typeof schema>;
+type RegistrationFormValues = z.infer<typeof schema>;
 
 export default function RegistrationForm(): JSX.Element {
-  const { register, formState } = useForm<LoginFormValues>({ resolver: zodResolver(schema) });
+  // const { setValueEmail, setValuePassword } = useLoginData();
+  const { register, handleSubmit, formState, reset } = useForm<RegistrationFormValues>({
+    resolver: zodResolver(schema),
+  });
   const { errors } = formState;
 
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
+  const inputFirstNameProps = getInputProps('firstName', 'firstName', 'Your First Name', 'off');
+  const inputLastNameProps = getInputProps('lastName', 'lastName', 'Your Last Name', 'off');
+
+  const onSubmit = (data: RegistrationFormValues): void => {
+    console.log(data);
+    // setValueEmail(data.email.toLowerCase());
+    // setValuePassword(data.password);
+    reset();
+  };
+
   // const { setValueEmail, setValuePassword } = useLoginData();
 
   // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -41,29 +61,59 @@ export default function RegistrationForm(): JSX.Element {
   // ];
 
   return (
-    <form className={style['registration-form']} data-testid="registration">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className={style['registration-form']}
+      data-testid="registration"
+      noValidate
+    >
       <FormTitle title="Register" />
       <div className={style['form-group']}>
-        {' '}
-        <Input
-          inputProps={{
-            ...register('email'),
-            ...inputEmailProps,
-          }}
-          label="E-mail "
-        />
-        {errors.email && <ErrorMessage message={errors.email.message} />}
-        <Input
-          inputProps={{
-            ...register('password'),
-            ...inputPasswordProps,
-          }}
-          label="Password "
-        />
-        {errors.password && <ErrorMessage message={errors.password.message} />}
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('email'),
+              ...inputEmailProps,
+            }}
+            label="E-mail "
+          />
+          {errors.email && <ErrorMessage message={errors.email.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('password'),
+              ...inputPasswordProps,
+            }}
+            label="Password "
+          />
+          {errors.password && <ErrorMessage message={errors.password.message} />}
+        </section>
       </div>
-      {/* <FormSubTitle subTitle="Personal Info" />
-       <div className={style['form-group']}> <Input
+      <FormSubTitle subTitle="Personal Info" />
+      <div className={style['form-group']}>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('firstName'),
+              ...inputFirstNameProps,
+            }}
+            label="First Name "
+          />
+          {errors.firstName && <ErrorMessage message={errors.firstName.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('lastName'),
+              ...inputLastNameProps
+            }}
+            label="Your Last Name "
+          />
+          {errors.lastName && <ErrorMessage message={errors.lastName.message} />}
+        </section>
+
+        {/* <Input
         type="firstName"
         id="firstName"
         name="firstName"
@@ -89,8 +139,9 @@ export default function RegistrationForm(): JSX.Element {
         label="Date of Birth "
         autocomplete="off"
         onChange={handlePasswordChange}
-      /></div>
-        <FormSubTitle subTitle="Main Address" />
+      /> */}
+      </div>
+      {/* <FormSubTitle subTitle="Main Address" />
         <div className={style['form-group']}> <Input
         type="street"
         id="street"

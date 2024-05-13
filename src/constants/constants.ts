@@ -109,3 +109,15 @@ export const EMAIL_VALIDATION_SCHEMA = z
       message: 'Email address must contain a domain name (e.g., example.com).',
     },
   );
+
+const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
+  z
+    .string()
+    .min(1, `${fieldName} must contain at least one character.`)
+    .refine((value) => /^[a-zA-Z]+$/.test(value), {
+      message: `${fieldName} must contain only letters (no special characters or numbers).`,
+    });
+
+export const FIRST_NAME_VALIDATION_SCHEMA = nameValidation('First name');
+
+export const LAST_NAME_VALIDATION_SCHEMA = nameValidation('Last name');
