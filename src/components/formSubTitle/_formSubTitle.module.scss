@@ -1,0 +1,7 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/mixins';
+
+.form-subtitle-wrapper {
+  @include flex-center-space-between;
+  gap: 1rem;
+}
