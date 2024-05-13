@@ -38,6 +38,12 @@
   justify-content: flex-end;
 }
 
+@mixin flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 // Gradients
 
 @mixin form-background-gradient {
