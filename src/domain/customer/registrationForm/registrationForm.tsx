@@ -1,18 +1,22 @@
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 // import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import ReactDatePicker from 'react-datepicker';
 
+import 'react-datepicker/dist/react-datepicker.css';
+import icon from '../../../assets/images/icons/icon-calendar.svg';
 import style from './_registrationForm.module.scss';
 import Input from '../../../components/ui/input/input';
 // import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
 import { getInputProps } from '../../../utils/utils';
 import {
+  DATE_VALIDATION_SCHEMA,
   EMAIL_VALIDATION_SCHEMA,
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
-  PASSWORD_VALIDATION_SCHEMA
+  PASSWORD_VALIDATION_SCHEMA,
 } from '../../../constants/constants';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 // import { useLoginData } from '../../../core/state/loginState';
@@ -23,13 +27,14 @@ const schema = z.object({
   password: PASSWORD_VALIDATION_SCHEMA,
   firstName: FIRST_NAME_VALIDATION_SCHEMA,
   lastName: LAST_NAME_VALIDATION_SCHEMA,
+  dateOfBirth: DATE_VALIDATION_SCHEMA,
 });
 
 type RegistrationFormValues = z.infer<typeof schema>;
 
 export default function RegistrationForm(): JSX.Element {
   // const { setValueEmail, setValuePassword } = useLoginData();
-  const { register, handleSubmit, formState, reset } = useForm<RegistrationFormValues>({
+  const { control, register, handleSubmit, formState, reset } = useForm<RegistrationFormValues>({
     resolver: zodResolver(schema),
   });
   const { errors } = formState;
@@ -45,20 +50,6 @@ export default function RegistrationForm(): JSX.Element {
     // setValuePassword(data.password);
     reset();
   };
-
-  // const { setValueEmail, setValuePassword } = useLoginData();
-
-  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-  //   setValueEmail(e.target.value);
-  // };
-
-  // const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-  //   setValuePassword(e.target.value);
-  // };
-
-  // const options = [
-  //   'USA', 'Canada'
-  // ];
 
   return (
     <form
@@ -106,12 +97,44 @@ export default function RegistrationForm(): JSX.Element {
           <Input
             inputProps={{
               ...register('lastName'),
-              ...inputLastNameProps
+              ...inputLastNameProps,
             }}
             label="Your Last Name "
           />
           {errors.lastName && <ErrorMessage message={errors.lastName.message} />}
         </section>
+        <section className={style['input-section']}>
+          {/* <label>Date of Birth  <span className={style.required}>*</span></label> */}
+          <Controller
+            control={control}
+            name="dateOfBirth"
+            render={({ field: { onChange, value } }) => (
+              <ReactDatePicker
+                showIcon
+                onChange={onChange}
+                selected={value}
+                icon={<img src={icon} alt="icon" />}
+                showMonthDropdown
+                showYearDropdown
+                dropdownMode="select"
+              />
+            )}
+          />
+        </section>
+
+        {/* <Controller
+          control={control}
+          name="dateOfBirth"
+          render={({ field }) => (
+            <Calendar
+              onChange={(date) => {
+                field.onChange(date);
+              }}
+              value={field.value}
+              maxDetail="year"
+            />
+          )}
+        /> */}
 
         {/* <Input
         type="firstName"
