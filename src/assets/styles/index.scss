@@ -46,3 +46,6 @@ body {
   background-color: $background-color-accent;
   border-radius: 24px;
 }
+.loading {
+  @include page-layout-container;
+}
