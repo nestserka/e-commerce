@@ -2,9 +2,8 @@ import { Controller, useForm } from 'react-hook-form';
 // import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import ReactDatePicker from 'react-datepicker';
+import { DatePicker } from 'antd';
 
-import 'react-datepicker/dist/react-datepicker.css';
 import icon from '../../../assets/images/icons/icon-calendar.svg';
 import style from './_registrationForm.module.scss';
 import Input from '../../../components/ui/input/input';
@@ -12,7 +11,7 @@ import Input from '../../../components/ui/input/input';
 import FormTitle from '../../../components/formTitle/FormTitle';
 import { getInputProps } from '../../../utils/utils';
 import {
-  DATE_VALIDATION_SCHEMA,
+  // DATE_VALIDATION_SCHEMA,
   EMAIL_VALIDATION_SCHEMA,
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
@@ -21,13 +20,14 @@ import {
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 // import { useLoginData } from '../../../core/state/loginState';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
+import CalendarLabel from '../../../components/ui/calendarLabel/label';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
   password: PASSWORD_VALIDATION_SCHEMA,
   firstName: FIRST_NAME_VALIDATION_SCHEMA,
   lastName: LAST_NAME_VALIDATION_SCHEMA,
-  dateOfBirth: DATE_VALIDATION_SCHEMA,
+  dateOfBirth: z.coerce.date()
 });
 
 type RegistrationFormValues = z.infer<typeof schema>;
@@ -104,65 +104,27 @@ export default function RegistrationForm(): JSX.Element {
           {errors.lastName && <ErrorMessage message={errors.lastName.message} />}
         </section>
         <section className={style['input-section']}>
-          {/* <label>Date of Birth  <span className={style.required}>*</span></label> */}
-          <Controller
-            control={control}
-            name="dateOfBirth"
-            render={({ field: { onChange, value } }) => (
-              <ReactDatePicker
-                showIcon
-                onChange={onChange}
-                selected={value}
-                icon={<img src={icon} alt="icon" />}
-                showMonthDropdown
-                showYearDropdown
-                dropdownMode="select"
+          <CalendarLabel
+            control={
+              <Controller
+                control={control}
+                name="dateOfBirth"
+                render={({ field: { onChange, value } }) => (
+                  <DatePicker
+                    onChange={onChange}
+                    // format='DD.MM.YYYY'
+                    value = {value}
+                    className= {style.datePicker}
+                    // placeholder='13.03.1990'
+                    suffixIcon = {<img src={icon} alt="icon" />}
+                  />
+                )}
               />
-            )}
+            }
+            label="Date of Birth "
           />
+           {errors.dateOfBirth && <ErrorMessage message={errors.dateOfBirth.message} />}
         </section>
-
-        {/* <Controller
-          control={control}
-          name="dateOfBirth"
-          render={({ field }) => (
-            <Calendar
-              onChange={(date) => {
-                field.onChange(date);
-              }}
-              value={field.value}
-              maxDetail="year"
-            />
-          )}
-        /> */}
-
-        {/* <Input
-        type="firstName"
-        id="firstName"
-        name="firstName"
-        placeholder="Your First Name"
-        label="First Name "
-        autocomplete="firstName"
-        onChange={handleEmailChange}
-      />
-      <Input
-        type="lastName"
-        id="lastName"
-        name="lastName"
-        placeholder="Your Last Name"
-        label="Last Name "
-        autocomplete="lastName"
-        onChange={handlePasswordChange}
-      />
-       <Input
-        type="calendar"
-        id="calendar"
-        name="calendar"
-        placeholder="01.01.1990"
-        label="Date of Birth "
-        autocomplete="off"
-        onChange={handlePasswordChange}
-      /> */}
       </div>
       {/* <FormSubTitle subTitle="Main Address" />
         <div className={style['form-group']}> <Input

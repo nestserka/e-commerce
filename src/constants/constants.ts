@@ -122,6 +122,6 @@ export const FIRST_NAME_VALIDATION_SCHEMA = nameValidation('First name');
 
 export const LAST_NAME_VALIDATION_SCHEMA = nameValidation('Last name');
 
-export const DATE_VALIDATION_SCHEMA = z.date().refine((value) => !Number.isNaN(value.getTime()), {
-  message: 'Date must be a valid date.',
-});
+// export const DATE_VALIDATION_SCHEMA = z.object({
+//   date: z.date(),
+// });
