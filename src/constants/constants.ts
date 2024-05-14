@@ -122,6 +122,27 @@ export const FIRST_NAME_VALIDATION_SCHEMA = nameValidation('First name');
 
 export const LAST_NAME_VALIDATION_SCHEMA = nameValidation('Last name');
 
-// export const DATE_VALIDATION_SCHEMA = z.object({
-//   date: z.date(),
-// });
+const MIN_AGE = 13;
+
+const calculateAge = (date: Date): number => {
+  const diff = Date.now() - date.getTime();
+  const ageDate = new Date(diff);
+
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+};
+
+export const DATE_VALIDATION_SCHEMA = z.coerce
+  .date()
+  .refine(
+    (date) => {
+      const today = new Date();
+
+      return date <= today;
+    },
+    {
+      message: 'Birthdate cannot be in the future.',
+    },
+  )
+  .refine((date) => calculateAge(date) >= MIN_AGE, {
+    message: `User must be at least ${MIN_AGE} years old.`,
+  });

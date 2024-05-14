@@ -3,6 +3,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DatePicker } from 'antd';
+import dayjs from 'dayjs';
 
 import icon from '../../../assets/images/icons/icon-calendar.svg';
 import style from './_registrationForm.module.scss';
@@ -11,7 +12,7 @@ import Input from '../../../components/ui/input/input';
 import FormTitle from '../../../components/formTitle/FormTitle';
 import { getInputProps } from '../../../utils/utils';
 import {
-  // DATE_VALIDATION_SCHEMA,
+  DATE_VALIDATION_SCHEMA,
   EMAIL_VALIDATION_SCHEMA,
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
@@ -27,7 +28,7 @@ const schema = z.object({
   password: PASSWORD_VALIDATION_SCHEMA,
   firstName: FIRST_NAME_VALIDATION_SCHEMA,
   lastName: LAST_NAME_VALIDATION_SCHEMA,
-  dateOfBirth: z.coerce.date(),
+  dateOfBirth: DATE_VALIDATION_SCHEMA,
 });
 
 type RegistrationFormValues = z.infer<typeof schema>;
@@ -112,10 +113,11 @@ export default function RegistrationForm(): JSX.Element {
                 render={({ field: { onChange, value } }) => (
                   <DatePicker
                     onChange={onChange}
-                    // format='DD.MM.YYYY'
+                    format='DD.MM.YYYY'
                     value={value}
                     className={style.datePicker}
-                    // placeholder='13.03.1990'
+                    placeholder='13.03.1990'
+                    minDate={dayjs('01.01.1900','DD.MM.YYYY')}
                     suffixIcon={<img src={icon} alt="icon" />}
                   />
                 )}
