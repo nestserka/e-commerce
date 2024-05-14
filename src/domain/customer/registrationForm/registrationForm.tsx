@@ -113,11 +113,11 @@ export default function RegistrationForm(): JSX.Element {
                 render={({ field: { onChange, value } }) => (
                   <DatePicker
                     onChange={onChange}
-                    format='DD.MM.YYYY'
+                    format="DD.MM.YYYY"
                     value={value}
-                    className={style.datePicker}
-                    placeholder='13.03.1990'
-                    minDate={dayjs('01.01.1900','DD.MM.YYYY')}
+                    className={style['date-picker']}
+                    placeholder="13.03.1990"
+                    minDate={dayjs('01.01.1900', 'DD.MM.YYYY')}
                     suffixIcon={<img src={icon} alt="icon" />}
                   />
                 )}
