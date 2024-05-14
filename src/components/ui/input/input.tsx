@@ -18,8 +18,6 @@ export default function Input({ inputProps, label }: InputProps): JSX.Element {
       </label>
       <section className={styles['input-icon-wrapper']}>
         <input {...inputProps} className={styles.input} />
-
-        {/* {inputProps.type === 'password' && <img src={icon} className={styles['eye-icon']} alt="" />} */}
       </section>
     </section>
   );

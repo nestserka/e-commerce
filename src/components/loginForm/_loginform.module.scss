@@ -12,8 +12,6 @@
   height: fit-content;
   padding: 4em;
 
-  // padding: 2em 8em;
-
   border: 1px solid $border-color-default;
   border-radius: 24px;
 
@@ -40,20 +38,6 @@
     width: 100%;
     padding: 2em;
   }
-
-  // @media (min-width: 1280px) {
-  //   width: 50%;
-  //   padding: 3.5em 6.125em;
-  // }
-  // @media (min-width: 1366px) {
-  //   width: 45%;
-  // }
-  // @media (min-width: 1920px) {
-  //   width: 35%;
-  // }
-  // @media (min-width: 2400px) {
-  //   width: 30%;
-  // }
 }
 
 .input-section {
