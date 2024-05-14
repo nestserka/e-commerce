@@ -18,7 +18,7 @@ import {
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
   PASSWORD_VALIDATION_SCHEMA,
-  POSTALCODE_VALIDATION_SCHEMA,
+  POSTCODE_VALIDATION_SCHEMA,
   STREET_VALIDATION_SCHEMA,
 } from '../../../constants/constants';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
@@ -34,19 +34,19 @@ const schema = z.object({
   mainAddress: z.object({
     street: STREET_VALIDATION_SCHEMA,
     city: CITY_VALIDATION_SCHEMA,
-    postalCode: POSTALCODE_VALIDATION_SCHEMA,
+    postalCode: POSTCODE_VALIDATION_SCHEMA,
     country: COUNTRY_VALIDATION_SCHEMA,
   }),
   shippingAddress: z.object({
     street: STREET_VALIDATION_SCHEMA,
     city: CITY_VALIDATION_SCHEMA,
-    postalCode: POSTALCODE_VALIDATION_SCHEMA,
+    postalCode: POSTCODE_VALIDATION_SCHEMA,
     country: COUNTRY_VALIDATION_SCHEMA,
   }),
   billingAddress: z.object({
     street: STREET_VALIDATION_SCHEMA,
     city: CITY_VALIDATION_SCHEMA,
-    postalCode: POSTALCODE_VALIDATION_SCHEMA,
+    postalCode: POSTCODE_VALIDATION_SCHEMA,
     country: COUNTRY_VALIDATION_SCHEMA,
   }),
 });
@@ -54,7 +54,7 @@ const schema = z.object({
 type RegistrationFormValues = z.infer<typeof schema>;
 
 export default function RegistrationForm(): JSX.Element {
-  // const { setValueEmail, setValuePassword } = useLoginData();
+
   const { control, register, handleSubmit, formState, reset } = useForm<RegistrationFormValues>({
     resolver: zodResolver(schema),
   });
@@ -66,7 +66,7 @@ export default function RegistrationForm(): JSX.Element {
   const inputLastNameProps = getInputProps('lastName', 'lastName', 'Your Last Name', 'off');
   const inputStreetProps = getInputProps('street', 'street', 'Street', 'off');
   const inputCityProps = getInputProps('city', 'city', 'City', 'off');
-  const inputPostalCodeProps = getInputProps('postal-code', 'postal-code', 'M5V1J1', 'off');
+  const inputPostalCodeProps = getInputProps('postal-code', 'postal-code', 'M5V 1J1', 'off');
 
   const onSubmit = (data: RegistrationFormValues): void => {
     console.log(data);
@@ -210,9 +210,9 @@ export default function RegistrationForm(): JSX.Element {
         id="default"
         name="default"
         label="Set as default address for shipping & billing "
-        // onChange={handlePasswordChange}
+        // onChange={handleAutoComplete}
       />
-      {/* <FormSubTitle subTitle="Shipping Address" />
+      <FormSubTitle subTitle="Shipping Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
           <Input
@@ -273,9 +273,9 @@ export default function RegistrationForm(): JSX.Element {
         id="default"
         name="default"
         label="Set as billing address "
-        // onChange={handlePasswordChange}
-      /> */}
-      {/* <FormSubTitle subTitle="Billing Address" />
+        // onChange={handleAutoComplete}
+      /> 
+      <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
           <Input
@@ -336,8 +336,8 @@ export default function RegistrationForm(): JSX.Element {
         id="default"
         name="default"
         label="Set as shipping address "
-        // onChange={handlePasswordChange}
-      /> */}
+        // onChange={handleAutoComplete}
+      /> 
       <button type="submit">Create Your Account</button>
       <section>
         <p>Already have an account?</p>

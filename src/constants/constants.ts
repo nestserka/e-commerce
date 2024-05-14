@@ -161,10 +161,10 @@ export const STREET_VALIDATION_SCHEMA = addressValidation('Street');
 
 export const CITY_VALIDATION_SCHEMA = addressValidation('City');
 
-export const POSTALCODE_VALIDATION_SCHEMA = z
+export const POSTCODE_VALIDATION_SCHEMA = z
   .string()
-  .refine((value) => /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(value), {
-    message: 'Postal code must follow the format for Canada (e.g., A1B 2C3)',
+  .refine((value) => /^[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/.test(value), {
+    message: 'Postal code must follow the format for North America (e.g., A1B 2C3)',
   });
 
 const validCountries = ['US', 'CA'];
