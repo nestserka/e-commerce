@@ -27,7 +27,7 @@ const schema = z.object({
   password: PASSWORD_VALIDATION_SCHEMA,
   firstName: FIRST_NAME_VALIDATION_SCHEMA,
   lastName: LAST_NAME_VALIDATION_SCHEMA,
-  dateOfBirth: z.coerce.date()
+  dateOfBirth: z.coerce.date(),
 });
 
 type RegistrationFormValues = z.infer<typeof schema>;
@@ -113,17 +113,17 @@ export default function RegistrationForm(): JSX.Element {
                   <DatePicker
                     onChange={onChange}
                     // format='DD.MM.YYYY'
-                    value = {value}
-                    className= {style.datePicker}
+                    value={value}
+                    className={style.datePicker}
                     // placeholder='13.03.1990'
-                    suffixIcon = {<img src={icon} alt="icon" />}
+                    suffixIcon={<img src={icon} alt="icon" />}
                   />
                 )}
               />
             }
             label="Date of Birth "
           />
-           {errors.dateOfBirth && <ErrorMessage message={errors.dateOfBirth.message} />}
+          {errors.dateOfBirth && <ErrorMessage message={errors.dateOfBirth.message} />}
         </section>
       </div>
       {/* <FormSubTitle subTitle="Main Address" />
