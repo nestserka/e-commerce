@@ -64,7 +64,9 @@ export default function LoginForm(): JSX.Element {
       </button>
       <section>
         <p>Don’t have an account?</p>
-        <Link to={ROUTES.SING_UP}>Sign Up</Link>
+        <Link to={ROUTES.SING_UP} className={styles.link}>
+          Sign Up
+        </Link>
       </section>
     </form>
   );

@@ -8,11 +8,52 @@
   flex-direction: column;
   gap: 2em;
 
-  width: 45%;
-  padding: 4.5em 7.125em;
+  width: 40%;
+  height: fit-content;
+  padding: 4em;
+
+  // padding: 2em 8em;
 
   border: 1px solid $border-color-default;
   border-radius: 24px;
+
+  @media (width >= 1800px) {
+    width: 30%;
+  }
+
+  @media (width <= 1200px) {
+    width: 60%;
+    padding: 4em;
+  }
+
+  @media (width <= 1024px) {
+    width: 60%;
+    padding: 4em;
+  }
+
+  @media (width <= 900px) {
+    width: 80%;
+    padding: 3em;
+  }
+
+  @media (width <= 640px) {
+    width: 100%;
+    padding: 2em;
+  }
+
+  // @media (min-width: 1280px) {
+  //   width: 50%;
+  //   padding: 3.5em 6.125em;
+  // }
+  // @media (min-width: 1366px) {
+  //   width: 45%;
+  // }
+  // @media (min-width: 1920px) {
+  //   width: 35%;
+  // }
+  // @media (min-width: 2400px) {
+  //   width: 30%;
+  // }
 }
 
 .input-section {
@@ -40,4 +81,11 @@
   &:hover {
     background-color: $bg-color-btn-hover;
   }
+}
+
+.link:link,
+.link:focus,
+.link:active,
+.link:visited {
+  text-decoration: none;
 }

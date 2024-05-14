@@ -11,11 +11,16 @@ body {
   height: 100%;
 }
 
+body {
+  padding: 1.5em 3em 0;
+
+  @media (width <= 390px) {
+    padding: 1em 1em 0;
+  }
+}
+
 :root {
   @include font-default-regular;
-
-  box-sizing: border-box;
-  padding: 24px 48px 0;
 
   font-size: 1em;
   -webkit-font-smoothing: antialiased;
