@@ -20,3 +20,24 @@
   flex-direction: column;
   gap: 0.5em;
 }
+
+.button-primary {
+  cursor: pointer;
+
+  display: flex;
+
+  padding: 1.5em;
+
+  font-size: 1em;
+
+  background-color: $bg-color-btn-default;
+  border: none;
+  border-radius: 0.5em;
+  outline: none;
+
+  transition: background-color 0.5s ease;
+
+  &:hover {
+    background-color: $bg-color-btn-hover;
+  }
+}
