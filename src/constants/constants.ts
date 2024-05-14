@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import type { NavLinkProps } from '../components/navigation/types';
+import dayjs from 'dayjs';
 
 export const ROUTES = {
   START: '/',
@@ -125,10 +126,11 @@ export const LAST_NAME_VALIDATION_SCHEMA = nameValidation('Last name');
 const MIN_AGE = 13;
 
 const calculateAge = (date: Date): number => {
-  const diff = Date.now() - date.getTime();
-  const ageDate = new Date(diff);
+  const now = dayjs();
+  const birthDate = dayjs(date);
+  const age = now.diff(birthDate, 'year');
 
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
+  return age;
 };
 
 export const DATE_VALIDATION_SCHEMA = z.coerce
