@@ -1,7 +1,7 @@
 import { z } from 'zod';
+import dayjs from 'dayjs';
 
 import type { NavLinkProps } from '../components/navigation/types';
-import dayjs from 'dayjs';
 
 export const ROUTES = {
   START: '/',
