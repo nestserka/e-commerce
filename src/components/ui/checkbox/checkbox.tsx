@@ -10,7 +10,7 @@ interface InputProps {
 export default function InputCheckBox({ name, id, label }: InputProps): JSX.Element {
   return (
     <section className={styles['checkbox-wrapper']}>
-      <input type="checkbox" id={id} name={name} className={styles.input}  />
+      <input type="checkbox" id={id} name={name} className={styles.input} />
       <label htmlFor={id} className={styles.label}>
         {label} <span className={styles.required} />
       </label>

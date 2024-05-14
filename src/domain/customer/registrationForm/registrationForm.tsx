@@ -1,5 +1,4 @@
 import { Controller, useForm } from 'react-hook-form';
-// import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DatePicker, Select } from 'antd';
@@ -12,18 +11,17 @@ import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
 import { getInputProps } from '../../../utils/utils';
 import {
+  CITY_VALIDATION_SCHEMA,
+  COUNTRY_VALIDATION_SCHEMA,
   DATE_VALIDATION_SCHEMA,
   EMAIL_VALIDATION_SCHEMA,
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
   PASSWORD_VALIDATION_SCHEMA,
-  STREET_VALIDATION_SCHEMA,
-  CITY_VALIDATION_SCHEMA,
   POSTALCODE_VALIDATION_SCHEMA,
-  COUNTRY_VALIDATION_SCHEMA,
+  STREET_VALIDATION_SCHEMA,
 } from '../../../constants/constants';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
-// import { useLoginData } from '../../../core/state/loginState';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import CalendarLabel from '../../../components/ui/calendarLabel/label';
 
@@ -34,6 +32,18 @@ const schema = z.object({
   lastName: LAST_NAME_VALIDATION_SCHEMA,
   dateOfBirth: DATE_VALIDATION_SCHEMA,
   mainAddress: z.object({
+    street: STREET_VALIDATION_SCHEMA,
+    city: CITY_VALIDATION_SCHEMA,
+    postalCode: POSTALCODE_VALIDATION_SCHEMA,
+    country: COUNTRY_VALIDATION_SCHEMA,
+  }),
+  shippingAddress: z.object({
+    street: STREET_VALIDATION_SCHEMA,
+    city: CITY_VALIDATION_SCHEMA,
+    postalCode: POSTALCODE_VALIDATION_SCHEMA,
+    country: COUNTRY_VALIDATION_SCHEMA,
+  }),
+  billingAddress: z.object({
     street: STREET_VALIDATION_SCHEMA,
     city: CITY_VALIDATION_SCHEMA,
     postalCode: POSTALCODE_VALIDATION_SCHEMA,
@@ -60,8 +70,6 @@ export default function RegistrationForm(): JSX.Element {
 
   const onSubmit = (data: RegistrationFormValues): void => {
     console.log(data);
-    // setValueEmail(data.email.toLowerCase());
-    // setValuePassword(data.password);
     reset();
   };
 
@@ -143,65 +151,59 @@ export default function RegistrationForm(): JSX.Element {
       </div>
       <FormSubTitle subTitle="Main Address" />
       <div className={style['form-group']}>
-      <section className={style['input-section']}>
-        <Input
-          inputProps={{
-            ...register('mainAddress.street'),
-            ...inputStreetProps,
-          }}
-          label="Street "
-        />
-        {errors.mainAddress && errors.mainAddress.street && (
-          <ErrorMessage message={errors.mainAddress.street.message} />
-        )}
-          </section>
-         <section className={style['input-section']}>
-        <Input
-          inputProps={{
-            ...register('mainAddress.city'),
-            ...inputCityProps,
-          }}
-          label="City "
-        />
-        {errors.mainAddress && errors.mainAddress.city && <ErrorMessage message={errors.mainAddress.city.message} />}
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('mainAddress.street'),
+              ...inputStreetProps,
+            }}
+            label="Street "
+          />
+          {errors.mainAddress?.street && <ErrorMessage message={errors.mainAddress.street.message} />}
         </section>
         <section className={style['input-section']}>
-        <Input
-          inputProps={{
-            ...register('mainAddress.postalCode'),
-            ...inputPostalCodeProps,
-          }}
-          label="Postal Code "
-        />
-        {errors.mainAddress && errors.mainAddress.postalCode && (
-          <ErrorMessage message={errors.mainAddress.postalCode.message} />
-        )}
+          <Input
+            inputProps={{
+              ...register('mainAddress.city'),
+              ...inputCityProps,
+            }}
+            label="City "
+          />
+          {errors.mainAddress?.city && <ErrorMessage message={errors.mainAddress.city.message} />}
         </section>
-         <section className={style['input-section']}> 
-         <CalendarLabel
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('mainAddress.postalCode'),
+              ...inputPostalCodeProps,
+            }}
+            label="Postal Code "
+          />
+          {errors.mainAddress?.postalCode && <ErrorMessage message={errors.mainAddress.postalCode.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <CalendarLabel
             control={
               <Controller
-              control={control}
-              name="mainAddress.country"
-              render={({ field: { onChange, value } }) => (
-                <Select
-                  onChange={onChange}
-                  value={value}
-                  className={style['select-country']}
-                  placeholder="Select Country"
-                  options={[
-                    { value: 'US', label: 'United States' },
-                    { value: 'CA', label: 'Canada' },
-                  ]}
-                />
+                control={control}
+                name="mainAddress.country"
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    onChange={onChange}
+                    value={value}
+                    className={style['select-country']}
+                    placeholder="Select Country"
+                    options={[
+                      { value: 'US', label: 'United States' },
+                      { value: 'CA', label: 'Canada' },
+                    ]}
+                  />
                 )}
               />
             }
             label="Country  "
           />
-          {errors.mainAddress && errors.mainAddress.country && (
-          <ErrorMessage message={errors.mainAddress.country.message} />
-        )}
+          {errors.mainAddress?.country && <ErrorMessage message={errors.mainAddress.country.message} />}
         </section>
       </div>
       <InputCheckBox
@@ -210,137 +212,132 @@ export default function RegistrationForm(): JSX.Element {
         label="Set as default address for shipping & billing "
         // onChange={handlePasswordChange}
       />
-
-      {/* <FormSubTitle subTitle="Main Address" />
-        <div className={style['form-group']}> <Input
-        type="street"
-        id="street"
-        name="street"
-        placeholder="Street "
-        label="Street "
-        autocomplete="street"
-        onChange={handleEmailChange}
-      />
-      <Input
-        type="city"
-        id="city"
-        name="city"
-        placeholder="City"
-        label="City "
-        autocomplete="city"
-        onChange={handlePasswordChange}
-      />
-       <Input
-        type="postal-code"
-        id="postal-code"
-        name="postal-code"
-        placeholder="123 456"
-        label="Postal Code "
-        autocomplete="off"
-        onChange={handlePasswordChange}
-      />
-        <Input
-        type="country"
-        id="country"
-        name="country"
-        placeholder="Select Country"
-        label="Country "
-        autocomplete="off"
-        onChange={handlePasswordChange}
-      /></div>    
+      {/* <FormSubTitle subTitle="Shipping Address" />
+      <div className={style['form-group']}>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('shippingAddress.street'),
+              ...inputStreetProps,
+            }}
+            label="Street "
+          />
+          {errors.shippingAddress?.street && <ErrorMessage message={errors.shippingAddress.street.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('shippingAddress.city'),
+              ...inputCityProps,
+            }}
+            label="City "
+          />
+          {errors.shippingAddress?.city && <ErrorMessage message={errors.shippingAddress.city.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('shippingAddress.postalCode'),
+              ...inputPostalCodeProps,
+            }}
+            label="Postal Code "
+          />
+          {errors.shippingAddress?.postalCode && <ErrorMessage message={errors.shippingAddress.postalCode.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <CalendarLabel
+            control={
+              <Controller
+                control={control}
+                name="shippingAddress.country"
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    onChange={onChange}
+                    value={value}
+                    className={style['select-country']}
+                    placeholder="Select Country"
+                    options={[
+                      { value: 'US', label: 'United States' },
+                      { value: 'CA', label: 'Canada' },
+                    ]}
+                  />
+                )}
+              />
+            }
+            label="Country  "
+          />
+          {errors.shippingAddress?.country && <ErrorMessage message={errors.shippingAddress.country.message} />}
+        </section>
+      </div>
       <InputCheckBox
         id="default"
         name="default"
-        label="Set as default address for shipping & billing "
-        onChange={handlePasswordChange}
-      />
-        <FormSubTitle subTitle="Shipping Address" />
-        <div className={style['form-group']}> <Input
-        type="street"
-        id="street"
-        name="street"
-        placeholder="Street "
-        label="Street "
-        autocomplete="street"
-        onChange={handleEmailChange}
-      />
-      <Input
-        type="city"
-        id="city"
-        name="city"
-        placeholder="City"
-        label="City "
-        autocomplete="city"
-        onChange={handlePasswordChange}
-      />
-       <Input
-        type="postal-code"
-        id="postal-code"
-        name="postal-code"
-        placeholder="123 456"
-        label="Postal Code "
-        autocomplete="off"
-        onChange={handlePasswordChange}
-      />
-        <Input
-        type="country"
-        id="country"
-        name="country"
-        placeholder="Select Country"
-        label="Country "
-        autocomplete="off"
-        onChange={handlePasswordChange}
-      /></div>
-          <InputCheckBox
-        id="default"
-        name="default"
         label="Set as billing address "
-        onChange={handlePasswordChange}
-      />
-        <FormSubTitle subTitle="Billing Address" />
-        <div className={style['form-group']}> <Input
-        type="street"
-        id="street"
-        name="street"
-        placeholder="Street "
-        label="Street "
-        autocomplete="street"
-        onChange={handleEmailChange}
-      />
-      <Input
-        type="city"
-        id="city"
-        name="city"
-        placeholder="City"
-        label="City "
-        autocomplete="city"
-        onChange={handlePasswordChange}
-      />
-       <Input
-        type="postal-code"
-        id="postal-code"
-        name="postal-code"
-        placeholder="123 456"
-        label="Postal Code "
-        autocomplete="off"
-        onChange={handlePasswordChange}
-      />
-        <Input
-        type="country"
-        id="country"
-        name="country"
-        placeholder="Select Country"
-        label="Country "
-        autocomplete="off"
-        onChange={handlePasswordChange}
-      /></div>
-        <InputCheckBox
+        // onChange={handlePasswordChange}
+      /> */}
+      {/* <FormSubTitle subTitle="Billing Address" />
+      <div className={style['form-group']}>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('billingAddress.street'),
+              ...inputStreetProps,
+            }}
+            label="Street "
+          />
+          {errors.billingAddress?.street && <ErrorMessage message={errors.billingAddress.street.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('billingAddress.city'),
+              ...inputCityProps,
+            }}
+            label="City "
+          />
+          {errors.billingAddress?.city && <ErrorMessage message={errors.billingAddress.city.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('billingAddress.postalCode'),
+              ...inputPostalCodeProps,
+            }}
+            label="Postal Code "
+          />
+          {errors.billingAddress?.postalCode && <ErrorMessage message={errors.billingAddress.postalCode.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <CalendarLabel
+            control={
+              <Controller
+                control={control}
+                name="billingAddress.country"
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    onChange={onChange}
+                    value={value}
+                    className={style['select-country']}
+                    placeholder="Select Country"
+                    options={[
+                      { value: 'US', label: 'United States' },
+                      { value: 'CA', label: 'Canada' },
+                    ]}
+                  />
+                )}
+              />
+            }
+            label="Country  "
+          />
+          {errors.billingAddress?.country && <ErrorMessage message={errors.billingAddress.country.message} />}
+        </section>
+      </div>
+      <InputCheckBox
         id="default"
         name="default"
         label="Set as shipping address "
-        onChange={handlePasswordChange}
+        // onChange={handlePasswordChange}
       /> */}
-
       <button type="submit">Create Your Account</button>
       <section>
         <p>Already have an account?</p>
