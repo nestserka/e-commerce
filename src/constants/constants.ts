@@ -146,3 +146,27 @@ export const DATE_VALIDATION_SCHEMA = z.coerce
   .refine((date) => calculateAge(date) >= MIN_AGE, {
     message: `User must be at least ${MIN_AGE} years old.`,
   });
+
+const addressValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
+  z
+    .string()
+    .min(1, `${fieldName} must contain at least one character.`)
+    .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
+      message: `${fieldName} must contain only Latin characters, numbers, and spaces.`,
+    });
+
+export const STREET_VALIDATION_SCHEMA = addressValidation('Street');
+
+export const CITY_VALIDATION_SCHEMA = addressValidation('City');
+
+export const POSTALCODE_VALIDATION_SCHEMA = z
+  .string()
+  .refine((value) => /^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(value), {
+    message: 'Postal code must follow the format for Canada (e.g., A1B 2C3)',
+  });
+
+const validCountries = ['US', 'CA'];
+
+export const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.includes(value), {
+  message: 'Country must be a valid country from the predefined list.',
+});
