@@ -6,5 +6,8 @@ export interface NavLinkProps {
 export interface NavigationProps {
   links: NavLinkProps[];
   isStatus: boolean;
+  isNavOpen: boolean;
+
+  onClick: () => void;
   handleClickLogOut: () => void;
 }
