@@ -17,11 +17,16 @@
     "clear": "rd /s /q dist"
   },
   "dependencies": {
+    "@commercetools/platform-sdk": "^7.8.0",
+    "@commercetools/sdk-auth": "^4.0.1",
+    "@commercetools/sdk-client-v2": "^2.5.0",
     "@hookform/resolvers": "^3.3.4",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.6",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
+    "isomorphic-fetch": "^3.0.0",
+    "node-fetch": "^3.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.3",

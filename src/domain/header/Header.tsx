@@ -19,9 +19,6 @@ export default function Header(): JSX.Element {
         <img src={logo} className="ns-logo" alt="NASA Store logotype" />
       </Link>
       <Navigation links={NAV_LINKS} isStatus={isAuth} handleClickLogOut={onClickButton} />
-      {/* <section className={style['icon-placeholder']}>
-        <span className={style.dot} />
-      </section> */}
     </header>
   );
 }
