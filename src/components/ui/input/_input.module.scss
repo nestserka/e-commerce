@@ -7,6 +7,16 @@
   gap: 0.5em;
 }
 
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.input {
+  flex-grow: 1;
+}
+
+input[type='text'],
 input[type='email'],
 input[type='password'] {
   padding: 1.5em;
@@ -38,4 +48,26 @@ input[type='password'] {
 .label .required {
   font: inherit;
   color: $font-color-warning;
+}
+
+.btn-eye-icon {
+  cursor: pointer;
+
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%);
+
+  display: flex;
+
+  width: 24px;
+  height: 24px;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.eye-icon {
+  display: block;
 }

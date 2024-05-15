@@ -16,7 +16,9 @@ export default function Input({ inputProps, label }: InputProps): JSX.Element {
       <label htmlFor={inputId} className={styles.label}>
         {label} <span className={styles.required}>*</span>
       </label>
-      <input {...inputProps} className={styles.input} />
+      <section className={styles['input-icon-wrapper']}>
+        <input {...inputProps} className={styles.input} />
+      </section>
     </section>
   );
 }

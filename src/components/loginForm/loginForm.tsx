@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import style from './_loginform.module.scss';
+import styles from './_loginform.module.scss';
 import Input from '../ui/input/input';
+import InputPassword from '../ui/inputPassword/inputPassword';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
@@ -20,7 +21,10 @@ type LoginFormValues = z.infer<typeof schema>;
 
 export default function LoginForm(): JSX.Element {
   const { setValueEmail, setValuePassword } = useLoginData();
-  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({
+    resolver: zodResolver(schema),
+    mode: 'onChange',
+  });
   const { errors } = formState;
 
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
@@ -33,9 +37,9 @@ export default function LoginForm(): JSX.Element {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={style['login-form']} data-testid="login-form" noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles['login-form']} data-testid="login-form" noValidate>
       <FormTitle title="Login" />
-      <section className={style['input-section']}>
+      <section className={styles['input-section']}>
         <Input
           inputProps={{
             ...register('email'),
@@ -45,8 +49,8 @@ export default function LoginForm(): JSX.Element {
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
       </section>
-      <section className={style['input-section']}>
-        <Input
+      <section className={styles['input-section']}>
+        <InputPassword
           inputProps={{
             ...register('password'),
             ...inputPasswordProps,
@@ -55,10 +59,14 @@ export default function LoginForm(): JSX.Element {
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
       </section>
-      <button type="submit">Login Your Account</button>
+      <button type="submit" className={styles['button-primary']}>
+        Login Your Account
+      </button>
       <section>
         <p>Don’t have an account?</p>
-        <Link to={ROUTES.REGISTRATION}>Sign Up</Link>
+        <Link to={ROUTES.SING_UP} className={styles.link}>
+          Sign Up
+        </Link>
       </section>
     </form>
   );
