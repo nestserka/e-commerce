@@ -8,7 +8,7 @@ export default function Layout(): JSX.Element {
   return (
     <>
       <Header />
-      <Suspense fallback={<div className='loading'>Loading...</div>}>
+      <Suspense fallback={<div className="loading">Loading...</div>}>
         <Outlet />
       </Suspense>
       <Footer />
