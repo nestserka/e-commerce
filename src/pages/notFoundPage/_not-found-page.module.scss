@@ -2,4 +2,74 @@
 
 .not-found {
   @include page-layout-container;
+
+  align-items: center;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+
+    opacity: 0.8;
+    background-image: url("../../assets/images/bg/bg-404.jpg");
+    background-position: center;
+    background-size: cover;
+  }
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  max-width: 50%;
+
+  @media (width <= 900px) {
+    max-width: 60%;
+  }
+
+  @media (width <= 700px) {
+    max-width: 70%;
+  }
+
+  @media (width <= 640px) {
+    max-width: 80%;
+  }
+
+  @media (width <= 480px) {
+    max-width: 100%;
+  }
+}
+
+.title-wrapper {
+  display: flex;
+  gap: 1.5em;
+  align-items: center;
+
+  @media (width <= 480px) {
+    gap: 1em;
+  }
+}
+
+.title {
+  font:
+    36px DisplayMedium,
+    sans-serif;
+  line-height: 1;
+  color: $font-color-primary;
+
+  @media (width <= 640px) {
+    font-size: 1.5em;
+  }
+}
+
+.icon {
+  width: 72px;
+  height: 72px;
+
+  @media (width <= 640px) {
+    width: 48px;
+    height: 48px;
+  }
 }

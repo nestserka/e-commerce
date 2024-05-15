@@ -59,7 +59,7 @@ export default function LoginForm(): JSX.Element {
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
       </section>
-      <button type="submit" className={styles['button-primary']}>
+      <button type="submit" className="button-primary">
         Login Your Account
       </button>
       <section>

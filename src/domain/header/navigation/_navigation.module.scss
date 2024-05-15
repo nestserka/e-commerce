@@ -9,7 +9,6 @@
   transition: right 1s ease-in-out;
 
   .nav-list {
-    background-color: $background-color-primary-one;
     border: 1px solid $border-color-default;
     border-radius: 36px;
   }
@@ -62,6 +61,8 @@
 
     width: 100%;
     height: calc(100vh - 6em);
+
+    background-color: $background-color-primary-one;
 
     &.nav-open {
       right: 0;
