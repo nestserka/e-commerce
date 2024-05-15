@@ -18,12 +18,35 @@ import {
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
   PASSWORD_VALIDATION_SCHEMA,
-  POSTCODE_VALIDATION_SCHEMA,
+  US_POSTCODE_VALIDATION_SCHEMA,
+  CANADA_POSTCODE_VALIDATION_SCHEMA,
   STREET_VALIDATION_SCHEMA,
 } from '../../../constants/constants';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import CalendarLabel from '../../../components/ui/calendarLabel/label';
+
+
+const ADDRESS_VALIDATION_SCHEMA = z.object({
+  street: STREET_VALIDATION_SCHEMA,
+  city: CITY_VALIDATION_SCHEMA,
+  postalCode: z.string().min(1, { message: 'Postal code required' }), // Ensure postal code is not empty
+  country: COUNTRY_VALIDATION_SCHEMA,
+}).superRefine((values, ctx) => {
+  if (values.country === 'CA' && !CANADA_POSTCODE_VALIDATION_SCHEMA.safeParse(values.postalCode).success) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'Postal code must follow the format for Canada (e.g., A1B 2C3)',
+      path: ['postalCode'],
+    });
+  } else if (values.country === 'US' && !US_POSTCODE_VALIDATION_SCHEMA.safeParse(values.postalCode).success) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'Postal code must follow the format for the USA (e.g., 12345 or 12345-6789)',
+      path: ['postalCode'],
+    });
+  }
+});
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -31,24 +54,9 @@ const schema = z.object({
   firstName: FIRST_NAME_VALIDATION_SCHEMA,
   lastName: LAST_NAME_VALIDATION_SCHEMA,
   dateOfBirth: DATE_VALIDATION_SCHEMA,
-  mainAddress: z.object({
-    street: STREET_VALIDATION_SCHEMA,
-    city: CITY_VALIDATION_SCHEMA,
-    postalCode: POSTCODE_VALIDATION_SCHEMA,
-    country: COUNTRY_VALIDATION_SCHEMA,
-  }),
-  shippingAddress: z.object({
-    street: STREET_VALIDATION_SCHEMA,
-    city: CITY_VALIDATION_SCHEMA,
-    postalCode: POSTCODE_VALIDATION_SCHEMA,
-    country: COUNTRY_VALIDATION_SCHEMA,
-  }),
-  billingAddress: z.object({
-    street: STREET_VALIDATION_SCHEMA,
-    city: CITY_VALIDATION_SCHEMA,
-    postalCode: POSTCODE_VALIDATION_SCHEMA,
-    country: COUNTRY_VALIDATION_SCHEMA,
-  }),
+  mainAddress: ADDRESS_VALIDATION_SCHEMA,
+  shippingAddress: ADDRESS_VALIDATION_SCHEMA,
+  billingAddress: ADDRESS_VALIDATION_SCHEMA,
 });
 
 type RegistrationFormValues = z.infer<typeof schema>;

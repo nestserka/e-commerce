@@ -161,14 +161,18 @@ export const STREET_VALIDATION_SCHEMA = addressValidation('Street');
 
 export const CITY_VALIDATION_SCHEMA = addressValidation('City');
 
-export const POSTCODE_VALIDATION_SCHEMA = z
-  .string()
-  .refine((value) => /^[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/.test(value), {
-    message: 'Postal code must follow the format for North America (e.g., A1B 2C3)',
-  });
-
 const validCountries = ['US', 'CA'];
 
 export const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.includes(value), {
   message: 'Country must be a valid country from the predefined list.',
+});
+
+export const CANADA_POSTCODE_VALIDATION_SCHEMA = z
+  .string()
+  .refine((value) => /^[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/.test(value), {
+    message: 'Postal code must follow the format for CANADA (e.g., A1B 2C3)',
+  });
+
+export const US_POSTCODE_VALIDATION_SCHEMA = z.string().refine((value) => /^\d{5}(-\d{4})?$/.test(value), {
+  message: 'Postal code must follow the format for the USA (e.g., 12345)',
 });
