@@ -22,7 +22,7 @@ import {
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import CalendarLabel from '../../../components/ui/calendarLabel/label';
-import { useAutoComplete, useBillingComplete, useShippingComplete } from '../../../utils/checkbox-autocomplete';
+import { useAddressAutoComplete, useAutoComplete } from '../../../utils/checkbox-autocomplete';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -71,17 +71,19 @@ export default function RegistrationForm(): JSX.Element {
   });
 
   const handleAutoComplete = useAutoComplete(mainAddress, isAutoCompleteChecked, setValue, setAutoCompleteChecked);
-  const handleShippingAutoComplete = useShippingComplete(
+  const handleShippingAutoComplete = useAddressAutoComplete(
     shippingAddress,
     isShippingCompleteChecked,
     setValue,
     setShippingCompleteChecked,
+    'billing',
   );
-  const handleBillingAutoComplete = useBillingComplete(
+  const handleBillingAutoComplete = useAddressAutoComplete(
     billingAddress,
     isBillingCompleteChecked,
     setValue,
     setBillingCompleteChecked,
+    'shipping',
   );
 
   const onSubmit = (data: RegistrationFormValues): void => {
@@ -209,7 +211,7 @@ export default function RegistrationForm(): JSX.Element {
                     onChange={onChange}
                     value={value}
                     className={style['select-country']}
-                    placeholder="Select Country"
+                    defaultValue={'Select Country'}
                     options={[
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
@@ -276,7 +278,7 @@ export default function RegistrationForm(): JSX.Element {
                     onChange={onChange}
                     value={value}
                     className={style['select-country']}
-                    placeholder="Select Country"
+                    defaultValue={'Select Country'}
                     options={[
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
@@ -344,7 +346,7 @@ export default function RegistrationForm(): JSX.Element {
                     onChange={onChange}
                     value={value}
                     className={style['select-country']}
-                    placeholder="Select Country"
+                    defaultValue={'Select Country'}
                     options={[
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
