@@ -211,7 +211,7 @@ export default function RegistrationForm(): JSX.Element {
                     onChange={onChange}
                     value={value}
                     className={style['select-country']}
-                    defaultValue={'Select Country'}
+                    defaultValue="Select Country"
                     options={[
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
@@ -278,7 +278,7 @@ export default function RegistrationForm(): JSX.Element {
                     onChange={onChange}
                     value={value}
                     className={style['select-country']}
-                    defaultValue={'Select Country'}
+                    defaultValue="Select Country"
                     options={[
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
@@ -346,7 +346,7 @@ export default function RegistrationForm(): JSX.Element {
                     onChange={onChange}
                     value={value}
                     className={style['select-country']}
-                    defaultValue={'Select Country'}
+                    defaultValue="Select Country"
                     options={[
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
