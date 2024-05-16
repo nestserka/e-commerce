@@ -45,6 +45,7 @@ export default function RegistrationForm(): JSX.Element {
   const { errors } = formState;
   const [isAutoCompleteChecked, setAutoCompleteChecked] = useState(false);
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
+  const [isBillingCompleteChecked, setBillingCompleteChecked] = useState(false);
 
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
@@ -70,9 +71,18 @@ export default function RegistrationForm(): JSX.Element {
   });
 
   const handleAutoComplete = useAutoComplete(mainAddress, isAutoCompleteChecked, setValue, setAutoCompleteChecked);
-  const handleShippingAutoComplete = useShippingComplete(shippingAddress, isShippingCompleteChecked, setValue, setShippingCompleteChecked);
-  const handleBillingAutoComplete = useBillingComplete(billingAddress, isAutoCompleteChecked, setValue, setAutoCompleteChecked);
-
+  const handleShippingAutoComplete = useShippingComplete(
+    shippingAddress,
+    isShippingCompleteChecked,
+    setValue,
+    setShippingCompleteChecked,
+  );
+  const handleBillingAutoComplete = useBillingComplete(
+    billingAddress,
+    isBillingCompleteChecked,
+    setValue,
+    setBillingCompleteChecked,
+  );
 
   const onSubmit = (data: RegistrationFormValues): void => {
     console.log(data);
@@ -217,7 +227,7 @@ export default function RegistrationForm(): JSX.Element {
         id="default"
         name="default"
         label="Set as default address for shipping & billing "
-        isCheckBoxDisabled={isShippingCompleteChecked}
+        isCheckBoxDisabled={isShippingCompleteChecked || isBillingCompleteChecked}
         onChange={handleAutoComplete}
       />
       <FormSubTitle subTitle="Shipping Address" />
@@ -229,7 +239,7 @@ export default function RegistrationForm(): JSX.Element {
               ...inputStreetProps,
             }}
             label="Street "
-            isDisabled={isAutoCompleteChecked}
+            isDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
           />
           {errors.shippingAddress?.street && <ErrorMessage message={errors.shippingAddress.street.message} />}
         </section>
@@ -240,7 +250,7 @@ export default function RegistrationForm(): JSX.Element {
               ...inputCityProps,
             }}
             label="City "
-            isDisabled={isAutoCompleteChecked}
+            isDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
           />
           {errors.shippingAddress?.city && <ErrorMessage message={errors.shippingAddress.city.message} />}
         </section>
@@ -251,7 +261,7 @@ export default function RegistrationForm(): JSX.Element {
               ...inputPostalCodeProps,
             }}
             label="Postal Code "
-            isDisabled={isAutoCompleteChecked}
+            isDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
           />
           {errors.shippingAddress?.postalCode && <ErrorMessage message={errors.shippingAddress.postalCode.message} />}
         </section>
@@ -271,7 +281,7 @@ export default function RegistrationForm(): JSX.Element {
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
                     ]}
-                    disabled={isAutoCompleteChecked}
+                    disabled={isAutoCompleteChecked || isBillingCompleteChecked}
                   />
                 )}
               />
@@ -285,7 +295,7 @@ export default function RegistrationForm(): JSX.Element {
         id="shipping"
         name="shipping"
         label="Set as billing address "
-        isCheckBoxDisabled={isAutoCompleteChecked}
+        isCheckBoxDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
         onChange={handleShippingAutoComplete}
       />
       <FormSubTitle subTitle="Billing Address" />

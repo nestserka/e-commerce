@@ -50,8 +50,6 @@ export const useAutoComplete = (
   return handleAutoComplete;
 };
 
-
-
 export const useShippingComplete = (
   shippingAddress: Address | undefined,
   isAutoCompleteChecked: boolean,
@@ -74,7 +72,7 @@ export const useShippingComplete = (
       setValue('billingAddress.street', shippingAddress.street, { shouldValidate: false });
       setValue('billingAddress.city', shippingAddress.city, { shouldValidate: false });
       setValue('billingAddress.postalCode', shippingAddress.postalCode, { shouldValidate: false });
-      setValue('billingAddress.country',shippingAddress.country, { shouldValidate: false });
+      setValue('billingAddress.country', shippingAddress.country, { shouldValidate: false });
     }
   }, [shippingAddress, isAutoCompleteChecked, setValue]);
 
