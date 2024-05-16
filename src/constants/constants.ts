@@ -149,16 +149,20 @@ export const DATE_VALIDATION_SCHEMA = z.coerce
     message: `User must be at least ${MIN_AGE} years old.`,
   });
 
-const addressValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
-  z
-    .string()
-    .min(1, `${fieldName} must contain at least one character.`)
-    .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
-      message: `${fieldName} must contain only Latin characters, numbers, and spaces.`,
-    });
+const STREET_VALIDATION_SCHEMA = z
+  .string()
+  .min(1, `Street must contain at least one character.`)
+  .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
+    message: `Street must contain only Latin characters, numbers, and spaces.`,
+  });
 
-const STREET_VALIDATION_SCHEMA = addressValidation('Street');
-const CITY_VALIDATION_SCHEMA = addressValidation('City');
+const CITY_VALIDATION_SCHEMA = z
+  .string()
+  .min(1, `City must contain at least one character.`)
+  .refine((value) => /^[a-zA-Z]*$/.test(value), {
+    message: `City must contain only Latin characters and no spaces.`,
+  });
+
 const validCountries = ['US', 'CA'];
 
 const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.includes(value), {
@@ -171,7 +175,7 @@ const CANADA_POSTCODE_VALIDATION_SCHEMA = z
     message: 'Postal code must follow the format for CANADA (e.g., A1B 2C3)',
   });
 
-export const US_POSTCODE_VALIDATION_SCHEMA = z.string().refine((value) => /^\d{5}(-\d{4})?$/.test(value), {
+export const US_POSTCODE_VALIDATION_SCHEMA = z.string().refine((value) => /^\d{5}$/.test(value), {
   message: 'Postal code must follow the format for the USA (e.g., 12345)',
 });
 
@@ -192,7 +196,7 @@ export const ADDRESS_VALIDATION_SCHEMA = z
     } else if (values.country === 'US' && !US_POSTCODE_VALIDATION_SCHEMA.safeParse(values.postalCode).success) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: 'Postal code must follow the format for the USA (e.g., 12345 or 12345-6789)',
+        message: 'Postal code must follow the format for the USA (e.g., 12345)',
         path: ['postalCode'],
       });
     }
