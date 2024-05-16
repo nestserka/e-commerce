@@ -21,7 +21,7 @@ import {
 } from '../../../constants/constants';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
-import CalendarLabel from '../../../components/ui/calendarLabel/label';
+import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete, useAutoComplete } from '../../../utils/checkbox-autocomplete';
 
 const schema = z.object({
@@ -145,7 +145,7 @@ export default function RegistrationForm(): JSX.Element {
           {errors.lastName && <ErrorMessage message={errors.lastName.message} />}
         </section>
         <section className={style['input-section']}>
-          <CalendarLabel
+          <ControllerLabel
             control={
               <Controller
                 control={control}
@@ -201,7 +201,7 @@ export default function RegistrationForm(): JSX.Element {
           {errors.mainAddress?.postalCode && <ErrorMessage message={errors.mainAddress.postalCode.message} />}
         </section>
         <section className={style['input-section']}>
-          <CalendarLabel
+          <ControllerLabel
             control={
               <Controller
                 control={control}
@@ -268,7 +268,7 @@ export default function RegistrationForm(): JSX.Element {
           {errors.shippingAddress?.postalCode && <ErrorMessage message={errors.shippingAddress.postalCode.message} />}
         </section>
         <section className={style['input-section']}>
-          <CalendarLabel
+          <ControllerLabel
             control={
               <Controller
                 control={control}
@@ -336,7 +336,7 @@ export default function RegistrationForm(): JSX.Element {
           {errors.billingAddress?.postalCode && <ErrorMessage message={errors.billingAddress.postalCode.message} />}
         </section>
         <section className={style['input-section']}>
-          <CalendarLabel
+          <ControllerLabel
             control={
               <Controller
                 control={control}

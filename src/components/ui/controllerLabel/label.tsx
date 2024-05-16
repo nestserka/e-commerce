@@ -2,12 +2,12 @@ import styles from '../input/_input.module.scss';
 
 import type { ReactNode } from 'react';
 
-interface CalendarLabelProps {
+interface ControllerLabelProps {
   control: ReactNode;
   label: string;
 }
 
-export default function CalendarLabel({ control, label }: CalendarLabelProps): JSX.Element {
+export default function ControllerLabel({ control, label }: ControllerLabelProps): JSX.Element {
   return (
     <section className={styles['input-wrapper']}>
       <label htmlFor="dateOfBirth" className={styles.label}>
