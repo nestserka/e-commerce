@@ -204,7 +204,7 @@ export default function RegistrationForm(): JSX.Element {
         id="default"
         name="default"
         label="Set as default address for shipping & billing "
-        isCheckBoxDisabled = {isShippingCompleteChecked}
+        isCheckBoxDisabled={isShippingCompleteChecked}
         onChange={handleAutoComplete}
       />
       <FormSubTitle subTitle="Shipping Address" />
@@ -268,7 +268,13 @@ export default function RegistrationForm(): JSX.Element {
           {errors.shippingAddress?.country && <ErrorMessage message={errors.shippingAddress.country.message} />}
         </section>
       </div>
-      <InputCheckBox id="shipping" name="shipping" label="Set as billing address " isCheckBoxDisabled = {isAutoCompleteChecked} onChange={handleAutoComplete} />
+      <InputCheckBox
+        id="shipping"
+        name="shipping"
+        label="Set as billing address "
+        isCheckBoxDisabled={isAutoCompleteChecked}
+        onChange={handleAutoComplete}
+      />
       <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
@@ -330,7 +336,13 @@ export default function RegistrationForm(): JSX.Element {
           {errors.billingAddress?.country && <ErrorMessage message={errors.billingAddress.country.message} />}
         </section>
       </div>
-      <InputCheckBox id="billing" name="billing" label="Set as shipping address " isCheckBoxDisabled = {isAutoCompleteChecked} onChange={handleAutoComplete} />
+      <InputCheckBox
+        id="billing"
+        name="billing"
+        label="Set as shipping address "
+        isCheckBoxDisabled={isAutoCompleteChecked}
+        onChange={handleAutoComplete}
+      />
       <button type="submit">Create Your Account</button>
       <section>
         <p>Already have an account?</p>
