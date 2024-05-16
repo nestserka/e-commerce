@@ -1,8 +1,9 @@
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DatePicker, Select } from 'antd';
 import dayjs from 'dayjs';
+import { useState } from 'react';
 
 import icon from '../../../assets/images/icons/icon-calendar.svg';
 import style from './_registrationForm.module.scss';
@@ -11,43 +12,17 @@ import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
 import { getInputProps } from '../../../utils/utils';
 import {
-  CANADA_POSTCODE_VALIDATION_SCHEMA,
-  CITY_VALIDATION_SCHEMA,
-  COUNTRY_VALIDATION_SCHEMA,
+  ADDRESS_VALIDATION_SCHEMA,
   DATE_VALIDATION_SCHEMA,
   EMAIL_VALIDATION_SCHEMA,
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
   PASSWORD_VALIDATION_SCHEMA,
-  STREET_VALIDATION_SCHEMA,
-  US_POSTCODE_VALIDATION_SCHEMA,
 } from '../../../constants/constants';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import CalendarLabel from '../../../components/ui/calendarLabel/label';
-
-const ADDRESS_VALIDATION_SCHEMA = z
-  .object({
-    street: STREET_VALIDATION_SCHEMA,
-    city: CITY_VALIDATION_SCHEMA,
-    postalCode: z.string().min(1, { message: 'Postal code required' }), // Ensure postal code is not empty
-    country: COUNTRY_VALIDATION_SCHEMA,
-  })
-  .superRefine((values, ctx) => {
-    if (values.country === 'CA' && !CANADA_POSTCODE_VALIDATION_SCHEMA.safeParse(values.postalCode).success) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Postal code must follow the format for Canada (e.g., A1B 2C3)',
-        path: ['postalCode'],
-      });
-    } else if (values.country === 'US' && !US_POSTCODE_VALIDATION_SCHEMA.safeParse(values.postalCode).success) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Postal code must follow the format for the USA (e.g., 12345 or 12345-6789)',
-        path: ['postalCode'],
-      });
-    }
-  });
+import {useAutoComplete } from '../../../utils/checkbox-autocomplete';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -60,13 +35,14 @@ const schema = z.object({
   billingAddress: ADDRESS_VALIDATION_SCHEMA,
 });
 
-type RegistrationFormValues = z.infer<typeof schema>;
+export type RegistrationFormValues = z.infer<typeof schema>;
 
 export default function RegistrationForm(): JSX.Element {
-  const { control, register, handleSubmit, formState, reset } = useForm<RegistrationFormValues>({
+  const { control, register, handleSubmit, formState, reset, setValue} = useForm<RegistrationFormValues>({
     resolver: zodResolver(schema),
   });
   const { errors } = formState;
+  const [isAutoCompleteChecked, setIsAutoCompleteChecked] = useState(false);
 
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
@@ -76,9 +52,18 @@ export default function RegistrationForm(): JSX.Element {
   const inputCityProps = getInputProps('city', 'city', 'City', 'off');
   const inputPostalCodeProps = getInputProps('postal-code', 'postal-code', 'M5V 1J1', 'off');
 
+  const mainAddress = useWatch({
+    control,
+    name: 'mainAddress'
+  });
+
+  const handleAutoComplete = useAutoComplete(mainAddress, isAutoCompleteChecked, setValue, setIsAutoCompleteChecked);
+
+
   const onSubmit = (data: RegistrationFormValues): void => {
     console.log(data);
     reset();
+    setIsAutoCompleteChecked(false);
   };
 
   return (
@@ -218,7 +203,7 @@ export default function RegistrationForm(): JSX.Element {
         id="default"
         name="default"
         label="Set as default address for shipping & billing "
-        // onChange={handleAutoComplete}
+        onChange={handleAutoComplete}
       />
       <FormSubTitle subTitle="Shipping Address" />
       <div className={style['form-group']}>
@@ -281,7 +266,7 @@ export default function RegistrationForm(): JSX.Element {
         id="default"
         name="default"
         label="Set as billing address "
-        // onChange={handleAutoComplete}
+        onChange={handleAutoComplete}
       />
       <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
@@ -344,7 +329,7 @@ export default function RegistrationForm(): JSX.Element {
         id="default"
         name="default"
         label="Set as shipping address "
-        // onChange={handleAutoComplete}
+        onChange={handleAutoComplete}
       />
       <button type="submit">Create Your Account</button>
       <section>
