@@ -25,6 +25,8 @@
     "@testing-library/react": "^15.0.6",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
+    "antd": "^5.17.0",
+    "dayjs": "^1.11.11",
     "isomorphic-fetch": "^3.0.0",
     "node-fetch": "^3.3.2",
     "react": "^18.2.0",

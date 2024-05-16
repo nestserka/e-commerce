@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import dayjs from 'dayjs';
 
 import type { NavLinkProps } from '../domain/header/navigation/types';
 
@@ -109,3 +110,94 @@ export const EMAIL_VALIDATION_SCHEMA = z
       message: 'Email address must contain a domain name (e.g., example.com).',
     },
   );
+
+const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
+  z
+    .string()
+    .min(1, `${fieldName} must contain at least one character.`)
+    .refine((value) => /^[a-zA-Z]+$/.test(value), {
+      message: `${fieldName} must contain only letters (no special characters or numbers).`,
+    });
+
+export const FIRST_NAME_VALIDATION_SCHEMA = nameValidation('First name');
+
+export const LAST_NAME_VALIDATION_SCHEMA = nameValidation('Last name');
+
+const MIN_AGE = 13;
+
+const calculateAge = (date: Date): number => {
+  const now = dayjs();
+  const birthDate = dayjs(date);
+  const age = now.diff(birthDate, 'year');
+
+  return age;
+};
+
+export const DATE_VALIDATION_SCHEMA = z.coerce
+  .date()
+  .refine(
+    (date) => {
+      const today = new Date();
+
+      return date <= today;
+    },
+    {
+      message: 'Birthdate cannot be in the future.',
+    },
+  )
+  .refine((date) => calculateAge(date) >= MIN_AGE, {
+    message: `User must be at least ${MIN_AGE} years old.`,
+  });
+
+const STREET_VALIDATION_SCHEMA = z
+  .string()
+  .min(1, `Street must contain at least one character.`)
+  .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
+    message: `Street must contain only Latin characters, numbers, and spaces.`,
+  });
+
+const CITY_VALIDATION_SCHEMA = z
+  .string()
+  .min(1, `City must contain at least one character.`)
+  .refine((value) => /^[a-zA-Z]*$/.test(value), {
+    message: `City must contain only Latin characters and no spaces.`,
+  });
+
+const validCountries = ['US', 'CA'];
+
+const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.includes(value), {
+  message: 'Country must be a valid country from the predefined list.',
+});
+
+const CANADA_POSTCODE_VALIDATION_SCHEMA = z
+  .string()
+  .refine((value) => /^[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/.test(value), {
+    message: 'Postal code must follow the format for CANADA (e.g., A1B 2C3)',
+  });
+
+export const US_POSTCODE_VALIDATION_SCHEMA = z.string().refine((value) => /^\d{5}$/.test(value), {
+  message: 'Postal code must follow the format for the USA (e.g., 12345)',
+});
+
+export const ADDRESS_VALIDATION_SCHEMA = z
+  .object({
+    street: STREET_VALIDATION_SCHEMA,
+    city: CITY_VALIDATION_SCHEMA,
+    postalCode: z.string().min(1, { message: 'Postal code required' }),
+    country: COUNTRY_VALIDATION_SCHEMA,
+  })
+  .superRefine((values, ctx) => {
+    if (values.country === 'CA' && !CANADA_POSTCODE_VALIDATION_SCHEMA.safeParse(values.postalCode).success) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Postal code must follow the format for Canada (e.g., A1B 2C3)',
+        path: ['postalCode'],
+      });
+    } else if (values.country === 'US' && !US_POSTCODE_VALIDATION_SCHEMA.safeParse(values.postalCode).success) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Postal code must follow the format for the USA (e.g., 12345)',
+        path: ['postalCode'],
+      });
+    }
+  });

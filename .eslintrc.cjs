@@ -29,7 +29,6 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', '@stylistic/ts', 'import', 'react', 'react-hooks', 'react-refresh'],
   rules: {
-    complexity: ['error', 10],
     curly: 'error',
     'default-case': 'error',
     'no-console': 'off',

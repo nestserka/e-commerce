@@ -1,0 +1,18 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.checkbox-wrapper {
+  @include flex-row-center;
+
+  gap: 1em;
+
+  input[type='checkbox'] {
+    width: 1.05em;
+    height: 1.05em;
+    accent-color: $background-color-secondary;
+  }
+}
+
+.label {
+  font: inherit;
+}

@@ -1,5 +1,7 @@
-@use '../../assets/styles/mixins' as *;
+@import '../../assets/styles/mixins';
 
-.registration {
-  @include page-layout-container;
+.registration-content-wrapper {
+  @include flex-justify-center;
+
+  padding: 2em 0;
 }

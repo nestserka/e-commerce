@@ -5,9 +5,10 @@ import styles from './_input.module.scss';
 interface InputProps {
   inputProps: InputHTMLAttributes<HTMLInputElement>;
   label: string;
+  isDisabled?: boolean;
 }
 
-export default function Input({ inputProps, label }: InputProps): JSX.Element {
+export default function Input({ inputProps, label, isDisabled }: InputProps): JSX.Element {
   const id = useId();
   const inputId = inputProps.id ?? id;
 
@@ -17,8 +18,12 @@ export default function Input({ inputProps, label }: InputProps): JSX.Element {
         {label} <span className={styles.required}>*</span>
       </label>
       <section className={styles['input-icon-wrapper']}>
-        <input {...inputProps} className={styles.input} />
+        <input {...inputProps} className={styles.input} disabled={isDisabled} />
       </section>
     </section>
   );
 }
+
+Input.defaultProps = {
+  isDisabled: false,
+};

@@ -4,6 +4,7 @@
 .input-wrapper {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: 0.5em;
 }
 
@@ -18,7 +19,14 @@
 
 input[type='text'],
 input[type='email'],
-input[type='password'] {
+input[type='password'],
+input[type='firstName'],
+input[type='lastName'],
+input[type='calendar'],
+input[type='street'],
+input[type='city'],
+input[type='postal-code'],
+input[type='country'] {
   padding: 1.5em;
 
   font: 0.875em;
