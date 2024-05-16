@@ -1,7 +1,9 @@
-@import '../../assets/styles/mixins';
+@use '../../assets/styles/mixins' as *;
 
 .footer {
   @include flex-center-space-between;
+
+  padding: 1em 0;
 }
 
 .rs-logo {

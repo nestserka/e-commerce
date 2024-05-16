@@ -1,15 +1,15 @@
 import { z } from 'zod';
 import dayjs from 'dayjs';
 
-import type { NavLinkProps } from '../components/navigation/types';
+import type { NavLinkProps } from '../domain/header/navigation/types';
 
 export const ROUTES = {
   START: '/',
-  MAIN: '/home',
+  HOME: '/home',
   PRODUCT_BESTSELLER: 'main/:productId',
-  LOGIN: '/signin',
-  REGISTRATION: '/signup',
-  ABOUT_US: '/about',
+  SING_IN: '/sign_in',
+  SING_UP: '/sign_up',
+  ABOUT: '/about',
   CATALOG: '/catalog',
   CATEGORY: '/catalog/:category',
   PRODUCT: '/catalog/:category/:productId',
@@ -19,13 +19,13 @@ export const ROUTES = {
   NOT_FOUND: '*',
 } as const;
 
-export const NAVLINKS: NavLinkProps[] = [
-  { title: 'Home', route: ROUTES.MAIN },
-  { title: 'Sign In', route: ROUTES.LOGIN },
-  { title: 'Sign Up', route: ROUTES.REGISTRATION },
+export const NAV_LINKS: NavLinkProps[] = [
+  { title: 'Home', route: ROUTES.HOME },
   { title: 'Catalog', route: ROUTES.CATALOG },
-  { title: 'About', route: ROUTES.ABOUT_US },
-];
+  { title: 'About', route: ROUTES.ABOUT },
+  { title: 'Sign In', route: ROUTES.SING_IN },
+  { title: 'Sign Up', route: ROUTES.SING_UP },
+] as const;
 
 export const PASSWORD_VALIDATION_SCHEMA = z
   .string()
@@ -99,7 +99,7 @@ export const EMAIL_VALIDATION_SCHEMA = z
 
         const domainParts = parts[1].split('.');
 
-        if (domainParts.length !== 2) {
+        if (domainParts.length !== 2 || domainParts[1].length < 2) {
           return false;
         }
       }

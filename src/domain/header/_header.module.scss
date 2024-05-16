@@ -1,7 +1,23 @@
-@import '../../assets/styles/mixins';
+@use '../../assets/styles/mixins' as *;
+
+@import '../../assets/styles/variables';
 
 .header {
   @include flex-center-space-between;
+
+  top: 1em;
+  width: 100%;
+  min-height: 70px;
+}
+
+.logo-wrapper,
+.burger-wrapper {
+  min-width: 110px;
+}
+
+.burger-wrapper {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .ns-logo {
@@ -9,10 +25,26 @@
   height: 30px;
 }
 
-.icon-placeholder {
+.burger-button {
+  cursor: pointer;
+
   position: relative;
+
+  display: block;
+
   width: 60px;
   height: 60px;
+
+  background-color: transparent;
+  border: none;
+
+  &.hidden {
+    display: none;
+
+    @media (width <= 1024px) {
+      display: block;
+    }
+  }
 
   & .dot {
     content: '';

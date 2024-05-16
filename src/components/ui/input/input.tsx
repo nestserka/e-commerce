@@ -17,7 +17,9 @@ export default function Input({ inputProps, label, isDisabled }: InputProps): JS
       <label htmlFor={inputId} className={styles.label}>
         {label} <span className={styles.required}>*</span>
       </label>
-      <input {...inputProps} className={styles.input} disabled={isDisabled} />
+      <section className={styles['input-icon-wrapper']}>
+        <input {...inputProps} className={styles.input} disabled={isDisabled} />
+      </section>
     </section>
   );
 }
