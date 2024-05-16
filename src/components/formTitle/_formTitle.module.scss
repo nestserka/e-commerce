@@ -1,3 +1,6 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
 .form-title-wrapper {
   display: flex;
   gap: 1.5em;
@@ -20,6 +23,7 @@
   font:
     2.25em DisplayMedium,
     sans-serif;
+  color: $font-color-primary;
 
   @media (width <= 640px) {
     font-size: 1.5em;

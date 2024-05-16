@@ -1,5 +1,134 @@
 @use '../../assets/styles/mixins' as *;
 
+@import '../../assets/styles/variables';
+
 .home {
   @include page-layout-container;
+
+  justify-content: center;
+  width: 100%;
+}
+
+.circle {
+  align-self: center;
+
+  width: 14em;
+  height: 14em;
+
+  background: #292b3b;
+  background-size: contain;
+  border-radius: 50%;
+
+  transition: 0.6s;
+}
+
+.links-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+
+  width: 100%;
+
+  transition: 0.6s;
+
+  :where(.left, .center, .right) {
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    justify-content: space-between;
+
+    padding: 2em;
+
+    font:
+      1em DisplayRegular,
+      sans-serif;
+    color: $font-color-primary;
+
+    background: #292b3b;
+    border-radius: 8px;
+
+    transition: 0.4s;
+
+    & .title {
+      font:
+        1.9em DisplayMedium,
+        sans-serif;
+      text-align: center;
+      transition:
+        font-size 0.6s,
+        width 0.6s;
+    }
+
+    .button-secondary {
+      user-select: none;
+
+      scale: 0;
+
+      display: block;
+
+      padding: 1em;
+
+      color: $background-color-primary-one;
+
+      opacity: 0;
+      background-color: rgb(219 235 234 / 50%);
+      border-radius: 12px;
+
+      transition: 0.4s;
+
+      &:hover {
+        background-color: rgb(219 235 234);
+      }
+    }
+  }
+
+  :where(.left, .center, .right):hover {
+    color: $background-color-primary-one;
+    background: #95bbbe;
+
+    & .circle {
+      width: 14em;
+      height: 14em;
+    }
+
+    & .title {
+      width: 100%;
+      font-size: 3em;
+    }
+
+    & .button-secondary {
+      user-select: all;
+      scale: 1;
+      opacity: 1;
+    }
+  }
+
+  &:has(.left:hover) {
+    grid-template-columns: 1.5fr 0.75fr 0.75fr;
+    background-size: contain;
+  }
+
+  &:has(.center:hover) {
+    grid-template-columns: 0.75fr 1.5fr 0.75fr;
+    background-size: contain;
+  }
+
+  &:has(.right:hover) {
+    grid-template-columns: 0.75fr 0.75fr 1.5fr;
+    background-size: contain;
+  }
+
+  & .left .circle {
+    background-image: url('../../assets/images/bg/circle-1.png');
+  }
+
+  & .center .circle {
+    background-image: url('../../assets/images/bg/circle-2.png');
+  }
+
+  & .right .circle {
+    background-image: url('../../assets/images/bg/circle-3.png');
+  }
 }

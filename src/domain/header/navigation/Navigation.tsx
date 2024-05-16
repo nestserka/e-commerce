@@ -5,9 +5,15 @@ import { ROUTES } from '../../../constants/constants';
 
 import type { NavLinkProps, NavigationProps } from './types';
 
-export default function Navigation({ links, isStatus, handleClickLogOut }: NavigationProps): JSX.Element {
+export default function Navigation({
+  links,
+  isStatus,
+  isNavOpen,
+  handleClickLogOut,
+  onClick,
+}: NavigationProps): JSX.Element {
   return (
-    <nav className={style.nav} data-testid="navigation">
+    <nav className={`${style.nav} ${isNavOpen ? style['nav-open'] : ''}`} data-testid="navigation">
       <ul className={style['nav-list']}>
         {links
           .filter(
@@ -17,7 +23,7 @@ export default function Navigation({ links, isStatus, handleClickLogOut }: Navig
           .map(
             (link: NavLinkProps): JSX.Element => (
               <li key={link.title}>
-                <NavLink to={link.route} className={style['nav-item']}>
+                <NavLink to={link.route} onClick={onClick} className={style['nav-item']}>
                   {link.title}
                 </NavLink>
               </li>
