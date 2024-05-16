@@ -1,5 +1,6 @@
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
+import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DatePicker, Select } from 'antd';
 import dayjs from 'dayjs';
@@ -18,6 +19,7 @@ import {
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
   PASSWORD_VALIDATION_SCHEMA,
+  ROUTES,
 } from '../../../constants/constants';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
@@ -371,6 +373,7 @@ export default function RegistrationForm(): JSX.Element {
       <button type="submit">Create Your Account</button>
       <section>
         <p>Already have an account?</p>
+        <Link to={ROUTES.LOGIN}>Sign Up</Link>
         <p>Login</p>
       </section>
     </form>
