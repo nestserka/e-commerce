@@ -14,7 +14,7 @@ interface Address {
 type OnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 export const useAutoComplete = (
-  mainAddress: Address,
+  mainAddress: Address | undefined,
   isAutoCompleteChecked: boolean,
   setValue: UseFormSetValue<RegistrationFormValues>,
   setIsAutoCompleteChecked: Dispatch<SetStateAction<boolean>>,
@@ -37,13 +37,13 @@ export const useAutoComplete = (
   useEffect(() => {
     if (isAutoCompleteChecked && mainAddress) {
       setValue('billingAddress.street', mainAddress.street, { shouldValidate: false });
-      setValue('billingAddress.city', mainAddress.city, { shouldValidate: false  });
-      setValue('billingAddress.postalCode', mainAddress.postalCode, { shouldValidate: false  });
-      setValue('billingAddress.country', mainAddress.country, { shouldValidate: false  });
-      setValue('shippingAddress.street', mainAddress.street, { shouldValidate: false  });
-      setValue('shippingAddress.city', mainAddress.city, { shouldValidate: false  });
-      setValue('shippingAddress.postalCode', mainAddress.postalCode, { shouldValidate: false  });
-      setValue('shippingAddress.country', mainAddress.country, { shouldValidate: false  });
+      setValue('billingAddress.city', mainAddress.city, { shouldValidate: false });
+      setValue('billingAddress.postalCode', mainAddress.postalCode, { shouldValidate: false });
+      setValue('billingAddress.country', mainAddress.country, { shouldValidate: false });
+      setValue('shippingAddress.street', mainAddress.street, { shouldValidate: false });
+      setValue('shippingAddress.city', mainAddress.city, { shouldValidate: false });
+      setValue('shippingAddress.postalCode', mainAddress.postalCode, { shouldValidate: false });
+      setValue('shippingAddress.country', mainAddress.country, { shouldValidate: false });
     }
   }, [mainAddress, isAutoCompleteChecked, setValue]);
 
