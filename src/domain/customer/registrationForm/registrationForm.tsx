@@ -373,8 +373,7 @@ export default function RegistrationForm(): JSX.Element {
       <button type="submit">Create Your Account</button>
       <section>
         <p>Already have an account?</p>
-        <Link to={ROUTES.LOGIN}>Sign Up</Link>
-        <p>Login</p>
+        <Link to={ROUTES.SING_IN}>Sign In</Link>
       </section>
     </form>
   );
