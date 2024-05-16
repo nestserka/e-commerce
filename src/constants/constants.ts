@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import dayjs from 'dayjs';
 
 import type { NavLinkProps } from '../components/navigation/types';
 
@@ -109,3 +110,69 @@ export const EMAIL_VALIDATION_SCHEMA = z
       message: 'Email address must contain a domain name (e.g., example.com).',
     },
   );
+
+const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
+  z
+    .string()
+    .min(1, `${fieldName} must contain at least one character.`)
+    .refine((value) => /^[a-zA-Z]+$/.test(value), {
+      message: `${fieldName} must contain only letters (no special characters or numbers).`,
+    });
+
+export const FIRST_NAME_VALIDATION_SCHEMA = nameValidation('First name');
+
+export const LAST_NAME_VALIDATION_SCHEMA = nameValidation('Last name');
+
+const MIN_AGE = 13;
+
+const calculateAge = (date: Date): number => {
+  const now = dayjs();
+  const birthDate = dayjs(date);
+  const age = now.diff(birthDate, 'year');
+
+  return age;
+};
+
+export const DATE_VALIDATION_SCHEMA = z.coerce
+  .date()
+  .refine(
+    (date) => {
+      const today = new Date();
+
+      return date <= today;
+    },
+    {
+      message: 'Birthdate cannot be in the future.',
+    },
+  )
+  .refine((date) => calculateAge(date) >= MIN_AGE, {
+    message: `User must be at least ${MIN_AGE} years old.`,
+  });
+
+const addressValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
+  z
+    .string()
+    .min(1, `${fieldName} must contain at least one character.`)
+    .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
+      message: `${fieldName} must contain only Latin characters, numbers, and spaces.`,
+    });
+
+export const STREET_VALIDATION_SCHEMA = addressValidation('Street');
+
+export const CITY_VALIDATION_SCHEMA = addressValidation('City');
+
+const validCountries = ['US', 'CA'];
+
+export const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.includes(value), {
+  message: 'Country must be a valid country from the predefined list.',
+});
+
+export const CANADA_POSTCODE_VALIDATION_SCHEMA = z
+  .string()
+  .refine((value) => /^[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/.test(value), {
+    message: 'Postal code must follow the format for CANADA (e.g., A1B 2C3)',
+  });
+
+export const US_POSTCODE_VALIDATION_SCHEMA = z.string().refine((value) => /^\d{5}(-\d{4})?$/.test(value), {
+  message: 'Postal code must follow the format for the USA (e.g., 12345)',
+});
