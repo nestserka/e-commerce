@@ -1,14 +1,14 @@
 import styles from './_checkbox.module.scss';
 
-interface InputProps {
+interface InputCheckboxProps {
   name: string;
   id: string;
   label: string;
-  isCheckBoxDisabled: boolean;
+  isCheckBoxDisabled?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function InputCheckBox({ name, id, label, isCheckBoxDisabled, onChange }: InputProps): JSX.Element {
+export default function InputCheckBox({ name, id, label, isCheckBoxDisabled, onChange }: InputCheckboxProps): JSX.Element {
   return (
     <section className={styles['checkbox-wrapper']}>
       <input
@@ -25,3 +25,7 @@ export default function InputCheckBox({ name, id, label, isCheckBoxDisabled, onC
     </section>
   );
 }
+
+InputCheckBox.defaultProps = {
+  isCheckBoxDisabled: false,
+};
