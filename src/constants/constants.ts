@@ -201,3 +201,5 @@ export const ADDRESS_VALIDATION_SCHEMA = z
       });
     }
   });
+
+export const LS_PREFIX = 'nasaStoreTeam';

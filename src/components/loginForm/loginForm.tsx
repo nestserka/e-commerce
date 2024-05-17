@@ -12,7 +12,7 @@ import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
 import { getInputProps } from '../../utils/utils';
 import { loginUser } from '../../api/ClientBuilder';
-import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
+import { EMAIL_VALIDATION_SCHEMA, LS_PREFIX, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -63,6 +63,8 @@ export default function LoginForm(): JSX.Element {
         customerId: response.body.customer.id,
       };
       setCustomerCredentials(customerCredentials);
+      localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
+      localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
       reset();
     }
   };
