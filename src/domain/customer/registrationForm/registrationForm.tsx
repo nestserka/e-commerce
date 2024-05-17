@@ -11,7 +11,15 @@ import style from './_registrationForm.module.scss';
 import Input from '../../../components/ui/input/input';
 import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
-import { getInputProps } from '../../../utils/utils';
+import {
+  inputCityProps,
+  inputEmailProps,
+  inputFirstNameProps,
+  inputLastNameProps,
+  inputPasswordProps,
+  inputPostalCodeProps,
+  inputStreetProps,
+} from '../../../utils/inputProps';
 import {
   ADDRESS_VALIDATION_SCHEMA,
   DATE_VALIDATION_SCHEMA,
@@ -24,7 +32,8 @@ import {
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ControllerLabel from '../../../components/ui/controllerLabel/label';
-import { useAddressAutoComplete, useAutoComplete } from '../../../utils/checkbox-autocomplete';
+import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
+import { useRegistrationData } from '../../../core/state/registrationState';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -32,9 +41,10 @@ const schema = z.object({
   firstName: FIRST_NAME_VALIDATION_SCHEMA,
   lastName: LAST_NAME_VALIDATION_SCHEMA,
   dateOfBirth: DATE_VALIDATION_SCHEMA,
-  mainAddress: ADDRESS_VALIDATION_SCHEMA,
   shippingAddress: ADDRESS_VALIDATION_SCHEMA,
   billingAddress: ADDRESS_VALIDATION_SCHEMA,
+  defaultShippingAddress: z.boolean().optional(),
+  defaultBillingAddress: z.boolean().optional(),
 });
 
 export type RegistrationFormValues = z.infer<typeof schema>;
@@ -45,34 +55,15 @@ export default function RegistrationForm(): JSX.Element {
     mode: 'onChange',
   });
   const { errors } = formState;
-  const [isAutoCompleteChecked, setAutoCompleteChecked] = useState(false);
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
-  const [isBillingCompleteChecked, setBillingCompleteChecked] = useState(false);
-
-  const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
-  const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
-  const inputFirstNameProps = getInputProps('firstName', 'firstName', 'Your First Name', 'off');
-  const inputLastNameProps = getInputProps('lastName', 'lastName', 'Your Last Name', 'off');
-  const inputStreetProps = getInputProps('street', 'street', 'Street', 'off');
-  const inputCityProps = getInputProps('city', 'city', 'City', 'off');
-  const inputPostalCodeProps = getInputProps('postal-code', 'postal-code', 'M5V 1J1', 'off');
-
-  const mainAddress = useWatch({
-    control,
-    name: 'mainAddress',
-  });
+  const { setEmail, setPassword, setFirstName, setLastName, setDateOfBirth, addAddress, setStatus } =
+    useRegistrationData();
 
   const shippingAddress = useWatch({
     control,
     name: 'shippingAddress',
   });
 
-  const billingAddress = useWatch({
-    control,
-    name: 'billingAddress',
-  });
-
-  const handleAutoComplete = useAutoComplete(mainAddress, isAutoCompleteChecked, setValue, setAutoCompleteChecked);
   const handleShippingAutoComplete = useAddressAutoComplete(
     shippingAddress,
     isShippingCompleteChecked,
@@ -80,18 +71,18 @@ export default function RegistrationForm(): JSX.Element {
     setShippingCompleteChecked,
     'billing',
   );
-  const handleBillingAutoComplete = useAddressAutoComplete(
-    billingAddress,
-    isBillingCompleteChecked,
-    setValue,
-    setBillingCompleteChecked,
-    'shipping',
-  );
 
   const onSubmit = (data: RegistrationFormValues): void => {
+    setEmail(data.email.toLowerCase());
+    setPassword(data.password);
+    setFirstName(data.firstName);
+    setLastName(data.lastName);
+    setDateOfBirth(data.dateOfBirth);
+    addAddress([data.shippingAddress, data.billingAddress]);
+    setStatus('inProgress');
+    setShippingCompleteChecked(false);
     console.log(data);
     reset();
-    setAutoCompleteChecked(false);
   };
 
   return (
@@ -170,82 +161,17 @@ export default function RegistrationForm(): JSX.Element {
           {errors.dateOfBirth && <ErrorMessage message={errors.dateOfBirth.message} />}
         </section>
       </div>
-      <FormSubTitle subTitle="Main Address" />
-      <div className={style['form-group']}>
-        <section className={style['input-section']}>
-          <Input
-            inputProps={{
-              ...register('mainAddress.street'),
-              ...inputStreetProps,
-            }}
-            label="Street "
-          />
-          {errors.mainAddress?.street && <ErrorMessage message={errors.mainAddress.street.message} />}
-        </section>
-        <section className={style['input-section']}>
-          <Input
-            inputProps={{
-              ...register('mainAddress.city'),
-              ...inputCityProps,
-            }}
-            label="City "
-          />
-          {errors.mainAddress?.city && <ErrorMessage message={errors.mainAddress.city.message} />}
-        </section>
-        <section className={style['input-section']}>
-          <Input
-            inputProps={{
-              ...register('mainAddress.postalCode'),
-              ...inputPostalCodeProps,
-            }}
-            label="Postal Code "
-          />
-          {errors.mainAddress?.postalCode && <ErrorMessage message={errors.mainAddress.postalCode.message} />}
-        </section>
-        <section className={style['input-section']}>
-          <ControllerLabel
-            control={
-              <Controller
-                control={control}
-                name="mainAddress.country"
-                render={({ field: { onChange, value } }) => (
-                  <Select
-                    onChange={onChange}
-                    value={value}
-                    className={style['select-country']}
-                    defaultValue="Select Country"
-                    options={[
-                      { value: 'US', label: 'United States' },
-                      { value: 'CA', label: 'Canada' },
-                    ]}
-                  />
-                )}
-              />
-            }
-            label="Country  "
-          />
-          {errors.mainAddress?.country && <ErrorMessage message={errors.mainAddress.country.message} />}
-        </section>
-      </div>
-      <InputCheckBox
-        id="default"
-        name="default"
-        label="Set as default address for shipping & billing "
-        isCheckBoxDisabled={isShippingCompleteChecked || isBillingCompleteChecked}
-        onChange={handleAutoComplete}
-      />
       <FormSubTitle subTitle="Shipping Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
           <Input
             inputProps={{
-              ...register('shippingAddress.street'),
+              ...register('shippingAddress.streetName'),
               ...inputStreetProps,
             }}
             label="Street "
-            isDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
           />
-          {errors.shippingAddress?.street && <ErrorMessage message={errors.shippingAddress.street.message} />}
+          {errors.shippingAddress?.streetName && <ErrorMessage message={errors.shippingAddress.streetName.message} />}
         </section>
         <section className={style['input-section']}>
           <Input
@@ -254,7 +180,6 @@ export default function RegistrationForm(): JSX.Element {
               ...inputCityProps,
             }}
             label="City "
-            isDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
           />
           {errors.shippingAddress?.city && <ErrorMessage message={errors.shippingAddress.city.message} />}
         </section>
@@ -265,7 +190,6 @@ export default function RegistrationForm(): JSX.Element {
               ...inputPostalCodeProps,
             }}
             label="Postal Code "
-            isDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
           />
           {errors.shippingAddress?.postalCode && <ErrorMessage message={errors.shippingAddress.postalCode.message} />}
         </section>
@@ -285,7 +209,6 @@ export default function RegistrationForm(): JSX.Element {
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
                     ]}
-                    disabled={isAutoCompleteChecked || isBillingCompleteChecked}
                   />
                 )}
               />
@@ -295,25 +218,31 @@ export default function RegistrationForm(): JSX.Element {
           {errors.shippingAddress?.country && <ErrorMessage message={errors.shippingAddress.country.message} />}
         </section>
       </div>
+      <Controller
+        control={control}
+        name="defaultShippingAddress"
+        render={({ field: { onChange } }) => (
+          <InputCheckBox onChange={onChange} id="shipping" name="shipping" label="Set Shipping Address as default" />
+        )}
+      />
+      <FormSubTitle subTitle="Billing Address" />
       <InputCheckBox
         id="shipping"
         name="shipping"
-        label="Set as billing address "
-        isCheckBoxDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
+        label="Bill to Shipping Address "
         onChange={handleShippingAutoComplete}
       />
-      <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
           <Input
             inputProps={{
-              ...register('billingAddress.street'),
+              ...register('billingAddress.streetName'),
               ...inputStreetProps,
             }}
             label="Street "
-            isDisabled={isAutoCompleteChecked || isShippingCompleteChecked}
+            isDisabled={isShippingCompleteChecked}
           />
-          {errors.billingAddress?.street && <ErrorMessage message={errors.billingAddress.street.message} />}
+          {errors.billingAddress?.streetName && <ErrorMessage message={errors.billingAddress.streetName.message} />}
         </section>
         <section className={style['input-section']}>
           <Input
@@ -322,7 +251,7 @@ export default function RegistrationForm(): JSX.Element {
               ...inputCityProps,
             }}
             label="City "
-            isDisabled={isAutoCompleteChecked || isShippingCompleteChecked}
+            isDisabled={isShippingCompleteChecked}
           />
           {errors.billingAddress?.city && <ErrorMessage message={errors.billingAddress.city.message} />}
         </section>
@@ -333,7 +262,7 @@ export default function RegistrationForm(): JSX.Element {
               ...inputPostalCodeProps,
             }}
             label="Postal Code "
-            isDisabled={isAutoCompleteChecked || isShippingCompleteChecked}
+            isDisabled={isShippingCompleteChecked}
           />
           {errors.billingAddress?.postalCode && <ErrorMessage message={errors.billingAddress.postalCode.message} />}
         </section>
@@ -353,7 +282,7 @@ export default function RegistrationForm(): JSX.Element {
                       { value: 'US', label: 'United States' },
                       { value: 'CA', label: 'Canada' },
                     ]}
-                    disabled={isAutoCompleteChecked || isShippingCompleteChecked}
+                    disabled={isShippingCompleteChecked}
                   />
                 )}
               />
@@ -363,12 +292,12 @@ export default function RegistrationForm(): JSX.Element {
           {errors.billingAddress?.country && <ErrorMessage message={errors.billingAddress.country.message} />}
         </section>
       </div>
-      <InputCheckBox
-        id="billing"
-        name="billing"
-        label="Set as shipping address "
-        isCheckBoxDisabled={isAutoCompleteChecked || isShippingCompleteChecked}
-        onChange={handleBillingAutoComplete}
+      <Controller
+        control={control}
+        name="defaultBillingAddress"
+        render={({ field: { onChange } }) => (
+          <InputCheckBox onChange={onChange} id="billing" name="billing" label="Set Billing Address as default" />
+        )}
       />
       <button type="submit">Create Your Account</button>
       <section>

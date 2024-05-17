@@ -114,6 +114,7 @@ export const EMAIL_VALIDATION_SCHEMA = z
 const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
   z
     .string()
+    .trim()
     .min(1, `${fieldName} must contain at least one character.`)
     .refine((value) => /^[a-zA-Z]+$/.test(value), {
       message: `${fieldName} must contain only letters (no special characters or numbers).`,
@@ -147,10 +148,12 @@ export const DATE_VALIDATION_SCHEMA = z.coerce
   )
   .refine((date) => calculateAge(date) >= MIN_AGE, {
     message: `User must be at least ${MIN_AGE} years old.`,
-  });
+  })
+  .transform((date) => dayjs(date).format('YYYY-MM-DD'));
 
 const STREET_VALIDATION_SCHEMA = z
   .string()
+  .trim()
   .min(1, `Street must contain at least one character.`)
   .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
     message: `Street must contain only Latin characters, numbers, and spaces.`,
@@ -158,6 +161,7 @@ const STREET_VALIDATION_SCHEMA = z
 
 const CITY_VALIDATION_SCHEMA = z
   .string()
+  .trim()
   .min(1, `City must contain at least one character.`)
   .refine((value) => /^[a-zA-Z]*$/.test(value), {
     message: `City must contain only Latin characters and no spaces.`,
@@ -171,6 +175,7 @@ const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.in
 
 const CANADA_POSTCODE_VALIDATION_SCHEMA = z
   .string()
+  .trim()
   .refine((value) => /^[A-Za-z]\d[A-Za-z]\s?\d[A-Za-z]\d$/.test(value), {
     message: 'Postal code must follow the format for CANADA (e.g., A1B 2C3)',
   });
@@ -181,7 +186,7 @@ export const US_POSTCODE_VALIDATION_SCHEMA = z.string().refine((value) => /^\d{5
 
 export const ADDRESS_VALIDATION_SCHEMA = z
   .object({
-    street: STREET_VALIDATION_SCHEMA,
+    streetName: STREET_VALIDATION_SCHEMA,
     city: CITY_VALIDATION_SCHEMA,
     postalCode: z.string().min(1, { message: 'Postal code required' }),
     country: COUNTRY_VALIDATION_SCHEMA,
