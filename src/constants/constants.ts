@@ -148,7 +148,8 @@ export const DATE_VALIDATION_SCHEMA = z.coerce
   )
   .refine((date) => calculateAge(date) >= MIN_AGE, {
     message: `User must be at least ${MIN_AGE} years old.`,
-  });
+  })
+  .transform((date) => dayjs(date).format('YYYY-MM-DD'));
 
 const STREET_VALIDATION_SCHEMA = z
   .string()
