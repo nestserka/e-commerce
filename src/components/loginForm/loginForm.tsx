@@ -11,6 +11,7 @@ import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
 import { getInputProps } from '../../utils/utils';
 import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
+import { loginUser } from '../../api/ClientBuilder';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -30,9 +31,14 @@ export default function LoginForm(): JSX.Element {
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
 
-  const onSubmit = (data: LoginFormValues): void => {
+  const onSubmit = async (data: LoginFormValues): Promise<void> => {
     setValueEmail(data.email.toLowerCase());
     setValuePassword(data.password);
+
+    const response = await loginUser(data.email.toLowerCase(), data.password);
+
+    console.log(response);
+
     reset();
   };
 
