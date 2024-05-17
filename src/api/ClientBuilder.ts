@@ -1,6 +1,8 @@
 import { type AuthMiddlewareOptions, ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
+import { getCustomerByEmail } from './AdminBuilder';
+
 import type { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 
 if (typeof import.meta.env.VITE_APP_CLIENT_ID !== 'string') {
@@ -89,6 +91,7 @@ export async function createCustomerMe(): Promise<ClientResponse<CustomerSignInR
 
 export const loginUser = async (
   email: string,
+
   password: string,
 ): Promise<ClientResponse<CustomerSignInResult> | undefined> => {
   try {
@@ -111,6 +114,8 @@ export const loginUser = async (
     return customer;
   } catch (error) {
     console.log(error);
+    const resonse = await getCustomerByEmail(email);
+    console.log(resonse);
 
     return undefined;
   }

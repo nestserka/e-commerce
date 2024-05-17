@@ -10,8 +10,8 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
 import { getInputProps } from '../../utils/utils';
-import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
 import { loginUser } from '../../api/ClientBuilder';
+import { EMAIL_VALIDATION_SCHEMA, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
