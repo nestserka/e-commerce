@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './_loginform.module.scss';
 import Input from '../ui/input/input';
@@ -28,6 +28,7 @@ export default function LoginForm(): JSX.Element {
     mode: 'onChange',
   });
   const { errors } = formState;
+  const navigate = useNavigate();
 
   const [formEmailError, setFormEmailError] = useState<string>('');
   const [formPasswordError, setFormPasswordError] = useState<string>('');
@@ -100,9 +101,16 @@ export default function LoginForm(): JSX.Element {
       </button>
       <section>
         <p>Don’t have an account?</p>
-        <Link to={ROUTES.SING_UP} className={styles.link}>
+        <button
+          className="button-link"
+          aria-label="button"
+          type="button"
+          onClick={() => {
+            navigate(ROUTES.SING_UP);
+          }}
+        >
           Sign Up
-        </Link>
+        </button>
       </section>
     </form>
   );
