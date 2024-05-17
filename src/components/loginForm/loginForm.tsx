@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 
 import styles from './_loginform.module.scss';
 import Input from '../ui/input/input';
@@ -27,26 +28,44 @@ export default function LoginForm(): JSX.Element {
     mode: 'onChange',
   });
   const { errors } = formState;
+  const [formEmailError, setFormEmailError] = useState<string>('');
+  const [formPasswordError, setFormPasswordError] = useState<string>('');
+  const [formError, setFormError] = useState<string>('');
 
   const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
 
   const onSubmit = async (data: LoginFormValues): Promise<void> => {
+    setFormEmailError('');
+    setFormPasswordError('');
+    setFormError('');
+
     setValueEmail(data.email.toLowerCase());
     setValuePassword(data.password);
 
     const response = await loginUser(data.email.toLowerCase(), data.password);
 
     if ('error' in response) {
-      console.log(response);
-    }
+      if ('isEmail' in response.error) {
+        setFormEmailError(response.error.message);
+      }
 
-    reset();
+      if ('isPassword' in response.error) {
+        setFormPasswordError(response.error.message);
+      }
+
+      if ('isForm' in response.error) {
+        setFormError(response.error.message);
+      }
+    } else {
+      reset();
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles['login-form']} data-testid="login-form" noValidate>
       <FormTitle title="Login" />
+      {formError && <ErrorMessage message={formError} />}
       <section className={styles['input-section']}>
         <Input
           inputProps={{
@@ -56,6 +75,7 @@ export default function LoginForm(): JSX.Element {
           label="E-mail "
         />
         {errors.email && <ErrorMessage message={errors.email.message} />}
+        {formEmailError && <ErrorMessage message={formEmailError} />}
       </section>
       <section className={styles['input-section']}>
         <InputPassword
@@ -66,6 +86,7 @@ export default function LoginForm(): JSX.Element {
           label="Password "
         />
         {errors.password && <ErrorMessage message={errors.password.message} />}
+        {formPasswordError && <ErrorMessage message={formPasswordError} />}
       </section>
       <button type="submit" className="button-primary">
         Login Your Account
