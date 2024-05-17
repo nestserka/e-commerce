@@ -87,15 +87,18 @@ export async function createCustomerMe(): Promise<ClientResponse<CustomerSignInR
   return customer;
 }
 
-export const loginUser = async (): Promise<ClientResponse<CustomerSignInResult> | undefined> => {
+export const loginUser = async (
+  email: string,
+  password: string,
+): Promise<ClientResponse<CustomerSignInResult> | undefined> => {
   try {
     const customer = await apiRoot
       .me()
       .login()
       .post({
         body: {
-          email: 'johndoe@example.com',
-          password: 'secret123',
+          email,
+          password,
         },
         headers: {
           'Content-Type': 'application/json',
