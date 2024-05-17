@@ -165,7 +165,7 @@ export default function RegistrationForm(): JSX.Element {
       <Controller
         control={control}
         name="defaultShippingAddress"
-        render={({ field: { onChange} }) => (
+        render={({ field: { onChange } }) => (
           <InputCheckBox onChange={onChange} id="shipping" name="shipping" label="Set Shipping Address as default" />
         )}
       />
@@ -295,7 +295,7 @@ export default function RegistrationForm(): JSX.Element {
       <Controller
         control={control}
         name="defaultBillingAddress"
-        render={({ field: { onChange} }) => (
+        render={({ field: { onChange } }) => (
           <InputCheckBox onChange={onChange} id="billing" name="billing" label="Set Billing Address as default" />
         )}
       />

@@ -7,7 +7,6 @@ import type { RegistrationFormValues } from '../domain/customer/registrationForm
 
 type OnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
-
 export const useAddressAutoComplete = (
   address: Address | undefined,
   isAutoCompleteChecked: boolean,
