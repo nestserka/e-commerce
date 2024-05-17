@@ -115,7 +115,6 @@ export const loginUser = async (
   } catch (error) {
     let errorResponse;
     const isUserByEmailResponse = await getCustomerByEmail(email);
-    // console.log('isUserByEmailResponse', isUserByEmailResponse);
 
     if (isUserByEmailResponse) {
       errorResponse = handleLoginError(isUserByEmailResponse.body.count);

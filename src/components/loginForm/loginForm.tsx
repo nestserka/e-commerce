@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './_loginform.module.scss';
 import Input from '../ui/input/input';
@@ -22,12 +22,13 @@ const schema = z.object({
 type LoginFormValues = z.infer<typeof schema>;
 
 export default function LoginForm(): JSX.Element {
-  const { setValueEmail, setValuePassword } = useLoginData();
+  const { setCustomerCredentials } = useLoginData();
   const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
   const { errors } = formState;
+
   const [formEmailError, setFormEmailError] = useState<string>('');
   const [formPasswordError, setFormPasswordError] = useState<string>('');
   const [formError, setFormError] = useState<string>('');
@@ -39,9 +40,6 @@ export default function LoginForm(): JSX.Element {
     setFormEmailError('');
     setFormPasswordError('');
     setFormError('');
-
-    setValueEmail(data.email.toLowerCase());
-    setValuePassword(data.password);
 
     const response = await loginUser(data.email.toLowerCase(), data.password);
 
@@ -58,6 +56,13 @@ export default function LoginForm(): JSX.Element {
         setFormError(response.error.message);
       }
     } else {
+      const customerCredentials = {
+        valueEmail: response.body.customer.email,
+        valuePassword: data.password,
+        isAuth: true,
+        customerId: response.body.customer.id,
+      };
+      setCustomerCredentials(customerCredentials);
       reset();
     }
   };
