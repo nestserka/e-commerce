@@ -7,22 +7,29 @@ export const getInputProps = (type: string, id: string, placeholder: string, aut
   autoComplete,
 });
 
-interface ErrorLoginForm {
-  isEmail?: boolean;
-  isPassword?: boolean;
-  message: string;
+export interface ErrorLoginForm {
+  error: {
+    isForm?: boolean;
+    isEmail?: boolean;
+    isPassword?: boolean;
+    message: string;
+  };
 }
 
-export function handleError(count: number | undefined): ErrorLoginForm {
+export function handleLoginError(count: number | undefined): ErrorLoginForm {
   if (count !== undefined && count === 0) {
     return {
-      isEmail: true,
-      message: 'Invalid email: There is no such user registered',
+      error: {
+        isEmail: true,
+        message: 'Invalid email: There is no such user registered',
+      },
     };
   }
 
   return {
-    isPassword: true,
-    message: 'Invalid password: You provided wrong password',
+    error: {
+      isPassword: true,
+      message: 'Invalid password: You provided wrong password',
+    },
   };
 }

@@ -2,7 +2,9 @@ import { type AuthMiddlewareOptions, ClientBuilder, type HttpMiddlewareOptions }
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
 import { getCustomerByEmail } from './AdminBuilder';
+import { handleLoginError } from '../utils/utils';
 
+import type { ErrorLoginForm } from '../utils/utils';
 import type { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 
 if (typeof import.meta.env.VITE_APP_CLIENT_ID !== 'string') {
@@ -93,7 +95,7 @@ export const loginUser = async (
   email: string,
 
   password: string,
-): Promise<ClientResponse<CustomerSignInResult> | undefined> => {
+): Promise<ClientResponse<CustomerSignInResult> | ErrorLoginForm> => {
   try {
     const customer = await apiRoot
       .me()
@@ -109,17 +111,23 @@ export const loginUser = async (
       })
       .execute();
 
-    console.log(customer.body.customer);
-
     return customer;
   } catch (error) {
-    console.log(error);
+    let errorResponse;
     const isUserByEmailResponse = await getCustomerByEmail(email);
+    console.log('isUserByEmailResponse', isUserByEmailResponse);
 
     if (isUserByEmailResponse) {
-      handleError(isUserByEmailResponse.body.count, error);
+      errorResponse = handleLoginError(isUserByEmailResponse.body.count);
+
+      return errorResponse;
     }
 
-    return undefined;
+    return {
+      error: {
+        isForm: true,
+        message: 'Form error',
+      },
+    };
   }
 };

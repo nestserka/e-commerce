@@ -37,7 +37,9 @@ export default function LoginForm(): JSX.Element {
 
     const response = await loginUser(data.email.toLowerCase(), data.password);
 
-    console.log(response);
+    if ('error' in response) {
+      console.log(response);
+    }
 
     reset();
   };
