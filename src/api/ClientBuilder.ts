@@ -114,8 +114,11 @@ export const loginUser = async (
     return customer;
   } catch (error) {
     console.log(error);
-    const resonse = await getCustomerByEmail(email);
-    console.log(resonse);
+    const isUserByEmailResponse = await getCustomerByEmail(email);
+
+    if (isUserByEmailResponse) {
+      handleError(isUserByEmailResponse.body.count, error);
+    }
 
     return undefined;
   }

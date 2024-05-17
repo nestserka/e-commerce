@@ -143,8 +143,6 @@ export const getCustomerByEmail = async (
 
     return response;
   } catch (error) {
-    console.error('Error fetching customer by email:', error);
-
     return undefined;
   }
 };
