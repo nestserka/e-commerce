@@ -162,13 +162,6 @@ export default function RegistrationForm(): JSX.Element {
         </section>
       </div>
       <FormSubTitle subTitle="Shipping Address" />
-      <Controller
-        control={control}
-        name="defaultShippingAddress"
-        render={({ field: { onChange } }) => (
-          <InputCheckBox onChange={onChange} id="shipping" name="shipping" label="Set Shipping Address as default" />
-        )}
-      />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
           <Input
@@ -225,6 +218,13 @@ export default function RegistrationForm(): JSX.Element {
           {errors.shippingAddress?.country && <ErrorMessage message={errors.shippingAddress.country.message} />}
         </section>
       </div>
+      <Controller
+        control={control}
+        name="defaultShippingAddress"
+        render={({ field: { onChange } }) => (
+          <InputCheckBox onChange={onChange} id="shipping" name="shipping" label="Set Shipping Address as default" />
+        )}
+      />
       <FormSubTitle subTitle="Billing Address" />
       <InputCheckBox
         id="shipping"
