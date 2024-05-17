@@ -11,7 +11,15 @@ import style from './_registrationForm.module.scss';
 import Input from '../../../components/ui/input/input';
 import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
-import { inputCityProps, inputEmailProps, inputFirstNameProps, inputLastNameProps, inputPasswordProps, inputPostalCodeProps, inputStreetProps } from '../../../utils/inputProps';
+import {
+  inputCityProps,
+  inputEmailProps,
+  inputFirstNameProps,
+  inputLastNameProps,
+  inputPasswordProps,
+  inputPostalCodeProps,
+  inputStreetProps,
+} from '../../../utils/inputProps';
 import {
   ADDRESS_VALIDATION_SCHEMA,
   DATE_VALIDATION_SCHEMA,
@@ -49,7 +57,8 @@ export default function RegistrationForm(): JSX.Element {
   const [isAutoCompleteChecked, setAutoCompleteChecked] = useState(false);
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [isBillingCompleteChecked, setBillingCompleteChecked] = useState(false);
-  const {  setEmail, setPassword,  setFirstName, setLastName, setDateOfBirth, addAddress, setStatus } = useRegistrationData();
+  const { setEmail, setPassword, setFirstName, setLastName, setDateOfBirth, addAddress, setStatus } =
+    useRegistrationData();
 
   const mainAddress = useWatch({
     control,

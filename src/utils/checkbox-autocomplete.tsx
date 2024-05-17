@@ -5,7 +5,6 @@ import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import type { UseFormSetValue } from 'react-hook-form';
 import type { RegistrationFormValues } from '../domain/customer/registrationForm/registrationForm';
 
-
 type OnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
 export const useAutoComplete = (
