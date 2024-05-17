@@ -56,8 +56,17 @@ export default function RegistrationForm(): JSX.Element {
   });
   const { errors } = formState;
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
-  const { setEmail, setPassword, setFirstName, setLastName, setDateOfBirth, addAddress, setStatus } =
-    useRegistrationData();
+  const {
+    setEmail,
+    setPassword,
+    setFirstName,
+    setLastName,
+    setDateOfBirth,
+    addAddress,
+    setDefaultBillingAddress,
+    setDefaultShippingAddress,
+    createCustomer,
+  } = useRegistrationData();
 
   const shippingAddress = useWatch({
     control,
@@ -79,9 +88,19 @@ export default function RegistrationForm(): JSX.Element {
     setLastName(data.lastName);
     setDateOfBirth(data.dateOfBirth);
     addAddress([data.shippingAddress, data.billingAddress]);
-    setStatus('inProgress');
     setShippingCompleteChecked(false);
-    console.log(data);
+
+    if (data.defaultShippingAddress) {
+      setDefaultShippingAddress(0);
+    }
+
+    if (data.defaultBillingAddress) {
+      setDefaultBillingAddress(1);
+    }
+
+    createCustomer(useRegistrationData.getState()).catch((error) => {
+      console.error('Error creating customer:', error);
+    });
     reset();
   };
 
@@ -225,13 +244,13 @@ export default function RegistrationForm(): JSX.Element {
           <InputCheckBox onChange={onChange} id="shipping" name="shipping" label="Set Shipping Address as default" />
         )}
       />
-      <FormSubTitle subTitle="Billing Address" />
-      <InputCheckBox
-        id="shipping"
-        name="shipping"
+       <InputCheckBox
+        id="main"
+        name="main"
         label="Bill to Shipping Address "
         onChange={handleShippingAutoComplete}
       />
+      <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
           <Input
