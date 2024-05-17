@@ -11,7 +11,7 @@ import style from './_registrationForm.module.scss';
 import Input from '../../../components/ui/input/input';
 import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
-import { getInputProps } from '../../../utils/utils';
+import { inputCityProps, inputEmailProps, inputFirstNameProps, inputLastNameProps, inputPasswordProps, inputPostalCodeProps, inputStreetProps } from '../../../utils/inputProps';
 import {
   ADDRESS_VALIDATION_SCHEMA,
   DATE_VALIDATION_SCHEMA,
@@ -25,6 +25,7 @@ import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete, useAutoComplete } from '../../../utils/checkbox-autocomplete';
+import { useRegistrationData } from '../../../core/state/registrationState';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -48,14 +49,7 @@ export default function RegistrationForm(): JSX.Element {
   const [isAutoCompleteChecked, setAutoCompleteChecked] = useState(false);
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [isBillingCompleteChecked, setBillingCompleteChecked] = useState(false);
-
-  const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
-  const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
-  const inputFirstNameProps = getInputProps('firstName', 'firstName', 'Your First Name', 'off');
-  const inputLastNameProps = getInputProps('lastName', 'lastName', 'Your Last Name', 'off');
-  const inputStreetProps = getInputProps('street', 'street', 'Street', 'off');
-  const inputCityProps = getInputProps('city', 'city', 'City', 'off');
-  const inputPostalCodeProps = getInputProps('postal-code', 'postal-code', 'M5V 1J1', 'off');
+  const {  setEmail, setPassword,  setFirstName, setLastName, setDateOfBirth, addAddress, setStatus } = useRegistrationData();
 
   const mainAddress = useWatch({
     control,
@@ -89,9 +83,18 @@ export default function RegistrationForm(): JSX.Element {
   );
 
   const onSubmit = (data: RegistrationFormValues): void => {
+    setEmail(data.email.toLowerCase());
+    setPassword(data.password);
+    setFirstName(data.firstName);
+    setLastName(data.lastName);
+    setDateOfBirth(data.dateOfBirth);
+    addAddress([data.mainAddress, data.shippingAddress, data.billingAddress]);
+    setStatus('inProgress');
+    setAutoCompleteChecked(false);
+    setBillingCompleteChecked(false);
+    setShippingCompleteChecked(false);
     console.log(data);
     reset();
-    setAutoCompleteChecked(false);
   };
 
   return (
@@ -175,12 +178,12 @@ export default function RegistrationForm(): JSX.Element {
         <section className={style['input-section']}>
           <Input
             inputProps={{
-              ...register('mainAddress.street'),
+              ...register('mainAddress.streetName'),
               ...inputStreetProps,
             }}
             label="Street "
           />
-          {errors.mainAddress?.street && <ErrorMessage message={errors.mainAddress.street.message} />}
+          {errors.mainAddress?.streetName && <ErrorMessage message={errors.mainAddress.streetName.message} />}
         </section>
         <section className={style['input-section']}>
           <Input
@@ -239,13 +242,13 @@ export default function RegistrationForm(): JSX.Element {
         <section className={style['input-section']}>
           <Input
             inputProps={{
-              ...register('shippingAddress.street'),
+              ...register('shippingAddress.streetName'),
               ...inputStreetProps,
             }}
             label="Street "
             isDisabled={isAutoCompleteChecked || isBillingCompleteChecked}
           />
-          {errors.shippingAddress?.street && <ErrorMessage message={errors.shippingAddress.street.message} />}
+          {errors.shippingAddress?.streetName && <ErrorMessage message={errors.shippingAddress.streetName.message} />}
         </section>
         <section className={style['input-section']}>
           <Input
@@ -307,13 +310,13 @@ export default function RegistrationForm(): JSX.Element {
         <section className={style['input-section']}>
           <Input
             inputProps={{
-              ...register('billingAddress.street'),
+              ...register('billingAddress.streetName'),
               ...inputStreetProps,
             }}
             label="Street "
             isDisabled={isAutoCompleteChecked || isShippingCompleteChecked}
           />
-          {errors.billingAddress?.street && <ErrorMessage message={errors.billingAddress.street.message} />}
+          {errors.billingAddress?.streetName && <ErrorMessage message={errors.billingAddress.streetName.message} />}
         </section>
         <section className={style['input-section']}>
           <Input

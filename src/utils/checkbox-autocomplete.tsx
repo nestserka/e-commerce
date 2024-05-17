@@ -1,15 +1,10 @@
 import { useEffect } from 'react';
 
+import type { Address } from './types';
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import type { UseFormSetValue } from 'react-hook-form';
 import type { RegistrationFormValues } from '../domain/customer/registrationForm/registrationForm';
 
-interface Address {
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
-}
 
 type OnChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => void;
 
@@ -23,11 +18,11 @@ export const useAutoComplete = (
     setIsAutoCompleteChecked(e.target.checked);
 
     if (!e.target.checked) {
-      setValue('billingAddress.street', '');
+      setValue('billingAddress.streetName', '');
       setValue('billingAddress.city', '');
       setValue('billingAddress.postalCode', '');
       setValue('billingAddress.country', 'Select Country');
-      setValue('shippingAddress.street', '');
+      setValue('shippingAddress.streetName', '');
       setValue('shippingAddress.city', '');
       setValue('shippingAddress.postalCode', '');
       setValue('shippingAddress.country', 'Select Country');
@@ -36,11 +31,11 @@ export const useAutoComplete = (
 
   useEffect(() => {
     if (isAutoCompleteChecked && mainAddress) {
-      setValue('billingAddress.street', mainAddress.street, { shouldValidate: false });
+      setValue('billingAddress.streetName', mainAddress.streetName, { shouldValidate: false });
       setValue('billingAddress.city', mainAddress.city, { shouldValidate: false });
       setValue('billingAddress.postalCode', mainAddress.postalCode, { shouldValidate: false });
       setValue('billingAddress.country', mainAddress.country, { shouldValidate: false });
-      setValue('shippingAddress.street', mainAddress.street, { shouldValidate: false });
+      setValue('shippingAddress.streetName', mainAddress.streetName, { shouldValidate: false });
       setValue('shippingAddress.city', mainAddress.city, { shouldValidate: false });
       setValue('shippingAddress.postalCode', mainAddress.postalCode, { shouldValidate: false });
       setValue('shippingAddress.country', mainAddress.country, { shouldValidate: false });
@@ -61,7 +56,7 @@ export const useAddressAutoComplete = (
     setIsAutoCompleteChecked(e.target.checked);
 
     if (!e.target.checked) {
-      setValue(`${addressType}Address.street`, '');
+      setValue(`${addressType}Address.streetName`, '');
       setValue(`${addressType}Address.city`, '');
       setValue(`${addressType}Address.postalCode`, '');
       setValue(`${addressType}Address.country`, 'Select Country');
@@ -71,7 +66,7 @@ export const useAddressAutoComplete = (
   useEffect(() => {
     if (isAutoCompleteChecked && address) {
       const updatedAddress = {
-        street: address.street,
+        streetName: address.streetName,
         city: address.city,
         postalCode: address.postalCode,
         country: address.country,

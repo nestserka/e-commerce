@@ -186,7 +186,7 @@ export const US_POSTCODE_VALIDATION_SCHEMA = z.string().refine((value) => /^\d{5
 
 export const ADDRESS_VALIDATION_SCHEMA = z
   .object({
-    street: STREET_VALIDATION_SCHEMA,
+    streetName: STREET_VALIDATION_SCHEMA,
     city: CITY_VALIDATION_SCHEMA,
     postalCode: z.string().min(1, { message: 'Postal code required' }),
     country: COUNTRY_VALIDATION_SCHEMA,
