@@ -133,3 +133,16 @@ a:visited {
   outline: none !important;
   box-shadow: none !important;
 }
+
+.ant-picker-focused {
+  background-color: $background-color-secondary !important;
+  outline: none !important;
+
+  .ant-picker-input input {
+    color: $font-color-primary-60 !important;
+  }
+}
+
+.ant-picker-input > input::placeholder {
+  color: $font-color-primary-60 !important;
+}
