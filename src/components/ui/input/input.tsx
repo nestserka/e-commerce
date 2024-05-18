@@ -8,7 +8,7 @@ interface InputProps {
   isDisabled?: boolean;
 }
 
-export default function Input({ inputProps, label, isDisabled }: InputProps): JSX.Element {
+export default function Input({ inputProps, label, isDisabled = false }: InputProps): JSX.Element {
   const id = useId();
   const inputId = inputProps.id ?? id;
 

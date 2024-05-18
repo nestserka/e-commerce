@@ -1,6 +1,8 @@
 import { type AuthMiddlewareOptions, ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
+import type { ClientResponse, CustomerPagedQueryResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
+
 if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_ID !== 'string') {
   throw new Error('no admin client id found');
 }
@@ -48,3 +50,22 @@ export const apiRoot = createApiBuilderFromCtpClient(
 ).withProjectKey({
   projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
 });
+
+export const getCustomerByEmail = async (
+  email: string,
+): Promise<ClientResponse<CustomerPagedQueryResponse> | undefined> => {
+  try {
+    const response = await apiRoot
+      .customers()
+      .get({
+        queryArgs: {
+          where: `email="${email}"`,
+        },
+      })
+      .execute();
+
+    return response;
+  } catch (error) {
+    return undefined;
+  }
+};

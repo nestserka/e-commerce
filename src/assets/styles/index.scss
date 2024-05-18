@@ -65,7 +65,13 @@ a:link,
 a:focus,
 a:active,
 a:visited {
+  color: $font-color-link-default;
   text-decoration: none;
+  transition: color 0.5s ease;
+}
+
+a:hover {
+  color: $font-color-link-hover;
 }
 
 .button-primary {
@@ -92,4 +98,24 @@ a:visited {
 
 .button-primary-s {
   max-width: 200px;
+}
+
+.button-link {
+  cursor: pointer;
+
+  margin: 0;
+  padding: 0;
+
+  font: inherit;
+  line-height: inherit;
+  color: $font-color-link-default;
+
+  background-color: transparent;
+  border: none;
+
+  transition: color 0.5s ease;
+
+  &:hover {
+    color: $font-color-link-hover;
+  }
 }
