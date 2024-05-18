@@ -6,6 +6,11 @@ import { ROUTES } from '../../constants/constants';
 export default function HomePage(): JSX.Element {
   return (
     <section className={style.home} data-testid="home">
+      <h1>
+        <span>Hello, stranger!</span>
+        <br />
+        Feel free to explore our digital hub
+      </h1>
       <div className={style['links-wrapper']}>
         <div className={style.left}>
           <span>/01</span>
