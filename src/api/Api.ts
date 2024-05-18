@@ -1,5 +1,5 @@
 import { handleLoginError } from '../utils/utils';
-import { getCustomerByEmail } from './AdminBuilder';
+import { apiRoot as adminApiRoot } from './AdminBuilder';
 import { createAnonymousSessionFlow } from './CreateAnonymousApi';
 import { createLoginUserClient } from './CreatePasswordFlow';
 
@@ -8,6 +8,7 @@ import type {
   ByProjectKeyRequestBuilder,
   ClientResponse,
   Customer,
+  CustomerPagedQueryResponse,
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
 
@@ -67,7 +68,7 @@ class Api {
       return customer;
     } catch (error) {
       let errorResponse;
-      const isUserByEmailResponse = await getCustomerByEmail(email);
+      const isUserByEmailResponse = await Api.getCustomerByEmail(email);
 
       if (isUserByEmailResponse) {
         errorResponse = handleLoginError(isUserByEmailResponse.body.count);
@@ -89,6 +90,25 @@ class Api {
       const customer = this.apiRoot.me().get().execute();
 
       return await customer;
+    } catch (error) {
+      return undefined;
+    }
+  }
+
+  public static async getCustomerByEmail(
+    email: string,
+  ): Promise<ClientResponse<CustomerPagedQueryResponse> | undefined> {
+    try {
+      const response = await adminApiRoot
+        .customers()
+        .get({
+          queryArgs: {
+            where: `email="${email}"`,
+          },
+        })
+        .execute();
+
+      return response;
     } catch (error) {
       return undefined;
     }
