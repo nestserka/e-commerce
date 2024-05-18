@@ -77,8 +77,6 @@ export const useRegistrationData = create<RegistrationState>((set) => ({
       })
       .execute();
 
-    console.log(customer);
-
     return customer;
   },
 }));

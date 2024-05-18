@@ -1,6 +1,9 @@
+import { handleLoginError } from '../utils/utils';
+import { getCustomerByEmail } from './AdminBuilder';
 import { createAnonymousSessionFlow } from './CreateAnonymousApi';
 import { createLoginUserClient } from './CreatePasswordFlow';
 
+import type { ErrorLoginForm } from '../utils/utils';
 import type {
   ByProjectKeyRequestBuilder,
   ClientResponse,
@@ -42,15 +45,18 @@ class Api {
     return customer;
   }
 
-  public async loginUser(): Promise<ClientResponse<CustomerSignInResult> | undefined> {
+  public async loginUser(
+    email: string,
+    password: string,
+  ): Promise<ClientResponse<CustomerSignInResult> | ErrorLoginForm> {
     try {
       const customer = await this.apiRoot
         .me()
         .login()
         .post({
           body: {
-            email: 'johndoe606877909h04@example.com',
-            password: 'secret1224',
+            email,
+            password,
           },
           headers: {
             'Content-Type': 'application/json',
@@ -60,9 +66,21 @@ class Api {
 
       return customer;
     } catch (error) {
-      console.log(error);
+      let errorResponse;
+      const isUserByEmailResponse = await getCustomerByEmail(email);
 
-      return undefined;
+      if (isUserByEmailResponse) {
+        errorResponse = handleLoginError(isUserByEmailResponse.body.count);
+
+        return errorResponse;
+      }
+
+      return {
+        error: {
+          isForm: true,
+          message: 'Form error',
+        },
+      };
     }
   }
 
@@ -72,8 +90,6 @@ class Api {
 
       return await customer;
     } catch (error) {
-      console.log(error);
-
       return undefined;
     }
   }

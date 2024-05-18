@@ -56,7 +56,6 @@ export const apiRoot = createApiBuilderFromCtpClient(
   projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
 });
 
-
 export const loginUser = async (
   email: string,
 
