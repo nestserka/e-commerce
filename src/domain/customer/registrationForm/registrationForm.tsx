@@ -34,6 +34,7 @@ import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
 import { useRegistrationData } from '../../../core/state/registrationState';
+import InputPassword from '../../../components/ui/inputPassword/inputPassword';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -56,8 +57,17 @@ export default function RegistrationForm(): JSX.Element {
   });
   const { errors } = formState;
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
-  const { setEmail, setPassword, setFirstName, setLastName, setDateOfBirth, addAddress, setStatus } =
-    useRegistrationData();
+  const {
+    setEmail,
+    setPassword,
+    setFirstName,
+    setLastName,
+    setDateOfBirth,
+    addAddress,
+    setDefaultBillingAddress,
+    setDefaultShippingAddress,
+    createCustomer,
+  } = useRegistrationData();
 
   const shippingAddress = useWatch({
     control,
@@ -79,9 +89,19 @@ export default function RegistrationForm(): JSX.Element {
     setLastName(data.lastName);
     setDateOfBirth(data.dateOfBirth);
     addAddress([data.shippingAddress, data.billingAddress]);
-    setStatus('inProgress');
     setShippingCompleteChecked(false);
-    console.log(data);
+
+    if (data.defaultShippingAddress) {
+      setDefaultShippingAddress(0);
+    }
+
+    if (data.defaultBillingAddress) {
+      setDefaultBillingAddress(1);
+    }
+
+    createCustomer(useRegistrationData.getState()).catch((error) => {
+      console.error('Error creating customer:', error);
+    });
     reset();
   };
 
@@ -105,7 +125,7 @@ export default function RegistrationForm(): JSX.Element {
           {errors.email && <ErrorMessage message={errors.email.message} />}
         </section>
         <section className={style['input-section']}>
-          <Input
+          <InputPassword
             inputProps={{
               ...register('password'),
               ...inputPasswordProps,
@@ -148,6 +168,7 @@ export default function RegistrationForm(): JSX.Element {
                     onChange={onChange}
                     format="DD.MM.YYYY"
                     value={value}
+                    allowClear={false}
                     className={style['date-picker']}
                     placeholder="13.03.1990"
                     minDate={dayjs('01.01.1900', 'DD.MM.YYYY')}
@@ -203,7 +224,7 @@ export default function RegistrationForm(): JSX.Element {
                   <Select
                     onChange={onChange}
                     value={value}
-                    className={style['select-country']}
+                    popupMatchSelectWidth={false}
                     defaultValue="Select Country"
                     options={[
                       { value: 'US', label: 'United States' },
@@ -225,13 +246,8 @@ export default function RegistrationForm(): JSX.Element {
           <InputCheckBox onChange={onChange} id="shipping" name="shipping" label="Set Shipping Address as default" />
         )}
       />
+      <InputCheckBox id="main" name="main" label="Bill to Shipping Address " onChange={handleShippingAutoComplete} />
       <FormSubTitle subTitle="Billing Address" />
-      <InputCheckBox
-        id="shipping"
-        name="shipping"
-        label="Bill to Shipping Address "
-        onChange={handleShippingAutoComplete}
-      />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
           <Input
@@ -276,7 +292,7 @@ export default function RegistrationForm(): JSX.Element {
                   <Select
                     onChange={onChange}
                     value={value}
-                    className={style['select-country']}
+                    popupMatchSelectWidth={false}
                     defaultValue="Select Country"
                     options={[
                       { value: 'US', label: 'United States' },
@@ -299,7 +315,9 @@ export default function RegistrationForm(): JSX.Element {
           <InputCheckBox onChange={onChange} id="billing" name="billing" label="Set Billing Address as default" />
         )}
       />
-      <button type="submit">Create Your Account</button>
+      <button type="submit" className="button-primary button-registration">
+        Create Your Account
+      </button>
       <section>
         <p>Already have an account?</p>
         <Link to={ROUTES.SING_IN}>Sign In</Link>

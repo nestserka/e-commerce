@@ -1,24 +1,28 @@
 import { create } from 'zustand';
 
+import { apiRoot } from '../../api/AdminBuilder';
+
 import type { Address } from '../../utils/types';
+import type { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 
-type RegistrationStatus = 'idle' | 'inProgress' | 'userCreated' | 'registrationComplete' | 'error';
-
-interface RegistrationState {
+export interface RegistrationState {
   email: string;
+  password: string;
   firstName: string;
   lastName: string;
-  password: string;
   dateOfBirth: string;
   addresses: Address[];
-  status: RegistrationStatus;
+  defaultShippingAddress?: number;
+  defaultBillingAddress?: number;
   setEmail: (email: string) => void;
   setPassword: (password: string) => void;
   setFirstName: (firstName: string) => void;
   setLastName: (lastName: string) => void;
   setDateOfBirth: (dateOfBirth: string) => void;
   addAddress: (addresses: Address[]) => void;
-  setStatus: (status: RegistrationStatus) => void;
+  setDefaultShippingAddress: (defaultShippingAddress: number) => void;
+  setDefaultBillingAddress: (defaultBillingAddress: number) => void;
+  createCustomer: (data: RegistrationState) => Promise<ClientResponse<CustomerSignInResult>>;
 }
 
 export const useRegistrationData = create<RegistrationState>((set) => ({
@@ -47,7 +51,34 @@ export const useRegistrationData = create<RegistrationState>((set) => ({
   addAddress: (addresses: Address[]): void => {
     set((state) => ({ ...state, addresses: [...state.addresses, ...addresses] }));
   },
-  setStatus: (status: RegistrationStatus): void => {
-    set(() => ({ status }));
+  setDefaultShippingAddress: (defaultShippingAddress: number): void => {
+    set(() => ({ defaultShippingAddress }));
+  },
+  setDefaultBillingAddress: (defaultBillingAddress: number): void => {
+    set(() => ({ defaultBillingAddress }));
+  },
+  createCustomer: async (data: RegistrationState): Promise<ClientResponse<CustomerSignInResult>> => {
+    const { email, firstName, lastName, password, addresses, defaultShippingAddress, defaultBillingAddress } = data;
+    const customer = await apiRoot
+      .customers()
+      .post({
+        body: {
+          email,
+          firstName,
+          lastName,
+          password,
+          addresses,
+          ...(defaultShippingAddress !== undefined && { defaultShippingAddress }),
+          ...(defaultBillingAddress !== undefined && { defaultBillingAddress }),
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .execute();
+
+    console.log(customer);
+
+    return customer;
   },
 }));
