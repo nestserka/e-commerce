@@ -1,12 +1,6 @@
 import { type AuthMiddlewareOptions, ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-import { getCustomerByEmail } from './AdminBuilder';
-import { handleLoginError } from '../utils/utils';
-
-import type { ErrorLoginForm } from '../utils/utils';
-import type { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
-
 if (typeof import.meta.env.VITE_APP_CLIENT_ID !== 'string') {
   throw new Error('no admin client id found');
 }
@@ -55,43 +49,3 @@ export const apiRoot = createApiBuilderFromCtpClient(
 ).withProjectKey({
   projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
 });
-
-export const loginUser = async (
-  email: string,
-
-  password: string,
-): Promise<ClientResponse<CustomerSignInResult> | ErrorLoginForm> => {
-  try {
-    const customer = await apiRoot
-      .me()
-      .login()
-      .post({
-        body: {
-          email,
-          password,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .execute();
-
-    return customer;
-  } catch (error) {
-    let errorResponse;
-    const isUserByEmailResponse = await getCustomerByEmail(email);
-
-    if (isUserByEmailResponse) {
-      errorResponse = handleLoginError(isUserByEmailResponse.body.count);
-
-      return errorResponse;
-    }
-
-    return {
-      error: {
-        isForm: true,
-        message: 'Form error',
-      },
-    };
-  }
-};
