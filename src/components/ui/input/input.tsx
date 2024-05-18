@@ -23,7 +23,3 @@ export default function Input({ inputProps, label, isDisabled = false }: InputPr
     </section>
   );
 }
-
-Input.defaultProps = {
-  isDisabled: false,
-};
