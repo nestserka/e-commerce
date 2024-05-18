@@ -39,8 +39,21 @@
     transition: opacity 0.5s ease;
   }
 
+  .link {
+    transform: translateY(50%);
+    opacity: 0;
+    transition:
+      transform 0.5s ease,
+      opacity 0.5s ease;
+  }
+
   &:hover {
     .nav-item-icon {
+      opacity: 1;
+    }
+
+    .link {
+      transform: translateY(0);
       opacity: 1;
     }
   }
@@ -49,11 +62,18 @@
 .index-text {
   font-family: DisplayMedium, sans-serif;
   font-size: 12px;
-  opacity: 0.8;
+  opacity: 0.6;
 }
 
 .title {
   @include font-default-regular;
 
   font-size: 1.2em;
+  opacity: 0.8;
+}
+
+.link-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

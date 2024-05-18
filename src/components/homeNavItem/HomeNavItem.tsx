@@ -7,10 +7,12 @@ export default function HomeNavItem({
   index,
   icon,
   route,
+  linkLabel,
 }: {
   title: string;
   index: number;
   icon: string;
+  linkLabel: string;
   route: string;
 }): JSX.Element {
   return (
@@ -20,7 +22,12 @@ export default function HomeNavItem({
           <p className={style['index-text']}>/0{index}</p>
           <h2 className={style.title}>{title}</h2>
         </div>
-        <img src={icon} className={style['nav-item-icon']} alt="" />
+        <div className={style['link-wrapper']}>
+          <Link to={route} className={style.link}>
+            {linkLabel}
+          </Link>
+          <img src={icon} className={style['nav-item-icon']} alt="" />
+        </div>
       </section>
     </Link>
   );

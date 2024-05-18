@@ -11,21 +11,25 @@ const navItemsContent = [
     title: 'Create a new account on our cosmic e-commerce hub to start shopping today.',
     icon: `${regIcon}`,
     route: `${ROUTES.SING_UP}`,
+    linkLabel: 'Sign Up',
   },
   {
     title: 'Log in to your existing account on the e-commerce site to continue shopping.',
     icon: `${loginIcon}`,
     route: `${ROUTES.SING_IN}`,
+    linkLabel: 'Sign In',
   },
   {
     title: 'Explore project details and meet the team behind it on our website.',
     icon: `${aboutIcon}`,
     route: `${ROUTES.ABOUT}`,
+    linkLabel: 'About Us',
   },
   {
     title: 'Browse our catalog to discover our latest products and offerings.',
     icon: `${catalogIcon}`,
     route: `${ROUTES.CATALOG}`,
+    linkLabel: 'Catalog',
   },
 ];
 
@@ -39,7 +43,13 @@ export default function HomePage(): JSX.Element {
       </h1>
       <section className={style['nav-wrapper']}>
         {navItemsContent.map((content, index) => (
-          <HomeNavItem index={index} title={content.title} route={content.route} icon={content.icon} />
+          <HomeNavItem
+            index={index}
+            title={content.title}
+            route={content.route}
+            icon={content.icon}
+            linkLabel={content.linkLabel}
+          />
         ))}
       </section>
 
