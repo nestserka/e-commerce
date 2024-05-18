@@ -103,6 +103,10 @@ a:visited {
 .ant-select {
   height: 3.531em !important;
   font: inherit !important;
+
+  .ant-select-arrow {
+    color: $font-color-primary-60 !important;
+  }
 }
 
 .ant-select-selector {
