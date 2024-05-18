@@ -8,22 +8,22 @@ import catalogIcon from '../../assets/images/icons/catalog-nav-icon.svg';
 
 const navItemsContent = [
   {
-    title: 'Create a new account on our cosmic e-commerce hub to start shopping today',
+    title: 'Create a new account on our cosmic e-commerce hub to start shopping today.',
     icon: `${regIcon}`,
     route: `${ROUTES.SING_UP}`,
   },
   {
-    title: 'Log in to your existing account on the e-commerce site to continue shopping',
+    title: 'Log in to your existing account on the e-commerce site to continue shopping.',
     icon: `${loginIcon}`,
     route: `${ROUTES.SING_IN}`,
   },
   {
-    title: 'Explore project details and meet the team behind it on our website',
+    title: 'Explore project details and meet the team behind it on our website.',
     icon: `${aboutIcon}`,
     route: `${ROUTES.ABOUT}`,
   },
   {
-    title: 'Browse our catalog to discover our latest products and offerings',
+    title: 'Browse our catalog to discover our latest products and offerings.',
     icon: `${catalogIcon}`,
     route: `${ROUTES.CATALOG}`,
   },
