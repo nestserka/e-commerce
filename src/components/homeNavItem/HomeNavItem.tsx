@@ -16,7 +16,7 @@ export default function HomeNavItem({
   return (
     <Link to={route} className={style['nav-item-link']}>
       <section className={style['nav-item-wrapper']} data-testid="nav-item-component">
-        <p className={style['index-text']}>/0${index}</p>
+        <p className={style['index-text']}>/0{index}</p>
         <h2 className={style.title}>{title}</h2>
         <img src={icon} className={style['nav-item-icon']} alt="" />
       </section>

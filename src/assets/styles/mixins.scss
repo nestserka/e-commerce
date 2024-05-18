@@ -38,6 +38,13 @@
   background: linear-gradient(45deg, rgb(41 43 59 / 40%) 32%, rgb(41 43 59 / 100%) 100%);
 }
 
+@mixin title-accent {
+  background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
 // Typography
 
 @mixin font-default-regular {
