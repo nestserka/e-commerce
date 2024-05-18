@@ -1,7 +1,7 @@
 import { type AuthMiddlewareOptions, ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-import type { ClientResponse, CustomerPagedQueryResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
+import type { ClientResponse, CustomerPagedQueryResponse } from '@commercetools/platform-sdk';
 
 if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_ID !== 'string') {
   throw new Error('no admin client id found');
