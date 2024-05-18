@@ -44,6 +44,7 @@ export default function HomePage(): JSX.Element {
       <section className={style['nav-wrapper']}>
         {navItemsContent.map((content, index) => (
           <HomeNavItem
+            key={content.linkLabel}
             index={index}
             title={content.title}
             route={content.route}
