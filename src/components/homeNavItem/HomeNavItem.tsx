@@ -23,9 +23,7 @@ export default function HomeNavItem({
           <h2 className={style.title}>{title}</h2>
         </div>
         <div className={style['link-wrapper']}>
-          <Link to={route} className={style.link}>
-            {linkLabel}
-          </Link>
+          <span className={style.link}>{linkLabel}</span>
           <img src={icon} className={style['nav-item-icon']} alt="" />
         </div>
       </section>
