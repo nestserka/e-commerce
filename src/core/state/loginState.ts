@@ -1,8 +1,17 @@
 import { create } from 'zustand';
 
-const local = localStorage.getItem('isAuth');
-const localCustomerId = localStorage.getItem('customerId');
-const refreshToken = localStorage.getItem('refreshToken');
+import { LS_PREFIX } from '../../constants/constants';
+
+const localIsAuth = localStorage.getItem(`isAuth-${LS_PREFIX}`);
+const localCustomerId = localStorage.getItem(`customerId-${LS_PREFIX}`);
+const localRefreshToken = localStorage.getItem(`refreshToken-${LS_PREFIX}`);
+
+interface CustomerCredentials {
+  valueEmail: string;
+  valuePassword: string;
+  isAuth: boolean;
+  customerId: string;
+}
 
 interface LoginState {
   valueEmail: string;
@@ -17,14 +26,15 @@ interface LoginState {
   setAccessToken: (data: string) => void;
   setValueEmail: (email: string) => void;
   setValuePassword: (password: string) => void;
+  setCustomerCredentials: (customerCredentials: CustomerCredentials) => void;
 }
 
 export const useLoginData = create<LoginState>((set) => ({
   valueEmail: '',
   valuePassword: '',
-  isAuth: !!(local && local === 'true'),
+  isAuth: !!(localIsAuth && localIsAuth === 'true'),
   customerId: localCustomerId ?? '',
-  customerRefreshToken: refreshToken ?? '',
+  customerRefreshToken: localRefreshToken ?? '',
   accessToken: '',
   createCustomerId: (data: string): void => {
     set(() => ({ customerId: data }));
@@ -43,5 +53,14 @@ export const useLoginData = create<LoginState>((set) => ({
   },
   setValuePassword: (password: string): void => {
     set(() => ({ valuePassword: password }));
+  },
+  setCustomerCredentials: (customerCredentials: CustomerCredentials): void => {
+    const { customerId, isAuth, valuePassword, valueEmail } = customerCredentials;
+    set(() => ({
+      customerId,
+      isAuth,
+      valuePassword,
+      valueEmail,
+    }));
   },
 }));
