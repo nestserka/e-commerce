@@ -22,8 +22,8 @@
 
   .input-section {
     display: flex;
+    flex-basis: 50%;
     flex-direction: column;
-    flex-grow: 1;
     gap: 0.5em;
   }
 
@@ -40,8 +40,17 @@
     width: calc(100% - 6em);
   }
 
-  @media (width <= 1200px) {
+  @media (width <= 1240px) {
     padding: 4em;
+
+    .form-group {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .form-group > * {
+      flex-basis: calc(50% - 0.75em);
+    }
   }
 
   @media (width <= 900px) {
@@ -51,7 +60,11 @@
 
   @media (width <= 640px) {
     width: 100%;
-    padding: 2em;
+    padding: 1.5em;
+
+    .input-section {
+      flex-basis: 100%;
+    }
   }
 }
 
