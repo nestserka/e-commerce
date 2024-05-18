@@ -22,7 +22,17 @@
     padding: 12px;
     list-style: none;
 
-    .nav-item {
+    .nav-button {
+      @include font-default-bold;
+
+      font-size: inherit;
+      line-height: inherit;
+      background-color: transparent;
+      border: none;
+    }
+
+    .nav-item,
+    .nav-button {
       @include font-default-bold;
 
       cursor: pointer;

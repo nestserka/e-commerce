@@ -1,7 +1,7 @@
 import { type AuthMiddlewareOptions, ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-import type { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
+import type { ClientResponse, CustomerPagedQueryResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 
 // export type RefreshTokenData= {
 //   access_token: string;
@@ -127,3 +127,22 @@ export async function createCustomerMeAdmin(): Promise<ClientResponse<CustomerSi
 
   return customer;
 }
+
+export const getCustomerByEmail = async (
+  email: string,
+): Promise<ClientResponse<CustomerPagedQueryResponse> | undefined> => {
+  try {
+    const response = await apiRoot
+      .customers()
+      .get({
+        queryArgs: {
+          where: `email="${email}"`,
+        },
+      })
+      .execute();
+
+    return response;
+  } catch (error) {
+    return undefined;
+  }
+};

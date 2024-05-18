@@ -1,6 +1,10 @@
 import { type AuthMiddlewareOptions, ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
+import { getCustomerByEmail } from './AdminBuilder';
+import { handleLoginError } from '../utils/utils';
+
+import type { ErrorLoginForm } from '../utils/utils';
 import type { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 
 if (typeof import.meta.env.VITE_APP_CLIENT_ID !== 'string') {
@@ -87,15 +91,19 @@ export async function createCustomerMe(): Promise<ClientResponse<CustomerSignInR
   return customer;
 }
 
-export const loginUser = async (): Promise<ClientResponse<CustomerSignInResult> | undefined> => {
+export const loginUser = async (
+  email: string,
+
+  password: string,
+): Promise<ClientResponse<CustomerSignInResult> | ErrorLoginForm> => {
   try {
     const customer = await apiRoot
       .me()
       .login()
       .post({
         body: {
-          email: 'johndoe@example.com',
-          password: 'secret123',
+          email,
+          password,
         },
         headers: {
           'Content-Type': 'application/json',
@@ -103,12 +111,22 @@ export const loginUser = async (): Promise<ClientResponse<CustomerSignInResult> 
       })
       .execute();
 
-    console.log(customer.body.customer);
-
     return customer;
   } catch (error) {
-    console.log(error);
+    let errorResponse;
+    const isUserByEmailResponse = await getCustomerByEmail(email);
 
-    return undefined;
+    if (isUserByEmailResponse) {
+      errorResponse = handleLoginError(isUserByEmailResponse.body.count);
+
+      return errorResponse;
+    }
+
+    return {
+      error: {
+        isForm: true,
+        message: 'Form error',
+      },
+    };
   }
 };
