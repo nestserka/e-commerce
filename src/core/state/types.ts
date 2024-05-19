@@ -20,3 +20,8 @@ export interface LoginState {
   setValuePassword: (password: string) => void;
   setCustomerCredentials: (customerCredentials: CustomerCredentials) => void;
 }
+
+export interface IsShownModal {
+  isShown: boolean;
+  setIsShown: (isSHown: boolean) => void;
+}

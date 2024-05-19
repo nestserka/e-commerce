@@ -39,6 +39,7 @@ import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
 import { useRegistrationData } from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
+import { showModalMessage } from '../../../core/state/loginState';
 import { Api, api } from '../../../api/Api';
 import { useLoginData } from '../../../core/state/loginState';
 
@@ -90,7 +91,9 @@ export default function RegistrationForm(): JSX.Element {
     'billing',
   );
 
-  // const { setIsShown } = showModalMessage();
+
+  const { setIsShown } = showModalMessage();
+
 
   const onSubmit = (data: RegistrationFormValues): void => {
     setEmail(data.email.toLowerCase());
@@ -125,11 +128,12 @@ export default function RegistrationForm(): JSX.Element {
           console.log(error.message);
         });
         reset();
-        // setIsShown(true);
+        setIsShown(true);
       })
       .catch((error: Error) => {
         setFormEmailError(error.message);
       });
+
   };
 
   return (
