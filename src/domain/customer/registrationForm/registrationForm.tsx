@@ -38,6 +38,7 @@ import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
 import { useRegistrationData } from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
+import { showModalMessage } from '../../../core/state/loginState';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -85,6 +86,8 @@ export default function RegistrationForm(): JSX.Element {
     'billing',
   );
 
+  const { setIsShown } = showModalMessage();
+
   const onSubmit = (data: RegistrationFormValues): void => {
     setEmail(data.email.toLowerCase());
     setPassword(data.password);
@@ -105,6 +108,7 @@ export default function RegistrationForm(): JSX.Element {
     createCustomer(useRegistrationData.getState()).catch((error) => {
       console.error('Error creating customer:', error);
     });
+    setIsShown(true);
     reset();
   };
 
