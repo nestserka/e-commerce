@@ -5,6 +5,7 @@ import regIcon from '../../assets/images/icons/register-nav-icon.svg';
 import loginIcon from '../../assets/images/icons/login-nav-icon.svg';
 import aboutIcon from '../../assets/images/icons/team-nav-icon.svg';
 import catalogIcon from '../../assets/images/icons/catalog-nav-icon.svg';
+import ModalMessage from '../../components/modalMessage/ModalMessage';
 
 const navItemsContent = [
   {
@@ -36,6 +37,11 @@ const navItemsContent = [
 export default function HomePage(): JSX.Element {
   return (
     <section className={style.home} data-testid="home">
+      <ModalMessage
+        type="success"
+        title="Successful Registration"
+        message="You registered and entered your account successfully."
+      />
       <h1 className={style.title}>
         <span className={style['accent-text']}>Hello, stranger!</span>
         <br />
