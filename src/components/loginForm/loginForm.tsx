@@ -63,12 +63,11 @@ export default function LoginForm(): JSX.Element {
         setFormEmailError('');
         setFormPasswordError('');
         setFormError('');
-        let errorResponse: ErrorLoginForm;
         const isUserByEmailResponse: ClientResponse<CustomerPagedQueryResponse> | undefined =
           await Api.getCustomerByEmail(data.email.toLowerCase());
 
         if (isUserByEmailResponse) {
-          errorResponse = handleLoginError(isUserByEmailResponse.body.count);
+          const errorResponse: ErrorLoginForm = handleLoginError(isUserByEmailResponse.body.count);
 
           if ('isEmail' in errorResponse.error) {
             setFormEmailError(errorResponse.error.message);
