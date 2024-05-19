@@ -11,8 +11,8 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
 import { getInputProps } from '../../utils/utils';
-import { loginUser } from '../../api/ClientBuilder';
 import { EMAIL_VALIDATION_SCHEMA, LS_PREFIX, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
+import { api } from '../../api/Api';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -34,15 +34,15 @@ export default function LoginForm(): JSX.Element {
   const [formPasswordError, setFormPasswordError] = useState<string>('');
   const [formError, setFormError] = useState<string>('');
 
-  const inputEmailProps = getInputProps('email', 'email', 'Type email address here', 'email');
-  const inputPasswordProps = getInputProps('password', 'password', 'Create a strong password', 'off');
+  const inputEmailProps = getInputProps('email', 'email', 'Enter your email', 'email');
+  const inputPasswordProps = getInputProps('password', 'password', 'Enter your password', 'off');
 
   const onSubmit = async (data: LoginFormValues): Promise<void> => {
     setFormEmailError('');
     setFormPasswordError('');
     setFormError('');
 
-    const response = await loginUser(data.email.toLowerCase(), data.password);
+    const response = await api.loginUser(data.email.toLowerCase(), data.password);
 
     if ('error' in response) {
       if ('isEmail' in response.error) {

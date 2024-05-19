@@ -8,8 +8,14 @@ export const inputFirstNameProps = getInputProps('firstName', 'firstName', 'Your
 
 export const inputLastNameProps = getInputProps('lastName', 'lastName', 'Your Last Name', 'off');
 
-export const inputStreetProps = getInputProps('streetName', 'streetName', 'Street', 'off');
+export const inputBillingPostalCodeProps = getInputProps('postal-code', 'billing-postal-code', 'M5V 1J1', 'off');
 
-export const inputCityProps = getInputProps('city', 'city', 'City', 'off');
+export const inputShippingPostalCodeProps = getInputProps('postal-code', 'shipping-postal-code', 'M5V 1J1', 'off');
 
-export const inputPostalCodeProps = getInputProps('postal-code', 'postal-code', 'M5V 1J1', 'off');
+export const inputBillingCityProps = getInputProps('city', 'billing-city', 'City', 'off');
+
+export const inputShippingCityProps = getInputProps('city', 'shipping-city', 'City', 'off');
+
+export const inputShippingStreetProps = getInputProps('streetName', 'shipping-street-name', 'Street', 'off');
+
+export const inputBillingStreetProps = getInputProps('streetName', 'billing-street-name', 'Street', 'off');

@@ -12,8 +12,8 @@ export default function InputCheckBox({
   name,
   id,
   label,
-  isCheckBoxDisabled,
   onChange,
+  isCheckBoxDisabled = false,
 }: InputCheckboxProps): JSX.Element {
   return (
     <section className={styles['checkbox-wrapper']}>
@@ -31,7 +31,3 @@ export default function InputCheckBox({
     </section>
   );
 }
-
-InputCheckBox.defaultProps = {
-  isCheckBoxDisabled: false,
-};

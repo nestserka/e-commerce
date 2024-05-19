@@ -1,10 +1,14 @@
+import { handleLoginError } from '../utils/utils';
+import { apiRoot as adminApiRoot } from './AdminBuilder';
 import { createAnonymousSessionFlow } from './CreateAnonymousApi';
 import { createLoginUserClient } from './CreatePasswordFlow';
 
+import type { ErrorLoginForm } from '../utils/utils';
 import type {
   ByProjectKeyRequestBuilder,
   ClientResponse,
   Customer,
+  CustomerPagedQueryResponse,
   CustomerSignInResult,
 } from '@commercetools/platform-sdk';
 
@@ -42,15 +46,18 @@ class Api {
     return customer;
   }
 
-  public async loginUser(): Promise<ClientResponse<CustomerSignInResult> | undefined> {
+  public async loginUser(
+    email: string,
+    password: string,
+  ): Promise<ClientResponse<CustomerSignInResult> | ErrorLoginForm> {
     try {
       const customer = await this.apiRoot
         .me()
         .login()
         .post({
           body: {
-            email: 'johndoe606877909h04@example.com',
-            password: 'secret1224',
+            email,
+            password,
           },
           headers: {
             'Content-Type': 'application/json',
@@ -60,9 +67,21 @@ class Api {
 
       return customer;
     } catch (error) {
-      console.log(error);
+      let errorResponse;
+      const isUserByEmailResponse = await Api.getCustomerByEmail(email);
 
-      return undefined;
+      if (isUserByEmailResponse) {
+        errorResponse = handleLoginError(isUserByEmailResponse.body.count);
+
+        return errorResponse;
+      }
+
+      return {
+        error: {
+          isForm: true,
+          message: 'Form error',
+        },
+      };
     }
   }
 
@@ -72,8 +91,25 @@ class Api {
 
       return await customer;
     } catch (error) {
-      console.log(error);
+      return undefined;
+    }
+  }
 
+  public static async getCustomerByEmail(
+    email: string,
+  ): Promise<ClientResponse<CustomerPagedQueryResponse> | undefined> {
+    try {
+      const response = await adminApiRoot
+        .customers()
+        .get({
+          queryArgs: {
+            where: `email="${email}"`,
+          },
+        })
+        .execute();
+
+      return response;
+    } catch (error) {
       return undefined;
     }
   }
