@@ -58,6 +58,16 @@
       opacity: 1;
     }
   }
+
+  @media (width <= 1024px) {
+    width: calc(50% - 3px);
+    height: auto;
+  }
+
+  @media (width <= 680px) {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .index-text {
