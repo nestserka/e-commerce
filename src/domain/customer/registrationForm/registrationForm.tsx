@@ -12,13 +12,16 @@ import Input from '../../../components/ui/input/input';
 import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import FormTitle from '../../../components/formTitle/FormTitle';
 import {
-  inputCityProps,
+  inputBillingCityProps,
+  inputBillingPostalCodeProps,
+  inputBillingStreetProps,
   inputEmailProps,
   inputFirstNameProps,
   inputLastNameProps,
   inputPasswordProps,
-  inputPostalCodeProps,
-  inputStreetProps,
+  inputShippingCityProps,
+  inputShippingPostalCodeProps,
+  inputShippingStreetProps,
 } from '../../../utils/inputProps';
 import {
   ADDRESS_VALIDATION_SCHEMA,
@@ -188,7 +191,7 @@ export default function RegistrationForm(): JSX.Element {
           <Input
             inputProps={{
               ...register('shippingAddress.streetName'),
-              ...inputStreetProps,
+              ...inputShippingStreetProps,
             }}
             label="Street "
           />
@@ -198,7 +201,7 @@ export default function RegistrationForm(): JSX.Element {
           <Input
             inputProps={{
               ...register('shippingAddress.city'),
-              ...inputCityProps,
+              ...inputShippingCityProps,
             }}
             label="City "
           />
@@ -208,7 +211,7 @@ export default function RegistrationForm(): JSX.Element {
           <Input
             inputProps={{
               ...register('shippingAddress.postalCode'),
-              ...inputPostalCodeProps,
+              ...inputShippingPostalCodeProps,
             }}
             label="Postal Code "
           />
@@ -253,7 +256,7 @@ export default function RegistrationForm(): JSX.Element {
           <Input
             inputProps={{
               ...register('billingAddress.streetName'),
-              ...inputStreetProps,
+              ...inputBillingStreetProps,
             }}
             label="Street "
             isDisabled={isShippingCompleteChecked}
@@ -264,7 +267,7 @@ export default function RegistrationForm(): JSX.Element {
           <Input
             inputProps={{
               ...register('billingAddress.city'),
-              ...inputCityProps,
+              ...inputBillingCityProps,
             }}
             label="City "
             isDisabled={isShippingCompleteChecked}
@@ -275,7 +278,7 @@ export default function RegistrationForm(): JSX.Element {
           <Input
             inputProps={{
               ...register('billingAddress.postalCode'),
-              ...inputPostalCodeProps,
+              ...inputBillingPostalCodeProps,
             }}
             label="Postal Code "
             isDisabled={isShippingCompleteChecked}
