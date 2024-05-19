@@ -44,6 +44,14 @@
   .accent-text {
     @include title-accent;
   }
+
+  @media (width <= 680px) {
+    font-size: 48px;
+  }
+
+  @media (width <= 480px) {
+    font-size: 36px;
+  }
 }
 
 // .circle {
