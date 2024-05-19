@@ -9,6 +9,18 @@
   gap: 2em;
   justify-content: center;
   width: 100%;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+
+    background-image: url('../../assets/images/bg/bg-home.jpg');
+    background-position: center;
+    background-size: cover;
+  }
 }
 
 .nav-wrapper {
