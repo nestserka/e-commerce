@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { showModalMessage } from '../../core/state/loginState';
 import style from './_modalMessage.module.scss';
@@ -14,19 +14,22 @@ export default function ModalMessage({
   message: string;
 }): JSX.Element {
   const { isShown, setIsShown } = showModalMessage();
+  const [isShownClass, setIsShownClass] = useState(false);
 
   useEffect(() => {
     if (isShown) {
+      setIsShownClass(true);
+      setTimeout(() => {
+        setIsShownClass(false);
+      }, 2500);
       setTimeout(() => {
         setIsShown(false);
-      }, 2500);
-    } else {
-      setIsShown(false);
+      }, 3000);
     }
-  }, [isShown, setIsShown]);
+  }, [isShown, setIsShownClass, setIsShown]);
 
   return (
-    <section className={`${style.wrapper} ${isShown ? style.show : style.hide}`} data-testid="modal-message">
+    <section className={`${style.wrapper} ${isShownClass ? style.show : style.hide}`} data-testid="modal-message">
       <button
         aria-label="Close"
         type="button"
