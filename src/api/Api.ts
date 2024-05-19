@@ -6,6 +6,7 @@ import { createClientBuilders } from './ClientBuilder';
 import type {
   ByProjectKeyRequestBuilder,
   ClientResponse,
+  CustomerDraft,
   CustomerPagedQueryResponse,
   CustomerSignInResult,
   ProductProjectionPagedQueryResponse,
@@ -30,16 +31,11 @@ export class Api {
     return this.apiRoot;
   }
 
-  public static async createCustomerMe(): Promise<ClientResponse<CustomerSignInResult>> {
+  public static async createCustomer(data: CustomerDraft): Promise<ClientResponse<CustomerSignInResult>> {
     const customer = await adminApiRoot
       .customers()
       .post({
-        body: {
-          email: 'johndoe4@example.com',
-          firstName: 'John4',
-          lastName: 'Doe4',
-          password: 'Q!secret1224',
-        },
+        body: data,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -65,24 +61,6 @@ export class Api {
       .execute();
 
     return customer;
-
-    // catch (error) {
-    //   let errorResponse;
-    //   const isUserByEmailResponse = await Api.getCustomerByEmail(email);
-
-    //   if (isUserByEmailResponse) {
-    //     errorResponse = handleLoginError(isUserByEmailResponse.body.count);
-
-    //     return errorResponse;
-    //   }
-
-    //   return {
-    //     error: {
-    //       isForm: true,
-    //       message: 'Form error',
-    //     },
-    //   };
-    // }
   }
 
   public static async getCustomerByEmail(
