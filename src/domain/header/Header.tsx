@@ -4,15 +4,28 @@ import { Link } from 'react-router-dom';
 import style from './_header.module.scss';
 import Navigation from './navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
-import { NAV_LINKS, ROUTES } from '../../constants/constants';
+import { LS_PREFIX, NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useLoginData } from '../../core/state/loginState';
+import { api } from '../../api/Api';
+
+import type { CustomerCredentials } from '../../core/state/types';
 
 export default function Header(): JSX.Element {
-  const { isAuth, setAuthStatus } = useLoginData();
+  const { isAuth, setCustomerCredentials } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const onClickButton = (): void => {
-    setAuthStatus(false);
+    const resetUser: CustomerCredentials = {
+      customerId: '',
+      isAuth: false,
+      valuePassword: '',
+      valueEmail: '',
+    };
+    setCustomerCredentials(resetUser);
+    localStorage.removeItem(`isAuth-${LS_PREFIX}`);
+    localStorage.removeItem(`customerId-${LS_PREFIX}`);
+    api.switchClientBuilders();
+    api.getAllProduct().catch(() => console.error);
   };
 
   const toggleNav = (): void => {

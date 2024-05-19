@@ -66,6 +66,8 @@ export default function LoginForm(): JSX.Element {
       setCustomerCredentials(customerCredentials);
       localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
       localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
+      api.switchToPasswordFlow(data.email.toLowerCase(), data.password);
+      api.getAllProduct().catch(() => console.error);
       reset();
     }
   };

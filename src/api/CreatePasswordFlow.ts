@@ -1,10 +1,8 @@
 import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-import { httpMiddlewareOptions } from './ClientBuilder';
-
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
-import type { Client, PasswordAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';
+import type { Client, HttpMiddlewareOptions, PasswordAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';
 
 export const createLoginUserClient = (username: string, password: string): ByProjectKeyRequestBuilder => {
   if (typeof import.meta.env.VITE_APP_CLIENT_ID !== 'string') {
@@ -39,6 +37,11 @@ export const createLoginUserClient = (username: string, password: string): ByPro
       },
     },
     scopes: [import.meta.env.VITE_APP_CLIENT_SCOPES],
+    fetch,
+  };
+
+  const httpMiddlewareOptions: HttpMiddlewareOptions = {
+    host: import.meta.env.VITE_APP_API_URL,
     fetch,
   };
 
