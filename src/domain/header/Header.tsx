@@ -25,7 +25,9 @@ export default function Header(): JSX.Element {
     localStorage.removeItem(`isAuth-${LS_PREFIX}`);
     localStorage.removeItem(`customerId-${LS_PREFIX}`);
     api.switchClientBuilders();
-    api.getAllProduct().catch(() => console.error);
+    api.getAllProduct().catch((error: Error) => {
+      console.log(error.message);
+    });
   };
 
   const toggleNav = (): void => {

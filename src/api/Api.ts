@@ -1,13 +1,12 @@
-import { handleLoginError } from '../utils/utils';
 import { apiRoot as adminApiRoot } from './AdminBuilder';
 import { createAnonymousSessionFlow } from './CreateAnonymousApi';
 import { createLoginUserClient } from './CreatePasswordFlow';
 import { createClientBuilders } from './ClientBuilder';
 
-import type { ErrorLoginForm } from '../utils/utils';
 import type {
   ByProjectKeyRequestBuilder,
   ClientResponse,
+  CustomerDraft,
   CustomerPagedQueryResponse,
   CustomerSignInResult,
   ProductProjectionPagedQueryResponse,
@@ -32,16 +31,11 @@ export class Api {
     return this.apiRoot;
   }
 
-  public static async createCustomerMe(): Promise<ClientResponse<CustomerSignInResult>> {
+  public static async createCustomer(data: CustomerDraft): Promise<ClientResponse<CustomerSignInResult>> {
     const customer = await adminApiRoot
       .customers()
       .post({
-        body: {
-          email: 'johndoe4@example.com',
-          firstName: 'John4',
-          lastName: 'Doe4',
-          password: 'Q!secret1224',
-        },
+        body: data,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -51,43 +45,22 @@ export class Api {
     return customer;
   }
 
-  public async loginUser(
-    email: string,
-    password: string,
-  ): Promise<ClientResponse<CustomerSignInResult> | ErrorLoginForm> {
-    try {
-      const customer = await this.apiRoot
-        .me()
-        .login()
-        .post({
-          body: {
-            email,
-            password,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-        .execute();
-
-      return customer;
-    } catch (error) {
-      let errorResponse;
-      const isUserByEmailResponse = await Api.getCustomerByEmail(email);
-
-      if (isUserByEmailResponse) {
-        errorResponse = handleLoginError(isUserByEmailResponse.body.count);
-
-        return errorResponse;
-      }
-
-      return {
-        error: {
-          isForm: true,
-          message: 'Form error',
+  public async loginUser(email: string, password: string): Promise<ClientResponse<CustomerSignInResult>> {
+    const customer = await this.apiRoot
+      .me()
+      .login()
+      .post({
+        body: {
+          email,
+          password,
         },
-      };
-    }
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .execute();
+
+    return customer;
   }
 
   public static async getCustomerByEmail(

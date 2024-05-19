@@ -10,9 +10,12 @@ import InputPassword from '../ui/inputPassword/inputPassword';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
 import { useLoginData } from '../../core/state/loginState';
-import { getInputProps } from '../../utils/utils';
+import { getInputProps, handleLoginError } from '../../utils/utils';
 import { EMAIL_VALIDATION_SCHEMA, LS_PREFIX, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
-import { api } from '../../api/Api';
+import { Api, api } from '../../api/Api';
+
+import type { ErrorLoginForm } from '../../utils/utils';
+import type { ClientResponse, CustomerPagedQueryResponse } from '@commercetools/platform-sdk';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -37,39 +40,48 @@ export default function LoginForm(): JSX.Element {
   const inputEmailProps = getInputProps('email', 'email', 'Enter your email', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Enter your password', 'off');
 
-  const onSubmit = async (data: LoginFormValues): Promise<void> => {
-    setFormEmailError('');
-    setFormPasswordError('');
-    setFormError('');
+  const onSubmit = (data: LoginFormValues): void => {
+    api
+      .loginUser(data.email.toLowerCase(), data.password)
+      .then((response) => {
+        const customerCredentials = {
+          valueEmail: response.body.customer.email,
+          valuePassword: data.password,
+          isAuth: true,
+          customerId: response.body.customer.id,
+        };
+        setCustomerCredentials(customerCredentials);
+        localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
+        localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
+        api.switchToPasswordFlow(data.email.toLowerCase(), data.password);
+        api.getAllProduct().catch((error: Error) => {
+          console.log(error.message);
+        });
+        reset();
+      })
+      .catch(async () => {
+        setFormEmailError('');
+        setFormPasswordError('');
+        setFormError('');
+        const isUserByEmailResponse: ClientResponse<CustomerPagedQueryResponse> | undefined =
+          await Api.getCustomerByEmail(data.email.toLowerCase());
 
-    const response = await api.loginUser(data.email.toLowerCase(), data.password);
+        if (isUserByEmailResponse) {
+          const errorResponse: ErrorLoginForm = handleLoginError(isUserByEmailResponse.body.count);
 
-    if ('error' in response) {
-      if ('isEmail' in response.error) {
-        setFormEmailError(response.error.message);
-      }
+          if ('isEmail' in errorResponse.error) {
+            setFormEmailError(errorResponse.error.message);
+          }
 
-      if ('isPassword' in response.error) {
-        setFormPasswordError(response.error.message);
-      }
+          if ('isPassword' in errorResponse.error) {
+            setFormPasswordError(errorResponse.error.message);
+          }
 
-      if ('isForm' in response.error) {
-        setFormError(response.error.message);
-      }
-    } else {
-      const customerCredentials = {
-        valueEmail: response.body.customer.email,
-        valuePassword: data.password,
-        isAuth: true,
-        customerId: response.body.customer.id,
-      };
-      setCustomerCredentials(customerCredentials);
-      localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
-      localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-      api.switchToPasswordFlow(data.email.toLowerCase(), data.password);
-      api.getAllProduct().catch(() => console.error);
-      reset();
-    }
+          if ('isForm' in errorResponse.error) {
+            setFormError(errorResponse.error.message);
+          }
+        }
+      });
   };
 
   return (
