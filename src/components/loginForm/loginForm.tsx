@@ -54,38 +54,33 @@ export default function LoginForm(): JSX.Element {
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
         api.switchToPasswordFlow(data.email.toLowerCase(), data.password);
-        api.getAllProduct().catch((error:Error) => { console.log(error.message); });
+        api.getAllProduct().catch((error: Error) => {
+          console.log(error.message);
+        });
         reset();
       })
       .catch(async () => {
         setFormEmailError('');
         setFormPasswordError('');
         setFormError('');
-        let errorResponse: ErrorLoginForm | undefined;
+        let errorResponse: ErrorLoginForm;
         const isUserByEmailResponse: ClientResponse<CustomerPagedQueryResponse> | undefined =
           await Api.getCustomerByEmail(data.email.toLowerCase());
 
         if (isUserByEmailResponse) {
           errorResponse = handleLoginError(isUserByEmailResponse.body.count);
-        } else {
-          errorResponse = {
-            error: {
-              isForm: true,
-              message: 'Form error',
-            },
-          };
-        }
 
-        if ('isEmail' in errorResponse.error) {
-          setFormEmailError(errorResponse.error.message);
-        }
+          if ('isEmail' in errorResponse.error) {
+            setFormEmailError(errorResponse.error.message);
+          }
 
-        if ('isPassword' in errorResponse.error) {
-          setFormPasswordError(errorResponse.error.message);
-        }
+          if ('isPassword' in errorResponse.error) {
+            setFormPasswordError(errorResponse.error.message);
+          }
 
-        if ('isForm' in errorResponse.error) {
-          setFormError(errorResponse.error.message);
+          if ('isForm' in errorResponse.error) {
+            setFormError(errorResponse.error.message);
+          }
         }
       });
   };

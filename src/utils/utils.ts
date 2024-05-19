@@ -26,10 +26,19 @@ export function handleLoginError(count: number | undefined): ErrorLoginForm {
     };
   }
 
+  if (count !== undefined && count > 0) {
+    return {
+      error: {
+        isPassword: true,
+        message: 'Invalid password: You provided wrong password',
+      },
+    };
+  }
+
   return {
     error: {
-      isPassword: true,
-      message: 'Invalid password: You provided wrong password',
+      isForm: true,
+      message: 'Form error',
     },
   };
 }

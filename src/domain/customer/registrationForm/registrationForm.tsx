@@ -121,7 +121,9 @@ export default function RegistrationForm(): JSX.Element {
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
         api.switchToPasswordFlow(data.email.toLowerCase(), data.password);
-        api.loginUser(data.email.toLowerCase(), data.password).catch((error:Error) => { console.log(error.message); });
+        api.loginUser(data.email.toLowerCase(), data.password).catch((error: Error) => {
+          console.log(error.message);
+        });
         reset();
         // setIsShown(true);
       })
