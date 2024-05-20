@@ -8,9 +8,9 @@ export const inputFirstNameProps = getInputProps('firstName', 'firstName', 'Your
 
 export const inputLastNameProps = getInputProps('lastName', 'lastName', 'Your Last Name', 'off');
 
-export const inputBillingPostalCodeProps = getInputProps('postal-code', 'billing-postal-code', 'M5V 1J1', 'off');
+export const inputBillingPostalCodeProps = getInputProps('postal-code', 'billing-postal-code', '42142', 'off');
 
-export const inputShippingPostalCodeProps = getInputProps('postal-code', 'shipping-postal-code', 'M5V 1J1', 'off');
+export const inputShippingPostalCodeProps = getInputProps('postal-code', 'shipping-postal-code', '42142', 'off');
 
 export const inputBillingCityProps = getInputProps('city', 'billing-city', 'City', 'off');
 

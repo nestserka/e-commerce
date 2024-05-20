@@ -78,7 +78,7 @@ export const EMAIL_VALIDATION_SCHEMA = z
         return false;
       }
 
-      if (!/^[a-zA-Z0-9.]*$/.test(parts[0]) || !/^[a-zA-Z.]*$/.test(parts[1])) {
+      if (!/^[a-zA-Z0-9._]*$/.test(parts[0]) || !/^[a-zA-Z.]*$/.test(parts[1])) {
         return false;
       }
 
@@ -143,7 +143,7 @@ export const DATE_VALIDATION_SCHEMA = z.coerce
       return date <= today;
     },
     {
-      message: 'Birthdate cannot be in the future.',
+      message: 'Birthday cannot be in the future.',
     },
   )
   .refine((date) => calculateAge(date) >= MIN_AGE, {
