@@ -78,7 +78,7 @@ export const EMAIL_VALIDATION_SCHEMA = z
         return false;
       }
 
-      if (!/^[a-zA-Z0-9.]*$/.test(parts[0]) || !/^[a-zA-Z.]*$/.test(parts[1])) {
+      if (!/^[a-zA-Z0-9._]*$/.test(parts[0]) || !/^[a-zA-Z.]*$/.test(parts[1])) {
         return false;
       }
 
