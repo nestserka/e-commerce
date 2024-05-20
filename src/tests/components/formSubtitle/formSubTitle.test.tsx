@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
-import styles from "../../../components/formSubTitle/_formSubTitle.module.scss"
+import styles from '../../../components/formSubTitle/_formSubTitle.module.scss';
 
 describe('FormSubTitle', () => {
   it('renders the subtitle correctly', () => {
