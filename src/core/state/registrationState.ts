@@ -1,11 +1,6 @@
-import { create } from 'zustand';
-
-import { apiRoot } from '../../api/AdminBuilder';
-
 import type { Address } from '../../utils/types';
-import type { ClientResponse, CustomerSignInResult } from '@commercetools/platform-sdk';
 
-export interface RegistrationState {
+interface RegistrationState {
   email: string;
   password: string;
   firstName: string;
@@ -14,69 +9,69 @@ export interface RegistrationState {
   addresses: Address[];
   defaultShippingAddress?: number;
   defaultBillingAddress?: number;
-  setEmail: (email: string) => void;
-  setPassword: (password: string) => void;
-  setFirstName: (firstName: string) => void;
-  setLastName: (lastName: string) => void;
-  setDateOfBirth: (dateOfBirth: string) => void;
-  addAddress: (addresses: Address[]) => void;
-  setDefaultShippingAddress: (defaultShippingAddress: number) => void;
-  setDefaultBillingAddress: (defaultBillingAddress: number) => void;
-  createCustomer: (data: RegistrationState) => Promise<ClientResponse<CustomerSignInResult>>;
+  billingAddresses: number[];
+  shippingAddresses: number[];
 }
 
-export const useRegistrationData = create<RegistrationState>((set) => ({
-  email: '',
-  password: '',
-  firstName: '',
-  lastName: '',
-  dateOfBirth: '',
-  addresses: [],
-  status: 'idle',
-  setEmail: (email: string): void => {
-    set(() => ({ email }));
-  },
-  setFirstName: (firstName: string): void => {
-    set(() => ({ firstName }));
-  },
-  setLastName: (lastName: string): void => {
-    set(() => ({ lastName }));
-  },
-  setPassword: (password: string): void => {
-    set(() => ({ password }));
-  },
-  setDateOfBirth: (dateOfBirth: string): void => {
-    set(() => ({ dateOfBirth }));
-  },
-  addAddress: (addresses: Address[]): void => {
-    set((state) => ({ ...state, addresses: [...state.addresses, ...addresses] }));
-  },
-  setDefaultShippingAddress: (defaultShippingAddress: number): void => {
-    set(() => ({ defaultShippingAddress }));
-  },
-  setDefaultBillingAddress: (defaultBillingAddress: number): void => {
-    set(() => ({ defaultBillingAddress }));
-  },
-  createCustomer: async (data: RegistrationState): Promise<ClientResponse<CustomerSignInResult>> => {
-    const { email, firstName, lastName, password, addresses, defaultShippingAddress, defaultBillingAddress } = data;
-    const customer = await apiRoot
-      .customers()
-      .post({
-        body: {
-          email,
-          firstName,
-          lastName,
-          password,
-          addresses,
-          ...(defaultShippingAddress !== undefined && { defaultShippingAddress }),
-          ...(defaultBillingAddress !== undefined && { defaultBillingAddress }),
-        },
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .execute();
+class RegistrationData {
+  private state: RegistrationState;
 
-    return customer;
-  },
-}));
+  constructor() {
+    this.state = {
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      dateOfBirth: '',
+      addresses: [],
+      billingAddresses: [],
+      shippingAddresses: [],
+    };
+  }
+
+  setEmail(email: string): void {
+    this.state.email = email;
+  }
+
+  setFirstName(firstName: string): void {
+    this.state.firstName = firstName;
+  }
+
+  setLastName(lastName: string): void {
+    this.state.lastName = lastName;
+  }
+
+  setPassword(password: string): void {
+    this.state.password = password;
+  }
+
+  setDateOfBirth(dateOfBirth: string): void {
+    this.state.dateOfBirth = dateOfBirth;
+  }
+
+  addAddress(addresses: Address[]): void {
+    this.state.addresses.push(...addresses);
+  }
+
+  setDefaultShippingAddress(defaultShippingAddress: number): void {
+    this.state.defaultShippingAddress = defaultShippingAddress;
+  }
+
+  setDefaultBillingAddress(defaultBillingAddress: number): void {
+    this.state.defaultBillingAddress = defaultBillingAddress;
+  }
+
+  setBillingAddressIds(billingAddresses: number[]): void {
+    this.state.billingAddresses = billingAddresses;
+  }
+
+  setShippingAddressIds(shippingAddresses: number[]): void {
+    this.state.shippingAddresses = shippingAddresses;
+  }
+
+  getState(): RegistrationState {
+    return this.state;
+  }
+}
+
+export default RegistrationData;

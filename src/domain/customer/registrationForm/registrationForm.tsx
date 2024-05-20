@@ -37,7 +37,7 @@ import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
-import { useRegistrationData } from '../../../core/state/registrationState';
+import RegistrationData from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
 import { showModalMessage, useLoginData } from '../../../core/state/loginState';
 import { Api, api } from '../../../api/Api';
@@ -64,17 +64,6 @@ export default function RegistrationForm(): JSX.Element {
   const { errors } = formState;
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [formEmailError, setFormEmailError] = useState<string>('');
-  const {
-    setEmail,
-    setPassword,
-    setFirstName,
-    setLastName,
-    setDateOfBirth,
-    addAddress,
-    setDefaultBillingAddress,
-    setDefaultShippingAddress,
-  } = useRegistrationData();
-
   const { setCustomerCredentials } = useLoginData();
 
   const shippingAddress = useWatch({
@@ -93,23 +82,26 @@ export default function RegistrationForm(): JSX.Element {
   const { setIsShown } = showModalMessage();
 
   const onSubmit = (data: RegistrationFormValues): void => {
-    setEmail(data.email.toLowerCase());
-    setPassword(data.password);
-    setFirstName(data.firstName);
-    setLastName(data.lastName);
-    setDateOfBirth(data.dateOfBirth);
-    addAddress([data.shippingAddress, data.billingAddress]);
     setShippingCompleteChecked(false);
+    const registrationData = new RegistrationData();
+    registrationData.setEmail(data.email);
+    registrationData.setPassword(data.password);
+    registrationData.setFirstName(data.firstName);
+    registrationData.setLastName(data.lastName);
+    registrationData.setDateOfBirth(data.dateOfBirth);
+    registrationData.addAddress([data.shippingAddress, data.billingAddress]);
+    registrationData.setShippingAddressIds([0]);
+    registrationData.setBillingAddressIds([1]);
 
     if (data.defaultShippingAddress) {
-      setDefaultShippingAddress(0);
+      registrationData.setDefaultShippingAddress(0);
     }
 
     if (data.defaultBillingAddress) {
-      setDefaultBillingAddress(1);
+      registrationData.setDefaultBillingAddress(1);
     }
 
-    Api.createCustomer(useRegistrationData.getState())
+    Api.createCustomer(registrationData.getState())
       .then((response) => {
         const customerCredentials = {
           valueEmail: response.body.customer.email,
@@ -233,16 +225,6 @@ export default function RegistrationForm(): JSX.Element {
           {errors.shippingAddress?.city && <ErrorMessage message={errors.shippingAddress.city.message} />}
         </section>
         <section className={style['input-section']}>
-          <Input
-            inputProps={{
-              ...register('shippingAddress.postalCode'),
-              ...inputShippingPostalCodeProps,
-            }}
-            label="Postal Code "
-          />
-          {errors.shippingAddress?.postalCode && <ErrorMessage message={errors.shippingAddress.postalCode.message} />}
-        </section>
-        <section className={style['input-section']}>
           <ControllerLabel
             control={
               <Controller
@@ -265,6 +247,16 @@ export default function RegistrationForm(): JSX.Element {
             label="Country  "
           />
           {errors.shippingAddress?.country && <ErrorMessage message={errors.shippingAddress.country.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('shippingAddress.postalCode'),
+              ...inputShippingPostalCodeProps,
+            }}
+            label="Postal Code "
+          />
+          {errors.shippingAddress?.postalCode && <ErrorMessage message={errors.shippingAddress.postalCode.message} />}
         </section>
       </div>
       <Controller
@@ -300,17 +292,6 @@ export default function RegistrationForm(): JSX.Element {
           {errors.billingAddress?.city && <ErrorMessage message={errors.billingAddress.city.message} />}
         </section>
         <section className={style['input-section']}>
-          <Input
-            inputProps={{
-              ...register('billingAddress.postalCode'),
-              ...inputBillingPostalCodeProps,
-            }}
-            label="Postal Code "
-            isDisabled={isShippingCompleteChecked}
-          />
-          {errors.billingAddress?.postalCode && <ErrorMessage message={errors.billingAddress.postalCode.message} />}
-        </section>
-        <section className={style['input-section']}>
           <ControllerLabel
             control={
               <Controller
@@ -334,6 +315,17 @@ export default function RegistrationForm(): JSX.Element {
             label="Country  "
           />
           {errors.billingAddress?.country && <ErrorMessage message={errors.billingAddress.country.message} />}
+        </section>
+        <section className={style['input-section']}>
+          <Input
+            inputProps={{
+              ...register('billingAddress.postalCode'),
+              ...inputBillingPostalCodeProps,
+            }}
+            label="Postal Code "
+            isDisabled={isShippingCompleteChecked}
+          />
+          {errors.billingAddress?.postalCode && <ErrorMessage message={errors.billingAddress.postalCode.message} />}
         </section>
       </div>
       <Controller
