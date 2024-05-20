@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import Input from '../../../../components/ui/input/input'; 
+import Input from '../../../../components/ui/input/input';
 
 describe('Input', () => {
   it('renders label and input field correctly', () => {
@@ -9,7 +9,7 @@ describe('Input', () => {
       id: 'inputId',
       type: 'text',
       value: '',
-      onChange: () : void => {},
+      onChange: (): void => {},
       placeholder: 'Enter text',
     };
 

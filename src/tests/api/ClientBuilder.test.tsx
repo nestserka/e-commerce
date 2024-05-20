@@ -1,5 +1,5 @@
 import { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
-import { describe, expect, it} from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { createClientBuilders } from '../../api/ClientBuilder';
 

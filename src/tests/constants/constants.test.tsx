@@ -33,14 +33,14 @@ describe('Validation Schemas', () => {
     });
 
     it('throws error for password without uppercase letter', () => {
-      const invalidPassword = 'password'; 
+      const invalidPassword = 'password';
       expect(() => PASSWORD_VALIDATION_SCHEMA.parse(invalidPassword)).toThrowError(
         'Password must contain at least one uppercase letter (A-Z).',
       );
     });
 
     it('throws error for password without lowercase letter', () => {
-      const invalidPassword = 'PASSWORD'; 
+      const invalidPassword = 'PASSWORD';
       expect(() => PASSWORD_VALIDATION_SCHEMA.parse(invalidPassword)).toThrowError(
         'Password must contain at least one lowercase letter (a-z).',
       );
@@ -54,7 +54,7 @@ describe('Validation Schemas', () => {
     });
 
     it('throws error for password without special character', () => {
-      const invalidPassword = 'Password123'; 
+      const invalidPassword = 'Password123';
       expect(() => PASSWORD_VALIDATION_SCHEMA.parse(invalidPassword)).toThrowError(
         'Password must contain at least one special character (e.g., !@#$%^&*).',
       );
@@ -68,7 +68,7 @@ describe('Validation Schemas', () => {
     });
 
     it('does not throw error for valid password', () => {
-      const validPassword = 'Password!123'; 
+      const validPassword = 'Password!123';
       expect(() => PASSWORD_VALIDATION_SCHEMA.parse(validPassword)).not.toThrow();
     });
   });
