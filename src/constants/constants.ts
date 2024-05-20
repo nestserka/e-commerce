@@ -99,7 +99,7 @@ export const EMAIL_VALIDATION_SCHEMA = z
 
         const domainParts = parts[1].split('.');
 
-        if (domainParts.length !== 2 || domainParts[1].length < 2) {
+        if (domainParts.length !== 2 || domainParts[1].length < 2 || domainParts[0].length < 1) {
           return false;
         }
       }
