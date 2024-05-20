@@ -143,7 +143,7 @@ export const DATE_VALIDATION_SCHEMA = z.coerce
       return date <= today;
     },
     {
-      message: 'Birthdate cannot be in the future.',
+      message: 'Birthday cannot be in the future.',
     },
   )
   .refine((date) => calculateAge(date) >= MIN_AGE, {
