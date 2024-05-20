@@ -7,4 +7,12 @@ export default defineConfig({
   server: {
     open: true,
   },
+  build: {
+    chunkSizeWarningLimit: 1000,
+  },
+  resolve: {
+    alias: {
+      'node-fetch': 'isomorphic-fetch',
+    },
+  },
 });

@@ -1,0 +1,24 @@
+@use '../../assets/styles/mixins' as *;
+
+.footer {
+  @include flex-center-space-between;
+
+  padding: 1em 0;
+}
+
+.rs-logo {
+  width: 80px;
+  height: 40px;
+}
+
+.footer-section {
+  flex-basis: calc(100% / 3);
+}
+
+.footer .footer-section:last-child {
+  @include flex-right;
+}
+
+.footer .footer-section:nth-child(2) {
+  @include flex-justify-center;
+}

@@ -1,0 +1,5 @@
+@use '../../assets/styles/mixins' as *;
+
+.about {
+  @include page-layout-container;
+}

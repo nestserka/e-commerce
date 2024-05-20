@@ -9,8 +9,8 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'airbnb-base',
-    'airbnb-typescript/base',
+    'airbnb',
+    'airbnb-typescript',
     'plugin:@typescript-eslint/recommended-type-checked',
     'plugin:import/recommended',
     'plugin:react-hooks/recommended',
@@ -29,19 +29,10 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', '@stylistic/ts', 'import', 'react', 'react-hooks', 'react-refresh'],
   rules: {
-    complexity: ['error', 10],
     curly: 'error',
     'default-case': 'error',
     'no-console': 'off',
     'max-depth': ['error', 4],
-    'max-lines-per-function': [
-      'error',
-      {
-        max: 40,
-        skipBlankLines: true,
-        skipComments: true,
-      },
-    ],
     'max-nested-callbacks': ['error', 4],
     'max-statements': ['error', 20],
     'no-constant-binary-expression': 'error',
@@ -105,7 +96,6 @@ module.exports = {
       'error',
       {
         selector: 'default',
-        // ?
         format: ['strictCamelCase', 'PascalCase'],
         leadingUnderscore: 'forbid',
         trailingUnderscore: 'forbid',
@@ -241,12 +231,32 @@ module.exports = {
         next: ['switch', 'while', 'try', 'return', 'if', 'interface', 'type', 'function'],
       },
     ],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        checksVoidReturn: {
+          attributes: false,
+        },
+      },
+    ],
+    'react/require-default-props': [
+      'error',
+      {
+        functions: 'defaultArguments',
+      },
+    ],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'comma-dangle': ['error', 'only-multiline'],
     'react/prop-types': 'off',
     'react/display-name': 'off',
+    'react/jsx-props-no-spreading': [
+      'error',
+      {
+        html: 'ignore',
+      },
+    ],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/ban-ts-comment': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',

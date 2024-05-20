@@ -1,0 +1,55 @@
+@use '../../assets/styles/mixins' as *;
+
+@import '../../assets/styles/variables';
+
+.home {
+  @include page-layout-container;
+
+  flex-direction: column;
+  gap: 2em;
+  justify-content: center;
+  width: 100%;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+
+    background-image: url('../../assets/images/bg/bg-home.jpg');
+    background-position: center;
+    background-size: cover;
+  }
+}
+
+.nav-wrapper {
+  display: flex;
+  gap: 3px;
+
+  @media (width <= 1024px) {
+    flex-wrap: wrap;
+  }
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+
+  font-family: DisplayRegular, sans-serif;
+  font-size: 56px;
+  line-height: 1.2;
+  color: $font-color-title-dark;
+
+  .accent-text {
+    @include title-accent;
+  }
+
+  @media (width <= 680px) {
+    font-size: 48px;
+  }
+
+  @media (width <= 480px) {
+    font-size: 36px;
+  }
+}

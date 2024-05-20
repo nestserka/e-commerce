@@ -1,0 +1,95 @@
+@use '../../assets/styles/mixins' as *;
+
+@import '../../assets/styles/variables';
+
+.header {
+  @include flex-center-space-between;
+
+  top: 1em;
+  width: 100%;
+  min-height: 70px;
+}
+
+.logo-wrapper,
+.burger-wrapper {
+  min-width: 110px;
+}
+
+.burger-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ns-logo {
+  width: 110px;
+  height: 30px;
+}
+
+.burger-button {
+  cursor: pointer;
+
+  position: relative;
+
+  display: block;
+
+  width: 60px;
+  height: 60px;
+
+  background-color: transparent;
+  border: none;
+
+  &.hidden {
+    display: none;
+
+    @media (width <= 1024px) {
+      display: block;
+    }
+  }
+
+  & .dot {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: block;
+
+    width: 6px;
+    height: 6px;
+
+    background-color: $font-color-primary-40;
+    border-radius: 50%;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      left: 18px;
+
+      display: block;
+
+      width: 6px;
+      height: 6px;
+
+      background-color: $font-color-primary-40;
+      border-radius: 50%;
+    }
+
+    &::before {
+      content: '';
+
+      position: absolute;
+      right: 18px;
+
+      display: block;
+
+      width: 6px;
+      height: 6px;
+
+      background-color: $font-color-primary-40;
+      border-radius: 50%;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+@import '../../assets/styles/mixins';
+
+.login-content-wrapper {
+  @include flex-justify-center;
+
+  flex-grow: 1;
+  width: 100%;
+  padding: 2em 0;
+}

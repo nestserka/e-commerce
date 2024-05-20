@@ -1,21 +1,75 @@
-@import './variables.scss';
+@import './variables';
+
+// Layout
 
 @mixin page-layout-container {
   display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
+  flex-grow: 1;
+  max-width: 1400px;
+  margin: 4em auto 1em;
+}
 
-  width: 100%;
+@mixin flex-center-space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  background-color: $background-color-primary-one;
+@mixin flex-justify-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-  &_wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+@mixin flex-right {
+  display: flex;
+  justify-content: flex-end;
+}
 
-    width: 90vw;
-    height: 100%;
-    margin: 0 auto;
-  }
+@mixin flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+// Gradients
+
+@mixin form-background-gradient {
+  background: linear-gradient(45deg, rgb(41 43 59 / 40%) 32%, rgb(41 43 59 / 100%) 100%);
+}
+
+@mixin title-accent {
+  background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+// Typography
+
+@mixin font-default-regular {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin font-default-medium {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@mixin font-default-bold {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+// Transitions
+
+@mixin background-color-on-hover {
+  transition: background-color 0.5 ease;
 }

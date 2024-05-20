@@ -1,0 +1,5 @@
+@use '../../assets/styles/mixins' as *;
+
+.category {
+  @include page-layout-container;
+}
