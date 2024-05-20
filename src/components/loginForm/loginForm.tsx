@@ -30,7 +30,7 @@ export default function LoginForm(): JSX.Element {
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
-  const { errors } = formState;
+  const { errors, isDirty, isValid } = formState;
   const navigate = useNavigate();
 
   const [formEmailError, setFormEmailError] = useState<string>('');
@@ -110,7 +110,7 @@ export default function LoginForm(): JSX.Element {
         {errors.password && <ErrorMessage message={errors.password.message} />}
         {formPasswordError && <ErrorMessage message={formPasswordError} />}
       </section>
-      <button type="submit" className="button-primary">
+      <button type="submit" className="button-primary" disabled={!isDirty || !isValid}>
         Login Your Account
       </button>
       <section>
