@@ -61,7 +61,7 @@ export default function RegistrationForm(): JSX.Element {
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
-  const { errors } = formState;
+  const { errors, isDirty, isValid, isSubmitting } = formState;
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [formEmailError, setFormEmailError] = useState<string>('');
   const { setCustomerCredentials } = useLoginData();
@@ -335,7 +335,11 @@ export default function RegistrationForm(): JSX.Element {
           <InputCheckBox onChange={onChange} id="billing" name="billing" label="Set Billing Address as default" />
         )}
       />
-      <button type="submit" className="button-primary button-registration">
+      <button
+        type="submit"
+        className="button-primary button-registration"
+        disabled={!isDirty || !isValid || isSubmitting}
+      >
         Create Your Account
       </button>
       <section>
