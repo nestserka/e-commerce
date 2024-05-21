@@ -37,7 +37,7 @@ export default function LoginForm(): JSX.Element {
   const [formPasswordError, setFormPasswordError] = useState<string>('');
   const [formError, setFormError] = useState<string>('');
 
-  const inputEmailProps = getInputProps('email', 'email', 'Enter your email', 'email');
+  const inputEmailProps = getInputProps('text', 'email', 'Enter your email', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Enter your password', 'off');
 
   const onSubmit = (data: LoginFormValues): void => {
