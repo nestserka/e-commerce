@@ -32,7 +32,8 @@
     }
 
     .nav-item,
-    .nav-button {
+    .nav-button,
+    .profile-title {
       @include font-default-bold;
 
       cursor: pointer;
@@ -54,6 +55,33 @@
       &:hover {
         color: $font-color-primary;
         background-color: $bg-color-btn-default;
+      }
+    }
+
+    .nav-item-profile {
+      @include flex-justify-center;
+      padding: 0;
+      gap: 0.313em;
+
+      .profile-wrapper {
+        @include flex-justify-center;
+        width: 42px;
+        height: 42px;
+        background: linear-gradient(#b2e3ff 0%, #a5a9ff 52%, #e0b9ff 100%);
+        border-radius: 50%;
+        padding: 0.75em;
+        cursor: pointer;
+        transition: transform 0.5s ease;
+
+        &:hover {
+          animation: spin 2s linear infinite;
+        }
+      }
+
+      .profile-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
       }
     }
   }
@@ -83,6 +111,15 @@
       width: 100%;
       height: 100%;
       border-radius: 24px;
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
     }
   }
 }

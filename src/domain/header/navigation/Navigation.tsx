@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom';
 
 import style from './_navigation.module.scss';
 import { ROUTES } from '../../../constants/constants';
+import icon from '../../../../public/assets/icons/astronaut-icon.jpg';
 
 import type { NavLinkProps, NavigationProps } from './types';
 
@@ -37,9 +38,13 @@ export default function Navigation({
           </li>
         )}
       </ul>
-      {/* TODO:  to realize at the 3rd sprint */}
-       <ul className={style['nav-list-user']}>
-        <li className={style['nav-item']}>Profile</li>
+      <ul className={style['nav-list-user']}>
+        <li className={style['nav-item-profile']}>
+          <div className={style['profile-wrapper']}>
+            <img src={icon} className={style['profile-icon']} alt="" />
+          </div>
+          <span className={style['profile-title']}>Profile</span>
+        </li>
         <li className={style['nav-item']}>Cart</li>
       </ul>
     </nav>
