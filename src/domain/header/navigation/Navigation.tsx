@@ -12,6 +12,7 @@ export default function Navigation({
   isNavOpen,
   handleClickLogOut,
   onClick,
+  customerId,
 }: NavigationProps): JSX.Element {
   return (
     <nav className={`${style.nav} ${isNavOpen ? style['nav-open'] : ''}`} data-testid="navigation">
@@ -19,7 +20,8 @@ export default function Navigation({
         {links
           .filter(
             (link: NavLinkProps): boolean =>
-              !isStatus || (link.route !== ROUTES.SING_IN && link.route !== ROUTES.SING_UP),
+              (!isStatus || (link.route !== ROUTES.SING_IN && link.route !== ROUTES.SING_UP)) &&
+              link.route !== ROUTES.PROFILE,
           )
           .map(
             (link: NavLinkProps): JSX.Element => (
@@ -39,13 +41,20 @@ export default function Navigation({
         )}
       </ul>
       <ul className={style['nav-list-user']}>
-        <li className={style['nav-item-profile']}>
-          <div className={style['profile-wrapper']}>
-            <img src={icon} className={style['profile-icon']} alt="" />
-          </div>
-          <span className={style['profile-title']}>Profile</span>
+        {isStatus && (
+          <NavLink to={`${ROUTES.PROFILE.replace(':customerId', customerId)}`} onClick={onClick}>
+            <li className={style['nav-item-profile']} key={customerId}>
+              <div className={style['profile-wrapper']}>
+                <img src={icon} className={style['profile-icon']} alt="" />
+              </div>
+              <span className={style['profile-title']}>Profile</span>
+            </li>
+          </NavLink>
+        )}
+        <li className={style['nav-item-cart']}>
+          <div className={style['cart-wrapper']} />
+          <span className={style['cart-title']}>Cart</span>
         </li>
-        <li className={style['nav-item']}>Cart</li>
       </ul>
     </nav>
   );

@@ -11,7 +11,7 @@ import { api } from '../../api/Api';
 import type { CustomerCredentials } from '../../core/state/types';
 
 export default function Header(): JSX.Element {
-  const { isAuth, setCustomerCredentials } = useLoginData();
+  const { isAuth, customerId, setCustomerCredentials } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   const onClickButton = (): void => {
@@ -48,6 +48,7 @@ export default function Header(): JSX.Element {
         isNavOpen={isNavOpen}
         handleClickLogOut={onClickButton}
         onClick={toggleNav}
+        customerId={customerId}
       />
 
       <section className={style['burger-wrapper']}>
