@@ -10,9 +10,8 @@
   min-height: 70px;
 }
 
-.logo-wrapper,
-.burger-wrapper {
-  min-width: 110px;
+.logo-wrapper {
+  flex-basis: 33%;
 }
 
 .burger-wrapper {

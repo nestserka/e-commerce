@@ -2,25 +2,25 @@
 @import '../../../assets/styles/mixins';
 
 .nav {
-  @include flex-justify-center;
+  @include flex-center-space-between;
 
   position: relative;
   flex-grow: 1;
   transition: right 1s ease-in-out;
-
-  .nav-list {
-    border: 1px solid $border-color-default;
-    border-radius: 36px;
-  }
 
   .nav-list,
   .nav-list-user {
     @include flex-justify-center;
 
     gap: 1.5em;
+
     margin: 0;
     padding: 12px;
+
     list-style: none;
+
+    border: 1px solid $border-color-default;
+    border-radius: 36px;
 
     .nav-button {
       @include font-default-bold;

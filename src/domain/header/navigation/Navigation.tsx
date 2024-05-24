@@ -38,10 +38,10 @@ export default function Navigation({
         )}
       </ul>
       {/* TODO:  to realize at the 3rd sprint */}
-      {/* <ul className={style['nav-list-user']}>
+       <ul className={style['nav-list-user']}>
         <li className={style['nav-item']}>Profile</li>
         <li className={style['nav-item']}>Cart</li>
-      </ul> */}
+      </ul>
     </nav>
   );
 }
