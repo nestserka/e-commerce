@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 
 import style from './_navigation.module.scss';
-import { ROUTES } from '../../../constants/constants';
+import { DYNAMIC_ROUTES, ROUTES } from '../../../constants/constants';
 import icon from '../../../../public/assets/icons/astronaut-icon.jpg';
 
 import type { NavLinkProps, NavigationProps } from './types';
@@ -42,7 +42,7 @@ export default function Navigation({
       </ul>
       <ul className={style['nav-list-user']}>
         {isStatus && (
-          <NavLink to={`${ROUTES.PROFILE.replace(':customerId', customerId)}`} onClick={onClick}>
+          <NavLink to={`${DYNAMIC_ROUTES.PROFILE}${customerId}`} onClick={onClick}>
             <li className={style['nav-item-profile']} key={customerId}>
               <div className={style['profile-wrapper']}>
                 <img src={icon} className={style['profile-icon']} alt="" />

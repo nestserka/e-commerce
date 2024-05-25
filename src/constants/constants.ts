@@ -19,6 +19,14 @@ export const ROUTES = {
   NOT_FOUND: '*',
 } as const;
 
+export const DYNAMIC_ROUTES = {
+  PROFILE: '/profile/',
+  PRODUCT: '/catalog/',
+  CARD: '/card/',
+  CATEGORY: '/catalog',
+  BESTSELLER: 'main/',
+};
+
 export const NAV_LINKS: NavLinkProps[] = [
   { title: 'Home', route: ROUTES.HOME },
   { title: 'Catalog', route: ROUTES.CATALOG },
