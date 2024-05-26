@@ -45,10 +45,12 @@ export const routesConfig: RouteObject[] = [
       {
         path: ROUTES.CATALOG,
         element: <CatalogPage />,
-      },
-      {
-        path: ROUTES.CATEGORY,
-        element: <CategoryPage />,
+        children: [
+          {
+            path: ROUTES.CATEGORY,
+            element: <CategoryPage />,
+          },
+        ],
       },
       {
         path: ROUTES.PRODUCT,

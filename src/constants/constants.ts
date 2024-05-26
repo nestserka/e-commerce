@@ -11,6 +11,7 @@ export const ROUTES = {
   SING_UP: '/sign_up',
   ABOUT: '/about',
   CATALOG: '/catalog',
+  CATALOG_ALL: '/catalog/all',
   CATEGORY: '/catalog/:category',
   PRODUCT: '/catalog/:category/:productId',
   PROFILE: '/profile/:customerId',
@@ -25,11 +26,11 @@ export const DYNAMIC_ROUTES = {
   CARD: '/card/',
   CATEGORY: '/catalog',
   BESTSELLER: 'main/',
-};
+} as const;
 
 export const NAV_LINKS: NavLinkProps[] = [
   { title: 'Home', route: ROUTES.HOME },
-  { title: 'Catalog', route: ROUTES.CATALOG },
+  { title: 'Catalog', route: ROUTES.CATALOG_ALL },
   { title: 'About', route: ROUTES.ABOUT },
   { title: 'Sign In', route: ROUTES.SING_IN },
   { title: 'Sign Up', route: ROUTES.SING_UP },
