@@ -1,7 +1,4 @@
 import { useParams } from 'react-router';
-import Swiper from 'swiper';
-
-import 'swiper/css';
 
 import style from './_product.module.scss';
 
