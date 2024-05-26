@@ -46,10 +46,7 @@ export const createClientBuilders = (): ByProjectKeyRequestBuilder => {
     .withLoggerMiddleware()
     .build();
 
-  const apiRoot = createApiBuilderFromCtpClient(
-    ctpClient,
-    'https://auth.us-central1.gcp.commercetools.com/',
-  ).withProjectKey({
+  const apiRoot = createApiBuilderFromCtpClient(ctpClient, import.meta.env.VITE_APP_AUTH_URL).withProjectKey({
     projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
   });
 
