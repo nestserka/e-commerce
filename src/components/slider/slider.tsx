@@ -1,17 +1,22 @@
-import { A11y, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules';
+import { useState } from 'react';
+import { A11y, FreeMode, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 
 export default function Slider(): JSX.Element {
+  const [thumbsSwiper] = useState(null);
+
   return (
     <Swiper
-      modules={[Navigation, Pagination, Scrollbar, A11y, Thumbs]}
+      modules={[FreeMode, Navigation, Pagination, Scrollbar, A11y, Thumbs]}
       spaceBetween={50}
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
+      thumbs={{ swiper: thumbsSwiper }}
+      className="mySwiper"
       onSlideChange={() => {
         console.log('slide change');
       }}
