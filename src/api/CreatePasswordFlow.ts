@@ -1,8 +1,8 @@
 import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
-
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import type { Client, HttpMiddlewareOptions, PasswordAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';
+import { tokenCache } from './NasaTokenCache';
 
 export const createLoginUserClient = (username: string, password: string): ByProjectKeyRequestBuilder => {
   if (typeof import.meta.env.VITE_APP_CLIENT_ID !== 'string') {
@@ -37,6 +37,7 @@ export const createLoginUserClient = (username: string, password: string): ByPro
       },
     },
     scopes: [import.meta.env.VITE_APP_CLIENT_SCOPES],
+    tokenCache,
     fetch,
   };
 
