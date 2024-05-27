@@ -14,21 +14,21 @@ export default function ProfilePage(): JSX.Element {
 
   useEffect(() => {
     const fetchCustomer = async (): Promise<void> => {
-        api.swithToPrivateToken(tokenCache.get().token);
-        const customerData = await api.getCustomer();
-        console.log(customerData);
+      api.swithToPrivateToken(tokenCache.get().token);
+      const customerData = await api.getCustomer();
+      console.log(customerData);
     };
 
     fetchCustomer().catch((error: Error) => {
       console.log(error.message);
-    });;
+    });
   }, [customerId]);
 
   return (
     <section className={style['profile-content']} data-testid="profile">
       <div className={style['profile-content-wrapper']}>
-      <ProfileAvatar /> 
-      <ProfileInfo />
+        <ProfileAvatar />
+        <ProfileInfo />
       </div>
     </section>
   );
