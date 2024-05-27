@@ -3,20 +3,33 @@ import { A11y, FreeMode, Navigation, Pagination, Scrollbar, Thumbs } from 'swipe
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
+import style from './_slider.module.scss';
 
-export default function Slider(): JSX.Element {
+interface Image {
+  dimensions: {
+    h: number;
+    w: number;
+  };
+  url: string;
+}
+
+interface SliderProps {
+  images: Image[];
+}
+
+export default function Slider({ images }: SliderProps): JSX.Element {
   const [thumbsSwiper] = useState(null);
 
   return (
     <Swiper
       modules={[FreeMode, Navigation, Pagination, Scrollbar, A11y, Thumbs]}
-      spaceBetween={50}
+      spaceBetween={0}
       slidesPerView={1}
       navigation
       pagination={{ clickable: true }}
       scrollbar={{ draggable: true }}
       thumbs={{ swiper: thumbsSwiper }}
-      className="mySwiper"
+      className={style.myswiper}
       onSlideChange={() => {
         console.log('slide change');
       }}
@@ -24,10 +37,11 @@ export default function Slider(): JSX.Element {
         console.log(swiper);
       }}
     >
-      <SwiperSlide>Slide 1</SwiperSlide>
-      <SwiperSlide>Slide 2</SwiperSlide>
-      <SwiperSlide>Slide 3</SwiperSlide>
-      <SwiperSlide>Slide 4</SwiperSlide>
+      {images.map((image, index) => (
+        <SwiperSlide key={image.url}>
+          <img src={image.url} alt={`Slide ${index}`} />
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 }

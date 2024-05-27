@@ -49,7 +49,7 @@ export default function ProductPage(): JSX.Element {
       Product № {productId}
       <h1>{product.body.name.en}</h1>
       <p>{product.body.description?.en}</p>
-      <Slider />
+      <Slider images={product.body.masterVariant.images} />
     </section>
   );
 }

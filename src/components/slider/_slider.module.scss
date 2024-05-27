@@ -1,0 +1,10 @@
+.myswiper {
+  width: 400px;
+  height: 400px;
+
+  & img {
+    cursor: pointer;
+    width: 400px;
+    height: 400px;
+  }
+}

@@ -42,9 +42,13 @@ export default function AboutPage(): JSX.Element {
 
   return (
     <section className={style.about} data-testid="about">
-      <h1>{product.body.name.en}</h1>
-      <p>{product.body.description?.en}</p>
-      <Slider />
+      <section>
+        <Slider images={product.body.masterVariant.images} />
+      </section>
+      <section>
+        <h1>{product.body.name.en}</h1>
+        <p>{product.body.description?.en}</p>
+      </section>
     </section>
   );
 }
