@@ -3,6 +3,9 @@ import { A11y, FreeMode, Navigation, Pagination, Scrollbar, Thumbs } from 'swipe
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 import style from './_slider.module.scss';
 
 interface Image {
@@ -14,7 +17,7 @@ interface Image {
 }
 
 interface SliderProps {
-  images: Image[];
+  images: Image[] | undefined;
 }
 
 export default function Slider({ images }: SliderProps): JSX.Element {
@@ -37,7 +40,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         console.log(swiper);
       }}
     >
-      {images.map((image, index) => (
+      {images?.map((image, index) => (
         <SwiperSlide key={image.url}>
           <img src={image.url} alt={`Slide ${index}`} />
         </SwiperSlide>

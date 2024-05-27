@@ -17,8 +17,10 @@ export default function ProductPage(): JSX.Element {
 
   const fetchProduct = async (): Promise<void> => {
     try {
-      const data = await api.getProductById('ZHUE023-1');
-      setProduct(data);
+      if (productId) {
+        const data = await api.getProductById(productId);
+        setProduct(data);
+      }
     } catch (err) {
       setError('Failed to fetch product');
     } finally {
@@ -46,10 +48,13 @@ export default function ProductPage(): JSX.Element {
 
   return (
     <section className={style.product} data-testid="product">
-      Product № {productId}
-      <h1>{product.body.name.en}</h1>
-      <p>{product.body.description?.en}</p>
-      <Slider images={product.body.masterVariant.images} />
+      <section>
+        <Slider images={product.body.masterVariant.images} />
+      </section>
+      <section>
+        <h1>{product.body.name.en}</h1>
+        <p>{product.body.description?.en}</p>
+      </section>
     </section>
   );
 }
