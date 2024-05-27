@@ -17,18 +17,22 @@ export default function ProfilePage(): JSX.Element {
     const fetchCustomer = async (): Promise<void> => {
       api.switchToPrivateToken(tokenCache.get().token);
       await api.getCustomer().then((response) => {
-      if (response?.body.dateOfBirth){
-      const shippingAddresses = extractShippingAddresses(response.body.addresses, response.body.defaultShippingAddressId, response.body.shippingAddressIds);
-      const customerInfo = {
-         valueEmail: response.body.email,
-         firstName: response.body.firstName,
-         lastName: response.body.lastName,
-         dateOfBirth: formatDateOfBirth(response.body.dateOfBirth),
-         shippingAddresses,
-      }
-      console.log(customerInfo);
-    }
-    });
+        if (response?.body.dateOfBirth) {
+          const shippingAddresses = extractShippingAddresses(
+            response.body.addresses,
+            response.body.defaultShippingAddressId,
+            response.body.shippingAddressIds,
+          );
+          const customerInfo = {
+            valueEmail: response.body.email,
+            firstName: response.body.firstName,
+            lastName: response.body.lastName,
+            dateOfBirth: formatDateOfBirth(response.body.dateOfBirth),
+            shippingAddresses,
+          };
+          console.log(customerInfo);
+        }
+      });
     };
 
     fetchCustomer().catch((error: Error) => {
