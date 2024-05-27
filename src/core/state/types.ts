@@ -1,3 +1,5 @@
+import type { Address } from '../../utils/types';
+
 export interface CustomerCredentials {
   valueEmail: string;
   valuePassword: string;
@@ -24,4 +26,14 @@ export interface LoginState {
 export interface IsShownModal {
   isShown: boolean;
   setIsShown: (isSHown: boolean) => void;
+}
+
+export interface CustomerInfo {
+  valueEmail: string;
+  valuePassword?: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  shippingAddress: Address[];
+  billingAddress: Address[];
 }

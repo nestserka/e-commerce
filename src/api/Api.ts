@@ -29,7 +29,7 @@ export class Api {
     this.apiRoot = createClientBuilders();
   }
 
-  public swithToPrivateToken(token: string): void {
+  public switchToPrivateToken(token: string): void {
     this.apiRoot = createClientWithAttachedToken(token);
   }
 
@@ -106,9 +106,7 @@ export class Api {
 
       return await customer;
     } catch (error) {
-      console.log(error);
-
-      return undefined;
+      throw new Error('No Bear Token found on request');
     }
   }
 }

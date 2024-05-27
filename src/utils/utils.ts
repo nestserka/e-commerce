@@ -1,4 +1,6 @@
-import type { InputProps } from './types';
+import dayjs from 'dayjs';
+
+import type { Address, InputProps } from './types';
 
 export const getInputProps = (type: string, id: string, placeholder: string, autoComplete: string): InputProps => ({
   type,
@@ -42,3 +44,18 @@ export function handleLoginError(count: number | undefined): ErrorLoginForm {
     },
   };
 }
+
+export const formatDateOfBirth = (dateString: string): string => dayjs(dateString).format('DD.MM.YYYY');
+
+export const extractShippingAddresses = (
+  addresses: Address[],
+  defaultShippingAddressId?: string,
+  shippingAddressIds?: string[],
+): Address[] =>
+  addresses
+    .filter((address) => shippingAddressIds?.includes(address.id ?? ''))
+    .map((address) => ({
+      ...address,
+      isDefault:
+        defaultShippingAddressId !== undefined && address.id !== undefined && address.id === defaultShippingAddressId,
+    }));

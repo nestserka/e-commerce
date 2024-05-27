@@ -6,6 +6,7 @@ import { api } from '../../api/Api';
 import { tokenCache } from '../../api/NasaTokenCache';
 import ProfileAvatar from '../../domain/customer/avatar/profileAvatar';
 import ProfileInfo from '../../domain/customer/personalnfo/personalInfo';
+import { extractShippingAddresses, formatDateOfBirth } from '../../utils/utils';
 
 import type { Params } from 'react-router-dom';
 
@@ -14,9 +15,20 @@ export default function ProfilePage(): JSX.Element {
 
   useEffect(() => {
     const fetchCustomer = async (): Promise<void> => {
-      api.swithToPrivateToken(tokenCache.get().token);
-      const customerData = await api.getCustomer();
-      console.log(customerData);
+      api.switchToPrivateToken(tokenCache.get().token);
+      await api.getCustomer().then((response) => {
+      if (response?.body.dateOfBirth){
+      const shippingAddresses = extractShippingAddresses(response.body.addresses, response.body.defaultShippingAddressId, response.body.shippingAddressIds);
+      const customerInfo = {
+         valueEmail: response.body.email,
+         firstName: response.body.firstName,
+         lastName: response.body.lastName,
+         dateOfBirth: formatDateOfBirth(response.body.dateOfBirth),
+         shippingAddresses,
+      }
+      console.log(customerInfo);
+    }
+    });
     };
 
     fetchCustomer().catch((error: Error) => {

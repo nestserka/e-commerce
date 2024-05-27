@@ -8,10 +8,12 @@ export interface InputProps {
 }
 
 export interface Address {
-  streetName: string;
-  city: string;
-  postalCode: string;
+  id?: string;
+  streetName?: string;
+  city?: string;
+  postalCode?: string;
   country: string;
+  isDefault?: boolean;
 }
 
 export function isTokenStore(obj: unknown): obj is TokenStore {
