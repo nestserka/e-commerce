@@ -1,0 +1,21 @@
+@import '../../../assets//styles/mixins';
+@import '../../../assets//styles/variables';
+
+.personal-section {
+  @include flex-justify-center;
+  flex-direction: row;
+  gap: 1.5em;
+  width: 100%;
+  margin-top: 1.375em;
+
+  .personal-section-wrapper {
+    @include form-background-gradient;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    width: 100%;
+    border-radius: 24px;
+    padding: 2.813em;
+  }
+}

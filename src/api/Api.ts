@@ -2,10 +2,12 @@ import { apiRoot as adminApiRoot } from './AdminBuilder';
 import { createAnonymousSessionFlow } from './CreateAnonymousApi';
 import { createLoginUserClient } from './CreatePasswordFlow';
 import { createClientBuilders } from './ClientBuilder';
+import { createClientWithAttachedToken } from './WithExistingToken';
 
 import type {
   ByProjectKeyRequestBuilder,
   ClientResponse,
+  Customer,
   CustomerDraft,
   CustomerPagedQueryResponse,
   CustomerSignInResult,
@@ -25,6 +27,10 @@ export class Api {
 
   public switchClientBuilders(): void {
     this.apiRoot = createClientBuilders();
+  }
+
+  public swithToPrivateToken(token: string): void {
+    this.apiRoot = createClientWithAttachedToken(token);
   }
 
   public root(): ByProjectKeyRequestBuilder {
@@ -87,6 +93,18 @@ export class Api {
       const products = this.apiRoot.productProjections().get().execute();
 
       return await products;
+    } catch (error) {
+      console.log(error);
+
+      return undefined;
+    }
+  }
+
+  public async getCustomer(): Promise<ClientResponse<Customer> | undefined> {
+    try {
+      const customer = this.apiRoot.me().get().execute();
+
+      return await customer;
     } catch (error) {
       console.log(error);
 
