@@ -7,6 +7,7 @@ import logo from '../../assets/images/ns-store-logo.svg';
 import { LS_PREFIX, NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useLoginData } from '../../core/state/loginState';
 import { api } from '../../api/Api';
+import { tokenCache } from '../../api/NasaTokenCache';
 
 import type { CustomerCredentials } from '../../core/state/types';
 
@@ -24,6 +25,7 @@ export default function Header(): JSX.Element {
     setCustomerCredentials(resetUser);
     localStorage.removeItem(`isAuth-${LS_PREFIX}`);
     localStorage.removeItem(`customerId-${LS_PREFIX}`);
+    tokenCache.clear();
     api.switchClientBuilders();
     api.getAllProduct().catch((error: Error) => {
       console.log(error.message);

@@ -10,11 +10,7 @@ export default function CatalogPage(): JSX.Element {
   const elem3 = 'name-category3';
   const elem4 = 'name-category4';
 
-  console.log( api.root()
-  .categories()
-  .get()
-  .execute()
-    )
+  console.log(api.root().categories().get().execute());
 
   return (
     <section className={style.catalog} data-testid="catalog">

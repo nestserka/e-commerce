@@ -1,3 +1,5 @@
+import type { TokenStore } from '@commercetools/sdk-client-v2';
+
 export interface InputProps {
   type: string;
   id: string;
@@ -10,4 +12,8 @@ export interface Address {
   city: string;
   postalCode: string;
   country: string;
+}
+
+export function isTokenStore(obj: unknown): obj is TokenStore {
+  return Boolean(obj) && typeof obj === 'object' && obj !== null && 'token' in obj && 'expirationTime' in obj;
 }
