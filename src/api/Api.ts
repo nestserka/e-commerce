@@ -95,15 +95,13 @@ export class Api {
     }
   }
 
-  public async getProductById(productId: string): Promise<ClientResponse<ProductProjection> | undefined> {
+  public async getProductById(productKey: string): Promise<ClientResponse<ProductProjection>> {
     try {
-      const product = this.apiRoot.productProjections().withKey({ key: productId }).get().execute();
+      const product = this.apiRoot.productProjections().withKey({ key: productKey }).get().execute();
 
       return await product;
     } catch (error) {
-      console.log(error);
-
-      return undefined;
+      throw new Error('no products found with the specified key');
     }
   }
 }
