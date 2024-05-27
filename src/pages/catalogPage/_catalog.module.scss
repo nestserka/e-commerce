@@ -2,4 +2,6 @@
 
 .catalog {
   @include page-layout-container;
+
+  flex-direction: column;
 }
