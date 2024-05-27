@@ -9,7 +9,7 @@ import type {
   CustomerDraft,
   CustomerPagedQueryResponse,
   CustomerSignInResult,
-  Product,
+  ProductProjection,
   ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 
@@ -95,9 +95,9 @@ export class Api {
     }
   }
 
-  public async getProductById(productId: string): Promise<ClientResponse<Product> | undefined> {
+  public async getProductById(productId: string): Promise<ClientResponse<ProductProjection> | undefined> {
     try {
-      const product = this.apiRoot.products().withKey({ key: productId }).get().execute();
+      const product = this.apiRoot.productProjections().withKey({ key: productId }).get().execute();
 
       return await product;
     } catch (error) {
