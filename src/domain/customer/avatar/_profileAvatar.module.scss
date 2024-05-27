@@ -4,6 +4,7 @@
 .profile-avatar-wrapper {
   width: 100%;
   position: relative;
+  height: 8.625em;
 
   .avatar-box {
     width: 100%;
@@ -21,7 +22,7 @@
     border-radius: 50%;
     position: absolute;
     z-index: 20;
-    top: 15%;
+    top: 25%;
     left: 5%;
 
     .profile-icon {

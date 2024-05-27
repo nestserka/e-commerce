@@ -1,5 +1,5 @@
 import style from './_infoField.module.scss';
-import styles from '../../../components/profileField/_profileField.module.scss'
+import styles from '../../../components/profileField/_profileField.module.scss';
 
 export default function InfoField({ title, value }: { title: string; value: string }): JSX.Element {
   return (

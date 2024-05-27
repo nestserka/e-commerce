@@ -6,6 +6,7 @@
 
   flex-direction: column;
   gap: 1em;
+  width: 100%;
 
   .profile-subtitle-wrapper {
     @include flex-center-space-between;
@@ -17,6 +18,12 @@
       color: $border-color-active;
       text-transform: capitalize;
       white-space: nowrap;
+    }
+
+    .profile-button-wrapper {
+      @include flex-justify-center;
+      flex-direction: row;
+      gap: 0.5em;
     }
 
     .edit-button {
