@@ -1,0 +1,22 @@
+@import '../../../assets//styles/mixins';
+@import '../../../assets//styles/variables';
+
+.info-field-wrapper {
+  @include flex-center-space-between;
+  flex-direction: row;
+  width: 100%;
+  gap: 5em;
+
+  .profile-subtitle {
+    @include font-default-regular;
+    color: $border-color-active;
+    text-transform: capitalize;
+    white-space: nowrap;
+    min-width: 6.25em;
+  }
+
+  .profile-field-input {
+    color: $checkbox-color-checked;
+    flex-grow: 1;
+  }
+}

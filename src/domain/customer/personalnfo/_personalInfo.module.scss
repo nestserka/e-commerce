@@ -6,6 +6,7 @@
   flex-direction: row;
   gap: 1.5em;
   width: 100%;
+  align-items: stretch;
   margin-top: 1.375em;
 
   .personal-section-wrapper {
@@ -17,5 +18,17 @@
     width: 100%;
     border-radius: 24px;
     padding: 2.813em;
+  }
+
+  .personal-section-button {
+    padding: 0.781em 1em;
+    border-radius: 24px;
+    border: 1px solid $border-color-default;
+    max-width: 11em;
+    background: none;
+    color: $font-color-primary-60;
+    font: inherit;
+    margin-left: auto;
+    cursor: pointer;
   }
 }
