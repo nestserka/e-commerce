@@ -25,10 +25,10 @@ interface SliderProps {
 }
 
 export default function Slider({ images }: SliderProps): JSX.Element {
-  const [firstSwiper, setFirstSwiper] = useState<SwiperProps | null>(null);
-  const [secondSwiper, setSecondSwiper] = useState<SwiperProps | null>(null);
+  const [productSwiper, setProductSwiper] = useState<SwiperProps | null>(null);
+  const [modalProductSwiper, setModalProductSwiper] = useState<SwiperProps | null>(null);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperProps | null>(null);
-  const [isGalleryOpen, setIsGalleryOpen] = useState<boolean>(false);
+  const [isModalSwiperShown, setIsModalSwiperShown] = useState<boolean>(false);
 
   return (
     <>
@@ -41,12 +41,12 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         pagination={{ clickable: true }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         className={style.myswiper}
-        controller={{ control: secondSwiper }}
+        controller={{ control: modalProductSwiper }}
         onSlideChange={() => {
           console.log('slide change');
         }}
         onSwiper={(swiper) => {
-          setFirstSwiper(swiper);
+          setProductSwiper(swiper);
         }}
         style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
       >
@@ -54,7 +54,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           <SwiperSlide
             key={image.url}
             onClick={() => {
-              setIsGalleryOpen(true);
+              setIsModalSwiperShown(true);
             }}
           >
             <img src={image.url} alt={`Slide ${index}`} />
@@ -78,13 +78,13 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         ))}
       </Swiper>
 
-      <section className={isGalleryOpen ? style.modalopen : style.modalhide}>
+      <section className={isModalSwiperShown ? style.modalopen : style.modalhide}>
         <button
           aria-label="Close"
           type="button"
           className={style['close-button']}
           onClick={(): void => {
-            setIsGalleryOpen(false);
+            setIsModalSwiperShown(false);
           }}
         />
         <Swiper
@@ -95,13 +95,13 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
           loop
-          controller={{ control: firstSwiper }}
+          controller={{ control: productSwiper }}
           className={style.modalswiper}
           onSlideChange={() => {
             console.log('slide change');
           }}
           onSwiper={(swiper) => {
-            setSecondSwiper(swiper);
+            setModalProductSwiper(swiper);
           }}
           style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
         >
