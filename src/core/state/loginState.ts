@@ -68,7 +68,7 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
       billingAddress: customerInfo.billingAddress,
     });
   },
-  reset: () => {
+  reset: (): void => {
     set({
       valueEmail: '',
       firstName: '',

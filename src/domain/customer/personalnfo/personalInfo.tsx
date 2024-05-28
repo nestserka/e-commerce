@@ -5,8 +5,7 @@ import InfoField from '../infoField/infoField';
 import style from './_personalInfo.module.scss';
 
 export default function ProfileInfo(): JSX.Element {
-
-  const {valueEmail, firstName, lastName, dateOfBirth} = useCustomerInfo();
+  const { valueEmail, firstName, lastName, dateOfBirth } = useCustomerInfo();
   const handleEditClick = (): void => {
     console.log('Edit button clicked');
   };
@@ -16,17 +15,12 @@ export default function ProfileInfo(): JSX.Element {
       <section className={style['personal-section']} data-testid="personal-section">
         <section className={style['personal-section-wrapper']}>
           <FormSubTitle subTitle="confidential Info" />
-          <ProfileField
-            title="Email"
-            onEditClick={handleEditClick}
-            inputVal= {valueEmail}
-            isAddress={false}
-          />
+          <ProfileField title="Email" onEditClick={handleEditClick} inputVal={valueEmail} isAddress={false} />
           <ProfileField title="Password" onEditClick={handleEditClick} inputVal="****..." isAddress={false} />
         </section>
         <section className={style['personal-section-wrapper']}>
           <FormSubTitle subTitle="personal info" />
-          <InfoField title="First Name" value={firstName}/>
+          <InfoField title="First Name" value={firstName} />
           <InfoField title="Last Name" value={lastName} />
           <InfoField title="Date of Birth" value={dateOfBirth} />
           <button type="button" className={style['personal-section-button']}>
