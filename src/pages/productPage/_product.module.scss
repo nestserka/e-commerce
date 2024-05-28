@@ -6,9 +6,24 @@
   @include page-layout-container;
 }
 
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-info-wrapper {
+  padding: 0 12em;
+}
+
 .title {
   @include font-display-medium;
 
+  margin-bottom: 1.8em;
   font-size: 36px;
+  line-height: 1.2;
   color: $font-color-primary;
+}
+
+.description {
+  margin: 1.5em 0 3em;
 }

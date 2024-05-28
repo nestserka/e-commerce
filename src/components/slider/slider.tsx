@@ -37,7 +37,6 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         spaceBetween={0}
         slidesPerView={1}
         navigation
-        loop
         pagination={{ clickable: true }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         className={style.myswiper}
@@ -89,7 +88,6 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           navigation
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
-          loop
           controller={{ control: productSwiper }}
           className={style.modalswiper}
           onSwiper={setModalProductSwiper}
