@@ -6,7 +6,7 @@ import { api } from '../../api/Api';
 import { tokenCache } from '../../api/NasaTokenCache';
 import ProfileAvatar from '../../domain/customer/avatar/profileAvatar';
 import { extractShippingAddresses, formatDateOfBirth } from '../../utils/utils';
-import { useCustomerInfo } from '../../core/state/loginState';
+import { useCustomerInfo } from '../../core/state/userState';
 
 import type { Params } from 'react-router-dom';
 

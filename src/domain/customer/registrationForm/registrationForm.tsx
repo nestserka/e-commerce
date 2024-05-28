@@ -39,7 +39,7 @@ import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
 import RegistrationData from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
-import { showModalMessage, useLoginData } from '../../../core/state/loginState';
+import { showModalMessage, useLoginData } from '../../../core/state/userState';
 import { Api, api } from '../../../api/Api';
 
 const schema = z.object({

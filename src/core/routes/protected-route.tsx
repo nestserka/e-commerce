@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router';
 
 import { ROUTES } from '../../constants/constants';
-import { useLoginData } from '../state/loginState';
+import { useLoginData } from '../state/userState';
 
 export interface Protected {
   children: JSX.Element;

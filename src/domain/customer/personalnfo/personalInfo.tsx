@@ -1,6 +1,6 @@
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ProfileField from '../../../components/profileField/profileField';
-import { useCustomerInfo } from '../../../core/state/loginState';
+import { useCustomerInfo } from '../../../core/state/userState';
 import InfoField from '../infoField/infoField';
 import style from './_personalInfo.module.scss';
 

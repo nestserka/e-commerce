@@ -5,7 +5,7 @@ import style from './_header.module.scss';
 import Navigation from './navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
 import { LS_PREFIX, NAV_LINKS, ROUTES } from '../../constants/constants';
-import { useCustomerInfo, useLoginData } from '../../core/state/loginState';
+import { useCustomerInfo, useLoginData } from '../../core/state/userState';
 import { api } from '../../api/Api';
 import { tokenCache } from '../../api/NasaTokenCache';
 

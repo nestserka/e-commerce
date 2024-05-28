@@ -5,7 +5,7 @@ import regIcon from '../../assets/images/icons/register-nav-icon.svg';
 import loginIcon from '../../assets/images/icons/login-nav-icon.svg';
 import aboutIcon from '../../assets/images/icons/team-nav-icon.svg';
 import catalogIcon from '../../assets/images/icons/catalog-nav-icon.svg';
-import { showModalMessage } from '../../core/state/loginState';
+import { showModalMessage } from '../../core/state/userState';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 
 const navItemsContent = [

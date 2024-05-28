@@ -9,7 +9,7 @@ import Input from '../ui/input/input';
 import InputPassword from '../ui/inputPassword/inputPassword';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
-import { useLoginData } from '../../core/state/loginState';
+import { useLoginData } from '../../core/state/userState';
 import { getInputProps, handleLoginError } from '../../utils/utils';
 import { EMAIL_VALIDATION_SCHEMA, LS_PREFIX, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
 import { Api, api } from '../../api/Api';
