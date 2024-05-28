@@ -7,9 +7,9 @@ import { tokenCache } from '../../api/NasaTokenCache';
 import ProfileAvatar from '../../domain/customer/avatar/profileAvatar';
 import { extractShippingAddresses, formatDateOfBirth } from '../../utils/utils';
 import { useCustomerInfo } from '../../core/state/userState';
+import ProfileView from '../../domain/customer/profileView/profileView';
 
 import type { Params } from 'react-router-dom';
-import ProfileView from '../../domain/customer/profileView/profileView';
 
 export default function ProfilePage(): JSX.Element {
   const { customerId }: Readonly<Params<string>> = useParams();

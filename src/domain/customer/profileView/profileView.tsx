@@ -17,8 +17,20 @@ export default function ProfileView(): JSX.Element {
       <section className={style['personal-section']} data-testid="personal-section">
         <section className={style['personal-section-wrapper']}>
           <FormSubTitle subTitle="confidential Info" />
-          <ProfileField title="Email" onEditClick={handleEditClick} inputVal={valueEmail} isAddress={false} isDefault={false} />
-          <ProfileField title="Password" onEditClick={handleEditClick} inputVal="****..." isAddress={false} isDefault={false} />
+          <ProfileField
+            title="Email"
+            onEditClick={handleEditClick}
+            inputVal={valueEmail}
+            isAddress={false}
+            isDefault={false}
+          />
+          <ProfileField
+            title="Password"
+            onEditClick={handleEditClick}
+            inputVal="****..."
+            isAddress={false}
+            isDefault={false}
+          />
         </section>
         <section className={style['personal-section-wrapper']}>
           <FormSubTitle subTitle="personal info" />
@@ -34,27 +46,27 @@ export default function ProfileView(): JSX.Element {
         <section className={style['personal-section-wrapper']}>
           <FormSubTitle subTitle="available addresses" />
           <div className={style['personal-section-group']}>
-          <div className={style.wrapper}>
-            {shippingAddress.map((address: Address) => (
-              <ProfileField
-                title="Shipping Address"
-                onEditClick={handleEditClick}
-                inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
-                isAddress
-                isDefault = {address.isDefault ?? false}
-              />
-            ))}
+            <div className={style.wrapper}>
+              {shippingAddress.map((address: Address) => (
+                <ProfileField
+                  title="Shipping Address"
+                  onEditClick={handleEditClick}
+                  inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
+                  isAddress
+                  isDefault={address.isDefault ?? false}
+                />
+              ))}
             </div>
             <div className={style.wrapper}>
-            {billingAddress.map((address: Address) => (
-              <ProfileField
-                title="Billing Address"
-                onEditClick={handleEditClick}
-                inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
-                isAddress
-                isDefault = {address.isDefault ?? false}
-              />
-            ))}
+              {billingAddress.map((address: Address) => (
+                <ProfileField
+                  title="Billing Address"
+                  onEditClick={handleEditClick}
+                  inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
+                  isAddress
+                  isDefault={address.isDefault ?? false}
+                />
+              ))}
             </div>
           </div>
           <button type="button" className={style['personal-section-button']}>
