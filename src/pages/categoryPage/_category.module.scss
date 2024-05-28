@@ -2,4 +2,6 @@
 
 .category {
   @include page-layout-container;
+
+  flex-direction: column;
 }

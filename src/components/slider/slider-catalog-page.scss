@@ -1,0 +1,134 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+:root {
+  --sizeindex: calc(1vw + 1vh);
+  --transition: 0.75s cubic-bezier(0.2, 0.6, 0, 1);
+}
+
+.slider-wrapper {
+  width: 95%;
+  margin: 0 auto;
+
+  .slider-catalog {
+    height: 250px;
+
+    .slider-item {
+      @include flex-justify-center;
+      @include form-background-gradient;
+
+      cursor: pointer;
+
+      overflow: hidden;
+
+      width: 340px;
+      min-height: 190px;
+      padding: 10px;
+
+      border: 1px solid $border-color-default;
+      border-radius: 100px;
+
+      transition: 2s;
+    }
+
+    .active {
+      color: $font-color-primary !important;
+      background-color: $bg-color-btn-default;
+    }
+  }
+}
+
+.slider-img {
+  will-change: transform;
+
+  position: relative;
+
+  height: 100%;
+
+  background-size: contain;
+  border-radius: 5px;
+
+  transition: var(--transition) !important;
+}
+
+.slider-img::after {
+  content: url('../../assets/images/headerCatalog/ellipse.png');
+
+  position: relative;
+  z-index: 1;
+  top: 0;
+  left: -20px;
+
+  width: 141px;
+  height: 171px;
+}
+
+.slider-title {
+  margin: 0 30px;
+  font-family: DisplayRegular, sans-serif;
+  color: #fff;
+
+  @media (width >= 1800px) {
+    font-size: calc(var(--sizeindex) * 0.7);
+  }
+
+  @media (width <= 1800px) {
+    font-size: calc(var(--sizeindex) * 1);
+  }
+}
+
+.space-suits {
+  position: relative;
+  z-index: 2;
+  background: url('../../assets/images/headerCatalog/space-suits.png') no-repeat;
+  background-position: center;
+}
+
+.space-photos-and-wall-art {
+  position: relative;
+  z-index: 2;
+  background: url('../../assets/images/headerCatalog/space-photos-and-wall-art.png') no-repeat;
+  background-position: center;
+}
+
+.meteorite {
+  position: relative;
+  z-index: 2;
+  background: url('../../assets/images/headerCatalog/meteorite.png') no-repeat;
+  background-position: center;
+}
+
+.space-memorabilia {
+  position: relative;
+  z-index: 2;
+  background: url('../../assets/images/headerCatalog/space-memorabilia.png') no-repeat;
+  background-position: center;
+}
+
+.astronomical-equipment {
+  position: relative;
+  z-index: 2;
+  background: url('../../assets/images/headerCatalog/astronomical-equipment.png') no-repeat;
+  background-position: center;
+}
+
+.space-food {
+  position: relative;
+  z-index: 2;
+  background: url('../../assets/images/headerCatalog/space-food.png') no-repeat;
+  background-position: center;
+}
+
+.astro-kits {
+  position: relative;
+  z-index: 2;
+  background: url('../../assets/images/headerCatalog/astro-kits.png') no-repeat;
+  background-position: center;
+}
+
+// .nasa-museum-ticket {
+// position: relative;
+// z-index: 2;
+//   background: url(../../assets/images/headerCatalog/nasa-museum-ticket.png) no-repeat;
+//   background-position: center;
+// }

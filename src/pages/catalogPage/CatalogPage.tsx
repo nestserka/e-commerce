@@ -1,31 +1,26 @@
-import { Link, Outlet } from 'react-router-dom';
-import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import { Suspense, useEffect, useState } from 'react';
 
 import style from './_catalog.module.scss';
-import { api } from '../../api/Api';
+import SliderCatalogPage from '../../components/slider/SliderForCatalogPage';
+import ProductList from '../../api/InteractionForProductList';
+
+import type { Category } from '@commercetools/platform-sdk';
 
 export default function CatalogPage(): JSX.Element {
-  const elem = 'name-category';
-  const elem2 = 'name-category2';
-  const elem3 = 'name-category3';
-  const elem4 = 'name-category4';
+  const [allCategories, setAllCategories] = useState<Category[]>([]);
 
-  console.log( api.root()
-  .categories()
-  .get()
-  .execute()
-    )
+  useEffect(() => {
+    ProductList.getAllCategories()
+      .then((response: Category[]) => {
+        setAllCategories(response);
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <section className={style.catalog} data-testid="catalog">
-      <Link to={`${elem}`}>Name Category</Link>
-
-      <Link to={`${elem2}`}>Name Category2</Link>
-
-      <Link to={`${elem3}`}>Name Category3</Link>
-
-      <Link to={`${elem4}`}>Name Category4</Link>
-
+      <SliderCatalogPage allCategories={allCategories} />
       <Suspense fallback={<div className="loading">Loading...</div>}>
         <Outlet />
       </Suspense>
