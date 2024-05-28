@@ -4,6 +4,7 @@ import { useState } from 'react';
 import style from './_product.module.scss';
 import Slider from '../../components/slider/slider';
 import { api } from '../../api/Api';
+import FormSubTitle from '../../components/formSubTitle/formSubTitle';
 
 import type { Params } from 'react-router';
 import type { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
@@ -47,13 +48,14 @@ export default function ProductPage(): JSX.Element {
   }
 
   return (
-    <section className={style.product} data-testid="product">
+    <section className={style['product-page']} data-testid="product-page">
       <section>
         <Slider images={product.body.masterVariant.images} />
       </section>
       <section>
-        <h1>{product.body.name.en}</h1>
-        <p>{product.body.description?.en}</p>
+        <h1 className={style.title}>{product.body.name.en}</h1>
+        <FormSubTitle subTitle="Product Description" />
+        <p className={style.description}>{product.body.description?.en}</p>
       </section>
     </section>
   );

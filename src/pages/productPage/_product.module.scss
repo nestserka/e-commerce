@@ -1,5 +1,14 @@
 @use '../../assets/styles/mixins' as *;
 
-.product {
+@import '../../assets/styles/variables';
+
+.product-page {
   @include page-layout-container;
+}
+
+.title {
+  @include font-display-medium;
+
+  font-size: 36px;
+  color: $font-color-primary;
 }

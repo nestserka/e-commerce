@@ -47,24 +47,36 @@
 
 // Typography
 
-@mixin font-default-regular {
+@mixin font-arimo-regular {
   font-family: Arimo, sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
 
-@mixin font-default-medium {
+@mixin font-arimo-medium {
   font-family: Arimo, sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
 }
 
-@mixin font-default-bold {
+@mixin font-arimo-bold {
   font-family: Arimo, sans-serif;
   font-optical-sizing: auto;
   font-weight: 700;
+  font-style: normal;
+}
+
+@mixin font-display-regular {
+  font-family: DisplayRegular, sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@mixin font-display-medium {
+  font-family: DisplayMedium, sans-serif;
+  font-optical-sizing: auto;
   font-style: normal;
 }
 
