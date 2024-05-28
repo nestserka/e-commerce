@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { A11y, FreeMode, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules';
+import { A11y, Controller, FreeMode, Navigation, Pagination, Scrollbar, Thumbs } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { type Swiper as SwiperProps } from 'swiper';
 
@@ -25,25 +25,29 @@ interface SliderProps {
 }
 
 export default function Slider({ images }: SliderProps): JSX.Element {
+  const [firstSwiper, setFirstSwiper] = useState<SwiperProps | null>(null);
+  const [secondSwiper, setSecondSwiper] = useState<SwiperProps | null>(null);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperProps | null>(null);
   const [isGalleryOpen, setIsGalleryOpen] = useState<boolean>(false);
 
   return (
     <>
       <Swiper
-        modules={[FreeMode, Navigation, Pagination, Scrollbar, A11y, Thumbs]}
+        modules={[Controller, FreeMode, Navigation, Pagination, Scrollbar, A11y, Thumbs]}
         spaceBetween={0}
         slidesPerView={1}
         navigation
+        loop
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         className={style.myswiper}
+        controller={{ control: secondSwiper }}
         onSlideChange={() => {
           console.log('slide change');
         }}
         onSwiper={(swiper) => {
-          console.log(swiper);
+          setFirstSwiper(swiper);
         }}
         style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
       >
@@ -76,19 +80,29 @@ export default function Slider({ images }: SliderProps): JSX.Element {
       </Swiper>
 
       <section className={isGalleryOpen ? style.modalopen : style.modalhide}>
+        <button
+          aria-label="Close"
+          type="button"
+          className={style['close-button']}
+          onClick={(): void => {
+            setIsGalleryOpen(false);
+          }}
+        />
         <Swiper
-          modules={[FreeMode, Navigation, Pagination, Scrollbar, A11y]}
+          modules={[Controller, FreeMode, Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={0}
           slidesPerView={1}
           navigation
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
+          loop
+          controller={{ control: firstSwiper }}
           className={style.modalswiper}
           onSlideChange={() => {
             console.log('slide change');
           }}
           onSwiper={(swiper) => {
-            console.log(swiper);
+            setSecondSwiper(swiper);
           }}
           style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
         >
