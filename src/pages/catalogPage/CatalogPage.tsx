@@ -11,15 +11,16 @@ export default function CatalogPage(): JSX.Element {
   const [allCategories, setAllCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    ProductList.getAllCategories().then((response:Category[])=>{
-      setAllCategories(response);
-    }).catch(()=>{})
-  },[])
+    ProductList.getAllCategories()
+      .then((response: Category[]) => {
+        setAllCategories(response);
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <section className={style.catalog} data-testid="catalog">
-      <SliderCatalogPage allCategories={allCategories}/>
-
+      <SliderCatalogPage allCategories={allCategories} />
       <Suspense fallback={<div className="loading">Loading...</div>}>
         <Outlet />
       </Suspense>

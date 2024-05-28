@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Navigation } from 'swiper/modules';
+import { FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/css';
-import 'swiper/css/navigation';
-import './slider-catalog-page.scss'
+import 'swiper/css/pagination';
+import './slider-catalog-page.scss';
 import { NavLink } from 'react-router-dom';
 
 import type { Category } from '@commercetools/platform-sdk';
@@ -19,12 +19,14 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
       <Swiper
         freeMode
         loop
-        navigation
         grabCursor
         initialSlide={1}
-        modules={[FreeMode, Navigation]}
-        spaceBetween={100}
-        slidesPerView={3}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[FreeMode, Pagination]}
+        spaceBetween={20}
+        slidesPerView={5.5}
         breakpoints={{
           0: {
             slidesPerView: 2,
@@ -32,8 +34,17 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
           710: {
             slidesPerView: 3,
           },
-          1200: {
-            slidesPerView: 5,
+          1550: {
+            slidesPerView: 3.5,
+          },
+          1980: {
+            slidesPerView: 4,
+          },
+          2440: {
+            slidesPerView: 4.5,
+          },
+          2550: {
+            slidesPerView: 5.5,
           },
         }}
         className="slider-catalog"

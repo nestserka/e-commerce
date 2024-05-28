@@ -11,7 +11,7 @@ export const ROUTES = {
   SING_UP: '/sign_up',
   ABOUT: '/about',
   CATALOG: '/catalog',
-  CATALOG_ALL: '/catalog/all',
+  CATALOG_ALL: '/catalog/',
   CATEGORY: '/catalog/:category',
   PRODUCT: '/catalog/:category/:productId',
   PROFILE: '/profile/:customerId',
