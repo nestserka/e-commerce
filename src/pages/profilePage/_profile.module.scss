@@ -1,19 +1,14 @@
 @use '../../assets/styles/mixins' as *;
 
 .profile-content {
-  @include flex-justify-center;
-  padding: 2em 0;
+  @include page-layout-container;
+  padding: 1em 0;
 
   .profile-content-wrapper {
     display: flex;
     flex-direction: column;
     gap: 1.5em;
-    padding: 4.5em 7.125em;
-    width: 83.75em;
-  }
-  .profile-section {
-    @include flex-justify-center;
-    flex-direction: row;
-    gap: 1.5em;
+    padding: 0;
+    width: 87.5em;
   }
 }

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 import { LS_PREFIX } from '../../constants/constants';
 
-import type { CustomerCredentials, IsShownModal, LoginState } from './types';
+import type { CustomerCredentials, CustomerInfo, CustomerInfoState, IsShownModal, LoginState } from './types';
 
 const localIsAuth = localStorage.getItem(`isAuth-${LS_PREFIX}`);
 const localCustomerId = localStorage.getItem(`customerId-${LS_PREFIX}`);
@@ -48,5 +48,34 @@ export const showModalMessage = create<IsShownModal>((set) => ({
   isShown: false,
   setIsShown: (isShown: boolean): void => {
     set(() => ({ isShown }));
+  },
+}));
+
+export const useCustomerInfo = create<CustomerInfoState>((set) => ({
+  valueEmail: '',
+  firstName: '',
+  lastName: '',
+  dateOfBirth: '',
+  shippingAddress: [],
+  billingAddress: [],
+  setCustomerInfo: (customerInfo: CustomerInfo): void => {
+    set({
+      valueEmail: customerInfo.valueEmail,
+      firstName: customerInfo.firstName,
+      lastName: customerInfo.lastName,
+      dateOfBirth: customerInfo.dateOfBirth,
+      shippingAddress: customerInfo.shippingAddress,
+      billingAddress: customerInfo.billingAddress,
+    });
+  },
+  reset: () => {
+    set({
+      valueEmail: '',
+      firstName: '',
+      lastName: '',
+      dateOfBirth: '',
+      shippingAddress: [],
+      billingAddress: [],
+    });
   },
 }));

@@ -29,11 +29,21 @@ export interface IsShownModal {
 }
 
 export interface CustomerInfo {
-  valueEmail: string;
-  valuePassword?: string;
+  valueEmail?: string;
   firstName: string;
   lastName: string;
   dateOfBirth: string;
   shippingAddress: Address[];
   billingAddress: Address[];
+}
+
+export interface CustomerInfoState {
+  valueEmail: string;
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  shippingAddress: Address[];
+  billingAddress: Address[];
+  setCustomerInfo: (customerInfo: CustomerInfo) => void;
+  reset: () => void;
 }

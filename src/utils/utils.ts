@@ -49,13 +49,12 @@ export const formatDateOfBirth = (dateString: string): string => dayjs(dateStrin
 
 export const extractShippingAddresses = (
   addresses: Address[],
-  defaultShippingAddressId?: string,
-  shippingAddressIds?: string[],
+  defaultgAddressId?: string,
+  addressIds?: string[],
 ): Address[] =>
   addresses
-    .filter((address) => shippingAddressIds?.includes(address.id ?? ''))
+    .filter((address) => addressIds?.includes(address.id ?? ''))
     .map((address) => ({
       ...address,
-      isDefault:
-        defaultShippingAddressId !== undefined && address.id !== undefined && address.id === defaultShippingAddressId,
+      isDefault: defaultgAddressId !== undefined && address.id !== undefined && address.id === defaultgAddressId,
     }));

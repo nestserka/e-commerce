@@ -1,9 +1,12 @@
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ProfileField from '../../../components/profileField/profileField';
+import { useCustomerInfo } from '../../../core/state/loginState';
 import InfoField from '../infoField/infoField';
 import style from './_personalInfo.module.scss';
 
 export default function ProfileInfo(): JSX.Element {
+
+  const {valueEmail, firstName, lastName, dateOfBirth} = useCustomerInfo();
   const handleEditClick = (): void => {
     console.log('Edit button clicked');
   };
@@ -16,16 +19,16 @@ export default function ProfileInfo(): JSX.Element {
           <ProfileField
             title="Email"
             onEditClick={handleEditClick}
-            inputVal="keith-glennan@gmail.com"
+            inputVal= {valueEmail}
             isAddress={false}
           />
           <ProfileField title="Password" onEditClick={handleEditClick} inputVal="****..." isAddress={false} />
         </section>
         <section className={style['personal-section-wrapper']}>
           <FormSubTitle subTitle="personal info" />
-          <InfoField title="First Name" value="Katsiaryns" />
-          <InfoField title="Last Name" value="Nestserava" />
-          <InfoField title="Date of Birth" value="30.03.1995" />
+          <InfoField title="First Name" value={firstName}/>
+          <InfoField title="Last Name" value={lastName} />
+          <InfoField title="Date of Birth" value={dateOfBirth} />
           <button type="button" className={style['personal-section-button']}>
             Edit Personal Info
           </button>
