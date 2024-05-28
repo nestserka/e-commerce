@@ -26,6 +26,8 @@ interface SliderProps {
 
 export default function Slider({ images }: SliderProps): JSX.Element {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperProps | null>(null);
+  const [thumbsModalSwiper, setThumbsModalSwiper] = useState<SwiperProps | null>(null);
+  const [isGalleryOpen, setIsGalleryOpen] = useState<boolean>(false);
 
   return (
     <>
@@ -47,7 +49,12 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
       >
         {images?.map((image, index) => (
-          <SwiperSlide key={image.url}>
+          <SwiperSlide
+            key={image.url}
+            onClick={() => {
+              setIsGalleryOpen(true);
+            }}
+          >
             <img src={image.url} alt={`Slide ${index}`} />
           </SwiperSlide>
         ))}
@@ -68,6 +75,48 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      <section className={isGalleryOpen ? style.modalopen : style.modalhide}>
+        <Swiper
+          modules={[FreeMode, Navigation, Pagination, Scrollbar, A11y, Thumbs]}
+          spaceBetween={0}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          thumbs={{ swiper: thumbsModalSwiper && !thumbsModalSwiper.destroyed ? thumbsModalSwiper : null }}
+          className={style.modalswiper}
+          onSlideChange={() => {
+            console.log('slide change');
+          }}
+          onSwiper={(swiper) => {
+            console.log(swiper);
+          }}
+          style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
+        >
+          {images?.map((image, index) => (
+            <SwiperSlide key={image.url}>
+              <img src={image.url} alt={`Slide ${index}`} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+
+        <Swiper
+          onSwiper={setThumbsModalSwiper}
+          spaceBetween={24}
+          slidesPerView={5}
+          freeMode
+          watchSlidesProgress
+          modules={[FreeMode, Navigation, Thumbs]}
+          className={style.modalthumbs}
+        >
+          {images?.map((image, index) => (
+            <SwiperSlide key={image.url}>
+              <img src={image.url} alt={`Slide ${index}`} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
     </>
   );
 }
