@@ -34,8 +34,14 @@
 
 @mixin flex-justify-start {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: start;
+}
+
+@mixin flex-start-space-between {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
 }
 
 // Gradients

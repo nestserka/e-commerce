@@ -4,6 +4,7 @@
 .wrapper {
   @include flex-justify-center;
   flex-direction: column;
+  width: 100%;
 
   .personal-section {
     @include flex-justify-center;
@@ -24,7 +25,7 @@
       padding: 2.813em;
 
       .personal-section-group {
-        @include flex-center-space-between;
+        @include flex-start-space-between;
         flex-direction: row;
         gap: 7.5em;
       }

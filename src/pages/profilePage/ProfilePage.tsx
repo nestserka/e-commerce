@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { lazy, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import style from './_profile.module.scss';
 import { api } from '../../api/Api';
@@ -9,10 +9,7 @@ import { extractShippingAddresses, formatDateOfBirth } from '../../utils/utils';
 import { useCustomerInfo } from '../../core/state/userState';
 
 import type { Params } from 'react-router-dom';
-
-const ProfileInfo = lazy(() => import('../../domain/customer/personalnfo/personalInfo'));
-
-export const dynamic = 'force-dynamic';
+import ProfileView from '../../domain/customer/profileView/profileView';
 
 export default function ProfilePage(): JSX.Element {
   const { customerId }: Readonly<Params<string>> = useParams();
@@ -56,7 +53,7 @@ export default function ProfilePage(): JSX.Element {
     <section className={style['profile-content']} data-testid="profile">
       <div className={style['profile-content-wrapper']}>
         <ProfileAvatar />
-        {valueEmail ? <ProfileInfo /> : <div className="loading">Loading...</div>}
+        {valueEmail ? <ProfileView /> : <div className="loading">Loading...</div>}
       </div>
     </section>
   );
