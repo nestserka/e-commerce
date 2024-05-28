@@ -10,13 +10,13 @@ export default class ProductList {
     return onlyWithoutAncestors;
   }
 
-  public static async getOneCategories(category: string): Promise<Category[] | undefined> {
+  public static async getOneCategory(category: string): Promise<Category[] | undefined> {
     const response = await api.root().categories().get().execute();
-    const idCategory = response.body.results.find((data: Category) => data.slug.en === category);
+    const dataCategory = response.body.results.find((data: Category) => data.slug.en === category);
 
-    if (idCategory) {
+    if (dataCategory) {
       const onlyWithoutAncestors = response.body.results.filter(
-        (data: Category) => data.ancestors.length && data.ancestors[0].id === idCategory.id,
+        (data: Category) => data.ancestors.length && data.ancestors[0].id === dataCategory.id,
       );
 
       return onlyWithoutAncestors;

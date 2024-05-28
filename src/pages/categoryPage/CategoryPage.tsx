@@ -13,7 +13,7 @@ export default function CategoryPage(): JSX.Element {
 
   useEffect(() => {
     if (category) {
-      ProductList.getOneCategories(category)
+      ProductList.getOneCategory(category)
         .then((response: Category[] | undefined) => {
           setSubtree(response);
         })
