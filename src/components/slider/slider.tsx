@@ -39,7 +39,6 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         navigation
         loop
         pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         className={style.myswiper}
         controller={{ control: secondSwiper }}
