@@ -42,12 +42,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
         className={style.myswiper}
         controller={{ control: modalProductSwiper }}
-        onSlideChange={() => {
-          console.log('slide change');
-        }}
-        onSwiper={(swiper) => {
-          setProductSwiper(swiper);
-        }}
+        onSwiper={setProductSwiper}
         style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
       >
         {images?.map((image, index) => (
@@ -97,12 +92,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           loop
           controller={{ control: productSwiper }}
           className={style.modalswiper}
-          onSlideChange={() => {
-            console.log('slide change');
-          }}
-          onSwiper={(swiper) => {
-            setModalProductSwiper(swiper);
-          }}
+          onSwiper={setModalProductSwiper}
           style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
         >
           {images?.map((image, index) => (
