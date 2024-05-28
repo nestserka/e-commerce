@@ -26,8 +26,9 @@
 }
 
 .modalswiper {
-  width: 90%;
-  height: 90vh;
+  width: 660px;
+  height: 660px;
+  margin: 40px auto;
 
   & img {
     cursor: pointer;
@@ -41,26 +42,32 @@
   }
 }
 
-.modalthumbs {
-  width: 90%;
-  height: 60px;
-
-  & img {
-    cursor: pointer;
-    width: 60px;
-    height: 60px;
-  }
-}
-
 .modalopen {
   position: absolute;
+  z-index: 4;
   top: 0;
   left: 0;
 
   display: block;
+  align-items: center;
+  justify-content: center;
 
   width: 100%;
   height: 100%;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgb(00 00 00 / 80%);
+  }
 }
 
 .modalhide {
