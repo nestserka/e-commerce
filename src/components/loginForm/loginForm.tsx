@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './_loginform.module.scss';
@@ -26,7 +26,7 @@ type LoginFormValues = z.infer<typeof schema>;
 
 export default function LoginForm(): JSX.Element {
   const { setCustomerCredentials } = useLoginData();
-  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({
+  const { register, handleSubmit, formState, reset, watch } = useForm<LoginFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
@@ -39,6 +39,19 @@ export default function LoginForm(): JSX.Element {
 
   const inputEmailProps = getInputProps('text', 'email', 'Enter your email', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Enter your password', 'off');
+
+  const valueEmail = watch('email');
+  const valuePassword = watch('password');
+
+  useEffect(() => {
+    setFormEmailError('');
+    setFormError('');
+  }, [valueEmail]);
+
+  useEffect(() => {
+    setFormPasswordError('');
+    setFormError('');
+  }, [valuePassword]);
 
   const onSubmit = (data: LoginFormValues): void => {
     api

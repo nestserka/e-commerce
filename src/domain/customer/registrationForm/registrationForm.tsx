@@ -72,6 +72,12 @@ export default function RegistrationForm(): JSX.Element {
     name: 'shippingAddress',
   });
 
+  const valueEmail = watch('email');
+
+  useEffect(() => {
+      setFormEmailError('');
+  }, [valueEmail]);
+
   const handleShippingAutoComplete = useAddressAutoComplete(
     shippingAddress,
     isShippingCompleteChecked,
