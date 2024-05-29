@@ -2,8 +2,6 @@
 @import '../../assets/styles/variables';
 
 .modal {
-  @include form-background-gradient;
-
   position: relative;
 
   overflow-y: hidden;
@@ -13,6 +11,7 @@
   margin: 10% auto;
   padding: 4em;
 
+  background-color: $background-color-primary-two;
   border: 1px solid $border-color-default;
   border-radius: 24px;
 
@@ -55,5 +54,5 @@
 }
 
 .modal::backdrop {
-  background: hsl(240deg 10% 9% / 80%);
+  background: hsl(240deg 10% 9% / 40%);
 }
