@@ -13,12 +13,12 @@ export default function ProfileView(): JSX.Element {
   const { valueEmail, firstName, lastName, dateOfBirth, shippingAddress, billingAddress } = useCustomerInfo();
   const [isEmailModalOpen, setEmailModalOpen] = useState<boolean>(false);
 
-  const handleEditClick = () : void  => {
+  const handleEditClick = (): void => {
     document.body.style.overflowY = 'hidden';
     setEmailModalOpen(true);
   };
 
-  const handleCloseEmailModal = () : void => {
+  const handleCloseEmailModal = (): void => {
     document.body.style.overflowY = 'auto';
     setEmailModalOpen(false);
   };
@@ -35,9 +35,7 @@ export default function ProfileView(): JSX.Element {
             isAddress={false}
             isDefault={false}
           />
-           {isEmailModalOpen && (
-        <EmailForm isOpen={isEmailModalOpen} onClose={handleCloseEmailModal} />
-      )}
+          {isEmailModalOpen && <EmailForm isOpen={isEmailModalOpen} onClose={handleCloseEmailModal} />}
           <ProfileField
             title="Password"
             onEditClick={handleEditClick}

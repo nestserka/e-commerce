@@ -19,7 +19,7 @@ const schema = z.object({
 
 export type EmailFormValues = z.infer<typeof schema>;
 
-export default function EmailForm({isOpen, onClose}: FormModal): JSX.Element {
+export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
   const { register, handleSubmit, formState, reset } = useForm<EmailFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -34,11 +34,9 @@ export default function EmailForm({isOpen, onClose}: FormModal): JSX.Element {
   };
 
   return (
-    <ModalProfile
-    isOpen={isOpen}
-    onClose={onClose}>
-    <form onSubmit={handleSubmit(onSubmit)} className={style['email-form']} data-testid="email-form" noValidate>
-      <FormTitle title="Change Email" />
+    <ModalProfile isOpen={isOpen} onClose={onClose}>
+      <form onSubmit={handleSubmit(onSubmit)} className={style['email-form']} data-testid="email-form" noValidate>
+        <FormTitle title="Change Email" />
         <section className={style['input-section']}>
           <Input
             inputProps={{
@@ -51,9 +49,9 @@ export default function EmailForm({isOpen, onClose}: FormModal): JSX.Element {
           {/* {formEmailError && <ErrorMessage message={formEmailError} />} */}
         </section>
         <button type="submit" className="button-primary">
-        Login Your Account
-      </button>
-    </form>
+          Login Your Account
+        </button>
+      </form>
     </ModalProfile>
   );
 }
