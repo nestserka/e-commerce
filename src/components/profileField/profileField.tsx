@@ -30,7 +30,7 @@ export default function ProfileField({
             <img src={editIcon} alt="Edit" />
           </button>
           {isAddress && (
-            <button type="button" className={style['edit-button']} onClick={handleDeleteClick}>
+            <button type="button" className={style['delete-button']} onClick={handleDeleteClick}>
               <img src={deleteIcon} alt="Delete" />
             </button>
           )}

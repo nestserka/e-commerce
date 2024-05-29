@@ -1,15 +1,26 @@
+import { useState } from 'react';
+
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ProfileField from '../../../components/profileField/profileField';
 import { useCustomerInfo } from '../../../core/state/userState';
 import InfoField from '../infoField/infoField';
 import style from './_profileView.module.scss';
+import EmailForm from '../forms/emailForm/emailForm';
 
 import type { Address } from '../../../utils/types';
 
 export default function ProfileView(): JSX.Element {
   const { valueEmail, firstName, lastName, dateOfBirth, shippingAddress, billingAddress } = useCustomerInfo();
-  const handleEditClick = (): void => {
-    console.log('Edit button clicked');
+  const [isEmailModalOpen, setEmailModalOpen] = useState<boolean>(false);
+
+  const handleEditClick = () : void  => {
+    document.body.style.overflowY = 'hidden';
+    setEmailModalOpen(true);
+  };
+
+  const handleCloseEmailModal = () : void => {
+    document.body.style.overflowY = 'auto';
+    setEmailModalOpen(false);
   };
 
   return (
@@ -24,6 +35,9 @@ export default function ProfileView(): JSX.Element {
             isAddress={false}
             isDefault={false}
           />
+           {isEmailModalOpen && (
+        <EmailForm isOpen={isEmailModalOpen} onClose={handleCloseEmailModal} />
+      )}
           <ProfileField
             title="Password"
             onEditClick={handleEditClick}

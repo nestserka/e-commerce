@@ -19,3 +19,8 @@ export interface Address {
 export function isTokenStore(obj: unknown): obj is TokenStore {
   return Boolean(obj) && typeof obj === 'object' && obj !== null && 'token' in obj && 'expirationTime' in obj;
 }
+
+export interface FormModal {
+  isOpen: boolean;
+  onClose: () => void;
+}
