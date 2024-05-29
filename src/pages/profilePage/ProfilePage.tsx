@@ -8,14 +8,14 @@ import ProfileAvatar from '../../domain/customer/avatar/profileAvatar';
 import { extractShippingAddresses, formatDateOfBirth } from '../../utils/utils';
 import { showModalMessage, useCustomerInfo } from '../../core/state/userState';
 import ProfileView from '../../domain/customer/profileView/profileView';
+import ModalMessage from '../../components/modalMessage/ModalMessage';
 
 import type { Params } from 'react-router-dom';
-import ModalMessage from '../../components/modalMessage/ModalMessage';
 
 const modalMessageSuccessUpdateProps = {
   type: 'success',
   title: 'Successful Update',
-  message: 'Your data was updated successfully.',
+  message: 'Your profile was updated.',
 };
 
 export default function ProfilePage(): JSX.Element {
