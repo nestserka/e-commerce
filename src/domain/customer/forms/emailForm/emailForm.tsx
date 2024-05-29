@@ -11,7 +11,7 @@ import Input from '../../../../components/ui/input/input';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
 import { api } from '../../../../api/Api';
-import { useCustomerInfo } from '../../../../core/state/userState';
+import { showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
 import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
 
 import type { ZodType, ZodTypeDef } from 'zod';
@@ -39,6 +39,7 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
 
   const { errors, isDirty, isValid, isSubmitting } = formState;
   const [formEmailError, setFormEmailError] = useState<string>('');
+  const { setIsShown } = showModalMessage();
 
   const onSubmit = (data: EmailFormValues): void => {
     const body: MyCustomerUpdateAction[] = [
@@ -55,6 +56,7 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
           version: response.body.version,
         };
         setUpdatedEmail(customerInfo);
+        setIsShown(true);
         onClose();
         reset();
       })
