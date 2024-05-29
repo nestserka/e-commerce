@@ -58,6 +58,8 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
   dateOfBirth: '',
   shippingAddress: [],
   billingAddress: [],
+  version: 1,
+  isSet: false,
   setCustomerInfo: (customerInfo: CustomerInfo): void => {
     set({
       valueEmail: customerInfo.valueEmail,
@@ -66,6 +68,8 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
       dateOfBirth: customerInfo.dateOfBirth,
       shippingAddress: customerInfo.shippingAddress,
       billingAddress: customerInfo.billingAddress,
+      version: customerInfo.version,
+      isSet: true,
     });
   },
   reset: (): void => {
@@ -76,6 +80,14 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
       dateOfBirth: '',
       shippingAddress: [],
       billingAddress: [],
+      version: 1,
+      isSet: false,
+    });
+  },
+  setUpdatedEmail: (customerInfo: CustomerInfo): void => {
+    set({
+      valueEmail: customerInfo.valueEmail,
+      version: customerInfo.version,
     });
   },
 }));

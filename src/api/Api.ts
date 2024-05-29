@@ -11,6 +11,7 @@ import type {
   CustomerDraft,
   CustomerPagedQueryResponse,
   CustomerSignInResult,
+  MyCustomerUpdateAction,
   ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 
@@ -100,7 +101,7 @@ export class Api {
     }
   }
 
-  public async getCustomer(): Promise<ClientResponse<Customer> | undefined> {
+  public async getCustomer(): Promise<ClientResponse<Customer>> {
     try {
       const customer = this.apiRoot.me().get().execute();
 
@@ -108,6 +109,23 @@ export class Api {
     } catch (error) {
       throw new Error('No Bear Token found on request');
     }
+  }
+
+  public async updateCustomer(version: number, data: MyCustomerUpdateAction[]): Promise<ClientResponse<Customer>> {
+    const customer = await this.apiRoot
+      .me()
+      .post({
+        body: {
+          version,
+          actions: data,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .execute();
+
+    return customer;
   }
 }
 

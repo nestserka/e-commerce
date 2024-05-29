@@ -30,11 +30,12 @@ export interface IsShownModal {
 
 export interface CustomerInfo {
   valueEmail?: string;
-  firstName: string;
-  lastName: string;
-  dateOfBirth: string;
-  shippingAddress: Address[];
-  billingAddress: Address[];
+  firstName?: string;
+  lastName?: string;
+  dateOfBirth?: string;
+  shippingAddress?: Address[];
+  billingAddress?: Address[];
+  version?: number;
 }
 
 export interface CustomerInfoState {
@@ -44,6 +45,9 @@ export interface CustomerInfoState {
   dateOfBirth: string;
   shippingAddress: Address[];
   billingAddress: Address[];
+  version: number;
+  isSet: boolean;
   setCustomerInfo: (customerInfo: CustomerInfo) => void;
   reset: () => void;
+  setUpdatedEmail: (customerInfo: CustomerInfo) => void;
 }

@@ -35,7 +35,7 @@ export default function ProfileView(): JSX.Element {
             isAddress={false}
             isDefault={false}
           />
-          {isEmailModalOpen && <EmailForm isOpen={isEmailModalOpen} onClose={handleCloseEmailModal} />}
+          {isEmailModalOpen && <EmailForm isOpen={isEmailModalOpen} onClose={handleCloseEmailModal}/>}
           <ProfileField
             title="Password"
             onEditClick={handleEditClick}

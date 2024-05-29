@@ -13,13 +13,15 @@ import type { Params } from 'react-router-dom';
 
 export default function ProfilePage(): JSX.Element {
   const { customerId }: Readonly<Params<string>> = useParams();
-  const { setCustomerInfo, valueEmail } = useCustomerInfo();
+  const { setCustomerInfo, isSet } = useCustomerInfo();
 
   useEffect(() => {
     const fetchCustomer = async (): Promise<void> => {
       api.switchToPrivateToken(tokenCache.get().token);
       await api.getCustomer().then((response) => {
-        if (response?.body.dateOfBirth && response.body.firstName && response.body.lastName) {
+        console.log(response);
+
+        if (response.body.dateOfBirth && response.body.firstName && response.body.lastName) {
           const shippingAddresses = extractShippingAddresses(
             response.body.addresses,
             response.body.defaultShippingAddressId,
@@ -37,8 +39,8 @@ export default function ProfilePage(): JSX.Element {
             dateOfBirth: formatDateOfBirth(response.body.dateOfBirth),
             shippingAddress: shippingAddresses,
             billingAddress: billingAddresses,
+            version: response.body.version
           };
-          console.log(customerInfo);
           setCustomerInfo(customerInfo);
         }
       });
@@ -53,7 +55,7 @@ export default function ProfilePage(): JSX.Element {
     <section className={style['profile-content']} data-testid="profile">
       <div className={style['profile-content-wrapper']}>
         <ProfileAvatar />
-        {valueEmail ? <ProfileView /> : <div className="loading">Loading...</div>}
+        {isSet ? <ProfileView /> : <div className="loading">Loading...</div>}
       </div>
     </section>
   );

@@ -60,6 +60,7 @@ export const PASSWORD_VALIDATION_SCHEMA = z
 
 export const EMAIL_VALIDATION_SCHEMA = z
   .string()
+  .max(254, { message: 'Email must be no longer than 254 characters.' })
   .refine(
     (value) => {
       if (value.includes('@')) {
