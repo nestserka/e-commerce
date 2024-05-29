@@ -43,6 +43,7 @@ export default function ProfileView(): JSX.Element {
             isAddress={false}
             isDefault={false}
           />
+          {isEmailModalOpen && <EmailForm isOpen={isEmailModalOpen} onClose={handleCloseEmailModal} />}
         </section>
         <section className={style['personal-section-wrapper']}>
           <FormSubTitle subTitle="personal info" />
