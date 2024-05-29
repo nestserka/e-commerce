@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import style from './_modalProfile.module.scss';
-import closeIcon from '../../assets/images/icons/icon-close-model.svg'
+import closeIcon from '../../assets/images/icons/icon-close-model.svg';
 
 interface ModalProps {
   isOpen: boolean;
@@ -34,7 +34,7 @@ export default function ModalProfile({ isOpen, onClose, children }: ModalProps):
   return (
     <dialog ref={modalRef} className={style.modal}>
       <button type="button" className={style['modal-close-btn']} onClick={handleCloseModal}>
-      <img src={closeIcon} alt="Edit" />
+        <img src={closeIcon} alt="Edit" />
       </button>
       {children}
     </dialog>

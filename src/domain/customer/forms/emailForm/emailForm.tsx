@@ -13,18 +13,25 @@ import ModalProfile from '../../../../components/modalProfile/ModalProfile';
 import { api } from '../../../../api/Api';
 import { useCustomerInfo } from '../../../../core/state/userState';
 
+import type { ZodType, ZodTypeDef } from 'zod';
 import type { FormModal } from '../../../../utils/types';
 import type { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 
+type SchemaFunction = (valueEmail: string) => ZodType<{ email: string }, ZodTypeDef, { email: string }>;
 
-const schema = z.object({
-  email: EMAIL_VALIDATION_SCHEMA,
-});
+const createSchema: SchemaFunction = (valueEmail) =>
+  z.object({
+    email: EMAIL_VALIDATION_SCHEMA.refine(
+      (email) => email !== valueEmail,
+      'The entered email is the same as the current email.',
+    ),
+  });
 
-export type EmailFormValues = z.infer<typeof schema>;
+export type EmailFormValues = z.infer<ReturnType<typeof createSchema>>;
 
 export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
-  const { version, setUpdatedEmail } = useCustomerInfo();
+  const { version, setUpdatedEmail, valueEmail } = useCustomerInfo();
+  const schema = createSchema(valueEmail);
   const { register, handleSubmit, formState, reset } = useForm<EmailFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
@@ -51,7 +58,7 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
         onClose();
         reset();
       })
-      .catch((error : Error) => {
+      .catch((error: Error) => {
         setFormEmailError(error.message);
       });
   };

@@ -39,7 +39,7 @@ export default function ProfilePage(): JSX.Element {
             dateOfBirth: formatDateOfBirth(response.body.dateOfBirth),
             shippingAddress: shippingAddresses,
             billingAddress: billingAddresses,
-            version: response.body.version
+            version: response.body.version,
           };
           setCustomerInfo(customerInfo);
         }
