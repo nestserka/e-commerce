@@ -75,7 +75,7 @@ export default function RegistrationForm(): JSX.Element {
   const valueEmail = watch('email');
 
   useEffect(() => {
-      setFormEmailError('');
+    setFormEmailError('');
   }, [valueEmail]);
 
   const handleShippingAutoComplete = useAddressAutoComplete(
@@ -105,7 +105,7 @@ export default function RegistrationForm(): JSX.Element {
       subscription.unsubscribe();
     };
   }, [watch, trigger]);
-  
+
   const { setIsShown } = showModalMessage();
 
   const onSubmit = (data: RegistrationFormValues): void => {
