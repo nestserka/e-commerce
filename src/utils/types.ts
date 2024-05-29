@@ -24,3 +24,6 @@ export interface FormModal {
   isOpen: boolean;
   onClose: () => void;
 }
+
+export const VERSION_ERROR_MESSAGE: string =
+  'Sorry, but we were unable to save your changes as someone else made changes to this same source while you were editing. Please refresh the page and re-enter your changes.';

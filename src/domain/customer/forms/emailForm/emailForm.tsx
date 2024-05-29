@@ -12,9 +12,9 @@ import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
 import { api } from '../../../../api/Api';
 import { useCustomerInfo } from '../../../../core/state/userState';
+import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
 
 import type { ZodType, ZodTypeDef } from 'zod';
-import type { FormModal } from '../../../../utils/types';
 import type { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 
 type SchemaFunction = (valueEmail: string) => ZodType<{ email: string }, ZodTypeDef, { email: string }>;
@@ -44,7 +44,7 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
     const body: MyCustomerUpdateAction[] = [
       {
         action: 'changeEmail',
-        email: data.email,
+        email: data.email.toLowerCase(),
       },
     ];
     api
@@ -59,7 +59,13 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
         reset();
       })
       .catch((error: Error) => {
-        setFormEmailError(error.message);
+        setFormEmailError('');
+
+        if (error.message.includes('different version')) {
+          setFormEmailError(VERSION_ERROR_MESSAGE);
+        } else {
+          setFormEmailError(error.message);
+        }
       });
   };
 
