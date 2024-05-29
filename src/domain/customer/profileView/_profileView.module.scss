@@ -20,7 +20,8 @@
       display: flex;
       flex-direction: column;
       gap: 2em;
-      width: 100%;
+      flex-grow: 1;
+      flex-basis: 50%;
       border-radius: 24px;
       padding: 2.813em;
 
@@ -41,6 +42,24 @@
       font: inherit;
       margin-left: auto;
       cursor: pointer;
+    }
+  }
+
+  @media (width <=1240px) {
+    .personal-section {
+      display: flex;
+      flex-wrap: wrap;
+
+      .personal-section-wrapper {
+        flex-basis: 100%;
+        width: 100%;
+        flex-wrap: wrap;
+
+        .personal-section-group {
+          display: flex;
+          flex-wrap: wrap;
+        }
+      }
     }
   }
 }

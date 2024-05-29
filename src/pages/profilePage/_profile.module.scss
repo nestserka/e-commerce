@@ -5,12 +5,12 @@
 
   justify-content: center;
   margin: 4em 10% 1em;
+  max-width: none;
 
   .profile-content-wrapper {
     display: flex;
     flex-direction: column;
     gap: 1.5em;
-
     width: 80%;
     padding: 0;
   }
@@ -32,11 +32,15 @@
   }
 
   @media (width <= 900px) {
-    margin: 3em 1.5em;
+    margin: 3em 1em;
+
+    .profile-content-wrapper {
+      gap: 0.5em;
+    }
   }
 
   @media (width <= 640px) {
-    margin: 0.5em;
+    margin: 3em 0.5em;
 
     .profile-content-wrapper {
       width: 100%;

@@ -21,7 +21,7 @@
     border: 16px solid $background-color-primary-one;
     border-radius: 50%;
     position: absolute;
-    z-index: 20;
+    z-index: 1;
     top: 25%;
     left: 5%;
 
@@ -41,18 +41,43 @@
     .profile-wrapper {
       width: 7.5em;
       height: 7.5em;
+
+      .profile-icon {
+        width: 6.5em;
+        height: 6.5em;
+      }
     }
   }
 
   @media (width <=900px) {
+    height: 6.5em;
+
     .avatar-box {
-      height: 5em;
+      height: 4.5em;
     }
 
     .profile-wrapper {
-      width: 5em;
-      height: 5em;
+      width: 6.5em;
+      height: 6.5em;
       border: 0.65em solid $background-color-primary-one;
+
+      .profile-icon {
+        width: 5.5em;
+        height: 5.5em;
+      }
+    }
+  }
+
+  @media (width <= 640px) {
+    .profile-wrapper {
+      width: 5.5em;
+      height: 5.5em;
+      border: 0.55em solid $background-color-primary-one;
+
+      .profile-icon {
+        width: 4.5em;
+        height: 4.5em;
+      }
     }
   }
 }
