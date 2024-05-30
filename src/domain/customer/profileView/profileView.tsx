@@ -1,27 +1,18 @@
-import { useState } from 'react';
-
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ProfileField from '../../../components/profileField/profileField';
 import { useCustomerInfo } from '../../../core/state/userState';
 import InfoField from '../infoField/infoField';
 import style from './_profileView.module.scss';
 import EmailForm from '../forms/emailForm/emailForm';
+import PasswordForm from '../forms/passwordForm/passwordForm';
+import { useToggleModal } from '../../../utils/useToggleModal';
 
 import type { Address } from '../../../utils/types';
 
 export default function ProfileView(): JSX.Element {
   const { valueEmail, firstName, lastName, dateOfBirth, shippingAddress, billingAddress } = useCustomerInfo();
-  const [isEmailModalOpen, setEmailModalOpen] = useState<boolean>(false);
-
-  const handleEditClick = (): void => {
-    document.body.style.overflowY = 'hidden';
-    setEmailModalOpen(true);
-  };
-
-  const handleCloseEmailModal = (): void => {
-    document.body.style.overflowY = 'auto';
-    setEmailModalOpen(false);
-  };
+  const [isEmailModalOpen, openEmailModal, closeEmailModal] = useToggleModal();
+  const [isPasswordModalOpen, openPasswordModal, closePasswordModal] = useToggleModal();
 
   return (
     <div className={style.wrapper}>
@@ -30,20 +21,20 @@ export default function ProfileView(): JSX.Element {
           <FormSubTitle subTitle="confidential Info" />
           <ProfileField
             title="Email"
-            onEditClick={handleEditClick}
+            onEditClick={openEmailModal}
             inputVal={valueEmail}
             isAddress={false}
             isDefault={false}
           />
-          {isEmailModalOpen && <EmailForm isOpen={isEmailModalOpen} onClose={handleCloseEmailModal} />}
+          {isEmailModalOpen && <EmailForm isOpen={isEmailModalOpen} onClose={closeEmailModal} />}
           <ProfileField
             title="Password"
-            onEditClick={handleEditClick}
+            onEditClick={openPasswordModal}
             inputVal="****..."
             isAddress={false}
             isDefault={false}
           />
-          {isEmailModalOpen && <EmailForm isOpen={isEmailModalOpen} onClose={handleCloseEmailModal} />}
+          {isPasswordModalOpen && <PasswordForm isOpen={isPasswordModalOpen} onClose={closePasswordModal} />}
         </section>
         <section className={style['personal-section-wrapper']}>
           <FormSubTitle subTitle="personal info" />
@@ -63,7 +54,7 @@ export default function ProfileView(): JSX.Element {
               {shippingAddress.map((address: Address) => (
                 <ProfileField
                   title="Shipping Address"
-                  onEditClick={handleEditClick}
+                  onEditClick={openPasswordModal}
                   inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
                   isAddress
                   isDefault={address.isDefault ?? false}
@@ -74,7 +65,7 @@ export default function ProfileView(): JSX.Element {
               {billingAddress.map((address: Address) => (
                 <ProfileField
                   title="Billing Address"
-                  onEditClick={handleEditClick}
+                  onEditClick={openPasswordModal}
                   inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
                   isAddress
                   isDefault={address.isDefault ?? false}

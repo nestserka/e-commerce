@@ -1,7 +1,8 @@
 @import '../../../assets/styles/mixins';
 @import '../../../assets/styles/variables';
 
-.email-form {
+.email-form,
+.password-form {
   display: flex;
   flex-direction: column;
   gap: 2em;

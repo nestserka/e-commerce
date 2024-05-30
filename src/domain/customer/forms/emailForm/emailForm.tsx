@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import style from '../_forms.module.scss';
 import { EMAIL_VALIDATION_SCHEMA } from '../../../../constants/constants';
@@ -32,7 +32,7 @@ export type EmailFormValues = z.infer<ReturnType<typeof createSchema>>;
 export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
   const { version, setUpdatedEmail, valueEmail } = useCustomerInfo();
   const schema = createSchema(valueEmail);
-  const { register, handleSubmit, formState, reset } = useForm<EmailFormValues>({
+  const { register, handleSubmit, formState, reset, watch } = useForm<EmailFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
@@ -40,6 +40,12 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
   const { errors, isDirty, isValid, isSubmitting } = formState;
   const [formEmailError, setFormEmailError] = useState<string>('');
   const { setIsShown } = showModalMessage();
+
+  const newEmail = watch('email');
+
+  useEffect(() => {
+    setFormEmailError('');
+  }, [newEmail]);
 
   const onSubmit = (data: EmailFormValues): void => {
     const body: MyCustomerUpdateAction[] = [
@@ -74,7 +80,7 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
   return (
     <ModalProfile isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)} className={style['email-form']} data-testid="email-form" noValidate>
-        <FormTitle title="Change Email" />
+        <FormTitle title="Change Email" isIcon={false} />
         <section className={style['input-section']}>
           <Input
             inputProps={{
