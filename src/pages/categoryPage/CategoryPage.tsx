@@ -3,13 +3,19 @@ import { useEffect, useState } from 'react';
 
 import style from './_category.module.scss';
 import ProductList from '../../api/InteractionForProductList';
+import Card from '../../components/cards/card/Card';
 
 import type { Params } from 'react-router';
-import type { Category, ClientResponse, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
+import type {
+  Category,
+  ClientResponse,
+  ProductProjection,
+  ProductProjectionPagedSearchResponse,
+} from '@commercetools/platform-sdk';
 
 export default function CategoryPage(): JSX.Element {
   const { category }: Readonly<Params<string>> = useParams();
-  const [subtree, setSubtree] = useState<Category[]>();
+  const [subtree, setSubtree] = useState<Category[]>([]);
   const [productsList, setProductsList] = useState<ClientResponse<ProductProjectionPagedSearchResponse>>();
   const [subtreeList, setSubtreeList] = useState<string[]>();
 
@@ -17,13 +23,16 @@ export default function CategoryPage(): JSX.Element {
     if (category) {
       ProductList.getOneCategory(category)
         .then((response: Category[] | undefined) => {
-          setSubtree(response);
+          if (response) {
+            setSubtree(response);
+          }
+
           const arrSubtreeNameList: string[] = [];
           response?.forEach((subtreeData: Category) => {
             arrSubtreeNameList.push(subtreeData.id);
           });
           setSubtreeList(arrSubtreeNameList);
-          const str = arrSubtreeNameList.map((name) => `"${name}"`).join(', ')
+          const str = arrSubtreeNameList.map((name) => `"${name}"`).join(', ');
           console.log(str, 'str');
           ProductList.filterByAttributes(str)
             .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
@@ -46,7 +55,7 @@ export default function CategoryPage(): JSX.Element {
     }
   }, [category]);
 
-  // console.log(productsList);
+  console.log(productsList?.body.results);
   // console.log(subtreeList?.map((name) => `"${name}"`).join(','));
 
   return (
@@ -58,7 +67,7 @@ export default function CategoryPage(): JSX.Element {
 
       <main className={style.products}>
         <aside className={style['products-filters']}>
-          {subtree?.map((subCategory) => (
+          {subtree.map((subCategory) => (
             <div key={subCategory.name.en}>
               <input name="filterSubtree" type="checkbox" id={subCategory.name.en} />
               <label htmlFor={subCategory.name.en}>{subCategory.name.en}</label>
@@ -66,7 +75,11 @@ export default function CategoryPage(): JSX.Element {
           ))}
         </aside>
         <section className={style['products-block']}>
-          <div className={style['products-block-card']}>Card</div>
+          {productsList
+            ? productsList.body.results.map((dataCard: ProductProjection) => (
+                <Card dataCard={dataCard} key={dataCard.name.en} />
+              ))
+            : ''}
         </section>
       </main>
     </section>

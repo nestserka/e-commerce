@@ -12,7 +12,6 @@ export interface SliderCatalogPageProps {
 }
 
 export default function SliderCatalogPage({ allCategories }: SliderCatalogPageProps): JSX.Element {
-
   return (
     <div className="slider-wrapper">
       <Swiper

@@ -1,23 +1,39 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import style from './card.module.scss';
+import { createParamsfromCard } from './utils';
 
-function Card(): JSX.Element {
-  // const [currentImage, setCurrentImage] = useState<string>('');
-  // const [currentSecondImage, setCurrentSecondImage] = useState<string>('');
-  // const [description, setDescription] = useState<string>('');
+import type { PropsCard } from './types';
+import type { ProductProjection } from '@commercetools/platform-sdk';
+
+function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
+  const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
 
   return (
-    <div className={style.card_wrapper}>
-      {/* <img className={style.card_pic} src={currentSecondImage || currentImage} alt="" />
-      <h2 className={style.card_name} id={props.keyCard}>
-        <span>{props.sku}</span>
+    <Link to={product.cardKey} className={style.card}>
+      <div className={style['card-pic']}>
+        <div className={style['information-block']}>
+          {product.discountedName && <span className={style['discount-name']}>{product.discountedName.label}</span>}
+          {product.isCardBestseller && <span className={style.bestseller}>BESTSELLER</span>}
+        </div>
+        <img className={style['card-pic-img']} src={product.cardImages[0]} alt="" />
+      </div>
+
+      <h2 className={style['card-title']} id={product.cardName}>
+        <span>{product.cardName}</span>
       </h2>
-      <div className={style.card_description}>{description}</div>
-      <div className={style.card_buy}>
-        <span className={!props.discounted ? style.card_price : style.linethrough}>{props.prices}$</span>
-        <span className={style.card_discount}>{props.discounted}</span>
-      </div> */}
-    </div>
+      <div className={style['card-description']}>{product.cardDescription}</div>
+      <div className={style['block-buy']}>
+        <button type="button" className={style['card-button']}>
+          View Details
+        </button>
+        <div className={style['block-price']}>
+          <span>{product.cardPrice}</span>
+          <span className={style.discount}>{product.cardDiscounted}</span>
+        </div>
+      </div>
+    </Link>
   );
 }
 
