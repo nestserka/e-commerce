@@ -4,4 +4,15 @@
   @include page-layout-container;
 
   flex-direction: column;
+
+  &-header {
+    @include flex-center-space-between;
+  }
+
+  .products {
+    @include flex-center-space-between;
+    .products-block {
+      width: 70%;
+    }
+  }
 }
