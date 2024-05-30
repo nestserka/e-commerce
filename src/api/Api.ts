@@ -11,6 +11,7 @@ import type {
   CustomerDraft,
   CustomerPagedQueryResponse,
   CustomerSignInResult,
+  MyCustomerChangePassword,
   MyCustomerUpdateAction,
   ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
@@ -122,6 +123,18 @@ export class Api {
         headers: {
           'Content-Type': 'application/json',
         },
+      })
+      .execute();
+
+    return customer;
+  }
+
+  public async updateCustomerPassword(data: MyCustomerChangePassword): Promise<ClientResponse<Customer>> {
+    const customer = await this.apiRoot
+      .me()
+      .password()
+      .post({
+        body: data,
       })
       .execute();
 

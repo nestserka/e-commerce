@@ -50,4 +50,5 @@ export interface CustomerInfoState {
   setCustomerInfo: (customerInfo: CustomerInfo) => void;
   reset: () => void;
   setUpdatedEmail: (customerInfo: CustomerInfo) => void;
+  setValueVersion: (version: number) => void;
 }

@@ -90,4 +90,7 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
       version: customerInfo.version,
     });
   },
+  setValueVersion: (version: number): void => {
+    set(() => ({ version }));
+  },
 }));

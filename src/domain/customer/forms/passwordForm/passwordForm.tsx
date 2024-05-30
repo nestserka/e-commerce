@@ -1,15 +1,24 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { useEffect, useState } from 'react';
 
 import style from '../_forms.module.scss';
 import { PASSWORD_VALIDATION_SCHEMA } from '../../../../constants/constants';
 import FormTitle from '../../../../components/formTitle/FormTitle';
-import { inputEmailProps } from '../../../../utils/inputProps';
+import {
+  inputConfirmPasswordProps,
+  inputCurrentPasswordProps,
+  inputNewPasswordProps,
+} from '../../../../utils/inputProps';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
-import { type FormModal } from '../../../../utils/types';
+import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
 import InputPassword from '../../../../components/ui/inputPassword/inputPassword';
+import { showModalMessage, useCustomerInfo, useLoginData } from '../../../../core/state/userState';
+import { api } from '../../../../api/Api';
+
+import type { CustomerChangePassword } from '@commercetools/platform-sdk';
 
 const schema = z
   .object({
@@ -25,44 +34,63 @@ const schema = z
 export type PasswordFormValues = z.infer<typeof schema>;
 
 export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Element {
-  // const { version, setUpdatedEmail, valueEmail } = useCustomerInfo();
-  const { register, handleSubmit, formState } = useForm<PasswordFormValues>({
+  const { version, setValueVersion, valueEmail } = useCustomerInfo();
+  const { customerId } = useLoginData();
+  const { register, handleSubmit, formState, watch, trigger, reset } = useForm<PasswordFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
 
   const { errors, isDirty, isValid, isSubmitting } = formState;
-  // const { setIsShown } = showModalMessage();
+  const { setIsShown } = showModalMessage();
+  const [formPasswordError, setFormPasswordError] = useState<string>('');
+
+  useEffect(() => {
+    const subscription = watch((_value, { name }) => {
+      if (name === 'newPassword') {
+        trigger(['newPassword', 'confirmPassword']).catch((error) => {
+          console.error('Error triggering newPassword or confirmPassword:', error);
+        });
+      }
+    });
+
+    return (): void => {
+      subscription.unsubscribe();
+    };
+  }, [watch, trigger]);
 
   const onSubmit = (data: PasswordFormValues): void => {
-    console.log(data);
-    // const body: MyCustomerUpdateAction[] = [
-    //   {
-    //     action: 'changeEmail',
-    //     email: data.email.toLowerCase(),
-    //   },
-    // ];
-    // api
-    //   .updateCustomer(version, body)
-    //   .then((response) => {
-    //     const customerInfo = {
-    //       valueEmail: response.body.email,
-    //       version: response.body.version,
-    //     };
-    //     setUpdatedEmail(customerInfo);
-    //     setIsShown(true);
-    //     onClose();
-    //     reset();
-    //   })
-    //   .catch((error: Error) => {
-    //     setFormEmailError('');
+    const body: CustomerChangePassword = {
+      id: customerId,
+      version,
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword,
+    };
+    api
+      .updateCustomerPassword(body)
+      .then((response) => {
+        setValueVersion(response.body.version);
+        api
+          .loginUser(valueEmail, body.newPassword)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        setIsShown(true);
+        onClose();
+        reset();
+      })
+      .catch((error: Error) => {
+        setFormPasswordError('');
 
-    //     if (error.message.includes('different version')) {
-    //       setFormEmailError(VERSION_ERROR_MESSAGE);
-    //     } else {
-    //       setFormEmailError(error.message);
-    //     }
-    //   });
+        if (error.message.includes('different version')) {
+          setFormPasswordError(VERSION_ERROR_MESSAGE);
+        } else {
+          setFormPasswordError(error.message);
+        }
+      });
   };
 
   return (
@@ -73,19 +101,19 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
           <InputPassword
             inputProps={{
               ...register('currentPassword'),
-              ...inputEmailProps,
+              ...inputCurrentPasswordProps,
             }}
             label="Current Password "
           />
           {errors.currentPassword && <ErrorMessage message={errors.currentPassword.message} />}
-          {/* {formEmailError && <ErrorMessage message={formEmailError} />} */}
+          {formPasswordError && <ErrorMessage message={formPasswordError} />}
         </section>
 
         <section className={style['input-section']}>
           <InputPassword
             inputProps={{
               ...register('newPassword'),
-              ...inputEmailProps,
+              ...inputNewPasswordProps,
             }}
             label="Enter New Password "
           />
@@ -96,7 +124,7 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
           <InputPassword
             inputProps={{
               ...register('confirmPassword'),
-              ...inputEmailProps,
+              ...inputConfirmPasswordProps,
             }}
             label="Confirm New Password "
           />
