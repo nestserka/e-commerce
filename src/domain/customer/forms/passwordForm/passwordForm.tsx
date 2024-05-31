@@ -13,10 +13,11 @@ import {
 } from '../../../../utils/inputProps';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
-import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
+import { type FormModal, VERSION_ERROR_MESSAGE} from '../../../../utils/types';
 import InputPassword from '../../../../components/ui/inputPassword/inputPassword';
 import { showModalMessage, useCustomerInfo, useLoginData } from '../../../../core/state/userState';
-import { api } from '../../../../api/Api';
+import updateCustomerPassword from '../../../../api/me/changePassword';
+import loginUser from '../../../../api/me/loginUser';
 
 import type { CustomerChangePassword } from '@commercetools/platform-sdk';
 
@@ -59,30 +60,21 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
     };
   }, [watch, trigger]);
 
-  const onSubmit = (data: PasswordFormValues): void => {
+  const onSubmit = async (data: PasswordFormValues): Promise<void> => {
     const body: CustomerChangePassword = {
       id: customerId,
       version,
       currentPassword: data.currentPassword,
       newPassword: data.newPassword,
     };
-    api
-      .updateCustomerPassword(body)
-      .then((response) => {
-        setValueVersion(response.body.version);
-        api
-          .loginUser(valueEmail, body.newPassword)
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+    console.log(body);
+      await updateCustomerPassword(body).then((response) =>{
+        setValueVersion(response.version);
         setIsShown(true);
         onClose();
         reset();
-      })
-      .catch((error: Error) => {
+        setFormPasswordError('');
+      }).catch((error: Error) => {
         setFormPasswordError('');
 
         if (error.message.includes('different version')) {
@@ -91,6 +83,7 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
           setFormPasswordError(error.message);
         }
       });
+      await loginUser(valueEmail, body.newPassword);
   };
 
   return (

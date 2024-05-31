@@ -4,7 +4,15 @@ import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import type { ExistingTokenMiddlewareOptions, HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 
-export const createClientWithAttachedToken = (token: string): ByProjectKeyRequestBuilder => {
+export default function withExistingToken(token: string): ByProjectKeyRequestBuilder {
+  if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_ID !== 'string') {
+    throw new Error('no admin client id found');
+  }
+
+  if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_SECRET !== 'string') {
+    throw new Error('no admin client secret found');
+  }
+
   if (typeof import.meta.env.VITE_APP_AUTH_URL !== 'string') {
     throw new Error('no auth url found');
   }
@@ -17,26 +25,21 @@ export const createClientWithAttachedToken = (token: string): ByProjectKeyReques
     throw new Error('no api url found');
   }
 
+  const options: ExistingTokenMiddlewareOptions = {
+    force: false,
+  };
+
   const httpMiddlewareOptions: HttpMiddlewareOptions = {
     host: import.meta.env.VITE_APP_API_URL,
     fetch,
   };
 
-  const options: ExistingTokenMiddlewareOptions = {
-    force: false,
-  };
-
-  const projectKey = import.meta.env.VITE_APP_PROJECT_KEY;
-
   const ctpClient = new ClientBuilder()
-    .withProjectKey(projectKey)
+    .withProjectKey(import.meta.env.VITE_APP_PROJECT_KEY)
     .withExistingTokenFlow(`Bearer ${token}`, options)
     .withHttpMiddleware(httpMiddlewareOptions)
+    .withLoggerMiddleware()
     .build();
 
-  const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
-    projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
-  });
-
-  return apiRoot;
-};
+  return createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: import.meta.env.VITE_APP_PROJECT_KEY });
+}

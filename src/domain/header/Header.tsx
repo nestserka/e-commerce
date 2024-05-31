@@ -6,8 +6,8 @@ import Navigation from './navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
 import { LS_PREFIX, NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useCustomerInfo, useLoginData } from '../../core/state/userState';
-import { api } from '../../api/Api';
-import { tokenCache } from '../../api/NasaTokenCache';
+import { tokenCache } from '../../api/token/NasaTokenCache';
+import getAllProducts from '../../api/products/getAllProducts';
 
 import type { CustomerCredentials } from '../../core/state/types';
 
@@ -15,7 +15,7 @@ export default function Header(): JSX.Element {
   const { isAuth, customerId, setCustomerCredentials } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
 
-  const onClickButton = (): void => {
+  const onClickButton = async (): Promise<void> => {
     const resetUser: CustomerCredentials = {
       customerId: '',
       isAuth: false,
@@ -28,9 +28,9 @@ export default function Header(): JSX.Element {
     localStorage.removeItem(`customerId-${LS_PREFIX}`);
     tokenCache.clear();
 
-    api.switchClientBuilders();
-    api.getAllProduct().catch((error: Error) => {
-      console.log(error.message);
+
+    await getAllProducts().catch(error => {
+      console.error('Error fetching products:', error);
     });
   };
 

@@ -1,17 +1,17 @@
 import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-import { tokenCache } from './token/NasaTokenCache';
+import { tokenCache } from '../token/NasaTokenCache';
 
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
-import type { Client, HttpMiddlewareOptions, PasswordAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';
+import type { HttpMiddlewareOptions, RefreshAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';
 
-export const createLoginUserClient = (username: string, password: string): ByProjectKeyRequestBuilder => {
-  if (typeof import.meta.env.VITE_APP_CLIENT_ID !== 'string') {
+export default function withRefreshToken(refreshToken: string): ByProjectKeyRequestBuilder {
+  if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_ID !== 'string') {
     throw new Error('no admin client id found');
   }
 
-  if (typeof import.meta.env.VITE_APP_CLIENT_SECRET !== 'string') {
+  if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_SECRET !== 'string') {
     throw new Error('no admin client secret found');
   }
 
@@ -27,20 +27,17 @@ export const createLoginUserClient = (username: string, password: string): ByPro
     throw new Error('no api url found');
   }
 
-  const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
+  const options: RefreshAuthMiddlewareOptions = {
     host: import.meta.env.VITE_APP_AUTH_URL,
     projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
     credentials: {
-      clientId: import.meta.env.VITE_APP_CLIENT_ID,
-      clientSecret: import.meta.env.VITE_APP_CLIENT_SECRET,
-      user: {
-        username,
-        password,
-      },
+      clientId: import.meta.env.VITE_APP_ADMIN_CLIENT_ID,
+      clientSecret: import.meta.env.VITE_APP_ADMIN_CLIENT_SECRET,
     },
-    scopes: [import.meta.env.VITE_APP_CLIENT_SCOPES],
+    refreshToken,
     tokenCache,
     fetch,
+    // scope???
   };
 
   const httpMiddlewareOptions: HttpMiddlewareOptions = {
@@ -48,15 +45,14 @@ export const createLoginUserClient = (username: string, password: string): ByPro
     fetch,
   };
 
-  const ctpClient: Client = new ClientBuilder()
-    .withPasswordFlow(passwordAuthMiddlewareOptions)
+  const ctpClient = new ClientBuilder()
+    .withProjectKey(import.meta.env.VITE_APP_PROJECT_KEY)
+    .withRefreshTokenFlow(options)
     .withHttpMiddleware(httpMiddlewareOptions)
     .withLoggerMiddleware()
     .build();
 
-  const apiRoot = createApiBuilderFromCtpClient(ctpClient).withProjectKey({
+  return createApiBuilderFromCtpClient(ctpClient).withProjectKey({
     projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
   });
-
-  return apiRoot;
-};
+}

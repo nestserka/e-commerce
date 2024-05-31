@@ -29,7 +29,6 @@ import {
   EMAIL_VALIDATION_SCHEMA,
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
-  LS_PREFIX,
   PASSWORD_VALIDATION_SCHEMA,
   ROUTES,
 } from '../../../constants/constants';
@@ -39,8 +38,8 @@ import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
 import RegistrationData from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
-import { showModalMessage, useLoginData } from '../../../core/state/userState';
-import { Api, api } from '../../../api/Api';
+import { showModalMessage } from '../../../core/state/userState';
+import createCustomer from '../../../api/customer/createCustomer';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -64,7 +63,6 @@ export default function RegistrationForm(): JSX.Element {
   const { errors } = formState;
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [formEmailError, setFormEmailError] = useState<string>('');
-  const { setCustomerCredentials } = useLoginData();
 
   const shippingAddress = useWatch({
     control,
@@ -81,7 +79,7 @@ export default function RegistrationForm(): JSX.Element {
 
   const { setIsShown } = showModalMessage();
 
-  const onSubmit = (data: RegistrationFormValues): void => {
+  const onSubmit = async (data: RegistrationFormValues): Promise<void> => {
     setShippingCompleteChecked(false);
     const registrationData = new RegistrationData();
     registrationData.setEmail(data.email);
@@ -101,27 +99,15 @@ export default function RegistrationForm(): JSX.Element {
       registrationData.setDefaultBillingAddress(1);
     }
 
-    Api.createCustomer(registrationData.getState())
-      .then((response) => {
-        const customerCredentials = {
-          valueEmail: response.body.customer.email,
-          valuePassword: data.password,
-          isAuth: true,
-          customerId: response.body.customer.id,
-        };
-        setCustomerCredentials(customerCredentials);
-        localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
-        localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-        api.switchToPasswordFlow(data.email.toLowerCase(), data.password);
-        api.loginUser(data.email.toLowerCase(), data.password).catch((error: Error) => {
-          console.log(error.message);
-        });
-        reset();
-        setIsShown(true);
-      })
-      .catch((error: Error) => {
+    try {
+      await createCustomer(registrationData.getState());
+      reset();
+      setIsShown(true);
+    } catch (error) {
+      if (error instanceof Error) {
         setFormEmailError(error.message);
-      });
+      }
+    }
   };
 
   return (

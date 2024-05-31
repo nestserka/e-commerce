@@ -2,7 +2,6 @@ import { Link, Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 
 import style from './_catalog.module.scss';
-import { api } from '../../api/Api';
 
 export default function CatalogPage(): JSX.Element {
   const elem = 'name-category';
@@ -10,7 +9,7 @@ export default function CatalogPage(): JSX.Element {
   const elem3 = 'name-category3';
   const elem4 = 'name-category4';
 
-  console.log(api.root().categories().get().execute());
+  // console.log(api.root().categories().get().execute());
 
   return (
     <section className={style.catalog} data-testid="catalog">

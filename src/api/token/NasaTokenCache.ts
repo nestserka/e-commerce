@@ -1,5 +1,5 @@
-import { LS_PREFIX } from '../constants/constants';
-import { isTokenStore } from '../utils/types';
+import { LS_PREFIX } from '../../constants/constants';
+import { isTokenStore } from '../../utils/types';
 
 import type { TokenCache, TokenStore } from '@commercetools/sdk-client-v2';
 
@@ -26,6 +26,8 @@ class NasaTokenCache implements TokenCache {
         }
       }
     }
+
+    console.log(this.myCache);
 
     return this.myCache;
   }

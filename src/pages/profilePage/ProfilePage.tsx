@@ -2,13 +2,12 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import style from './_profile.module.scss';
-import { api } from '../../api/Api';
-import { tokenCache } from '../../api/NasaTokenCache';
 import ProfileAvatar from '../../domain/customer/avatar/profileAvatar';
 import { extractShippingAddresses, formatDateOfBirth } from '../../utils/utils';
 import { showModalMessage, useCustomerInfo } from '../../core/state/userState';
 import ProfileView from '../../domain/customer/profileView/profileView';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
+import getUser from '../../api/me/getUser';
 
 import type { Params } from 'react-router-dom';
 
@@ -26,39 +25,45 @@ export default function ProfilePage(): JSX.Element {
 
   useEffect(() => {
     const fetchCustomer = async (): Promise<void> => {
-      api.switchToPrivateToken(tokenCache.get().token);
-      await api.getCustomer().then((response) => {
-        console.log(response);
+      try {
+        const token = localStorage.getItem('token');
+    
+        if (token) {
+          const response = await getUser(token);
 
-        if (response.body.dateOfBirth && response.body.firstName && response.body.lastName) {
-          const shippingAddresses = extractShippingAddresses(
-            response.body.addresses,
-            response.body.defaultShippingAddressId,
-            response.body.shippingAddressIds,
-          );
-          const billingAddresses = extractShippingAddresses(
-            response.body.addresses,
-            response.body.defaultBillingAddressId,
-            response.body.billingAddressIds,
-          );
-          const customerInfo = {
-            valueEmail: response.body.email,
-            firstName: response.body.firstName,
-            lastName: response.body.lastName,
-            dateOfBirth: formatDateOfBirth(response.body.dateOfBirth),
-            shippingAddress: shippingAddresses,
-            billingAddress: billingAddresses,
-            version: response.body.version,
-          };
-          setCustomerInfo(customerInfo);
+          if (response.dateOfBirth && response.firstName && response.lastName) {
+            const shippingAddresses = extractShippingAddresses(
+              response.addresses,
+              response.defaultShippingAddressId,
+              response.shippingAddressIds,
+            );
+            const billingAddresses = extractShippingAddresses(
+              response.addresses,
+              response.defaultBillingAddressId,
+              response.billingAddressIds,
+            );
+            const customerInfo = {
+              valueEmail: response.email,
+              firstName: response.firstName,
+              lastName: response.lastName,
+              dateOfBirth: formatDateOfBirth(response.dateOfBirth),
+              shippingAddress: shippingAddresses,
+              billingAddress: billingAddresses,
+              version: response.version,
+            };
+            setCustomerInfo(customerInfo);
+          }
         }
-      });
+      } catch (error) {
+        console.error('Error fetching customer info:', error);
+      }
     };
-
-    fetchCustomer().catch((error: Error) => {
-      console.log(error.message);
+  
+    fetchCustomer().catch((error) => {
+      console.error('Error executing fetchCustomer:', error);
     });
   }, [customerId, setCustomerInfo]);
+  
 
   return (
     <section className={style['profile-content']} data-testid="profile">

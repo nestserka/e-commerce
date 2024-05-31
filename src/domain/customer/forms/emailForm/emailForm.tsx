@@ -10,9 +10,9 @@ import { inputEmailProps } from '../../../../utils/inputProps';
 import Input from '../../../../components/ui/input/input';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
-import { api } from '../../../../api/Api';
 import { showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
 import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
+import updateCustomer from '../../../../api/customer/updateCustomer';
 
 import type { ZodType, ZodTypeDef } from 'zod';
 import type { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
@@ -32,7 +32,7 @@ export type EmailFormValues = z.infer<ReturnType<typeof createSchema>>;
 export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
   const { version, setUpdatedEmail, valueEmail } = useCustomerInfo();
   const schema = createSchema(valueEmail);
-  const { register, handleSubmit, formState, reset, watch } = useForm<EmailFormValues>({
+  const { register, handleSubmit, formState, watch, reset } = useForm<EmailFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
@@ -47,19 +47,19 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
     setFormEmailError('');
   }, [newEmail]);
 
-  const onSubmit = (data: EmailFormValues): void => {
+  const onSubmit = async (data: EmailFormValues): Promise<void> => {
     const body: MyCustomerUpdateAction[] = [
       {
         action: 'changeEmail',
         email: data.email.toLowerCase(),
       },
     ];
-    api
-      .updateCustomer(version, body)
+    console.log(body);
+    await updateCustomer(version, body)
       .then((response) => {
         const customerInfo = {
-          valueEmail: response.body.email,
-          version: response.body.version,
+          valueEmail: response.email,
+          version: response.version,
         };
         setUpdatedEmail(customerInfo);
         setIsShown(true);
