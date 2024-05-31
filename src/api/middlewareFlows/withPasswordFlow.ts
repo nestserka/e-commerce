@@ -9,11 +9,11 @@ export default function withPasswordFlow(
   password: string,
   tokenCache: TokenCache,
 ): ByProjectKeyRequestBuilder {
-  if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_ID !== 'string') {
+  if (typeof import.meta.env.VITE_APP_PASSWORD_FLOW_ID !== 'string') {
     throw new Error('no admin client id found');
   }
 
-  if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_SECRET !== 'string') {
+  if (typeof import.meta.env.VITE_APP_PASSWORD_FLOW_SECRET !== 'string') {
     throw new Error('no admin client secret found');
   }
 
@@ -33,14 +33,14 @@ export default function withPasswordFlow(
     host: import.meta.env.VITE_APP_AUTH_URL,
     projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
     credentials: {
-      clientId: import.meta.env.VITE_APP_ADMIN_CLIENT_ID,
-      clientSecret: import.meta.env.VITE_APP_ADMIN_CLIENT_SECRET,
+      clientId: import.meta.env.VITE_APP_PASSWORD_FLOW_ID,
+      clientSecret: import.meta.env.VITE_APP_PASSWORD_FLOW_SECRET,
       user: {
         username,
         password,
       },
     },
-    scopes: [import.meta.env.VITE_APP_ADMIN_SCOPES],
+    scopes: [import.meta.env.VITE_APP_PASSWORD_FLOW_SCOPE],
     tokenCache,
     fetch,
   };

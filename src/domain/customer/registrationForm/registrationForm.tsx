@@ -29,6 +29,7 @@ import {
   EMAIL_VALIDATION_SCHEMA,
   FIRST_NAME_VALIDATION_SCHEMA,
   LAST_NAME_VALIDATION_SCHEMA,
+  LS_PREFIX,
   PASSWORD_VALIDATION_SCHEMA,
   ROUTES,
 } from '../../../constants/constants';
@@ -38,7 +39,7 @@ import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
 import RegistrationData from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
-import { showModalMessage } from '../../../core/state/userState';
+import { showModalMessage, useLoginData } from '../../../core/state/userState';
 import createCustomer from '../../../api/customer/createCustomer';
 
 const schema = z.object({
@@ -63,6 +64,7 @@ export default function RegistrationForm(): JSX.Element {
   const { errors } = formState;
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [formEmailError, setFormEmailError] = useState<string>('');
+  const { setCustomerCredentials } = useLoginData();
 
   const shippingAddress = useWatch({
     control,
@@ -99,15 +101,23 @@ export default function RegistrationForm(): JSX.Element {
       registrationData.setDefaultBillingAddress(1);
     }
 
-    try {
-      await createCustomer(registrationData.getState());
-      reset();
-      setIsShown(true);
-    } catch (error) {
-      if (error instanceof Error) {
+    await createCustomer(registrationData.getState())
+      .then((response) => {
+        const customerCredentials = {
+          valueEmail: response.email,
+          valuePassword: data.password,
+          isAuth: true,
+          customerId: response.id,
+        };
+        setCustomerCredentials(customerCredentials);
+        localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
+        localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
+        reset();
+        setIsShown(true);
+      })
+      .catch((error: Error) => {
         setFormEmailError(error.message);
-      }
-    }
+      });
   };
 
   return (
