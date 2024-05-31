@@ -1,0 +1,152 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.card {
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+  width: 318px;
+  height: 570px;
+  padding: 20px;
+
+  font-family: Arimo, sans-serif;
+  font-size: 16px;
+  line-height: 17.5px;
+  color: $checkbox-color-checked;
+
+  border: 1px solid $border-color-default;
+  border-radius: 24px;
+
+  transition: 300ms;
+
+  &-pic {
+    position: relative;
+
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: calc(318px - 40px);
+    height: 260px;
+
+    border-radius: 24px;
+
+    .information-block {
+      position: absolute;
+      top: 15px;
+      right: 5px;
+
+      font-family: 'TT Firs Neue', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+
+      .discount-name,
+      .bestseller {
+        margin-right: 5px;
+        padding: 5px;
+
+        color: $checkbox-color-checked;
+
+        background-color: $font-color-warning;
+        border-radius: 10px;
+      }
+
+      .discount-name {
+        background-color: $font-color-warning;
+      }
+
+      .bestseller {
+        background-color: $bg-color-bestseller;
+      }
+    }
+
+    .card-pic-img {
+      aspect-ratio: 0.7 / 0.7;
+      width: 100%;
+    }
+  }
+
+  &-title {
+    display: block;
+
+    margin: 20px auto;
+
+    font-family: 'TT Firs Neue', sans-serif;
+    font-size: 20px;
+    line-height: 24px;
+    color: $checkbox-color-checked;
+  }
+
+  &-description {
+    overflow-y: auto;
+
+    height: 100px;
+    margin-bottom: 20px;
+
+    font-family: Arimo, sans-serif;
+    font-size: 16px;
+    line-height: 17.5px;
+    color: $checkbox-color-checked;
+  }
+
+  .block-buy {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .card-button {
+      cursor: pointer;
+
+      display: block;
+
+      padding: 10px;
+
+      font-size: inherit;
+      color: $checkbox-color-checked;
+      text-decoration: none;
+
+      background-color: transparent;
+      border: 1px solid $border-color-default;
+      border-radius: 24px;
+
+      transition: 300ms;
+
+      &:hover {
+        color: $font-color-primary;
+        background-color: $bg-color-btn-default;
+      }
+    }
+
+    .block-price {
+      display: flex;
+      flex-direction: column;
+      align-items: end;
+
+      font-family: Arimo, sans-serif;
+      font-size: 16px;
+      line-height: 17.5px;
+
+      .discount {
+        margin-top: 5px;
+        font-size: 14px;
+        line-height: 16.8px;
+        text-decoration: line-through;
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 0 20px $bg-color-btn-default;
+  }
+
+  // &-buy {
+
+  // }
+}
