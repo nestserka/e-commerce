@@ -44,5 +44,5 @@ export function handleLoginError(count: number | undefined): ErrorLoginForm {
 }
 
 export function formatPrice(num: number): string {
-  return `USD ${(num / 100).toFixed(2)}`;
+  return `$${(num / 100).toFixed(2)}`;
 }
