@@ -67,7 +67,6 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
       currentPassword: data.currentPassword,
       newPassword: data.newPassword,
     };
-    console.log(body);
     await updateCustomerPassword(body)
       .then((response) => {
         setValueVersion(response.version);

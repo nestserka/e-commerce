@@ -1,8 +1,6 @@
 import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-import { tokenCache } from './NasaTokenCache';
-
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import type { AnonymousAuthMiddlewareOptions, HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 
@@ -39,7 +37,7 @@ export default function anonymousSession(): ByProjectKeyRequestBuilder {
       clientSecret: import.meta.env.VITE_APP_CLIENT_SECRET,
     },
     scopes: [import.meta.env.VITE_APP_CLIENT_SCOPES],
-    tokenCache,
+    // tokenCache,
     fetch,
   };
 

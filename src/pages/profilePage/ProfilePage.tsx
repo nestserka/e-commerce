@@ -26,33 +26,29 @@ export default function ProfilePage(): JSX.Element {
   useEffect(() => {
     const fetchCustomer = async (): Promise<void> => {
       try {
-        const token = localStorage.getItem('token');
+        const response = await getUser();
 
-        if (token) {
-          const response = await getUser(token);
-
-          if (response.dateOfBirth && response.firstName && response.lastName) {
-            const shippingAddresses = extractShippingAddresses(
-              response.addresses,
-              response.defaultShippingAddressId,
-              response.shippingAddressIds,
-            );
-            const billingAddresses = extractShippingAddresses(
-              response.addresses,
-              response.defaultBillingAddressId,
-              response.billingAddressIds,
-            );
-            const customerInfo = {
-              valueEmail: response.email,
-              firstName: response.firstName,
-              lastName: response.lastName,
-              dateOfBirth: formatDateOfBirth(response.dateOfBirth),
-              shippingAddress: shippingAddresses,
-              billingAddress: billingAddresses,
-              version: response.version,
-            };
-            setCustomerInfo(customerInfo);
-          }
+        if (response.dateOfBirth && response.firstName && response.lastName) {
+          const shippingAddresses = extractShippingAddresses(
+            response.addresses,
+            response.defaultShippingAddressId,
+            response.shippingAddressIds,
+          );
+          const billingAddresses = extractShippingAddresses(
+            response.addresses,
+            response.defaultBillingAddressId,
+            response.billingAddressIds,
+          );
+          const customerInfo = {
+            valueEmail: response.email,
+            firstName: response.firstName,
+            lastName: response.lastName,
+            dateOfBirth: formatDateOfBirth(response.dateOfBirth),
+            shippingAddress: shippingAddresses,
+            billingAddress: billingAddresses,
+            version: response.version,
+          };
+          setCustomerInfo(customerInfo);
         }
       } catch (error) {
         console.error('Error fetching customer info:', error);

@@ -1,7 +1,7 @@
 import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
-import { tokenCache } from '../token/NasaTokenCache';
+import { tokenCache } from '../token/MyTokenCache';
 
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import type { HttpMiddlewareOptions, RefreshAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';

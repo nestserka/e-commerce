@@ -1,12 +1,10 @@
-import MyTokenCache from '../token/MyTokenCache';
+import { tokenCache } from '../token/MyTokenCache';
 import withPasswordFlow from '../middlewareFlows/withPasswordFlow';
 
 import type { ClientResponse, Customer, CustomerSignInResult } from '@commercetools/platform-sdk';
 
 export default async function loginUser(email: string, password: string): Promise<Customer> {
-  const tokenCache = new MyTokenCache();
-
-  // const tokenAnon: string | null = localStorage.getItem('tokenAnon');
+  tokenCache.clear();
 
   const response: ClientResponse<CustomerSignInResult> = await withPasswordFlow(email, password, tokenCache)
     .me()
@@ -22,10 +20,10 @@ export default async function loginUser(email: string, password: string): Promis
     })
     .execute();
 
-  const { token } = tokenCache.get();
-  console.log(token);
+  const { refreshToken } = tokenCache.get();
+  console.log(refreshToken);
 
-  if (token) localStorage.setItem('token', token);
+  if (refreshToken) localStorage.setItem('token', refreshToken);
 
   return response.body.customer;
 }

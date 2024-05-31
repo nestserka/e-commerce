@@ -6,8 +6,8 @@ import Navigation from './navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
 import { LS_PREFIX, NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useCustomerInfo, useLoginData } from '../../core/state/userState';
-import { tokenCache } from '../../api/token/NasaTokenCache';
 import getAllProducts from '../../api/products/getAllProducts';
+import { tokenCache } from '../../api/token/MyTokenCache';
 
 import type { CustomerCredentials } from '../../core/state/types';
 
