@@ -1,12 +1,11 @@
-import withExistingToken from '../token/existingToken';
+import withRefreshToken from '../middlewareFlows/withRefreshToken';
 
 import type { Customer, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 
 export default async function updateCustomer(version: number, data: MyCustomerUpdateAction[]): Promise<Customer> {
-  const currentToken = localStorage.getItem('token');
-  const parsenToken = currentToken ?? '';
+  const accessToken = localStorage.getItem('token');
 
-  const response = await withExistingToken(parsenToken)
+  const response = await withRefreshToken(accessToken ?? '')
     .me()
     .post({
       body: {
