@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './_loginform.module.scss';
@@ -26,19 +26,32 @@ type LoginFormValues = z.infer<typeof schema>;
 
 export default function LoginForm(): JSX.Element {
   const { setCustomerCredentials } = useLoginData();
-  const { register, handleSubmit, formState, reset } = useForm<LoginFormValues>({
+  const { register, handleSubmit, formState, reset, watch } = useForm<LoginFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
-  const { errors } = formState;
+  const { errors, isDirty, isValid, isSubmitting } = formState;
   const navigate = useNavigate();
 
   const [formEmailError, setFormEmailError] = useState<string>('');
   const [formPasswordError, setFormPasswordError] = useState<string>('');
   const [formError, setFormError] = useState<string>('');
 
-  const inputEmailProps = getInputProps('email', 'email', 'Enter your email', 'email');
+  const inputEmailProps = getInputProps('text', 'email', 'Enter your email', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Enter your password', 'off');
+
+  const valueEmail = watch('email');
+  const valuePassword = watch('password');
+
+  useEffect(() => {
+    setFormEmailError('');
+    setFormError('');
+  }, [valueEmail]);
+
+  useEffect(() => {
+    setFormPasswordError('');
+    setFormError('');
+  }, [valuePassword]);
 
   const onSubmit = (data: LoginFormValues): void => {
     api
@@ -110,7 +123,7 @@ export default function LoginForm(): JSX.Element {
         {errors.password && <ErrorMessage message={errors.password.message} />}
         {formPasswordError && <ErrorMessage message={formPasswordError} />}
       </section>
-      <button type="submit" className="button-primary">
+      <button type="submit" className="button-primary" disabled={!isDirty || !isValid || isSubmitting}>
         Login Your Account
       </button>
       <section>
