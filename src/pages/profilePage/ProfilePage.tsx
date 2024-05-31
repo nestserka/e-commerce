@@ -27,7 +27,7 @@ export default function ProfilePage(): JSX.Element {
     const fetchCustomer = async (): Promise<void> => {
       try {
         const token = localStorage.getItem('token');
-    
+
         if (token) {
           const response = await getUser(token);
 
@@ -58,12 +58,11 @@ export default function ProfilePage(): JSX.Element {
         console.error('Error fetching customer info:', error);
       }
     };
-  
+
     fetchCustomer().catch((error) => {
       console.error('Error executing fetchCustomer:', error);
     });
   }, [customerId, setCustomerInfo]);
-  
 
   return (
     <section className={style['profile-content']} data-testid="profile">

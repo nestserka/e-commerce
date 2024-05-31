@@ -13,7 +13,7 @@ import {
 } from '../../../../utils/inputProps';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
-import { type FormModal, VERSION_ERROR_MESSAGE} from '../../../../utils/types';
+import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
 import InputPassword from '../../../../components/ui/inputPassword/inputPassword';
 import { showModalMessage, useCustomerInfo, useLoginData } from '../../../../core/state/userState';
 import updateCustomerPassword from '../../../../api/me/changePassword';
@@ -68,13 +68,15 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
       newPassword: data.newPassword,
     };
     console.log(body);
-      await updateCustomerPassword(body).then((response) =>{
+    await updateCustomerPassword(body)
+      .then((response) => {
         setValueVersion(response.version);
         setIsShown(true);
         onClose();
         reset();
         setFormPasswordError('');
-      }).catch((error: Error) => {
+      })
+      .catch((error: Error) => {
         setFormPasswordError('');
 
         if (error.message.includes('different version')) {
@@ -83,7 +85,7 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
           setFormPasswordError(error.message);
         }
       });
-      await loginUser(valueEmail, body.newPassword);
+    await loginUser(valueEmail, body.newPassword);
   };
 
   return (

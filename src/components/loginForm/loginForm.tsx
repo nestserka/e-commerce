@@ -41,44 +41,48 @@ export default function LoginForm(): JSX.Element {
   const inputEmailProps = getInputProps('email', 'email', 'Enter your email', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Enter your password', 'off');
 
-  const { setCustomerCredentials } = useLoginData()
+  const { setCustomerCredentials } = useLoginData();
 
   const onSubmit = async (data: LoginFormValues): Promise<void> => {
-    await loginUser(data.email.toLowerCase(), data.password).then(async (response) =>{
-      const customerCredentials = {
-        valueEmail: response.email,
-        valuePassword: data.password,
-        isAuth: true,
-        customerId: response.id,
-      };
-      setCustomerCredentials(customerCredentials);
-      localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
-      localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-      await getAllProducts();
-      reset();
-    }).catch(async () => {
-      setFormEmailError('');
-      setFormPasswordError('');
-      setFormError('');
-      const isUserByEmailResponse: CustomerPagedQueryResponse| undefined = await getCustomerByEmail(data.email.toLowerCase());
-  
-      if (isUserByEmailResponse) {
-        const errorResponse: ErrorLoginForm = handleLoginError(isUserByEmailResponse.count);
-  
-        if ('isEmail' in errorResponse.error) {
-          setFormEmailError(errorResponse.error.message);
+    await loginUser(data.email.toLowerCase(), data.password)
+      .then(async (response) => {
+        const customerCredentials = {
+          valueEmail: response.email,
+          valuePassword: data.password,
+          isAuth: true,
+          customerId: response.id,
+        };
+        setCustomerCredentials(customerCredentials);
+        localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
+        localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
+        await getAllProducts();
+        reset();
+      })
+      .catch(async () => {
+        setFormEmailError('');
+        setFormPasswordError('');
+        setFormError('');
+        const isUserByEmailResponse: CustomerPagedQueryResponse | undefined = await getCustomerByEmail(
+          data.email.toLowerCase(),
+        );
+
+        if (isUserByEmailResponse) {
+          const errorResponse: ErrorLoginForm = handleLoginError(isUserByEmailResponse.count);
+
+          if ('isEmail' in errorResponse.error) {
+            setFormEmailError(errorResponse.error.message);
+          }
+
+          if ('isPassword' in errorResponse.error) {
+            setFormPasswordError(errorResponse.error.message);
+          }
+
+          if ('isForm' in errorResponse.error) {
+            setFormError(errorResponse.error.message);
+          }
         }
-  
-        if ('isPassword' in errorResponse.error) {
-          setFormPasswordError(errorResponse.error.message);
-        }
-  
-        if ('isForm' in errorResponse.error) {
-          setFormError(errorResponse.error.message);
-        }
-      }
-    });
-};
+      });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles['login-form']} data-testid="login-form" noValidate>

@@ -28,8 +28,7 @@ export default function Header(): JSX.Element {
     localStorage.removeItem(`customerId-${LS_PREFIX}`);
     tokenCache.clear();
 
-
-    await getAllProducts().catch(error => {
+    await getAllProducts().catch((error) => {
       console.error('Error fetching products:', error);
     });
   };
