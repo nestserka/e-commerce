@@ -10,13 +10,15 @@ export default function Badge({ type, text }: BadgeProps): JSX.Element {
 
   if (type === 'bestseller') {
     badgeClass += ` ${style['badge-bestseller']}`;
-  } else {
+  }
+
+  if (type === 'discount') {
     badgeClass += ` ${style['badge-discount']}`;
   }
 
   return (
-    <div className={badgeClass} data-testid="badge">
+    <span className={badgeClass} data-testid="badge">
       {text}
-    </div>
+    </span>
   );
 }

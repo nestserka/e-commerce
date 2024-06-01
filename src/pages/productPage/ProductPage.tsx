@@ -21,9 +21,6 @@ export default function ProductPage(): JSX.Element {
   const [price, setPrice] = useState<string | null>(null);
   const [discount, setDiscount] = useState<string | null>(null);
 
-  const [discountBadgeStr, setDiscountBadgeStr] = useState<string | null>(null);
-  const [bestsellerBadgeStr, setBestsellerBadgeStr] = useState<string | null>(null);
-
   const extractPrice = (res: ClientResponse<ProductProjection> | undefined): void => {
     if (res) {
       const { prices } = res.body.masterVariant;
@@ -39,25 +36,6 @@ export default function ProductPage(): JSX.Element {
     }
   };
 
-  const extractBadges = (res: ClientResponse<ProductProjection> | undefined): void => {
-    if (res) {
-      const { attributes } = res.body.masterVariant;
-
-      if (attributes) {
-        const discountElem = attributes.filter((attribute) => attribute.name === 'discount');
-        const bestsellerElem = attributes.filter((attribute) => attribute.name === 'bestseller');
-
-        if (discountElem.length && typeof discountElem[0].name === 'string') {
-          setDiscountBadgeStr(discountElem[0].name);
-        }
-
-        if (bestsellerElem.length && typeof bestsellerElem[0].name === 'string') {
-          setBestsellerBadgeStr(bestsellerElem[0].name);
-        }
-      }
-    }
-  };
-
   useEffect(() => {
     const fetchProduct = async (): Promise<void> => {
       try {
@@ -66,11 +44,11 @@ export default function ProductPage(): JSX.Element {
           console.log(data.body);
           setProduct(data);
           extractPrice(data);
-          extractBadges(data);
         } else {
           setError('Product ID is missing');
         }
       } catch (err) {
+        console.log(err);
         setError('Failed to fetch product');
       } finally {
         setLoading(false);
@@ -103,8 +81,25 @@ export default function ProductPage(): JSX.Element {
         <section className={style['product-info-wrapper']}>
           <div className={style['product-info-text']}>
             <h1 className={style.title}>{product.body.name.en}</h1>
-            {discountBadgeStr && <Badge type="discount" text={discountBadgeStr} />}
-            {bestsellerBadgeStr && <Badge type="discount" text={bestsellerBadgeStr} />}
+
+            {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              product.body.masterVariant.attributes?.filter((atr) => atr.name === 'discount')[0].value[0].label && (
+                <Badge
+                  type="discount"
+                  text={
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+                    product.body.masterVariant.attributes.filter((atr) => atr.name === 'discount')[0]?.value[0]?.label
+                  }
+                />
+              )
+            }
+            {product.body.masterVariant.attributes?.filter((atr) => atr.name === 'bestseller')[0].value && (
+              <Badge
+                type="bestseller"
+                text={product.body.masterVariant.attributes.filter((atr) => atr.name === 'bestseller')[0].name}
+              />
+            )}
             <FormSubTitle subTitle="Product Description" />
             <p className={style.description}>{product.body.description?.en}</p>
             <FormSubTitle subTitle="Shipping & Delivery Information" />
