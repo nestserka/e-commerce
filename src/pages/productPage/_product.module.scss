@@ -27,3 +27,14 @@
 .description {
   margin: 1.5em 0 3em;
 }
+
+.price {
+  display: inline-block;
+  margin-right: 0.6em;
+  font-size: 24px;
+}
+
+.discount {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
