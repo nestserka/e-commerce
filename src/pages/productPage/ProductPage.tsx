@@ -11,6 +11,21 @@ import Badge from '../../components/badge/badge';
 import type { Params } from 'react-router';
 import type { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
 
+interface AttributeBestseller {
+  name: 'bestseller';
+  value: boolean[];
+}
+
+interface AttributeDiscount {
+  name: 'discount';
+  value: Discount[];
+}
+
+interface Discount {
+  key: string;
+  label: string;
+}
+
 export default function ProductPage(): JSX.Element {
   const { productId }: Readonly<Params<string>> = useParams();
 
@@ -72,6 +87,17 @@ export default function ProductPage(): JSX.Element {
     return <div>Product not found</div>;
   }
 
+  const discountAttribute = product.body.masterVariant.attributes?.find((atr) => atr.name === 'discount') as
+    | AttributeDiscount
+    | undefined;
+
+  const discountLabel = discountAttribute?.value[0].label;
+
+  const bestsellerAttribute = product.body.masterVariant.attributes?.find((atr) => atr.name === 'bestseller') as
+    | AttributeBestseller
+    | undefined;
+  const bestsellerName = bestsellerAttribute?.name;
+
   return (
     <section className={style['product-page']} data-testid="product-page">
       <section className={style['content-wrapper']}>
@@ -82,24 +108,8 @@ export default function ProductPage(): JSX.Element {
           <div className={style['product-info-text']}>
             <h1 className={style.title}>{product.body.name.en}</h1>
 
-            {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-              product.body.masterVariant.attributes?.filter((atr) => atr.name === 'discount')[0].value[0].label && (
-                <Badge
-                  type="discount"
-                  text={
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-                    product.body.masterVariant.attributes.filter((atr) => atr.name === 'discount')[0]?.value[0]?.label
-                  }
-                />
-              )
-            }
-            {product.body.masterVariant.attributes?.filter((atr) => atr.name === 'bestseller')[0].value && (
-              <Badge
-                type="bestseller"
-                text={product.body.masterVariant.attributes.filter((atr) => atr.name === 'bestseller')[0].name}
-              />
-            )}
+            {discountLabel && <Badge type="discount" text={discountLabel} />}
+            {bestsellerName && <Badge type="bestseller" text={bestsellerName} />}
             <FormSubTitle subTitle="Product Description" />
             <p className={style.description}>{product.body.description?.en}</p>
             <FormSubTitle subTitle="Shipping & Delivery Information" />
