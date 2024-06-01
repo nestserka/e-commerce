@@ -9,7 +9,6 @@ import type {
   CustomerDraft,
   CustomerPagedQueryResponse,
   CustomerSignInResult,
-  ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 
 export class Api {
@@ -82,17 +81,17 @@ export class Api {
     }
   }
 
-  public async getAllProduct(): Promise<ClientResponse<ProductProjectionPagedQueryResponse> | undefined> {
-    try {
-      const products = this.apiRoot.productProjections().get().execute();
+  // public async getAllProduct(): Promise<ClientResponse<ProductProjectionPagedQueryResponse> | undefined> {
+  //   try {
+  //     const products = this.apiRoot.productProjections().get().execute();
 
-      return await products;
-    } catch (error) {
-      console.log(error);
+  //     return await products;
+  //   } catch (error) {
+  //     console.log(error);
 
-      return undefined;
-    }
-  }
+  //     return undefined;
+  //   }
+  // }
 }
 
 export const api = new Api();

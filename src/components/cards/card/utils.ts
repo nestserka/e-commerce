@@ -18,7 +18,7 @@ export function createParamsfromCard(params: ProductProjection): PropsCard {
 
   return {
     cardName: params.name.en,
-    cardDescription: params.description ? params.description.en : lackOfDescription,
+    cardDescription: params.metaDescription ? params.metaDescription.en : lackOfDescription,
     cardImages,
     cardPrice: params.masterVariant.prices
       ? `$ ${(Number(params.masterVariant.prices[0].value.centAmount) / 100).toFixed(2)}`

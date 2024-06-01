@@ -2,12 +2,12 @@
 @import '../../../assets/styles/variables';
 
 .card {
+  @include form-background-gradient;
+  @include flex-center-space-between;
+
   cursor: pointer;
 
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
 
   box-sizing: border-box;
   width: 318px;
@@ -25,12 +25,11 @@
   transition: 300ms;
 
   &-pic {
+    @include flex-justify-center;
+
     position: relative;
 
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     width: calc(318px - 40px);
     height: 260px;
@@ -96,9 +95,8 @@
   }
 
   .block-buy {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include flex-center-space-between;
+
     width: 100%;
 
     .card-button {
@@ -145,8 +143,4 @@
   &:hover {
     box-shadow: 0 0 20px $bg-color-btn-default;
   }
-
-  // &-buy {
-
-  // }
 }
