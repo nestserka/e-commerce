@@ -1,2 +1,19 @@
 @import '../../assets/styles/mixins';
 @import '../../assets/styles/variables';
+
+.badge {
+  @include font-display-medium;
+
+  padding: 6px 8px;
+  font-size: 14px;
+  text-transform: capitalize;
+  border-radius: 6px;
+}
+
+.badge-bestseller {
+  background-color: #009a9a;
+}
+
+.badge-discount {
+  background-color: #5629a0;
+}
