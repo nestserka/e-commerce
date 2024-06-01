@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 
 import style from './_product.module.scss';
-import Slider from '../../components/slider/slider';
+import Slider from '../../components/sliderProduct/slider';
 import { api } from '../../api/Api';
 import FormSubTitle from '../../components/formSubTitle/formSubTitle';
 import { formatPrice } from '../../utils/utils';

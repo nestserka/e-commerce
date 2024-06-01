@@ -42,7 +42,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         className={style.myswiper}
         controller={{ control: modalProductSwiper }}
         onSwiper={setProductSwiper}
-        style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
+        style={{ '--swiper-theme-color': '#fff' } as CSSProperties}
       >
         {images?.map((image, index) => (
           <SwiperSlide
@@ -58,7 +58,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
 
       <Swiper
         onSwiper={setThumbsSwiper}
-        spaceBetween={24}
+        spaceBetween={16}
         slidesPerView={5}
         freeMode
         watchSlidesProgress
@@ -91,7 +91,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           controller={{ control: productSwiper }}
           className={style.modalswiper}
           onSwiper={setModalProductSwiper}
-          style={{ '--swiper-theme-color': '#3E45E6' } as CSSProperties}
+          style={{ '--swiper-theme-color': '#fff' } as CSSProperties}
         >
           {images?.map((image, index) => (
             <SwiperSlide key={image.url}>
