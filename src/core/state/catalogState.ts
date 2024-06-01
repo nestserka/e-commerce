@@ -68,7 +68,15 @@ export const useCatalogData = create<CatalogStateData>((set) => ({
     set({ isLoading: true });
 
     try {
-      const response = await api.root().categories().get().execute();
+      const response = await api
+        .root()
+        .categories()
+        .get({
+          queryArgs: {
+            limit: 100,
+          },
+        })
+        .execute();
       set({ categoriesData: response.body.results, isLoading: false });
       set({
         parentsCategories: response.body.results.filter((data: Category) => data.ancestors.length === 0),

@@ -27,7 +27,6 @@ export default class ProductList {
         },
       })
       .execute();
-    console.log('jgyjgy', response);
     const dataCategory = response.body.results.find((data: Category) => data.slug.en === category);
 
     if (dataCategory) {
