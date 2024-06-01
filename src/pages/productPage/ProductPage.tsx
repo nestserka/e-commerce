@@ -47,12 +47,12 @@ export default function ProductPage(): JSX.Element {
         const discountElem = attributes.filter((attribute) => attribute.name === 'discount');
         const bestsellerElem = attributes.filter((attribute) => attribute.name === 'bestseller');
 
-        if (discountElem.length && typeof discountElem[0].value === 'string') {
-          setDiscountBadgeStr(discountElem[0].value);
+        if (discountElem.length && typeof discountElem[0].name === 'string') {
+          setDiscountBadgeStr(discountElem[0].name);
         }
 
-        if (bestsellerElem.length && typeof bestsellerElem[0].value === 'string') {
-          setBestsellerBadgeStr(bestsellerElem[0].value);
+        if (bestsellerElem.length && typeof bestsellerElem[0].name === 'string') {
+          setBestsellerBadgeStr(bestsellerElem[0].name);
         }
       }
     }
@@ -104,6 +104,7 @@ export default function ProductPage(): JSX.Element {
           <div className={style['product-info-text']}>
             <h1 className={style.title}>{product.body.name.en}</h1>
             {discountBadgeStr && <Badge type="discount" text={discountBadgeStr} />}
+            {bestsellerBadgeStr && <Badge type="discount" text={bestsellerBadgeStr} />}
             <FormSubTitle subTitle="Product Description" />
             <p className={style.description}>{product.body.description?.en}</p>
             <FormSubTitle subTitle="Shipping & Delivery Information" />
