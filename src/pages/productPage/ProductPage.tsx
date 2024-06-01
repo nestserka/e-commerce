@@ -6,6 +6,7 @@ import Slider from '../../components/sliderProduct/slider';
 import { api } from '../../api/Api';
 import FormSubTitle from '../../components/formSubTitle/formSubTitle';
 import { formatPrice } from '../../utils/utils';
+import Badge from '../../components/badge/badge';
 
 import type { Params } from 'react-router';
 import type { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
@@ -102,6 +103,7 @@ export default function ProductPage(): JSX.Element {
         <section className={style['product-info-wrapper']}>
           <div className={style['product-info-text']}>
             <h1 className={style.title}>{product.body.name.en}</h1>
+            {discountBadgeStr && <Badge type="discount" text={discountBadgeStr} />}
             <FormSubTitle subTitle="Product Description" />
             <p className={style.description}>{product.body.description?.en}</p>
             <FormSubTitle subTitle="Shipping & Delivery Information" />
