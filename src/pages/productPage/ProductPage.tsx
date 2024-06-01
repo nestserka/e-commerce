@@ -20,6 +20,9 @@ export default function ProductPage(): JSX.Element {
   const [price, setPrice] = useState<string | null>(null);
   const [discount, setDiscount] = useState<string | null>(null);
 
+  const [discountBadgeStr, setDiscountBadgeStr] = useState<string | null>(null);
+  const [bestsellerBadgeStr, setBestsellerBadgeStr] = useState<string | null>(null);
+
   const extractPrice = (res: ClientResponse<ProductProjection> | undefined): void => {
     if (res) {
       const { prices } = res.body.masterVariant;
@@ -35,6 +38,25 @@ export default function ProductPage(): JSX.Element {
     }
   };
 
+  const extractBadges = (res: ClientResponse<ProductProjection> | undefined): void => {
+    if (res) {
+      const { attributes } = res.body.masterVariant;
+
+      if (attributes) {
+        const discountElem = attributes.filter((attribute) => attribute.name === 'discount');
+        const bestsellerElem = attributes.filter((attribute) => attribute.name === 'bestseller');
+
+        if (discountElem.length && typeof discountElem[0].value === 'string') {
+          setDiscountBadgeStr(discountElem[0].value);
+        }
+
+        if (bestsellerElem.length && typeof bestsellerElem[0].value === 'string') {
+          setBestsellerBadgeStr(bestsellerElem[0].value);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     const fetchProduct = async (): Promise<void> => {
       try {
@@ -43,6 +65,7 @@ export default function ProductPage(): JSX.Element {
           console.log(data.body);
           setProduct(data);
           extractPrice(data);
+          extractBadges(data);
         } else {
           setError('Product ID is missing');
         }
