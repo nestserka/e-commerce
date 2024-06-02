@@ -6,7 +6,6 @@ import Navigation from './navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
 import { LS_PREFIX, NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useCustomerInfo, useLoginData } from '../../core/state/userState';
-import getAllProducts from '../../api/products/getAllProducts';
 import { tokenCache } from '../../api/token/MyTokenCache';
 
 import type { CustomerCredentials } from '../../core/state/types';
@@ -27,10 +26,6 @@ export default function Header(): JSX.Element {
     localStorage.removeItem(`isAuth-${LS_PREFIX}`);
     localStorage.removeItem(`customerId-${LS_PREFIX}`);
     tokenCache.clear();
-
-    await getAllProducts().catch((error) => {
-      console.error('Error fetching products:', error);
-    });
   };
 
   const toggleNav = (): void => {

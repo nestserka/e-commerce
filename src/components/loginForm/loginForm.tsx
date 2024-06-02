@@ -13,7 +13,6 @@ import { getInputProps, handleLoginError } from '../../utils/utils';
 import { EMAIL_VALIDATION_SCHEMA, LS_PREFIX, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
 import loginUser from '../../api/me/loginUser';
 import getCustomerByEmail from '../../api/customer/getCustomerByEmal';
-import getAllProducts from '../../api/products/getAllProducts';
 import { useLoginData } from '../../core/state/userState';
 
 import type { ErrorLoginForm } from '../../utils/utils';
@@ -55,7 +54,6 @@ export default function LoginForm(): JSX.Element {
         setCustomerCredentials(customerCredentials);
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-        await getAllProducts();
         reset();
       })
       .catch(async () => {

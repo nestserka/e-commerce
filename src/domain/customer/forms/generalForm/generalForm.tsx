@@ -21,7 +21,6 @@ import updateCustomer from '../../../../api/customer/updateCustomer';
 
 import type { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 
-
 const schema = z.object({
   firstName: FIRST_NAME_VALIDATION_SCHEMA,
   lastName: LAST_NAME_VALIDATION_SCHEMA,
