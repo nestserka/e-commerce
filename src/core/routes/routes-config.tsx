@@ -6,7 +6,7 @@ import {
   ProtectedRouteForAuth,
   ProtectedRouteForCartForAuth,
   ProtectedRouteForCartNotAuth,
-  ProtectedRouteForNotAuth,
+  ProtectedRouteForProfileForAuth,
 } from './protected-route';
 import {
   AboutPage,
@@ -75,9 +75,9 @@ export const routesConfig: RouteObject[] = [
       {
         path: ROUTES.PROFILE,
         element: (
-          <ProtectedRouteForNotAuth>
+          <ProtectedRouteForProfileForAuth>
             <ProfilePage />
-          </ProtectedRouteForNotAuth>
+          </ProtectedRouteForProfileForAuth>
         ),
       },
       {

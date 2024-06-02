@@ -41,7 +41,7 @@ export default function Navigation({
         )}
       </ul>
       <ul className={style['nav-list-user']}>
-        {isStatus && (
+        {isStatus && customerId && (
           <NavLink to={`${DYNAMIC_ROUTES.PROFILE}${customerId}`} onClick={onClick}>
             <li className={style['nav-item-profile']} key={customerId}>
               <div className={style['profile-wrapper']}>

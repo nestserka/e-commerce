@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import style from './_header.module.scss';
 import Navigation from './navigation/Navigation';
@@ -13,6 +13,7 @@ import type { CustomerCredentials } from '../../core/state/types';
 export default function Header(): JSX.Element {
   const { isAuth, customerId, setCustomerCredentials } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const navigate = useNavigate();
 
   const onClickButton = (): void => {
     const resetUser: CustomerCredentials = {
@@ -26,6 +27,7 @@ export default function Header(): JSX.Element {
     localStorage.removeItem(`isAuth-${LS_PREFIX}`);
     localStorage.removeItem(`customerId-${LS_PREFIX}`);
     tokenCache.clear();
+    navigate(ROUTES.HOME)
   };
 
   const toggleNav = (): void => {
