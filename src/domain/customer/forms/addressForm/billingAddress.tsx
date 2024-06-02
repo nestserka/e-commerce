@@ -19,7 +19,6 @@ import {
 } from '../../../../utils/inputProps';
 import ControllerLabel from '../../../../components/ui/controllerLabel/label';
 import InputCheckBox from '../../../../components/ui/checkbox/checkbox';
-import styles from '../../../../components/modalProfile/_modalProfile.module.scss';
 import updateCustomer from '../../../../api/me/updateCustomer';
 
 import type { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
@@ -92,9 +91,9 @@ export default function BillingAddressForm({ isOpen, onClose, billingAddressId }
                 addressId: billingAddressId,
               },
               {
-                action: "addBillingAddressId",
-                addressId: billingAddressId
-              }
+                action: 'addBillingAddressId',
+                addressId: billingAddressId,
+              },
             ];
             await updateCustomer(version, setDefaultAddress).then((res) => {
               setDefault(billingAddressId, res.version, true, 'billing');
@@ -106,9 +105,9 @@ export default function BillingAddressForm({ isOpen, onClose, billingAddressId }
                 addressId: billingAddressId,
               },
               {
-                action: "addBillingAddressId",
-                addressId: billingAddressId
-              }
+                action: 'addBillingAddressId',
+                addressId: billingAddressId,
+              },
             ];
             await updateCustomer(version, removeDefaultAddress).then((resp) => {
               setDefault(billingAddressId, resp.version, false, 'billing');
@@ -177,7 +176,6 @@ export default function BillingAddressForm({ isOpen, onClose, billingAddressId }
 
                         return document.body;
                       }}
-                      className={styles.moduleSelector}
                       value={value}
                       popupMatchSelectWidth={false}
                       options={[

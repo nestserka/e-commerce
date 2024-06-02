@@ -181,6 +181,7 @@ const CITY_VALIDATION_SCHEMA = z
   });
 
 const validCountries = ['US', 'CA'];
+const validAddressType = ['shipping', 'billing'];
 
 const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.includes(value), {
   message: 'Country must be a valid country from the predefined list.',
@@ -279,5 +280,9 @@ export const INPUT_DATE_VALIDATION_SCHEMA = z
 
     return `${year}-${month}-${day}`;
   });
+
+export const SHIPPING_TYPE_VALIDATION_SCHEMA = z.string().refine((value) => validAddressType.includes(value), {
+  message: 'Address type must be a valid type from the predefined list.',
+});
 
 export const LS_PREFIX = 'nasaStoreTeam';

@@ -59,4 +59,5 @@ export interface CustomerInfoState {
     addressType: 'shipping' | 'billing',
   ) => void;
   setDefault: (addressId: string, version: number, isDefault: boolean, addressType: 'shipping' | 'billing') => void;
+  addAddress: (newAddress: Address, version: number, addressType: 'shipping' | 'billing', isDefault: boolean) => void;
 }

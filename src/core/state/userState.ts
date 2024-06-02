@@ -116,12 +116,31 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
       version,
     }));
   },
+  addAddress: (newAddress: Address, version: number, addressType: 'shipping' | 'billing', isDefault: boolean): void => {
+    set((state) => {
+      let updatedAddresses = state[`${addressType}Address`];
+
+      if (isDefault) {
+        updatedAddresses = updatedAddresses.map((address) => ({ ...address, isDefault: false }));
+      }
+
+      const addressWithDefault = { ...newAddress, isDefault };
+      updatedAddresses.push(addressWithDefault);
+
+      return {
+        ...state,
+        [`${addressType}Address`]: updatedAddresses,
+        version,
+      };
+    });
+  },
   setDefault: (addressId: string, version: number, isDefault: boolean, addressType: 'shipping' | 'billing'): void => {
     set((state) => ({
       ...state,
-      [`${addressType}Address`]: state[`${addressType}Address`].map((address) =>
-        address.id === addressId ? { ...address, isDefault } : address,
-      ),
+      [`${addressType}Address`]: state[`${addressType}Address`].map((address) => ({
+        ...address,
+        isDefault: address.id === addressId ? isDefault : false,
+      })),
       version,
     }));
   },

@@ -6,7 +6,7 @@ interface InputCheckboxProps {
   label: string;
   isCheckBoxDisabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isValue?:boolean
+  isValue?: boolean;
 }
 
 export default function InputCheckBox({
@@ -24,7 +24,7 @@ export default function InputCheckBox({
         id={id}
         name={name}
         className={styles.input}
-        {...(isCheckBoxDisabled && { 'aria-disabled': 'true'})}
+        {...(isCheckBoxDisabled && { 'aria-disabled': 'true' })}
         onChange={onChange}
         checked={isValue}
       />

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 
 import style from '../_forms.module.scss';
-import { ADDRESS_VALIDATION_SCHEMA } from '../../../../constants/constants';
+import { ADDRESS_VALIDATION_SCHEMA, SHIPPING_TYPE_VALIDATION_SCHEMA } from '../../../../constants/constants';
 import FormTitle from '../../../../components/formTitle/FormTitle';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
@@ -19,33 +19,21 @@ import {
 } from '../../../../utils/inputProps';
 import ControllerLabel from '../../../../components/ui/controllerLabel/label';
 import InputCheckBox from '../../../../components/ui/checkbox/checkbox';
-import updateCustomer from '../../../../api/me/updateCustomer';
-
-import type { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
+import createNewAddress from '../../../../api/me/createNewAddress';
 
 const schema = z.object({
-  shippingAddress: ADDRESS_VALIDATION_SCHEMA,
-  defaultShippingAddress: z.boolean().optional(),
+  newAddress: ADDRESS_VALIDATION_SCHEMA,
+  defaultAddress: z.boolean().optional(),
+  addressType: SHIPPING_TYPE_VALIDATION_SCHEMA,
 });
 
-export type ShippingFormValues = z.infer<typeof schema>;
+export type AddressFormValues = z.infer<typeof schema>;
 
-export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId }: FormModal): JSX.Element {
-  const { shippingAddress, version, updateAddress, setDefault } = useCustomerInfo();
-  const address = shippingAddress.find((addr) => addr.id === shippingAddressId);
-
-  const { register, handleSubmit, formState, reset, control, watch, trigger } = useForm<ShippingFormValues>({
+export default function AddressForm({ isOpen, onClose }: FormModal): JSX.Element {
+  const { version, addAddress } = useCustomerInfo();
+  const { register, handleSubmit, formState, reset, control, watch, trigger } = useForm<AddressFormValues>({
     resolver: zodResolver(schema),
     mode: 'onChange',
-    defaultValues: {
-      shippingAddress: {
-        streetName: address?.streetName ?? '',
-        city: address?.city ?? '',
-        postalCode: address?.postalCode ?? '',
-        country: address?.country ?? 'Select Country',
-      },
-      defaultShippingAddress: address?.isDefault ?? false,
-    },
   });
 
   const { errors, isDirty, isValid, isSubmitting } = formState;
@@ -54,9 +42,9 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
 
   useEffect(() => {
     const subscription = watch((_value, { name }) => {
-      if (name === 'shippingAddress.country') {
-        trigger(['shippingAddress.postalCode']).catch((error: Error) => {
-          console.error('Error triggering shippingAddress.postalCode:', error);
+      if (name === 'newAddress.country') {
+        trigger(['newAddress.postalCode']).catch((error: Error) => {
+          console.error('Error triggering postalCode:', error);
         });
       }
     });
@@ -66,52 +54,13 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
     };
   }, [watch, trigger]);
 
-  const onSubmit = async (data: ShippingFormValues): Promise<void> => {
-    const body: MyCustomerUpdateAction[] = [
-      {
-        action: 'changeAddress',
-        addressId: shippingAddressId,
-        address: data.shippingAddress,
-      },
-    ];
-    await updateCustomer(version, body)
-      .then(async (response) => {
-        const updatedAddress = response.addresses.find((addr) => addr.id === shippingAddressId);
+  const onSubmit = async (data: AddressFormValues): Promise<void> => {
+    await createNewAddress(version, data.addressType, data.newAddress, data.defaultAddress ?? false)
+      .then((response) => {
+        const newAddress = response.addresses[response.addresses.length - 1];
 
-        if (updatedAddress && shippingAddressId) {
-          updateAddress(shippingAddressId, updatedAddress, response.version, 'shipping');
-        }
-
-        if (address?.isDefault !== data.defaultShippingAddress && shippingAddressId) {
-          if (data.defaultShippingAddress) {
-            const setDefaultAddress: MyCustomerUpdateAction[] = [
-              {
-                action: 'setDefaultShippingAddress',
-                addressId: shippingAddressId,
-              },
-              {
-                action: 'addShippingAddressId',
-                addressId: shippingAddressId,
-              },
-            ];
-            await updateCustomer(version, setDefaultAddress).then((res) => {
-              setDefault(shippingAddressId, res.version, true, 'shipping');
-            });
-          } else {
-            const removeDefaultAddress: MyCustomerUpdateAction[] = [
-              {
-                action: 'removeShippingAddressId',
-                addressId: shippingAddressId,
-              },
-              {
-                action: 'addShippingAddressId',
-                addressId: shippingAddressId,
-              },
-            ];
-            await updateCustomer(version, removeDefaultAddress).then((resp) => {
-              setDefault(shippingAddressId, resp.version, false, 'shipping');
-            });
-          }
+        if (data.addressType === 'shipping' || data.addressType === 'billing') {
+          addAddress(newAddress, response.version, data.addressType, data.defaultAddress ?? false);
         }
 
         setIsShown(true);
@@ -133,38 +82,39 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
 
   return (
     <ModalProfile isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleSubmit(onSubmit)} className={style['general-form']} data-testid="general-form" noValidate>
-        <FormTitle title="Edit Shipping Address" isIcon={false} />
+      <form onSubmit={handleSubmit(onSubmit)} className={style['address-form']} data-testid="address-form" noValidate>
+        <FormTitle title="Add New Address" isIcon={false} />
         {formError && <ErrorMessage message={formError} />}
         <div className={style['form-group']}>
           <section className={style['input-section']}>
             <Input
               inputProps={{
-                ...register('shippingAddress.streetName'),
+                ...register('newAddress.streetName'),
                 ...inputShippingStreetProps,
               }}
               label="Street "
             />
-            {errors.shippingAddress?.streetName && <ErrorMessage message={errors.shippingAddress.streetName.message} />}
+            {errors.newAddress?.streetName && <ErrorMessage message={errors.newAddress.streetName.message} />}
           </section>
           <section className={style['input-section']}>
             <Input
               inputProps={{
-                ...register('shippingAddress.city'),
+                ...register('newAddress.city'),
                 ...inputShippingCityProps,
               }}
               label="City "
             />
-            {errors.shippingAddress?.city && <ErrorMessage message={errors.shippingAddress.city.message} />}
+            {errors.newAddress?.city && <ErrorMessage message={errors.newAddress.city.message} />}
           </section>
         </div>
+
         <div className={style['form-group']}>
           <section className={style['input-section']}>
             <ControllerLabel
               control={
                 <Controller
                   control={control}
-                  name="shippingAddress.country"
+                  name="newAddress.country"
                   render={({ field: { onChange, value } }) => (
                     <Select
                       onChange={onChange}
@@ -176,6 +126,7 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
                         return document.body;
                       }}
                       value={value}
+                      defaultValue="Select Country"
                       popupMatchSelectWidth={false}
                       options={[
                         { value: 'US', label: 'United States' },
@@ -187,34 +138,65 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
               }
               label="Country  "
             />
-            {errors.shippingAddress?.country && <ErrorMessage message={errors.shippingAddress.country.message} />}
+            {errors.newAddress?.country && <ErrorMessage message={errors.newAddress.country.message} />}
           </section>
           <section className={style['input-section']}>
             <Input
               inputProps={{
-                ...register('shippingAddress.postalCode'),
+                ...register('newAddress.postalCode'),
                 ...inputShippingPostalCodeProps,
               }}
               label="Postal Code "
             />
-            {errors.shippingAddress?.postalCode && <ErrorMessage message={errors.shippingAddress.postalCode.message} />}
+            {errors.newAddress?.postalCode && <ErrorMessage message={errors.newAddress.postalCode.message} />}
           </section>
         </div>
+        <section className={style['input-section']}>
+          <ControllerLabel
+            control={
+              <Controller
+                control={control}
+                name="addressType"
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    onChange={onChange}
+                    getPopupContainer={(node: HTMLElement) => {
+                      if (node.parentNode instanceof HTMLElement) {
+                        return node.parentNode;
+                      }
+
+                      return document.body;
+                    }}
+                    defaultValue="Select Type"
+                    value={value}
+                    popupMatchSelectWidth={false}
+                    options={[
+                      { value: 'shipping', label: 'Shipping' },
+                      { value: 'billing', label: 'Billing' },
+                    ]}
+                  />
+                )}
+              />
+            }
+            label="Choose Address Type  "
+          />
+          {errors.newAddress?.country && <ErrorMessage message={errors.newAddress.country.message} />}
+        </section>
         <Controller
           control={control}
-          name="defaultShippingAddress"
+          name="defaultAddress"
           render={({ field: { onChange, value } }) => (
             <InputCheckBox
               onChange={onChange}
-              id="shipping"
-              name="shipping"
-              label="Set Shipping Address as default"
+              id="shippingAndBilling"
+              name="shippingAndBilling"
+              label="Set Address as default"
               isValue={value}
             />
           )}
         />
         <button type="submit" className="button-primary" disabled={!isDirty || !isValid || isSubmitting}>
-          Change Shipping Address
+          New Address
         </button>
       </form>
     </ModalProfile>
