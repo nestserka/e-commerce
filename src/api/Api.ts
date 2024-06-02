@@ -9,6 +9,7 @@ import type {
   CustomerDraft,
   CustomerPagedQueryResponse,
   CustomerSignInResult,
+  ProductProjection,
   ProductProjectionPagedQueryResponse,
 } from '@commercetools/platform-sdk';
 
@@ -91,6 +92,16 @@ export class Api {
       console.log(error);
 
       return undefined;
+    }
+  }
+
+  public async getProductById(productKey: string): Promise<ClientResponse<ProductProjection>> {
+    try {
+      const product = this.apiRoot.productProjections().withKey({ key: productKey }).get().execute();
+
+      return await product;
+    } catch (error) {
+      throw new Error('no products found with the specified key');
     }
   }
 }

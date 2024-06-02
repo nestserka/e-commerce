@@ -23,7 +23,7 @@
     border-radius: 36px;
 
     .nav-button {
-      @include font-default-bold;
+      @include font-arimo-bold;
 
       font-size: inherit;
       line-height: inherit;
@@ -35,7 +35,7 @@
     .nav-button,
     .profile-title,
     .cart-title {
-      @include font-default-bold;
+      @include font-arimo-bold;
 
       cursor: pointer;
 
