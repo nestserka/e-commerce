@@ -19,30 +19,27 @@ export default function CategoryPage(): JSX.Element {
   const { category }: Readonly<Params<string>> = useParams();
   const [subtree, setSubtree] = useState<Category[]>([]);
   const [attributesList, setAttributesList] = useState<AttributeDefinition[]>([]);
-  const [productsList, setProductsList] = useState<ClientResponse<ProductProjectionPagedSearchResponse>>();
+  const [productsList, setProductsList] = useState<ProductProjection[]>([]);
   // const [subtreeList, setSubtreeList] = useState<string[]>();
 
-  const { categoriesData, productTypesAttributes } = useCatalogData();
+  const { categoriesData, productTypesAttributes, getProductsList } = useCatalogData();
 
   useEffect(() => {
     if (category) {
       setSubtree(getSubCategory(categoriesData, category));
       setAttributesList(getAttributesCategory(productTypesAttributes, category));
+      const dataCategory = categoriesData.find((item: Category) => item.slug.en === category);
+
+      if (dataCategory) {
+        getProductsList(dataCategory.id)
+          .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
+            setProductsList(productListData.body.results);
+          })
+          .catch((error: Error) => {
+            console.log(error.message);
+          });
+      }
     }
-
-    // if (category) {
-    //   ProductList.getOneCategory(category)
-    //     .then((response: Category[] | undefined) => {
-    //       if (response) {
-    //         setSubtree(response);
-    //       }
-
-    //       ProductList.getProductTypeSizeAttribute()
-    //         .then((response) => {
-    //           console.log(response , '1');
-    //         })
-    //         .catch(() => {});
-
     //       // const arrSubtreeNameList: string[] = [];
     //       // response?.forEach((subtreeData: Category) => {
     //       //   arrSubtreeNameList.push(subtreeData.id);
@@ -55,27 +52,7 @@ export default function CategoryPage(): JSX.Element {
     //       //     setProductsList(productListData);
     //       //   })
     //       //   .catch(() => {});
-    //       // ProductList.filterByAttributes(`subtree("${responseCategory.body.id}")`)
-    //       //   .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
-    //       //     setProductsList(productListData);
-    //       //   })
-    //       //   .catch(() => {});
-    //     })
-    //     .catch(() => {});
-
-    //   // ProductList.returnProductsByCategoryKey(category)
-    //   //   .then((responseCategory) => {
-    //   //      console.log(responseCategory);
-    //   //     ProductList.filterByAttributes(`subtree("${responseCategory.body.id}")`)
-    //   //       .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
-    //   //         setProductsList(productListData);
-    //   //       })
-    //   //       .catch(() => {});
-
-    //   //   })
-    //   //   .catch(() => {});
-    // }
-  }, [categoriesData, category, productTypesAttributes]);
+  }, [categoriesData, category, getProductsList, productTypesAttributes]);
 
   // console.log(productsList?.body.results);
   // console.log(subtreeList?.map((name) => `"${name}"`).join(','));
@@ -104,11 +81,9 @@ export default function CategoryPage(): JSX.Element {
           ))}
         </aside>
         <section className={style['products-block']}>
-          {productsList
-            ? productsList.body.results.map((dataCard: ProductProjection) => (
-                <Card dataCard={dataCard} key={dataCard.name.en} />
-              ))
-            : ''}
+          {productsList.map((dataCard: ProductProjection) => (
+            <Card dataCard={dataCard} key={dataCard.name.en} />
+          ))}
         </section>
       </main>
     </section>
