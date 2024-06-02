@@ -135,11 +135,15 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
     });
   },
   removeAddress: (addressId: string, addressType: 'shipping' | 'billing', version: number): void => {
-    set((state) => ({
-      ...state,
-      [`${addressType}Address`]: state[`${addressType}Address`].filter((address) => address.id !== addressId),
-      version,
-    }));
+    set((state) => {
+      const updatedAddresses = state[`${addressType}Address`].filter((address) => address.id !== addressId);
+
+      return {
+        ...state,
+        [`${addressType}Address`]: updatedAddresses,
+        version,
+      };
+    });
   },
   setDefault: (addressId: string, version: number, isDefault: boolean, addressType: 'shipping' | 'billing'): void => {
     set((state) => ({

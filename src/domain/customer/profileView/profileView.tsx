@@ -74,7 +74,7 @@ export default function ProfileView(): JSX.Element {
                     <ShippingAddressForm
                       isOpen={isAddressModalOpen}
                       onClose={closeAddressModal}
-                      shippingAddressId={address.id}
+                      addressId={address.id}
                     />
                   )}
                 </div>
@@ -95,7 +95,7 @@ export default function ProfileView(): JSX.Element {
                     <BillingAddressForm
                       isOpen={isBillingAddressModalOpen}
                       onClose={closeBillingAddressModal}
-                      billingAddressId={address.id}
+                      addressId={address.id}
                     />
                   )}
                 </div>
