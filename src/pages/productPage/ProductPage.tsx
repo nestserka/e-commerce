@@ -107,9 +107,10 @@ export default function ProductPage(): JSX.Element {
         <section className={style['product-info-wrapper']}>
           <div className={style['product-info-text']}>
             <h1 className={style.title}>{product.body.name.en}</h1>
-
-            {discountLabel && <Badge type="discount" text={discountLabel} />}
-            {bestsellerName && <Badge type="bestseller" text={bestsellerName} />}
+            <div className={style['badges-wrapper']}>
+              {discountLabel && <Badge type="discount" text={discountLabel} />}
+              {bestsellerName && <Badge type="bestseller" text={bestsellerName} />}
+            </div>
             <FormSubTitle subTitle="Product Description" />
             <p className={style.description}>{product.body.description?.en}</p>
             <FormSubTitle subTitle="Shipping & Delivery Information" />
