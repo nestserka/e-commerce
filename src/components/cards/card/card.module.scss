@@ -87,7 +87,7 @@
     -webkit-box-orient: vertical;
 
     width: 100%;
-    height: calc(24px * 3);
+    max-height: calc(24px * 3);
 
     font-family: DisplayMedium, sans-serif;
     font-size: 20px;
@@ -173,16 +173,8 @@
     border-color: $font-color-primary-80;
 
     animation-name: flash-border;
-    animation-name: flash-border;
-    animation-name: flash-border;
-    animation-duration: 2s;
-    animation-duration: 2s;
     animation-duration: 2s;
     animation-timing-function: linear;
-    animation-timing-function: linear;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
     animation-iteration-count: infinite;
 
     .card-pic-img {
