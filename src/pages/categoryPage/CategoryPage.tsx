@@ -36,7 +36,7 @@ export default function CategoryPage(): JSX.Element {
 
   const { categoriesData, productTypesAttributes, getProductsList, setSort } = useCatalogData();
 
-  const handleChangeSort = (value: OptionsFromSort):void => {
+  const handleChangeSort = (value: OptionsFromSort): void => {
     setSort(value.value);
     const dataCategory = categoriesData.find((item: Category) => item.slug.en === category);
 
@@ -46,11 +46,11 @@ export default function CategoryPage(): JSX.Element {
           setProductsList(productListData.body.results);
         })
         .catch((error: Error) => {
-          setProductsList([])
+          setProductsList([]);
           console.log(error.message);
         });
     }
-  }
+  };
 
   useEffect(() => {
     if (category) {
@@ -134,9 +134,11 @@ export default function CategoryPage(): JSX.Element {
           ))}
         </aside>
         <section className={style['products-block']}>
-          {productsList.length? productsList.map((dataCard: ProductProjection) => (
-            <Card dataCard={dataCard} key={dataCard.name.en} />
-          )): <div>No product by attribute or filter found</div>}
+          {productsList.length ? (
+            productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
+          ) : (
+            <div>No product by attribute or filter found</div>
+          )}
         </section>
       </main>
     </section>

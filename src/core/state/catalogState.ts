@@ -19,6 +19,8 @@ export interface CatalogStateData {
   sort: string;
   isBestseller: boolean;
   isDiscount: boolean;
+  offset: number;
+  setOffset: (status: number) => void;
   setSort: (status: string) => void;
   setBestsellerStatus: (status: boolean) => void;
   setDiscountStatus: (status: boolean) => void;
@@ -36,6 +38,10 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   sort: 'price asc',
   isBestseller: false,
   isDiscount: false,
+  offset: 0,
+  setOffset: (page: number): void => {
+    set(() => ({ offset: page - 1 }));
+  },
   setSort: (newSort: string): void => {
     set(() => ({ sort: newSort }));
   },
@@ -95,7 +101,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
             // 'text.en-us': `${search}`,
             // fuzzy: true,
             // fuzzyLevel: Number(`${fuzzylevel}`),
-            // offset: 9 * 1,
+            offset: get().offset * get().limit,
             'filter.query': [
               `categories.id: subtree("${subtrees}")`,
               ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),
