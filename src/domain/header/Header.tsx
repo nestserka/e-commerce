@@ -14,7 +14,7 @@ export default function Header(): JSX.Element {
   const { isAuth, customerId, setCustomerCredentials } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
 
-  const onClickButton = async (): Promise<void> => {
+  const onClickButton = (): void => {
     const resetUser: CustomerCredentials = {
       customerId: '',
       isAuth: false,

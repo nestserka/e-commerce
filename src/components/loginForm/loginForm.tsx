@@ -44,7 +44,7 @@ export default function LoginForm(): JSX.Element {
 
   const onSubmit = async (data: LoginFormValues): Promise<void> => {
     await loginUser(data.email.toLowerCase(), data.password)
-      .then(async (response) => {
+      .then((response) => {
         const customerCredentials = {
           valueEmail: response.email,
           valuePassword: data.password,
