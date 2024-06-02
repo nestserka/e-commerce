@@ -1,5 +1,3 @@
-import React from 'react';
-
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ProfileField from '../../../components/profileField/profileField';
 import { useCustomerInfo } from '../../../core/state/userState';
