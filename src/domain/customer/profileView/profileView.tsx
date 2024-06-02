@@ -64,6 +64,7 @@ export default function ProfileView(): JSX.Element {
                 <div key={address.id} className={style.wrapper}>
                   <ProfileField
                     title="Shipping Address"
+                    id={address.id ?? ''}
                     onEditClick={openAddressModal}
                     inputVal={`${address.streetName}, ${address.city}, ${address.postalCode}, ${address.country}`}
                     isAddress
@@ -84,6 +85,7 @@ export default function ProfileView(): JSX.Element {
                 <div key={address.id} className={style.wrapper}>
                   <ProfileField
                     title="Billing Address"
+                    id={address.id ?? ''}
                     onEditClick={openBillingAddressModal}
                     inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
                     isAddress
