@@ -54,9 +54,12 @@
 }
 
 .modalswiper {
+  position: fixed;
+  inset: 0;
+
   width: 800px;
   height: 800px;
-  margin: 40px auto;
+  margin: 36px auto;
 
   & img {
     cursor: pointer;
@@ -67,6 +70,27 @@
     height: 100%;
 
     object-fit: cover;
+  }
+
+  @media (width <= 1024px) {
+    width: 600px;
+    height: 600px;
+  }
+
+  @media (width <= 800px) {
+    width: 500px;
+    height: 500px;
+  }
+
+  @media (width <= 700px) {
+    width: 400px;
+    height: 400px;
+    margin: 96px auto;
+  }
+
+  @media (width <= 480px) {
+    width: 320px;
+    height: 320px;
   }
 }
 
