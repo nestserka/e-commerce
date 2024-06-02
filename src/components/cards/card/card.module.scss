@@ -171,11 +171,7 @@
 
   &:hover {
     border-color: $font-color-primary-80;
-
-    animation-name: flash-border;
-    animation-duration: 2s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+    animation: flash-border 2s linear infinite;
 
     .card-pic-img {
       transform: scale(1.1);
