@@ -19,9 +19,9 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
         loop
         grabCursor
         initialSlide={1}
-        // pagination={{
-        //   clickable: true,
-        // }}
+        pagination={{
+          clickable: true,
+        }}
         scrollbar
         modules={[Pagination, Scrollbar]}
         spaceBetween={20}

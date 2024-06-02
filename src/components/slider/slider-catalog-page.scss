@@ -150,9 +150,10 @@
   background-position: center;
 }
 
-// .nasa-museum-ticket {
-// position: relative;
-// z-index: 2;
-//   background: url(../../assets/images/headerCatalog/nasa-museum-ticket.png) no-repeat;
-//   background-position: center;
-// }
+.swiper-pagination {
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet {
+  background: $font-color-primary;
+}
