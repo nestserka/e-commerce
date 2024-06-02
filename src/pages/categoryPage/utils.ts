@@ -1,7 +1,7 @@
-import type { Category } from '@commercetools/platform-sdk';
+import type { AttributeDefinition, Category, ProductType } from '@commercetools/platform-sdk';
 
 export function getSubCategory(allCategories: Category[], nameCategory: string): Category[] {
-  const dataCategory = allCategories.find((data: Category) => data.slug.en === nameCategory);
+  const dataCategory = allCategories.find((category: Category) => category.slug.en === nameCategory);
 
   if (dataCategory) {
     const categoryWithAncestors = allCategories.filter(
@@ -12,4 +12,10 @@ export function getSubCategory(allCategories: Category[], nameCategory: string):
   }
 
   return [];
+}
+
+export function getAttributesCategory(allProductTypes: ProductType[], nameCategory: string): AttributeDefinition[] {
+  const dataProductTypes = allProductTypes.find((productType: ProductType) => productType.key === nameCategory);
+
+  return dataProductTypes?.attributes ? dataProductTypes.attributes : [];
 }

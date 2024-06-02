@@ -2,32 +2,32 @@ import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
 
 import style from './_category.module.scss';
-import ProductList from '../../api/InteractionForProductList';
 import Card from '../../components/cards/card/Card';
+import { useCatalogData } from '../../core/state/catalogState';
+import { getAttributesCategory, getSubCategory } from './utils';
 
 import type { Params } from 'react-router';
 import type {
+  AttributeDefinition,
   Category,
   ClientResponse,
   ProductProjection,
   ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
-import { useCatalogData } from '../../core/state/catalogState';
-import { getSubCategory } from './utils';
-
-
 
 export default function CategoryPage(): JSX.Element {
   const { category }: Readonly<Params<string>> = useParams();
   const [subtree, setSubtree] = useState<Category[]>([]);
+  const [attributesList, setAttributesList] = useState<AttributeDefinition[]>([]);
   const [productsList, setProductsList] = useState<ClientResponse<ProductProjectionPagedSearchResponse>>();
   // const [subtreeList, setSubtreeList] = useState<string[]>();
 
-  const { categoriesData } = useCatalogData();
+  const { categoriesData, productTypesAttributes } = useCatalogData();
 
   useEffect(() => {
-    if(category){
-      setSubtree(getSubCategory(categoriesData,category))
+    if (category) {
+      setSubtree(getSubCategory(categoriesData, category));
+      setAttributesList(getAttributesCategory(productTypesAttributes, category));
     }
 
     // if (category) {
@@ -75,7 +75,7 @@ export default function CategoryPage(): JSX.Element {
     //   //   })
     //   //   .catch(() => {});
     // }
-  }, [categoriesData, category]);
+  }, [categoriesData, category, productTypesAttributes]);
 
   // console.log(productsList?.body.results);
   // console.log(subtreeList?.map((name) => `"${name}"`).join(','));
@@ -93,6 +93,13 @@ export default function CategoryPage(): JSX.Element {
             <div key={subCategory.name.en}>
               <input name="filterSubtree" type="checkbox" id={subCategory.name.en} />
               <label htmlFor={subCategory.name.en}>{subCategory.name.en}</label>
+            </div>
+          ))}
+
+          {attributesList.map((attribute: AttributeDefinition) => (
+            <div key={attribute.name}>
+              <input name="filterSubtree" type="checkbox" id={attribute.name} />
+              <label htmlFor={attribute.name}>{attribute.name}</label>
             </div>
           ))}
         </aside>

@@ -6,13 +6,16 @@ import SliderCatalogPage from '../../components/slider/SliderForCatalogPage';
 import { useCatalogData } from '../../core/state/catalogState';
 
 export default function CatalogPage(): JSX.Element {
-  const { setCategoriesData, parentsCategories } = useCatalogData();
+  const { setCategoriesData, setProductTypesAttributes, parentsCategories } = useCatalogData();
 
   useEffect(() => {
     setCategoriesData().catch((error: Error) => {
       console.log(error.message);
     });
-  }, [setCategoriesData]);
+    setProductTypesAttributes().catch((error: Error) => {
+      console.log(error.message);
+    });
+  }, [setCategoriesData, setProductTypesAttributes]);
 
   return (
     <section className={style.catalog} data-testid="catalog">
