@@ -1,3 +1,5 @@
+import React from 'react';
+
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ProfileField from '../../../components/profileField/profileField';
 import { useCustomerInfo } from '../../../core/state/userState';
@@ -74,11 +76,25 @@ export default function ProfileView(): JSX.Element {
                     <ShippingAddressForm
                       isOpen={isAddressModalOpen}
                       onClose={closeAddressModal}
-                      addressId={address.id}
+                      shippingAddressId={address.id}
                     />
                   )}
                 </div>
               ))}
+              {shippingAddress.length === 0 && (
+                <>
+                  <ProfileField
+                    title="Shipping Address"
+                    onEditClick={openNewAddressModal}
+                    isAddress
+                    isDefault={false}
+                    inputVal="No Shipping has been set. You can add the delivery address in edit mode."
+                  />
+                  {isNewAddressModalOpen && (
+                    <AddressForm isOpen={isNewAddressModalOpen} onClose={closeNewAddressModal} />
+                  )}
+                </>
+              )}
             </div>
             <div className={style.wrapper}>
               {billingAddress.map((address: Address) => (
@@ -95,11 +111,25 @@ export default function ProfileView(): JSX.Element {
                     <BillingAddressForm
                       isOpen={isBillingAddressModalOpen}
                       onClose={closeBillingAddressModal}
-                      addressId={address.id}
+                      billingAddressId={address.id}
                     />
                   )}
                 </div>
               ))}
+              {billingAddress.length === 0 && (
+                <>
+                  <ProfileField
+                    title="Billing Address"
+                    onEditClick={openNewAddressModal}
+                    isAddress
+                    isDefault={false}
+                    inputVal="No Billing Address has been set. You can add the delivery address in edit mode."
+                  />
+                  {isNewAddressModalOpen && (
+                    <AddressForm isOpen={isNewAddressModalOpen} onClose={closeNewAddressModal} />
+                  )}
+                </>
+              )}
             </div>
           </div>
           <button type="button" className={style['personal-section-button']} onClick={openNewAddressModal}>

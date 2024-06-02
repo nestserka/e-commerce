@@ -24,7 +24,7 @@ export default function DeleteAddressForm({ isOpen, onClose, addressId, addressT
     await updateCustomer(version, body)
       .then((response) => {
         if ((addressType === 'shipping' || addressType === 'billing') && typeof addressId === 'string') {
-            console.log(addressType);
+          console.log(addressType);
           removeAddress(addressId, addressType, response.version);
         }
 
@@ -42,17 +42,17 @@ export default function DeleteAddressForm({ isOpen, onClose, addressId, addressT
 
   return (
     <ModalProfile isOpen={isOpen} onClose={onClose}>
-        <div className={style['address-form']} data-testid="address-form">
-      <p className={style['confirm-text']}>Are you sure you want to delete the address?</p>
-      <div className={style['button-group']}>
-        {formError && <ErrorMessage message={formError} />}
-        <button type="button" className={style['close-button']} onClick={onClose}>
-          Cancel
-        </button>
-        <button type="submit" className={style['confirm-button']} onClick={deleteAddress}>
-          OK
-        </button>
-      </div>
+      <div className={style['address-form']} data-testid="address-form">
+        <p className={style['confirm-text']}>Are you sure you want to delete the address?</p>
+        <div className={style['button-group']}>
+          {formError && <ErrorMessage message={formError} />}
+          <button type="button" className={style['close-button']} onClick={onClose}>
+            Cancel
+          </button>
+          <button type="submit" className={style['confirm-button']} onClick={deleteAddress}>
+            OK
+          </button>
+        </div>
       </div>
     </ModalProfile>
   );

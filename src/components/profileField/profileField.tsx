@@ -2,7 +2,7 @@ import style from './_profileField.module.scss';
 import editIcon from '../../assets/images/icons/icon-edit.svg';
 import deleteIcon from '../../assets/images/icons/icon-delete.svg';
 import InputCheckBox from '../ui/checkbox/checkbox';
-import { useToggleModal }  from '../../utils/useToggleModal';
+import { useToggleModal } from '../../utils/useToggleModal';
 import DeleteAddressForm from '../modalProfile/confirmDelete';
 
 interface ProfileFieldProps {
@@ -33,13 +33,18 @@ export default function ProfileField({
           <button type="button" className={style['edit-button']} onClick={onEditClick}>
             <img src={editIcon} alt="Edit" />
           </button>
-          {isAddress && (
+          {isAddress && id !== '' && (
             <button type="button" className={style['delete-button']} onClick={openDeleteModal}>
               <img src={deleteIcon} alt="Delete" />
             </button>
           )}
           {isDeleteModalOpen && (
-            <DeleteAddressForm isOpen={isDeleteModalOpen} onClose={closeDeleteModal} addressId={id} addressType={addressType} />
+            <DeleteAddressForm
+              isOpen={isDeleteModalOpen}
+              onClose={closeDeleteModal}
+              addressId={id}
+              addressType={addressType}
+            />
           )}
         </div>
       </section>
