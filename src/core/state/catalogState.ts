@@ -17,17 +17,20 @@ export interface CatalogStateData {
   productTypesAttributes: ProductType[];
   isLoading: boolean;
   limit: number;
-  sort: string;
-  search: string;
+  fuzzyLevelValue: number;
+  sortValue: string;
+  searchValue: string;
   isBestseller: boolean;
   isDiscount: boolean;
   offset: number;
   createFilterByCategoriesId: (category: string) => string;
-  setOffset: (status: number) => void;
-  setSort: (status: string) => void;
+  setOffset: (page: number) => void;
+  setSort: (newSort: string) => void;
   setSubtreesList: (id: string, isStatus: boolean) => void;
   setBestsellerStatus: (isStatus: boolean) => void;
   setDiscountStatus: (iStatus: boolean) => void;
+  setSearchValue: (newSearch: string) => void;
+  setFuzzyLevel: () => number;
   setCategoriesData: () => Promise<void>;
   setProductTypesAttributes: () => Promise<void>;
   getProductsList: (subtrees: string) => Promise<ClientResponse<ProductProjectionPagedSearchResponse>>;
@@ -40,8 +43,9 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   productTypesAttributes: [],
   isLoading: false,
   limit: 100,
-  sort: 'price asc',
-  search: '',
+  fuzzyLevelValue: 0,
+  sortValue: 'price asc',
+  searchValue: '',
   isBestseller: false,
   isDiscount: false,
   offset: 0,
@@ -66,13 +70,35 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
     set(() => ({ offset: page - 1 }));
   },
   setSort: (newSort: string): void => {
-    set(() => ({ sort: newSort }));
+    set(() => ({ sortValue: newSort }));
   },
   setBestsellerStatus: (isStatus: boolean): void => {
     set(() => ({ isBestseller: isStatus }));
   },
   setDiscountStatus: (isStatus: boolean): void => {
     set(() => ({ isDiscount: isStatus }));
+  },
+  setSearchValue: (newSearch: string): void => {
+    set(() => ({ searchValue: newSearch }));
+  },
+  setFuzzyLevel: (): number => {
+    switch (get().searchValue.length) {
+      case 1:
+      case 2:
+        set(() => ({ fuzzyLevelValue: 0 }));
+
+        return 0;
+      case 3:
+      case 4:
+      case 5:
+        set(() => ({ fuzzyLevelValue: 1 }));
+
+        return 1;
+      default:
+        set(() => ({ fuzzyLevelValue: 2 }));
+
+        return 2;
+    }
   },
   setCategoriesData: async (): Promise<void> => {
     set({ isLoading: true });
@@ -109,30 +135,11 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
       set({ isLoading: false });
     }
   },
-  // setFuzzyLevel:():void=>{
-  //   switch (searchValue.length) {
-  //     case 1:
-  //       fuzzylevel = 0;
-  //       break;
-  //     case 2:
-  //       fuzzylevel = 0;
-  //       break;
-  //     case 3:
-  //       fuzzylevel = 1;
-  //       break;
-  //     case 4:
-  //       fuzzylevel = 1;
-  //       break;
-  //     case 5:
-  //       fuzzylevel = 1;
-  //       break;
-  //     default:
-  //       fuzzylevel = 2;
-  //   }
-  // },
   getProductsList: async (category: string): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
     set({ isLoading: true });
-    const newSearch = get().search.length ? [`text.en: ${get().search}`] : [];
+    const newSearch = get().searchValue.length
+      ? { 'text.en': get().searchValue, fuzzy: true, fuzzyLevel: get().setFuzzyLevel() }
+      : {};
 
     try {
       const productsList = await api
@@ -141,12 +148,10 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
         .search()
         .get({
           queryArgs: {
-            sort: get().sort,
+            sort: get().sortValue,
             limit: get().limit,
-            newSearch,
-            // 'text.en-us': `${get().search}`,
-            fuzzy: true,
-            fuzzyLevel: 0,
+            ...newSearch,
+            // 'text.en': `${get().searchValue}`,
 
             offset: get().offset * get().limit,
             'filter.query': [

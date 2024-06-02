@@ -1,6 +1,7 @@
 import { useParams } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
-import { Select } from 'antd';
+import { Input, Select, Space } from 'antd';
+
 // import {  useForm } from 'react-hook-form';
 
 import style from './_category.module.scss';
@@ -10,6 +11,7 @@ import { getAttributesCategory, getSubCategory } from './utils';
 import InputCheckBox from '../../components/ui/checkbox/checkbox';
 import { OPTIONS_FROM_SORT } from '../../constants/constants';
 
+import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSort } from './types';
 import type { Params } from 'react-router';
 import type {
@@ -34,7 +36,20 @@ export default function CategoryPage(): JSX.Element {
   //   name: 'shippingAddress',
   // });
 
-  const { categoriesData, productTypesAttributes, getProductsList, setSubtreesList, setSort } = useCatalogData();
+  const { categoriesData, productTypesAttributes, setSearchValue, getProductsList, setSubtreesList, setSort } =
+    useCatalogData();
+  const { Search } = Input;
+
+  // const onCahange: SearchProps['onChange'] = (e) => {
+  //   console.log(e.target.value)
+  //   // const valueInput: string = value.trim();
+
+  //   // if (valueInput.length > 0) {
+  //   //   this.buttonForm.node.removeAttribute('disabled');
+  //   // } else {
+  //   //   this.buttonForm.node.disabled = true;
+  //   // }
+  // };
 
   const getProductListFromCategory = useCallback(() => {
     const dataCategory = categoriesData.find((item: Category) => item.slug.en === category);
@@ -50,8 +65,20 @@ export default function CategoryPage(): JSX.Element {
     }
   }, [categoriesData, category, getProductsList]);
 
+  const onSearch: SearchProps['onSearch'] = (value) => {
+    setSearchValue(value);
+    getProductListFromCategory();
+  };
+
+  const onChange: SearchProps['onChange'] = (e) => {
+    if (!e.target.value.length) {
+      setSearchValue(e.target.value);
+      getProductListFromCategory();
+    }
+  };
+
   const handleChangeSort = (option: OptionsFromSort): void => {
-    setSort((option.value));
+    setSort(option.value);
     getProductListFromCategory();
   };
 
@@ -72,17 +99,27 @@ export default function CategoryPage(): JSX.Element {
     <section className={style.category} data-testid={category}>
       <header className={style['category-header']}>
         <h1 className={style['category-title']}>{category}</h1>
-        <input className={style['category-search']} type="text" placeholder="Search For..." />
-        <section className={style['input-section']}>
+        <div className={style['category-search']}>
+          <Space direction="vertical">
+            <Search
+              className={style.search}
+              placeholder="Search For..."
+              style={{ width: 304 }}
+              enterButton
+              onSearch={onSearch}
+              onChangeCapture={onChange}
+            />
+          </Space>
+        </div>
+        <div className={style['sort-section']}>
           <Select
             labelInValue
-            placeholder='Sort by'
-            className={style.selector}
+            placeholder="Sort by"
             style={{ width: 200 }}
             onChange={handleChangeSort}
             options={OPTIONS_FROM_SORT}
           />
-        </section>
+        </div>
       </header>
 
       <main className={style.products}>

@@ -1,4 +1,5 @@
-@use '../../assets/styles/mixins' as *;
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
 
 .category {
   @include page-layout-container;
@@ -7,6 +8,33 @@
 
   &-header {
     @include flex-center-space-between;
+
+    .category-search {
+      margin: 0 2em;
+
+      .search {
+        border: 1px solid $background-color-secondary;
+        transition: 3ms;
+      }
+    }
+
+    .search input::placeholder {
+      color: $font-color-primary;
+    }
+
+    .search input {
+      color: $font-color-primary;
+      background: $background-color-secondary;
+    }
+
+    .search button {
+      @include form-background-gradient;
+    }
+
+    .search button:hover {
+      color: $font-color-primary;
+      background-color: $bg-color-btn-default;
+    }
   }
 
   .products {
