@@ -56,7 +56,6 @@ export default function ProductPage(): JSX.Element {
       try {
         if (productId) {
           const data = await api.getProductById(productId);
-          console.log(data.body);
           setProduct(data);
           extractPrice(data);
         } else {
