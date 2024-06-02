@@ -17,7 +17,7 @@ import Input from '../../../../components/ui/input/input';
 import { showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
 import { formatDateOfBirth, getInputProps } from '../../../../utils/utils';
 import { inputFirstNameProps, inputLastNameProps } from '../../../../utils/inputProps';
-import updateCustomer from '../../../../api/customer/updateCustomer';
+import updateCustomer from '../../../../api/me/updateCustomer';
 
 import type { MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 

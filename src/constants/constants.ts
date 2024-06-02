@@ -126,6 +126,7 @@ const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, st
     .string()
     .trim()
     .min(1, `${fieldName} must contain at least one character.`)
+    .max(150, { message: 'Name and Surname must be no longer than 150 characters.' })
     .refine((value) => /^[a-zA-Z]+$/.test(value), {
       message: `${fieldName} must contain only letters (no special characters or numbers).`,
     });
@@ -165,6 +166,7 @@ const STREET_VALIDATION_SCHEMA = z
   .string()
   .trim()
   .min(1, `Street must contain at least one character.`)
+  .max(200, { message: 'Street must be no longer than 200 characters.' })
   .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
     message: `Street must contain only Latin characters, numbers, and spaces.`,
   });
@@ -173,6 +175,7 @@ const CITY_VALIDATION_SCHEMA = z
   .string()
   .trim()
   .min(1, `City must contain at least one character.`)
+  .max(150, { message: 'City must be no longer than 150 characters.' })
   .refine((value) => /^[a-zA-Z]*$/.test(value), {
     message: `City must contain only Latin characters and no spaces.`,
   });

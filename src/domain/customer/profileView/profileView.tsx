@@ -7,6 +7,8 @@ import EmailForm from '../forms/emailForm/emailForm';
 import PasswordForm from '../forms/passwordForm/passwordForm';
 import { useToggleModal } from '../../../utils/useToggleModal';
 import GeneralForm from '../forms/generalForm/generalForm';
+import ShippingAddressForm from '../forms/addressForm/shippingAddress';
+import BillingAddressForm from '../forms/addressForm/billingAddress';
 
 import type { Address } from '../../../utils/types';
 
@@ -15,6 +17,8 @@ export default function ProfileView(): JSX.Element {
   const [isEmailModalOpen, openEmailModal, closeEmailModal] = useToggleModal();
   const [isPasswordModalOpen, openPasswordModal, closePasswordModal] = useToggleModal();
   const [isGeneralModalOpen, openGeneralModal, closeGeneralModal] = useToggleModal();
+  const [isAddressModalOpen, openAddressModal, closeAddressModal] = useToggleModal();
+  const [isBillingAddressModalOpen, openBillingAddressModal, closeBillingAddressModal] = useToggleModal();
 
   return (
     <div className={style.wrapper}>
@@ -55,29 +59,39 @@ export default function ProfileView(): JSX.Element {
           <div className={style['personal-section-group']}>
             <div className={style.wrapper}>
               {shippingAddress.map((address: Address) => (
-                <ProfileField
-                  title="Shipping Address"
-                  onEditClick={openPasswordModal}
-                  inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
-                  isAddress
-                  isDefault={address.isDefault ?? false}
-                />
+                <div key={address.id} className={style.wrapper}>
+                  <ProfileField
+                    title="Shipping Address"
+                    onEditClick={openAddressModal}
+                    inputVal={`${address.streetName}, ${address.city}, ${address.postalCode}, ${address.country}`}
+                    isAddress
+                    isDefault={address.isDefault ?? false}
+                  />
+                  {isAddressModalOpen &&(
+                    <ShippingAddressForm isOpen={isAddressModalOpen} onClose={closeAddressModal} shippingAddressId={address.id} />
+                  )}
+                </div>
               ))}
             </div>
             <div className={style.wrapper}>
               {billingAddress.map((address: Address) => (
+                  <div key={address.id} className={style.wrapper}>
                 <ProfileField
                   title="Billing Address"
-                  onEditClick={openPasswordModal}
+                  onEditClick={openBillingAddressModal}
                   inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
                   isAddress
                   isDefault={address.isDefault ?? false}
                 />
+                {isBillingAddressModalOpen &&(
+                  <BillingAddressForm isOpen={isBillingAddressModalOpen} onClose={closeBillingAddressModal} billingAddressId={address.id} />
+                )}
+                  </div>
               ))}
             </div>
           </div>
           <button type="button" className={style['personal-section-button']}>
-            Edit Address
+            Add New Address
           </button>
         </section>
       </section>

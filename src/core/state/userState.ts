@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 import { LS_PREFIX } from '../../constants/constants';
 
+import type { Address } from '../../utils/types';
 import type { CustomerCredentials, CustomerInfo, CustomerInfoState, IsShownModal, LoginState } from './types';
 
 const localIsAuth = localStorage.getItem(`isAuth-${LS_PREFIX}`);
@@ -100,5 +101,28 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
       dateOfBirth: customerInfo.dateOfBirth,
       version: customerInfo.version,
     });
+  },
+  updateAddress: (
+    addressId: string,
+    newAddress: Partial<Address>,
+    version: number,
+    addressType: 'shipping' | 'billing',
+  ): void => {
+    set((state) => ({
+      ...state,
+      [`${addressType}Address`]: state[`${addressType}Address`].map((address) =>
+        address.id === addressId ? { ...address, ...newAddress } : address,
+      ),
+      version,
+    }));
+  },
+  setDefault: (addressId: string, version: number, isDefault: boolean, addressType: 'shipping' | 'billing'): void => {
+    set((state) => ({
+      ...state,
+      [`${addressType}Address`]: state[`${addressType}Address`].map((address) =>
+        address.id === addressId ? { ...address, isDefault } : address,
+      ),
+      version,
+    }));
   },
 }));

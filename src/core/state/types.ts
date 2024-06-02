@@ -52,4 +52,11 @@ export interface CustomerInfoState {
   setUpdatedEmail: (customerInfo: CustomerInfo) => void;
   setValueVersion: (version: number) => void;
   setUpdatedGeneraValues: (customerInfo: CustomerInfo) => void;
+  updateAddress: (
+    addressId: string,
+    newAddress: Partial<Address>,
+    version: number,
+    addressType: 'shipping' | 'billing',
+  ) => void;
+  setDefault: (addressId: string, version: number, isDefault: boolean, addressType: 'shipping' | 'billing') => void;
 }

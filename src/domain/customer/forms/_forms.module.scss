@@ -9,8 +9,30 @@
   gap: 2em;
 }
 
-.input-section {
+.form-group {
   display: flex;
-  flex-direction: column;
-  gap: 0.5em;
+  flex-direction: row;
+  gap: 1.5em;
+  width: 100%;
+
+  .input-section {
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    gap: 0.5em;
+
+    max-width: calc(50% - 0.75em);
+  }
+
+  @media (width <= 1240px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  @media (width <= 900px) {
+    .input-section {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
 }

@@ -23,6 +23,8 @@ export function isTokenStore(obj: unknown): obj is TokenStore {
 export interface FormModal {
   isOpen: boolean;
   onClose: () => void;
+  shippingAddressId?: string;
+  billingAddressId?: string;
 }
 
 export const VERSION_ERROR_MESSAGE: string =

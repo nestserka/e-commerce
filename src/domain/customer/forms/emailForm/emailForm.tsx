@@ -12,7 +12,7 @@ import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
 import { showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
 import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
-import updateCustomer from '../../../../api/customer/updateCustomer';
+import updateCustomer from '../../../../api/me/updateCustomer';
 
 import type { ZodType, ZodTypeDef } from 'zod';
 import type { MyCustomerUpdateAction } from '@commercetools/platform-sdk';

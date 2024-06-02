@@ -27,7 +27,7 @@ export default function Header(): JSX.Element {
     localStorage.removeItem(`isAuth-${LS_PREFIX}`);
     localStorage.removeItem(`customerId-${LS_PREFIX}`);
     tokenCache.clear();
-    navigate(ROUTES.HOME)
+    navigate(ROUTES.HOME);
   };
 
   const toggleNav = (): void => {

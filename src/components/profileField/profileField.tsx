@@ -43,6 +43,7 @@ export default function ProfileField({
           name="profile"
           label={`This address is set as default ${title}`}
           isCheckBoxDisabled
+          isValue={isDefault}
         />
       )}
       <span className={style['profile-horizontal-line']} />
