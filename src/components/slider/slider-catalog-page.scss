@@ -7,7 +7,31 @@
 }
 
 .slider-wrapper {
+  position: relative;
   width: 100%;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    z-index: 3;
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    display: block;
+
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(275deg, rgb(22 23 32 / 100%) 15%, rgb(22 23 32 / 0%) 78%);
+
+    @media (width <= 400px),
+      (width >= 840px) and (width <= 979px),
+      (width >= 1199px) and (width <= 1439px),
+      (width >= 1979px) and (width <= 2439px) {
+      display: none;
+    }
+  }
 
   .slider-catalog {
     height: 250px;

@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
+import { Pagination, Scrollbar } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './slider-catalog-page.scss';
@@ -19,20 +19,21 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
         loop
         grabCursor
         initialSlide={1}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination]}
+        // pagination={{
+        //   clickable: true,
+        // }}
+        scrollbar
+        modules={[Pagination, Scrollbar]}
         spaceBetween={20}
         slidesPerView={5.5}
         breakpoints={{
           0: {
             slidesPerView: 1,
           },
-          500: {
+          400: {
             slidesPerView: 1.2,
           },
-          660: {
+          500: {
             slidesPerView: 1.5,
           },
           840: {
