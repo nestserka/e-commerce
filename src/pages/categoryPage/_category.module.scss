@@ -2,4 +2,25 @@
 
 .category {
   @include page-layout-container;
+
+  flex-direction: column;
+
+  &-header {
+    @include flex-center-space-between;
+  }
+
+  .products {
+    @include flex-center-space-between;
+
+    &-block {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+
+      width: 80%;
+      padding: 20px 0;
+    }
+  }
 }
