@@ -181,3 +181,7 @@ a:hover {
     color: $font-color-link-hover;
   }
 }
+
+.ant-select-selection-placeholder {
+  color: $font-color-primary !important;
+}
