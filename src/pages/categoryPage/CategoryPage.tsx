@@ -36,6 +36,22 @@ export default function CategoryPage(): JSX.Element {
 
   const { categoriesData, productTypesAttributes, getProductsList, setSort } = useCatalogData();
 
+  const handleChangeSort = (value: OptionsFromSort):void => {
+    setSort(value.value);
+    const dataCategory = categoriesData.find((item: Category) => item.slug.en === category);
+
+    if (dataCategory) {
+      getProductsList(dataCategory.id)
+        .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
+          setProductsList(productListData.body.results);
+        })
+        .catch((error: Error) => {
+          setProductsList([])
+          console.log(error.message);
+        });
+    }
+  }
+
   useEffect(() => {
     if (category) {
       setSubtree(getSubCategory(categoriesData, category));
@@ -79,26 +95,13 @@ export default function CategoryPage(): JSX.Element {
     <section className={style.category} data-testid={category}>
       <header className={style['category-header']}>
         <h1 className={style['category-title']}>{category}</h1>
-        <input className={style['category-search']} type="text" placeholder="Search..." />
+        <input className={style['category-search']} type="text" placeholder="Search For..." />
         <section className={style['input-section']}>
           <Select
             labelInValue
             defaultValue={{ value: 'price asc', label: 'Sort by' }}
             style={{ width: 200 }}
-            onChange={(value:OptionsFromSort) => {
-              setSort(value.value);
-              const dataCategory = categoriesData.find((item: Category) => item.slug.en === category);
-
-              if (dataCategory) {
-                getProductsList(dataCategory.id)
-                  .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
-                    setProductsList(productListData.body.results);
-                  })
-                  .catch((error: Error) => {
-                    console.log(error.message);
-                  });
-              }
-            }}
+            onChange={handleChangeSort}
             options={OPTIONS_FROM_SORT}
           />
         </section>
@@ -131,9 +134,9 @@ export default function CategoryPage(): JSX.Element {
           ))}
         </aside>
         <section className={style['products-block']}>
-          {productsList.map((dataCard: ProductProjection) => (
+          {productsList.length? productsList.map((dataCard: ProductProjection) => (
             <Card dataCard={dataCard} key={dataCard.name.en} />
-          ))}
+          )): <div>No product by attribute or filter found</div>}
         </section>
       </main>
     </section>
