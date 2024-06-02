@@ -224,19 +224,19 @@ export const LS_PREFIX = 'nasaStoreTeam';
 
 export const OPTIONS_FROM_SORT: OptionsFromSort[] = [
   {
-    value: 'price desc',
-    label: 'Price from high to low',
-  },
-  {
-    value: 'price asc',
-    label: 'Price from low to high',
+    value: 'name.en asc',
+    label: 'Name from A to Z',
   },
   {
     value: 'name.en desc',
     label: 'Name from Z to A',
   },
   {
-    value: 'name.en asc',
-    label: 'Name from A to Z',
+    value: 'price asc',
+    label: 'Price from low to high',
+  },
+  {
+    value: 'price desc',
+    label: 'Price from high to low',
   },
 ];
