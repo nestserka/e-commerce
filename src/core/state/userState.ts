@@ -93,4 +93,12 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
   setValueVersion: (version: number): void => {
     set(() => ({ version }));
   },
+  setUpdatedGeneraValues: (customerInfo: CustomerInfo): void => {
+    set({
+      firstName: customerInfo.firstName,
+      lastName: customerInfo.lastName,
+      dateOfBirth: customerInfo.dateOfBirth,
+      version: customerInfo.version,
+    });
+  },
 }));

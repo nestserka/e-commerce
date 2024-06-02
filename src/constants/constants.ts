@@ -217,4 +217,64 @@ export const ADDRESS_VALIDATION_SCHEMA = z
     }
   });
 
+export const INPUT_DATE_VALIDATION_SCHEMA = z
+  .string()
+  .refine((value) => /^\d{2}\.\d{2}\.\d{4}$/.test(value), {
+    message: 'Invalid format',
+  })
+  .refine(
+    (value) => {
+      const parts = value.split('.');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+
+      if (day <= 0 || day > 31 || month < 0 || month > 11 || year <= 0) {
+        return false;
+      }
+
+      const daysInMonth = dayjs().set('year', year).set('month', month).daysInMonth();
+
+      if (day > daysInMonth) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: 'Invalid day, month, or year',
+    },
+  )
+  .refine(
+    (value) => {
+      const parts = value.split('.');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+      const parsedDate = new Date(year, month, day);
+      const dateOfBirth = dayjs(parsedDate);
+
+      if (dateOfBirth.isValid()) {
+        const today = dayjs();
+        const age = today.diff(dateOfBirth, 'year');
+
+        if (age < 13) {
+          return false;
+        }
+
+        return true;
+      }
+
+      return false;
+    },
+    {
+      message: 'You must be at least 13 years old.',
+    },
+  )
+  .transform((date) => {
+    const [day, month, year] = date.split('.');
+
+    return `${year}-${month}-${day}`;
+  });
+
 export const LS_PREFIX = 'nasaStoreTeam';

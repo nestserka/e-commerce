@@ -2,7 +2,8 @@
 @import '../../../assets/styles/variables';
 
 .email-form,
-.password-form {
+.password-form,
+.general-form {
   display: flex;
   flex-direction: column;
   gap: 2em;

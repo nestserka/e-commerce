@@ -6,6 +6,7 @@ import style from './_profileView.module.scss';
 import EmailForm from '../forms/emailForm/emailForm';
 import PasswordForm from '../forms/passwordForm/passwordForm';
 import { useToggleModal } from '../../../utils/useToggleModal';
+import GeneralForm from '../forms/generalForm/generalForm';
 
 import type { Address } from '../../../utils/types';
 
@@ -13,6 +14,7 @@ export default function ProfileView(): JSX.Element {
   const { valueEmail, firstName, lastName, dateOfBirth, shippingAddress, billingAddress } = useCustomerInfo();
   const [isEmailModalOpen, openEmailModal, closeEmailModal] = useToggleModal();
   const [isPasswordModalOpen, openPasswordModal, closePasswordModal] = useToggleModal();
+  const [isGeneralModalOpen, openGeneralModal, closeGeneralModal] = useToggleModal();
 
   return (
     <div className={style.wrapper}>
@@ -41,9 +43,10 @@ export default function ProfileView(): JSX.Element {
           <InfoField title="First Name" value={firstName} />
           <InfoField title="Last Name" value={lastName} />
           <InfoField title="Date of Birth" value={dateOfBirth} />
-          <button type="button" className={style['personal-section-button']}>
+          <button type="button" className={style['personal-section-button']} onClick={openGeneralModal}>
             Edit Personal Info
           </button>
+          {isGeneralModalOpen && <GeneralForm isOpen={isGeneralModalOpen} onClose={closeGeneralModal} />}
         </section>
       </section>
       <section className={style['personal-section']} data-testid="personal-section">
