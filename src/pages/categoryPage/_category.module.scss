@@ -15,12 +15,11 @@
     &-block {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
-      align-items: center;
-      justify-content: space-between;
+      gap: 2em;
+      align-items: stretch !important;
 
       width: 80%;
-      padding: 20px 0;
+      padding: 2em 0;
     }
   }
 }

@@ -20,17 +20,19 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
         <img className={style['card-pic-img']} src={product.cardImages[0]} alt="" />
       </div>
 
-      <h2 className={style['card-title']} id={product.cardName}>
-        <span>{product.cardName}</span>
-      </h2>
-      <div className={style['card-description']}>{product.cardDescription}</div>
-      <div className={style['block-buy']}>
-        <button type="button" className={style['card-button']}>
-          View Details
-        </button>
-        <div className={style['block-price']}>
-          <span>{product.cardPrice}</span>
-          <span className={style.discount}>{product.cardDiscounted}</span>
+      <div className={style['card-info-wrapper']}>
+        <h2 className={style['card-title']} id={product.cardName} title={product.cardName}>
+          {product.cardName}
+        </h2>
+        <div className={style['card-description']}>{product.cardDescription}</div>
+        <div className={style['block-buy']}>
+          <button type="button" className={style['card-button']}>
+            View Details
+          </button>
+          <div className={style['block-price']}>
+            <span className={style.price}>{product.cardPrice}</span>
+            <span className={style.discount}>{product.cardDiscounted}</span>
+          </div>
         </div>
       </div>
     </Link>
