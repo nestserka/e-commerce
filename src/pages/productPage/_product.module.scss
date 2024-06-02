@@ -9,10 +9,28 @@
 .content-wrapper {
   display: flex;
   justify-content: space-between;
+
+  @media (width <= 900px) {
+    flex-direction: column-reverse;
+    gap: 2em;
+    align-items: flex-start;
+  }
+
+  @media (width <= 480px) {
+    align-items: center;
+  }
 }
 
 .product-info-wrapper {
   padding: 0 6em;
+
+  @media (width <= 1366px) {
+    padding: 0 2em;
+  }
+
+  @media (width <= 900px) {
+    padding: 0;
+  }
 }
 
 .title {
