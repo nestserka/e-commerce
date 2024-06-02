@@ -23,6 +23,7 @@
 
     width: 100px;
     height: 100%;
+
     background: linear-gradient(275deg, rgb(22 23 32 / 100%) 15%, rgb(22 23 32 / 0%) 78%);
 
     @media (width <= 400px),
@@ -103,14 +104,14 @@
 .space-suits {
   position: relative;
   z-index: 2;
-  background: url('../../assets/images/headerCatalog/space-suits.png') 100% / cover no-repeat;
+  background: url('../../assets/images/headerCatalog/space-suits-category-img.png') 100% / cover no-repeat;
   background-position: center;
 }
 
 .space-photos-and-wall-art {
   position: relative;
   z-index: 2;
-  background: url('../../assets/images/headerCatalog/space-photos-and-wall-art.png') 100% / cover no-repeat;
+  background: url('../../assets/images/headerCatalog/poster-category-img.png') 100% / cover no-repeat;
   background-position: center;
 }
 
@@ -124,7 +125,7 @@
 .space-memorabilia {
   position: relative;
   z-index: 2;
-  background: url('../../assets/images/headerCatalog/space-memorabilia.png') 100% / cover no-repeat;
+  background: url('../../assets/images/headerCatalog/space-memorabilia-category-img.png') 100% / cover no-repeat;
   background-position: center;
 }
 
@@ -145,7 +146,7 @@
 .astro-kits {
   position: relative;
   z-index: 2;
-  background: url('../../assets/images/headerCatalog/astro-kits.png') 100% / cover no-repeat;
+  background: url('../../assets/images/headerCatalog/astrokits-category-img.png') 100% / cover no-repeat;
   background-position: center;
 }
 
