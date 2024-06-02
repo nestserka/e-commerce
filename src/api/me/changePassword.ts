@@ -4,6 +4,7 @@ import type { ClientResponse, Customer, MyCustomerChangePassword } from '@commer
 
 export default async function updateCustomerPassword(data: MyCustomerChangePassword): Promise<Customer> {
   const accessToken = localStorage.getItem('token');
+  // tokenCache.get();
 
   const response: ClientResponse<Customer> = await withRefreshToken(accessToken ?? '')
     .me()
