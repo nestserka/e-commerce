@@ -15,16 +15,36 @@ export interface CatalogStateData {
   parentsCategories: Category[];
   productTypesAttributes: ProductType[];
   isLoading: boolean;
+  limit: number;
+  sort: string;
+  isBestseller: boolean;
+  isDiscount: boolean;
+  setSort: (status: string) => void;
+  setBestsellerStatus: (status: boolean) => void;
+  setDiscountStatus: (status: boolean) => void;
   setCategoriesData: () => Promise<void>;
   setProductTypesAttributes: () => Promise<void>;
   getProductsList: (subtrees: string) => Promise<ClientResponse<ProductProjectionPagedSearchResponse>>;
 }
 
-export const useCatalogData = create<CatalogStateData>((set) => ({
+export const useCatalogData = create<CatalogStateData>((set, get) => ({
   categoriesData: [],
   parentsCategories: [],
   productTypesAttributes: [],
   isLoading: false,
+  limit: 100,
+  sort: 'price asc',
+  isBestseller: false,
+  isDiscount: false,
+  setSort: (newSort: string): void => {
+    set(() => ({ sort: newSort }));
+  },
+  setBestsellerStatus: (status: boolean): void => {
+    set(() => ({ isBestseller: status }));
+  },
+  setDiscountStatus: (status: boolean): void => {
+    set(() => ({ isDiscount: status }));
+  },
   setCategoriesData: async (): Promise<void> => {
     set({ isLoading: true });
 
@@ -70,22 +90,16 @@ export const useCatalogData = create<CatalogStateData>((set) => ({
         .search()
         .get({
           queryArgs: {
-            // sort: sortpricename,
-            // limit: Number(`${limit}`),
-            limit: 100,
+            sort: get().sort,
+            limit: get().limit,
             // 'text.en-us': `${search}`,
             // fuzzy: true,
             // fuzzyLevel: Number(`${fuzzylevel}`),
-            // fuzzyLevel: 2,
             // offset: 9 * 1,
-            // offset:2,
             'filter.query': [
               `categories.id: subtree("${subtrees}")`,
-              // `variants.attributes.color.key:${colour}`,
-              // `variants.attributes.size.key:${size}`,
-              // `variants.attributes.bestseller: "true"`,
-              // `variants.attributes.discount.key:"10%-off", "20%-off"`,
-              // `variants.attributes.winter:${winter}`,
+              ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),
+              ...(get().isDiscount ? [`variants.attributes.discount.key: "10%-off", "15%-off", "20%-off"`] : []),
               // `variants.attributes.brand.key:${brand}`,
               // `variants.price.centAmount:range (${priceRangeStart} to ${priceRangeFinish})`,
             ],

@@ -1,10 +1,14 @@
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
+import { Select } from 'antd';
+// import {  useForm } from 'react-hook-form';
 
 import style from './_category.module.scss';
 import Card from '../../components/cards/card/Card';
 import { useCatalogData } from '../../core/state/catalogState';
 import { getAttributesCategory, getSubCategory } from './utils';
+import InputCheckBox from '../../components/ui/checkbox/checkbox';
+import { OPTIONS_FROM_SORT } from '../../constants/constants';
 
 import type { Params } from 'react-router';
 import type {
@@ -14,6 +18,7 @@ import type {
   ProductProjection,
   ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
+import type { OptionsFromSort } from './types';
 
 export default function CategoryPage(): JSX.Element {
   const { category }: Readonly<Params<string>> = useParams();
@@ -22,7 +27,14 @@ export default function CategoryPage(): JSX.Element {
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
   // const [subtreeList, setSubtreeList] = useState<string[]>();
 
-  const { categoriesData, productTypesAttributes, getProductsList } = useCatalogData();
+  // const { control, setValue, watch, trigger } = useForm();
+
+  // const shippingAddress = useWatch({
+  //   control,
+  //   name: 'shippingAddress',
+  // });
+
+  const { categoriesData, productTypesAttributes, getProductsList, setSort } = useCatalogData();
 
   useEffect(() => {
     if (category) {
@@ -54,6 +66,12 @@ export default function CategoryPage(): JSX.Element {
     //       //   .catch(() => {});
   }, [categoriesData, category, getProductsList, productTypesAttributes]);
 
+  // useEffect(() => {
+  //   watch((_value, { name }) => {
+  //     console.log(name);
+  //   });
+  // }, [watch]);
+
   // console.log(productsList?.body.results);
   // console.log(subtreeList?.map((name) => `"${name}"`).join(','));
 
@@ -62,22 +80,54 @@ export default function CategoryPage(): JSX.Element {
       <header className={style['category-header']}>
         <h1 className={style['category-title']}>{category}</h1>
         <input className={style['category-search']} type="text" placeholder="Search..." />
+        <section className={style['input-section']}>
+          <Select
+            labelInValue
+            defaultValue={{ value: 'price asc', label: 'Sort by' }}
+            style={{ width: 200 }}
+            onChange={(value:OptionsFromSort) => {
+              setSort(value.value);
+              const dataCategory = categoriesData.find((item: Category) => item.slug.en === category);
+
+              if (dataCategory) {
+                getProductsList(dataCategory.id)
+                  .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
+                    setProductsList(productListData.body.results);
+                  })
+                  .catch((error: Error) => {
+                    console.log(error.message);
+                  });
+              }
+            }}
+            options={OPTIONS_FROM_SORT}
+          />
+        </section>
       </header>
 
       <main className={style.products}>
         <aside className={style['products-filters']}>
           {subtree.map((subCategory) => (
-            <div key={subCategory.name.en}>
-              <input name="filterSubtree" type="checkbox" id={subCategory.name.en} />
-              <label htmlFor={subCategory.name.en}>{subCategory.name.en}</label>
-            </div>
+            <InputCheckBox
+              key={subCategory.name.en}
+              id={subCategory.name.en}
+              name={subCategory.name.en}
+              label={subCategory.name.en}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                console.log('pop', e.target.checked);
+              }}
+            />
           ))}
 
           {attributesList.map((attribute: AttributeDefinition) => (
-            <div key={attribute.name}>
-              <input name="filterSubtree" type="checkbox" id={attribute.name} />
-              <label htmlFor={attribute.name}>{attribute.name}</label>
-            </div>
+            <InputCheckBox
+              key={attribute.name}
+              id={attribute.name}
+              name={attribute.name}
+              label={attribute.name}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                console.log('pop', e);
+              }}
+            />
           ))}
         </aside>
         <section className={style['products-block']}>

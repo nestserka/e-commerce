@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import dayjs from 'dayjs';
 
+import type { OptionsFromSort } from '../pages/categoryPage/types';
 import type { NavLinkProps } from '../domain/header/navigation/types';
 
 export const ROUTES = {
@@ -220,3 +221,22 @@ export const ADDRESS_VALIDATION_SCHEMA = z
   });
 
 export const LS_PREFIX = 'nasaStoreTeam';
+
+export const OPTIONS_FROM_SORT: OptionsFromSort[] = [
+  {
+    value: 'price desc',
+    label: 'Price from high to low',
+  },
+  {
+    value: 'price asc',
+    label: 'Price from low to high',
+  },
+  {
+    value: 'name.en desc',
+    label: 'Name from Z to A',
+  },
+  {
+    value: 'name.en asc',
+    label: 'Name from A to Z',
+  },
+];
