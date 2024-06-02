@@ -12,7 +12,7 @@ export const ROUTES = {
   SING_UP: '/sign_up',
   ABOUT: '/about',
   CATALOG: '/catalog',
-  CATALOG_ALL: '/catalog/',
+  CATALOG_ALL: '/catalog/all',
   CATEGORY: '/catalog/:category',
   PRODUCT: '/catalog/:category/:productId',
   PROFILE: '/profile/:customerId',

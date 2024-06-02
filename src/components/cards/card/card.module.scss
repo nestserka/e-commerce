@@ -2,62 +2,59 @@
 @import '../../../assets/styles/variables';
 
 .card {
-  @include form-background-gradient;
-  @include flex-center-space-between;
-
   cursor: pointer;
 
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 
   box-sizing: border-box;
   width: 318px;
   height: 570px;
-  padding: 20px;
 
   font-family: Arimo, sans-serif;
   font-size: 16px;
   line-height: 17.5px;
   color: $checkbox-color-checked;
 
+  background-color: $background-color-primary-two;
   border: 1px solid $border-color-default;
   border-radius: 24px;
 
-  transition: 300ms;
+  transition: border-color 0.5s ease;
 
   &-pic {
-    @include flex-justify-center;
-
     position: relative;
 
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    width: calc(318px - 40px);
-    height: 260px;
+    width: 100%;
 
     border-radius: 24px;
 
     .information-block {
       position: absolute;
-      top: 15px;
-      right: 5px;
+      z-index: 1;
+      top: 24px;
+      right: 16px;
 
-      font-family: 'TT Firs Neue', sans-serif;
+      font-family: DisplayMedium, sans-serif;
       font-size: 14px;
-      font-weight: 600;
 
       .discount-name,
       .bestseller {
-        margin-right: 5px;
-        padding: 5px;
-
+        margin-right: 4px;
+        padding: 6px 8px 5px;
         color: $checkbox-color-checked;
-
-        background-color: $font-color-warning;
-        border-radius: 10px;
+        border-radius: 6px;
       }
 
       .discount-name {
-        background-color: $font-color-warning;
+        background-color: rgb(86 41 160);
       }
 
       .bestseller {
@@ -68,35 +65,64 @@
     .card-pic-img {
       aspect-ratio: 0.7 / 0.7;
       width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      transition: transform 0.5s ease;
     }
   }
 
+  &-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 1em;
+    justify-content: space-between;
+
+    padding: 2em;
+  }
+
   &-title {
-    display: block;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 
-    margin: 20px auto;
+    width: 100%;
+    max-height: calc(24px * 3);
 
-    font-family: 'TT Firs Neue', sans-serif;
+    font-family: DisplayMedium, sans-serif;
     font-size: 20px;
     line-height: 24px;
     color: $checkbox-color-checked;
+    text-overflow: ellipsis;
+
+    -webkit-line-clamp: 3;
   }
 
   &-description {
-    overflow-y: auto;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 
-    height: 100px;
+    height: calc(17.5px * 4);
     margin-bottom: 20px;
 
     font-family: Arimo, sans-serif;
     font-size: 16px;
     line-height: 17.5px;
-    color: $checkbox-color-checked;
+    color: $font-color-primary;
+    text-overflow: ellipsis;
+
+    opacity: 0.8;
+
+    -webkit-line-clamp: 4;
   }
 
   .block-buy {
-    @include flex-center-space-between;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
 
     .card-button {
@@ -104,7 +130,7 @@
 
       display: block;
 
-      padding: 10px;
+      padding: 12px 16px;
 
       font-size: inherit;
       color: $checkbox-color-checked;
@@ -119,6 +145,7 @@
       &:hover {
         color: $font-color-primary;
         background-color: $bg-color-btn-default;
+        border: 1px solid $bg-color-btn-default;
       }
     }
 
@@ -128,19 +155,70 @@
       align-items: end;
 
       font-family: Arimo, sans-serif;
-      font-size: 16px;
+      font-size: 18px;
       line-height: 17.5px;
+      color: $font-color-primary;
 
       .discount {
         margin-top: 5px;
+
         font-size: 14px;
         line-height: 16.8px;
         text-decoration: line-through;
+
+        opacity: 0.6;
       }
     }
   }
 
   &:hover {
-    box-shadow: 0 0 20px $bg-color-btn-default;
+    border-color: $font-color-primary-80;
+    animation: flash-border 2s linear infinite;
+
+    .card-pic-img {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@keyframes flash-border {
+  0% {
+    border-color: $font-color-primary-60;
+  }
+
+  50% {
+    border-color: $border-color-default;
+  }
+
+  100% {
+    border-color: $font-color-primary-80;
+  }
+}
+
+@keyframes flash-border {
+  0% {
+    border-color: $font-color-primary-60;
+  }
+
+  50% {
+    border-color: $border-color-default;
+  }
+
+  100% {
+    border-color: $font-color-primary-60;
+  }
+}
+
+@keyframes flash-border {
+  0% {
+    border-color: $font-color-primary-60;
+  }
+
+  50% {
+    border-color: $border-color-default;
+  }
+
+  100% {
+    border-color: $font-color-primary-60;
   }
 }

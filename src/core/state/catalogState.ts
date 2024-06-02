@@ -11,6 +11,7 @@ import type {
 } from '@commercetools/platform-sdk';
 
 export interface CatalogStateData {
+  categoryName: string;
   categoriesData: Category[];
   subtreesList: string[];
   parentsCategories: Category[];
@@ -23,7 +24,8 @@ export interface CatalogStateData {
   isBestseller: boolean;
   isDiscount: boolean;
   offset: number;
-  createFilterByCategoriesId: (category: string) => string;
+  setCategoryName: (newName: string) => void;
+  createFilterByCategoriesId: (category?: string) => string;
   setOffset: (page: number) => void;
   setSort: (newSort: string) => void;
   setSubtreesList: (id: string, isStatus: boolean) => void;
@@ -33,10 +35,11 @@ export interface CatalogStateData {
   setFuzzyLevel: () => number;
   setCategoriesData: () => Promise<void>;
   setProductTypesAttributes: () => Promise<void>;
-  getProductsList: (subtrees: string) => Promise<ClientResponse<ProductProjectionPagedSearchResponse>>;
+  getProductsList: (subtrees?: string) => Promise<ClientResponse<ProductProjectionPagedSearchResponse>>;
 }
 
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
+  categoryName: 'all',
   categoriesData: [],
   subtreesList: [],
   parentsCategories: [],
@@ -49,6 +52,9 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   isBestseller: false,
   isDiscount: false,
   offset: 0,
+  setCategoryName: (newName: string): void => {
+    set(() => ({ categoryName: newName }));
+  },
   setSubtreesList: (id: string, isStatus: boolean): void => {
     if (isStatus) {
       get().subtreesList.push(id);
@@ -57,14 +63,20 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
       set(() => ({ subtreesList: newSubtreesList }));
     }
   },
-  createFilterByCategoriesId: (category: string): string => {
-    if (get().subtreesList.length) {
-      return get()
-        .subtreesList.map((id) => `"${id}"`)
-        .join(',');
+  createFilterByCategoriesId: (category?: string): string => {
+    if (get().categoryName === 'all' || !category) {
+      return '';
     }
 
-    return `subtree("${category}")`;
+    if (get().subtreesList.length) {
+      const newFilter = `categories.id: ${get()
+        .subtreesList.map((id) => `"${id}"`)
+        .join(',')}`;
+
+      return newFilter;
+    }
+
+    return `categories.id: subtree("${category}")`;
   },
   setOffset: (page: number): void => {
     set(() => ({ offset: page - 1 }));
@@ -135,7 +147,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
       set({ isLoading: false });
     }
   },
-  getProductsList: async (category: string): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
+  getProductsList: async (category?: string): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
     set({ isLoading: true });
     const newSearch = get().searchValue.length
       ? { 'text.en': get().searchValue, fuzzy: true, fuzzyLevel: get().setFuzzyLevel() }
@@ -155,7 +167,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
 
             offset: get().offset * get().limit,
             'filter.query': [
-              `categories.id: ${get().createFilterByCategoriesId(category)}`,
+              ...(get().categoryName === 'all' ? [] : [get().createFilterByCategoriesId(category)]),
               ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),
               ...(get().isDiscount ? [`variants.attributes.discount.key: "10%-off", "15%-off", "20%-off"`] : []),
               // `variants.attributes.brand.key:${brand}`,

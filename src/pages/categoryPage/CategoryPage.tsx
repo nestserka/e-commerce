@@ -27,7 +27,7 @@ export default function CategoryPage(): JSX.Element {
   const [subtree, setSubtree] = useState<Category[]>([]);
   const [attributesList, setAttributesList] = useState<AttributeDefinition[]>([]);
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
-  // const [subtreeList, setSubtreeList] = useState<string[]>();
+  const [activeCategory, setActiveCategory] = useState<string>('');
 
   // const { control, setValue, watch, trigger } = useForm();
 
@@ -36,8 +36,15 @@ export default function CategoryPage(): JSX.Element {
   //   name: 'shippingAddress',
   // });
 
-  const { categoriesData, productTypesAttributes, setSearchValue, getProductsList, setSubtreesList, setSort } =
-    useCatalogData();
+  const {
+    categoriesData,
+    productTypesAttributes,
+    setCategoryName,
+    setSearchValue,
+    getProductsList,
+    setSubtreesList,
+    setSort,
+  } = useCatalogData();
   const { Search } = Input;
 
   // const onCahange: SearchProps['onChange'] = (e) => {
@@ -52,6 +59,16 @@ export default function CategoryPage(): JSX.Element {
   // };
 
   const getProductListFromCategory = useCallback(() => {
+    if(category === 'all'){
+      getProductsList()
+      .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
+        setProductsList(productListData.body.results);
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+      });
+    }
+
     const dataCategory = categoriesData.find((item: Category) => item.slug.en === category);
 
     if (dataCategory) {
@@ -87,73 +104,100 @@ export default function CategoryPage(): JSX.Element {
     getProductListFromCategory();
   };
 
+  const handleChangeCategory = (): void => {};
+
   useEffect(() => {
     if (category) {
       setSubtree(getSubCategory(categoriesData, category));
       setAttributesList(getAttributesCategory(productTypesAttributes, category));
+
+      if (category === 'all') {
+        setActiveCategory('Select by Category');
+      } else {
+        setActiveCategory(category);
+        setCategoryName(category);
+      }
+
+      console.log(category);
       getProductListFromCategory();
     }
-  }, [categoriesData, category, getProductListFromCategory, getProductsList, productTypesAttributes]);
+  }, [categoriesData, category, getProductListFromCategory, getProductsList, productTypesAttributes, setCategoryName]);
 
   return (
     <section className={style.category} data-testid={category}>
-      <header className={style['category-header']}>
-        <h1 className={style['category-title']}>{category}</h1>
-        <div className={style['category-search']}>
-          <Space direction="vertical">
-            <Search
-              className={style.search}
-              placeholder="Search For..."
-              style={{ width: 304 }}
-              enterButton
-              onSearch={onSearch}
-              onChangeCapture={onChange}
-            />
-          </Space>
+      <aside className={style['products-filters']}>
+        <div className={style['filters-header']}>
+          <h3 className={style['filters-header-title']}> FILTERS</h3>
         </div>
-        <div className={style['sort-section']}>
-          <Select
-            labelInValue
-            placeholder="Sort by"
-            style={{ width: 200 }}
-            onChange={handleChangeSort}
-            options={OPTIONS_FROM_SORT}
+
+        <div className={style['filters-header']}>
+          <h3 className={style['filters-header-title']}>Category</h3>
+          <div className={style['products-sort']}>
+            <Select
+              labelInValue
+              className={style.subtrees}
+              placeholder={activeCategory}
+              onChange={handleChangeCategory}
+              options={OPTIONS_FROM_SORT}
+            />
+          </div>
+          <div>
+            {subtree.map((subCategory) => (
+              <InputCheckBox
+                key={subCategory.key}
+                id={subCategory.id}
+                name={subCategory.name.en}
+                label={subCategory.name.en}
+                onChange={handleChangeSubTrees}
+              />
+            ))}
+          </div>
+        </div>
+
+        {attributesList.map((attribute: AttributeDefinition) => (
+          <InputCheckBox
+            key={attribute.name}
+            id={attribute.name}
+            name={attribute.name}
+            label={attribute.name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              console.log('pop', e);
+            }}
           />
-        </div>
-      </header>
-
-      <main className={style.products}>
-        <aside className={style['products-filters']}>
-          {subtree.map((subCategory) => (
-            <InputCheckBox
-              key={subCategory.key}
-              id={subCategory.id}
-              name={subCategory.name.en}
-              label={subCategory.name.en}
-              onChange={handleChangeSubTrees}
+        ))}
+      </aside>
+      <section className={style.products}>
+        <header className={style['products-header']}>
+          <h1 className={style['products-title']}>{category}</h1>
+          <div className={style['products-search']}>
+            <Space direction="vertical">
+              <Search
+                className={style.search}
+                placeholder="Search For..."
+                enterButton
+                onSearch={onSearch}
+                onChangeCapture={onChange}
+              />
+            </Space>
+          </div>
+          <div className={style['products-sort']}>
+            <Select
+              labelInValue
+              placeholder="Sort by"
+              style={{ width: 200 }}
+              onChange={handleChangeSort}
+              options={OPTIONS_FROM_SORT}
             />
-          ))}
-
-          {attributesList.map((attribute: AttributeDefinition) => (
-            <InputCheckBox
-              key={attribute.name}
-              id={attribute.name}
-              name={attribute.name}
-              label={attribute.name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                console.log('pop', e);
-              }}
-            />
-          ))}
-        </aside>
-        <section className={style['products-block']}>
+          </div>
+        </header>
+        <div className={style['products-block']}>
           {productsList.length ? (
             productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
           ) : (
             <div>No product by attribute or filter found</div>
           )}
-        </section>
-      </main>
+        </div>
+      </section>
     </section>
   );
 }
