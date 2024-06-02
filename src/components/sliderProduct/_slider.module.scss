@@ -92,6 +92,11 @@
     width: 320px;
     height: 320px;
   }
+
+  @media (height <= 800px) and (width >= 1024px) {
+    width: 700px;
+    height: 700px;
+  }
 }
 
 .modalopen {
