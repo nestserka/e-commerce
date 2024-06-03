@@ -7,7 +7,7 @@ export default async function getProductById(productKey: string): Promise<Client
     const response: ClientResponse<ProductProjection> = await withClientCredentialsFlow()
       .productProjections()
       .withKey({ key: productKey })
-      .get()
+      .get({ queryArgs: { expand: 'categories[*].parent' } })
       .execute();
 
     return response;
