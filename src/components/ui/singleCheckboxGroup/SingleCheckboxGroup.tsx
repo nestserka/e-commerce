@@ -1,4 +1,4 @@
-import styles from '../checkbox/_checkbox.module.scss';
+import styles from './singleCheckboxGroup.module.scss';
 
 export interface Option {
   label: string;

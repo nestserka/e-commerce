@@ -42,6 +42,8 @@ export default function CategoryPage(): JSX.Element {
     getProductsList,
     setSubtreesList,
     setSort,
+    setBestsellerStatus,
+    setDiscountStatus
   } = useCatalogData();
   const { Search } = Input;
   const getProductListFromCategory = useCallback(() => {
@@ -153,12 +155,12 @@ export default function CategoryPage(): JSX.Element {
       </header>
       <main className={style.main}>
         <aside className={style['products-filters']}>
-          <div className={style['filters-header']}>
+          <div className={style['filters-section']}>
             <h3 className={style['filters-header-title']}> FILTERS</h3>
           </div>
 
-          <div className={style['filters-header']}>
-            <h3 className={style['filters-header-title']}>Category</h3>
+          <details className={style['filters-section']} open>
+            <summary className={style['filters-header-title']}>Categories</summary>
             <div className={style['products-sort']}>
               <Select
                 labelInValue
@@ -171,7 +173,34 @@ export default function CategoryPage(): JSX.Element {
             <div>
               <SingleCheckboxGroup options={subtree} selectedValue={selectedValue} onChange={handleCheckboxChange} />
             </div>
-          </div>
+          </details>
+          <details className={style['filters-section']} open>
+            <summary className={style['filters-header-title']}>Promo-Actions</summary>
+            <div className={style['products-sort']}>
+              <div className={style['checkbox-wrapper']}>
+                <InputCheckBox
+                  id="discount"
+                  name="Discount"
+                  label="Discount"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setDiscountStatus(e.target.checked);
+                    getProductListFromCategory();
+                  }}
+                />
+              </div>
+              <div className={style['checkbox-wrapper']}>
+                <InputCheckBox
+                  id="bestseller"
+                  name="Bestseller"
+                  label="BestSeller"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setBestsellerStatus(e.target.checked);
+                    getProductListFromCategory();
+                  }}
+                />
+              </div>
+            </div>
+          </details>
 
           {attributesList.map((attribute: AttributeDefinition) => (
             <InputCheckBox

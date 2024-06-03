@@ -52,7 +52,7 @@
       }
     }
 
-    .filters-header::before {
+    .filters-section::before {
       content: '';
       display: block;
       width: 90%;
@@ -113,8 +113,19 @@
     }
   }
 }
-.filters-header {
+.filters-section {
   position: relative;
   padding: 2em 1em;
   box-sizing: border-box;
+  font-size: 1.2em;
+  color: $font-color-primary;
+  .filters-header-title {
+    margin-bottom: 1em;
+  }
+  .checkbox-wrapper {
+    @include flex-row-center;
+    margin: 0.5em 0;
+    font-size: 16px;
+    gap: 1em;
+  }
 }
