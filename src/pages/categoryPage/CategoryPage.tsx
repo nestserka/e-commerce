@@ -1,9 +1,7 @@
 import { useNavigate, useParams } from 'react-router';
-import { Link } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { Input, Select, Space } from 'antd';
-
-// import {  useForm } from 'react-hook-form';
+import ReactSlider from 'react-slider';
 
 import style from './_category.module.scss';
 import Card from '../../components/cards/card/Card';
@@ -37,13 +35,15 @@ export default function CategoryPage(): JSX.Element {
   const {
     categoriesData,
     productTypesAttributes,
+    priceRange,
     setCategoryName,
     setSearchValue,
     getProductsList,
     setSubtreesList,
     setSort,
     setBestsellerStatus,
-    setDiscountStatus
+    setDiscountStatus,
+    setPriceRange,
   } = useCatalogData();
   const { Search } = Input;
   const getProductListFromCategory = useCallback(() => {
@@ -91,6 +91,7 @@ export default function CategoryPage(): JSX.Element {
       getProductListFromCategory();
     }
   };
+
   const handleChangeSort = (option: OptionsFromSelect): void => {
     setSort(option.value);
     getProductListFromCategory();
@@ -103,6 +104,14 @@ export default function CategoryPage(): JSX.Element {
     setNameSubtree('');
     setSubtreesList('', true);
     getProductListFromCategory();
+  };
+
+  const handleClickForCatalog = (): void => {
+    setSelectedValue('');
+    setNameSubtree('');
+    setSubtreesList('', true);
+    setActiveCategory('Select by Category');
+    navigation('/catalog/all');
   };
 
   useEffect(() => {
@@ -136,12 +145,14 @@ export default function CategoryPage(): JSX.Element {
     setSubtreesList,
   ]);
 
+  console.log(attributesList);
+
   return (
     <section className={style.category} data-testid={category}>
       <header className={style['category-header']}>
-        <Link className={style['category-header-link']} to="/catalog/all">
+        <button className={style['category-header-link']} type="button" onClick={handleClickForCatalog}>
           All categories
-        </Link>
+        </button>
         {category === 'all' ? '' : <span className={style['category-header-link']}>/</span>}
         {category === 'all' ? (
           ''
@@ -202,7 +213,34 @@ export default function CategoryPage(): JSX.Element {
             </div>
           </details>
 
-          {attributesList.map((attribute: AttributeDefinition) => (
+          <details className={style['filters-section']} open>
+            <summary className={style['filters-header-title']}>Price Range</summary>
+            <div className={style['price-range']}>
+              <div className={style['price-range-value']}>
+                <span>Price</span>
+                <span>${priceRange[0]}</span>
+                <span>-</span>
+                <span>${priceRange[1]}</span>
+              </div>
+              <ReactSlider
+                className="horizontal-slider"
+                thumbClassName="example-thumb"
+                trackClassName="example-track"
+                defaultValue={[0, 17000]}
+                max={17000}
+                min={0}
+                onChange={(value) => {
+                  setPriceRange(value);
+                }}
+                onAfterChange={() => {
+                  getProductListFromCategory();
+                }}
+                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
+              />
+            </div>
+          </details>
+
+          {/* {attributesList.map((attribute: AttributeDefinition) => (
             <InputCheckBox
               key={attribute.name}
               id={attribute.name}
@@ -212,7 +250,7 @@ export default function CategoryPage(): JSX.Element {
                 console.log('pop', e);
               }}
             />
-          ))}
+          ))} */}
         </aside>
         <section className={style.products}>
           <header className={style['products-header']}>
@@ -223,6 +261,7 @@ export default function CategoryPage(): JSX.Element {
                   placeholder="Search For..."
                   enterButton
                   onSearch={onSearch}
+                  style={{ width: 300 }}
                   onChangeCapture={onChange}
                 />
               </Space>

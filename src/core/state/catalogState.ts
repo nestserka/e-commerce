@@ -8,6 +8,7 @@ import type { Category, ProductProjectionPagedSearchResponse, ProductType } from
 export interface CatalogStateData {
   categoryName: string;
   categoriesData: Category[];
+  priceRange: number[];
   subtreesList: string;
   parentsCategories: Category[];
   productTypesAttributes: ProductType[];
@@ -19,6 +20,7 @@ export interface CatalogStateData {
   isBestseller: boolean;
   isDiscount: boolean;
   offset: number;
+  setPriceRange: (newRange: number[]) => void;
   setCategoryName: (newName: string) => void;
   createFilterByCategoriesId: (category?: string) => string;
   setOffset: (page: number) => void;
@@ -35,6 +37,7 @@ export interface CatalogStateData {
 
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
   categoryName: 'all',
+  priceRange: [0, 17000],
   categoriesData: [],
   subtreesList: '',
   parentsCategories: [],
@@ -47,6 +50,9 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   isBestseller: false,
   isDiscount: false,
   offset: 0,
+  setPriceRange: (newRange: number[]): void => {
+    set(() => ({ priceRange: newRange }));
+  },
   setCategoryName: (newName: string): void => {
     set(() => ({ categoryName: newName }));
   },
@@ -159,7 +165,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
               ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),
               ...(get().isDiscount ? [`variants.attributes.discount.key: "10%-off", "15%-off", "20%-off"`] : []),
               // `variants.attributes.brand.key:${brand}`,
-              // `variants.price.centAmount:range (${priceRangeStart} to ${priceRangeFinish})`,
+              `variants.price.centAmount:range (${get().priceRange[0] * 100}to ${get().priceRange[1] * 100})`,
             ],
           },
         })
