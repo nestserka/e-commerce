@@ -7,6 +7,11 @@
   @include page-layout-container;
 }
 
+.product-page {
+  margin-top: 1em;
+  margin-bottom: 4em;
+}
+
 .content-wrapper {
   display: flex;
   justify-content: space-between;
@@ -62,4 +67,32 @@
 .discount {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+.home-icon {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+.breadcrumbs-wrapper {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+  margin-top: 4em;
+}
+
+.breadcrumbs-link {
+  font-family: DisplayMedium, sans-serif;
+  font-size: 1em;
+  line-height: 100%;
+  color: $font-color-primary !important;
+
+  opacity: 0.6;
+
+  transition: opacity 0.5s ease;
+
+  &:hover {
+    opacity: 1;
+  }
 }

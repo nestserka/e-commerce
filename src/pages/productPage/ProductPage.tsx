@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import style from './_product.module.scss';
 import Slider from '../../components/sliderProduct/slider';
@@ -7,6 +8,9 @@ import FormSubTitle from '../../components/formSubTitle/formSubTitle';
 import { formatPrice } from '../../utils/utils';
 import Badge from '../../components/badge/badge';
 import getProductById from '../../api/products/getProductById';
+import homeIcon from '../../assets/images/icons/home-icon.svg';
+import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
+import { ROUTES } from '../../constants/constants';
 
 import type { Params } from 'react-router';
 import type { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
@@ -56,6 +60,7 @@ export default function ProductPage(): JSX.Element {
       try {
         if (productId) {
           const data = await getProductById(productId);
+          console.log(data);
           setProduct(data);
           extractPrice(data);
         } else {
@@ -97,33 +102,59 @@ export default function ProductPage(): JSX.Element {
     | undefined;
   const bestsellerName = bestsellerAttribute?.name;
 
+  const subCategoryNameRoute = product.body.categories.map((atr) => atr.obj?.slug.en).join('');
+  const subCategoryNameStr = product.body.categories.map((atr) => atr.obj?.name.en).join('');
+  const categoryNameRoute = product.body.categories.map((atr) => atr.obj?.parent?.obj?.slug.en).join('');
+  const categoryNameStr = product.body.categories.map((atr) => atr.obj?.parent?.obj?.name.en).join('');
+  const productName = product.body.name.en;
+  const productImages = product.body.masterVariant.images;
+
   return (
-    <section className={style['product-page']} data-testid="product-page">
-      <section className={style['content-wrapper']}>
-        <section className={style['slider-wrapper']}>
-          <Slider images={product.body.masterVariant.images} />
-        </section>
-        <section className={style['product-info-wrapper']}>
-          <div className={style['product-info-text']}>
-            <h1 className={style.title}>{product.body.name.en}</h1>
-            <div className={style['badges-wrapper']}>
-              {discountLabel && <Badge type="discount" text={discountLabel} />}
-              {bestsellerName && <Badge type="bestseller" text={bestsellerName} />}
+    <>
+      <section className={style['breadcrumbs-wrapper']}>
+        <Link to={ROUTES.HOME} className={style['breadcrumbs-link']}>
+          <img src={homeIcon} className="home-icon" alt="NASA Store Homepage" />
+        </Link>
+        <img src={chevronIcon} className="chevron-icon" alt="" />
+        <Link to={`${ROUTES.CATALOG}/${categoryNameRoute}/`} className={style['breadcrumbs-link']}>
+          {categoryNameStr}
+        </Link>
+        <img src={chevronIcon} className="chevron-icon" alt="" />
+        <Link to={`${ROUTES.CATALOG}/${subCategoryNameRoute}/`} className={style['breadcrumbs-link']}>
+          {subCategoryNameStr}
+        </Link>
+        <img src={chevronIcon} className="chevron-icon" alt="" />
+        <Link to={`${ROUTES.CATALOG}/${subCategoryNameRoute}/${productId}`} className={style['breadcrumbs-link']}>
+          {productName}
+        </Link>
+      </section>
+      <section className={style['product-page']} data-testid="product-page">
+        <section className={style['content-wrapper']}>
+          <section className={style['slider-wrapper']}>
+            <Slider images={productImages} />
+          </section>
+          <section className={style['product-info-wrapper']}>
+            <div className={style['product-info-text']}>
+              <h1 className={style.title}>{productName}</h1>
+              <div className={style['badges-wrapper']}>
+                {discountLabel && <Badge type="discount" text={discountLabel} />}
+                {bestsellerName && <Badge type="bestseller" text={bestsellerName} />}
+              </div>
+              <FormSubTitle subTitle="Product Description" />
+              <p className={style.description}>{product.body.description?.en}</p>
+              <FormSubTitle subTitle="Shipping & Delivery Information" />
+              <p className={style.description}>
+                We partner with trusted carriers like USPS, UPS, and FedEx to ensure your orders reach you promptly and
+                securely, no matter where you are in the country.
+              </p>
             </div>
-            <FormSubTitle subTitle="Product Description" />
-            <p className={style.description}>{product.body.description?.en}</p>
-            <FormSubTitle subTitle="Shipping & Delivery Information" />
-            <p className={style.description}>
-              We partner with trusted carriers like USPS, UPS, and FedEx to ensure your orders reach you promptly and
-              securely, no matter where you are in the country.
-            </p>
-          </div>
-          <section className={style['price-info']}>
-            {price && <span className={style.price}>{price}</span>}
-            {discount && <span className={style.discount}>{discount}</span>}
+            <section className={style['price-info']}>
+              {price && <span className={style.price}>{price}</span>}
+              {discount && <span className={style.discount}>{discount}</span>}
+            </section>
           </section>
         </section>
       </section>
-    </section>
+    </>
   );
 }
