@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
 import { Input, Select, Space } from 'antd';
 
@@ -7,12 +7,12 @@ import { Input, Select, Space } from 'antd';
 import style from './_category.module.scss';
 import Card from '../../components/cards/card/Card';
 import { useCatalogData } from '../../core/state/catalogState';
-import { getAttributesCategory, getSubCategory } from './utils';
+import { createCategoriesList, getAttributesCategory, getSubCategory } from './utils';
 import InputCheckBox from '../../components/ui/checkbox/checkbox';
 import { OPTIONS_FROM_SORT } from '../../constants/constants';
 
 import type { SearchProps } from 'antd/es/input';
-import type { OptionsFromSort } from './types';
+import type { OptionsFromSelect } from './types';
 import type { Params } from 'react-router';
 import type {
   AttributeDefinition,
@@ -28,13 +28,9 @@ export default function CategoryPage(): JSX.Element {
   const [attributesList, setAttributesList] = useState<AttributeDefinition[]>([]);
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
-
-  // const { control, setValue, watch, trigger } = useForm();
-
-  // const shippingAddress = useWatch({
-  //   control,
-  //   name: 'shippingAddress',
-  // });
+  const [categoryOptions, setCategoryOptions] = useState<OptionsFromSelect[]>([]);
+  const [namePosition, setNamePosition] = useState<string|undefined>();
+  const navigation = useNavigate();
 
   const {
     categoriesData,
@@ -47,26 +43,15 @@ export default function CategoryPage(): JSX.Element {
   } = useCatalogData();
   const { Search } = Input;
 
-  // const onCahange: SearchProps['onChange'] = (e) => {
-  //   console.log(e.target.value)
-  //   // const valueInput: string = value.trim();
-
-  //   // if (valueInput.length > 0) {
-  //   //   this.buttonForm.node.removeAttribute('disabled');
-  //   // } else {
-  //   //   this.buttonForm.node.disabled = true;
-  //   // }
-  // };
-
   const getProductListFromCategory = useCallback(() => {
-    if(category === 'all'){
+    if (category === 'all') {
       getProductsList()
-      .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
-        setProductsList(productListData.body.results);
-      })
-      .catch((error: Error) => {
-        console.log(error.message);
-      });
+        .then((productListData: ClientResponse<ProductProjectionPagedSearchResponse>) => {
+          setProductsList(productListData.body.results);
+        })
+        .catch((error: Error) => {
+          console.log(error.message);
+        });
     }
 
     const dataCategory = categoriesData.find((item: Category) => item.slug.en === category);
@@ -94,7 +79,7 @@ export default function CategoryPage(): JSX.Element {
     }
   };
 
-  const handleChangeSort = (option: OptionsFromSort): void => {
+  const handleChangeSort = (option: OptionsFromSelect): void => {
     setSort(option.value);
     getProductListFromCategory();
   };
@@ -104,21 +89,26 @@ export default function CategoryPage(): JSX.Element {
     getProductListFromCategory();
   };
 
-  const handleChangeCategory = (): void => {};
+  const handleChangeCategory = (option: OptionsFromSelect): void => {
+    navigation(`/catalog/${option.value}`);
+  };
 
   useEffect(() => {
     if (category) {
       setSubtree(getSubCategory(categoriesData, category));
       setAttributesList(getAttributesCategory(productTypesAttributes, category));
-
+      const newOptionCategoriesList = createCategoriesList(categoriesData);
+      setCategoryOptions(newOptionCategoriesList);
+      
       if (category === 'all') {
         setActiveCategory('Select by Category');
       } else {
-        setActiveCategory(category);
+        const nameCategory = newOptionCategoriesList.find((option)=>option.value === category);
+        setNamePosition(nameCategory?.label);
+        setActiveCategory(nameCategory?.label??'');
         setCategoryName(category);
       }
 
-      console.log(category);
       getProductListFromCategory();
     }
   }, [categoriesData, category, getProductListFromCategory, getProductsList, productTypesAttributes, setCategoryName]);
@@ -138,7 +128,7 @@ export default function CategoryPage(): JSX.Element {
               className={style.subtrees}
               placeholder={activeCategory}
               onChange={handleChangeCategory}
-              options={OPTIONS_FROM_SORT}
+              options={categoryOptions}
             />
           </div>
           <div>
@@ -168,7 +158,7 @@ export default function CategoryPage(): JSX.Element {
       </aside>
       <section className={style.products}>
         <header className={style['products-header']}>
-          <h1 className={style['products-title']}>{category}</h1>
+          <h1 className={style['products-title']}>Catalog {namePosition}</h1>
           <div className={style['products-search']}>
             <Space direction="vertical">
               <Search

@@ -1,4 +1,4 @@
-import type { OptionsFromSort } from './types';
+import type { OptionsFromSelect } from './types';
 import type { AttributeDefinition, Category, ProductType } from '@commercetools/platform-sdk';
 
 export function getSubCategory(allCategories: Category[], nameCategory: string): Category[] {
@@ -21,14 +21,16 @@ export function getAttributesCategory(allProductTypes: ProductType[], nameCatego
   return dataProductTypes?.attributes ? dataProductTypes.attributes : [];
 }
 
-export function createCategoriesList(categoriesData: Category[]): OptionsFromSort[] {
-  const optionsForSelect: OptionsFromSort[] = [];
-  categoriesData.forEach((catalog: Category) => {
-    const option: OptionsFromSort = {
-      value: catalog.id,
-      label: catalog.name.en,
-    };
-    optionsForSelect.push(option);
+export function createCategoriesList(categoriesData: Category[]): OptionsFromSelect[] {
+  const optionsForSelect: OptionsFromSelect[] = [];
+  categoriesData.forEach((category: Category) => {
+    if (!category.ancestors.length) {
+      const option: OptionsFromSelect = {
+        value: category.key ? category.key : '',
+        label: category.name.en,
+      };
+      optionsForSelect.push(option);
+    }
   });
 
   return optionsForSelect;

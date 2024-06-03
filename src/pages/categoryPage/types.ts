@@ -1,4 +1,4 @@
-export interface OptionsFromSort {
+export interface OptionsFromSelect {
   value: string;
   label: string;
 }
