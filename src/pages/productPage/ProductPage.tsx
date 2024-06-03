@@ -6,10 +6,10 @@ import Slider from '../../components/sliderProduct/slider';
 import FormSubTitle from '../../components/formSubTitle/formSubTitle';
 import { formatPrice } from '../../utils/utils';
 import Badge from '../../components/badge/badge';
+import getProductById from '../../api/products/getProductById';
 
 import type { Params } from 'react-router';
 import type { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
-import getProductById from '../../api/products/getProductById';
 
 interface AttributeBestseller {
   name: 'bestseller';

@@ -1,10 +1,11 @@
+import withClientCredentialsFlow from './middlewareFlows/withClientCredentials';
+
 import type {
   Category,
   ClientResponse,
   ProductProjectionPagedSearchResponse,
   ProductType,
 } from '@commercetools/platform-sdk';
-import withClientCredentialsFlow from './middlewareFlows/withClientCredentials';
 
 export default class ProductList {
   public static async getAllCategories(): Promise<Category[]> {

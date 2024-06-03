@@ -54,7 +54,6 @@ export default function LoginForm(): JSX.Element {
     setFormError('');
   }, [valuePassword]);
 
- 
   const onSubmit = async (data: LoginFormValues): Promise<void> => {
     await loginUser(data.email.toLowerCase(), data.password)
       .then((response) => {
