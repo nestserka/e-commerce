@@ -112,7 +112,6 @@ export default function CategoryPage(): JSX.Element {
   };
 
   useEffect(() => {
-
     if (category) {
       const allSubtrees = getSubCategory(categoriesData, category);
       setSubtree(allSubtrees);
@@ -171,7 +170,7 @@ export default function CategoryPage(): JSX.Element {
             {namePosition}
           </button>
         )}
-        {nameSubtree ?  <img src={chevronIcon} className="chevron-icon" alt="" /> : ''}
+        {nameSubtree ? <img src={chevronIcon} className="chevron-icon" alt="" /> : ''}
         {nameSubtree ? <span className={style['category-header-link']}>{nameSubtree}</span> : ''}
       </header>
       <main className={style.main}>
