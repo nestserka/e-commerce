@@ -48,7 +48,6 @@ body {
 * {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
 }
 
 a.active {
@@ -180,4 +179,54 @@ a:hover {
   &:hover {
     color: $font-color-link-hover;
   }
+}
+
+.ant-select-selection-placeholder {
+  color: $font-color-primary !important;
+}
+
+.horizontal-slider {
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  margin: 0.5em 0;
+
+  background-color: $font-color-title-dark;
+  border-radius: 15px;
+}
+
+.horizontal-slider .example-track {
+  top: 20px;
+  height: 5px;
+}
+
+.example-track.example-track-0 {
+  background: rgb(198 190 190);
+}
+
+.example-track.example-track-1 {
+  background: $font-color-link-hover;
+}
+
+.example-track.example-track-2 {
+  background: rgb(198 190 190);
+}
+
+.horizontal-slider .example-thumb {
+  cursor: pointer;
+
+  top: 1px;
+
+  box-sizing: border-box;
+  width: 50px;
+  height: 48px;
+
+  font-size: 0.7em;
+  line-height: 38px;
+  color: white;
+  text-align: center;
+
+  background-color: black;
+  border: 5px solid gray;
+  border-radius: 50%;
 }

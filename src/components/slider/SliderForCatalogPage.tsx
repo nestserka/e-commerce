@@ -22,7 +22,6 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
         pagination={{
           clickable: true,
         }}
-        scrollbar
         modules={[Pagination, Scrollbar]}
         spaceBetween={20}
         slidesPerView={5.5}

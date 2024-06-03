@@ -10,7 +10,8 @@
   justify-content: space-between;
 
   box-sizing: border-box;
-  width: calc((100% - 4em) / 3);
+  width: 318px;
+  height: 570px;
 
   font-family: Arimo, sans-serif;
   font-size: 16px;
@@ -53,7 +54,7 @@
       }
 
       .discount-name {
-        background-color: $bg-color-discount;
+        background-color: rgb(86 41 160);
       }
 
       .bestseller {

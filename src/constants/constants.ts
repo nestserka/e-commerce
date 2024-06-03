@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import dayjs from 'dayjs';
 
+import type { OptionsFromSelect } from '../pages/categoryPage/types';
 import type { NavLinkProps } from '../domain/header/navigation/types';
 
 export const ROUTES = {
@@ -11,7 +12,7 @@ export const ROUTES = {
   SING_UP: '/sign_up',
   ABOUT: '/about',
   CATALOG: '/catalog',
-  CATALOG_ALL: '/catalog/',
+  CATALOG_ALL: '/catalog/all',
   CATEGORY: '/catalog/:category',
   PRODUCT: '/catalog/:category/:productId',
   PROFILE: '/profile/:customerId',
@@ -289,3 +290,22 @@ export const SHIPPING_TYPE_VALIDATION_SCHEMA = z.string().refine((value) => vali
 });
 
 export const LS_PREFIX = 'nasaStoreTeam';
+
+export const OPTIONS_FROM_SORT: OptionsFromSelect[] = [
+  {
+    value: 'name.en asc',
+    label: 'Name from A to Z',
+  },
+  {
+    value: 'name.en desc',
+    label: 'Name from Z to A',
+  },
+  {
+    value: 'price asc',
+    label: 'Price from low to high',
+  },
+  {
+    value: 'price desc',
+    label: 'Price from high to low',
+  },
+];

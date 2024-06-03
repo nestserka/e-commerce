@@ -4,13 +4,14 @@
   @include page-layout-container;
 
   justify-content: center;
-  margin: 4em 10% 1em;
   max-width: none;
+  margin: 4em 10% 1em;
 
   .profile-content-wrapper {
     display: flex;
     flex-direction: column;
     gap: 1.5em;
+
     width: 80%;
     padding: 0;
   }
