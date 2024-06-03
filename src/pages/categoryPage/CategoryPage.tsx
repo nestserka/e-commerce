@@ -166,7 +166,7 @@ export default function CategoryPage(): JSX.Element {
       </header>
       <main className={style.main}>
         <aside className={style['products-filters']}>
-          <div className={style['filters-section']}>
+          <div className={style['filters-section-first']}>
             <h3 className={style['filters-header-title']}> FILTERS</h3>
           </div>
 
