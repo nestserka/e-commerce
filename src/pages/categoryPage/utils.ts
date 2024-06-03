@@ -27,7 +27,11 @@ export function getSubCategory(allCategories: Category[], nameCategory: string):
 export function getAttributesCategory(allProductTypes: ProductType[], nameCategory: string): AttributeDefinition[] {
   const dataProductTypes = allProductTypes.find((productType: ProductType) => productType.key === nameCategory);
 
-  return dataProductTypes?.attributes ? dataProductTypes.attributes : [];
+  const arrAttribute = dataProductTypes?.attributes?.filter(
+    (attribute) => attribute.name !== 'discount' && attribute.name !== 'bestseller',
+  );
+
+  return arrAttribute ?? [];
 }
 
 export function createCategoriesList(categoriesData: Category[]): OptionsFromSelect[] {

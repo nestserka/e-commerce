@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import style from './_category.module.scss';
 import Card from '../../components/cards/card/Card';
 import { useCatalogData } from '../../core/state/catalogState';
-import { createCategoriesList, getAttributesCategory, getSubCategory } from './utils';
+import { createCategoriesList, getSubCategory } from './utils';
 import InputCheckBox from '../../components/ui/checkbox/checkbox';
 import { DYNAMIC_ROUTES, OPTIONS_FROM_SORT, ROUTES } from '../../constants/constants';
 import SingleCheckboxGroup from '../../components/ui/singleCheckboxGroup/SingleCheckboxGroup';
@@ -18,7 +18,7 @@ import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
 import type { Params } from 'react-router';
 import type {
-  AttributeDefinition,
+  // AttributeDefinition,
   Category,
   ProductProjection,
   ProductProjectionPagedSearchResponse,
@@ -27,7 +27,7 @@ import type {
 export default function CategoryPage(): JSX.Element {
   const { category, subtree }: Readonly<Params<string>> = useParams();
   const [subtrees, setSubtree] = useState<OptionsFromSelect[]>([]);
-  const [attributesList, setAttributesList] = useState<AttributeDefinition[]>([]);
+  // const [attributesList, setAttributesList] = useState<AttributeDefinition[]>([]);
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [categoryOptions, setCategoryOptions] = useState<OptionsFromSelect[]>([]);
@@ -112,17 +112,15 @@ export default function CategoryPage(): JSX.Element {
   };
 
   useEffect(() => {
-    console.log(category,subtree)
 
     if (category) {
       const allSubtrees = getSubCategory(categoriesData, category);
       setSubtree(allSubtrees);
-      setAttributesList(getAttributesCategory(productTypesAttributes, category));
+      // setAttributesList(getAttributesCategory(productTypesAttributes, category));
       const newOptionCategoriesList = createCategoriesList(categoriesData);
       setCategoryOptions(newOptionCategoriesList);
 
       if (subtree) {
-        console.log('pop')
         const nameCategory = allSubtrees.find((option: OptionsFromSelect) => option.key === subtree);
         setSelectedValue(subtree);
         setSubtreesList(nameCategory?.value ?? '', true);

@@ -102,7 +102,7 @@ export default function ProductPage(): JSX.Element {
   const subCategoryNameStr = product.categories.map((atr) => atr.obj?.name.en).join('');
   const productName = product.name.en;
   const productImages = product.masterVariant.images;
-  console.log(categoryNameRoute )
+  console.log(categoryNameRoute);
 
   return (
     <>
@@ -119,7 +119,10 @@ export default function ProductPage(): JSX.Element {
           {categoryNameStr}
         </Link>
         <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}/${subCategoryNameRoute}`} className={style['breadcrumbs-link']}>
+        <Link
+          to={`${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}/${subCategoryNameRoute}`}
+          className={style['breadcrumbs-link']}
+        >
           {subCategoryNameStr}
         </Link>
         <img src={chevronIcon} className="chevron-icon" alt="" />
