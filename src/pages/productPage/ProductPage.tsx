@@ -101,8 +101,6 @@ export default function ProductPage(): JSX.Element {
     | undefined;
   const bestsellerName = bestsellerAttribute?.name;
 
-  const subCategoryNameRoute = product.body.categories.map((atr) => atr.obj?.slug.en).join('');
-  const subCategoryNameStr = product.body.categories.map((atr) => atr.obj?.name.en).join('');
   const categoryNameRoute = product.body.categories.map((atr) => atr.obj?.parent?.obj?.slug.en).join('');
   const categoryNameStr = product.body.categories.map((atr) => atr.obj?.parent?.obj?.name.en).join('');
   const productName = product.body.name.en;
@@ -119,11 +117,7 @@ export default function ProductPage(): JSX.Element {
           {categoryNameStr}
         </Link>
         <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${ROUTES.CATALOG}/${subCategoryNameRoute}/`} className={style['breadcrumbs-link']}>
-          {subCategoryNameStr}
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${ROUTES.CATALOG}/${subCategoryNameRoute}/${productId}`} className={style['breadcrumbs-link']}>
+        <Link to={`${ROUTES.CATALOG}/${categoryNameRoute}/${productId}`} className={style['breadcrumbs-link']}>
           {productName}
         </Link>
       </section>
