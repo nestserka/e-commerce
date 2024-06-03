@@ -10,7 +10,7 @@ describe('NotFoundPage', () => {
     const { getByTestId, getByText, getByAltText } = render(
       <MemoryRouter>
         <NotFoundPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     const mainElement = getByTestId('not-found-page');
     expect(mainElement).toBeInTheDocument();

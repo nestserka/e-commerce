@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 
-
 import withPasswordFlow from '../../../api/middlewareFlows/withPasswordFlow';
 import { tokenCache } from '../../../api/token/MyTokenCache';
 
