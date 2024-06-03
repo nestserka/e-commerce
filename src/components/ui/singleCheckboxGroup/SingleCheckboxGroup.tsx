@@ -1,4 +1,3 @@
-
 import styles from '../checkbox/_checkbox.module.scss';
 
 export interface Option {
@@ -11,7 +10,7 @@ export default function SingleCheckboxGroup({
   options,
   onChange,
 }: {
-  selectedValue: string|null;
+  selectedValue: string | null;
   options: Option[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }): JSX.Element {
@@ -21,7 +20,7 @@ export default function SingleCheckboxGroup({
         <div className={styles['checkbox-wrapper']} key={option.value}>
           <input
             type="checkbox"
-            id={option.value}
+            id={option.label}
             value={option.value}
             className={styles.input}
             checked={selectedValue === option.value}

@@ -3,12 +3,7 @@ import { create } from 'zustand';
 import { api } from '../../api/Api';
 import { apiRoot as adminApiRoot } from '../../api/AdminBuilder';
 
-import type {
-  Category,
-  ClientResponse,
-  ProductProjectionPagedSearchResponse,
-  ProductType,
-} from '@commercetools/platform-sdk';
+import type { Category, ProductProjectionPagedSearchResponse, ProductType } from '@commercetools/platform-sdk';
 
 export interface CatalogStateData {
   categoryName: string;
@@ -35,7 +30,7 @@ export interface CatalogStateData {
   setFuzzyLevel: () => number;
   setCategoriesData: () => Promise<void>;
   setProductTypesAttributes: () => Promise<void>;
-  getProductsList: (subtrees?: string) => Promise<ClientResponse<ProductProjectionPagedSearchResponse>>;
+  getProductsList: (subtrees?: string) => Promise<ProductProjectionPagedSearchResponse>;
 }
 
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
@@ -142,7 +137,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
       set({ isLoading: false });
     }
   },
-  getProductsList: async (category?: string): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> => {
+  getProductsList: async (category?: string): Promise<ProductProjectionPagedSearchResponse> => {
     set({ isLoading: true });
     const newSearch = get().searchValue.length
       ? { 'text.en': get().searchValue, fuzzy: true, fuzzyLevel: get().setFuzzyLevel() }
@@ -158,8 +153,6 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
             sort: get().sortValue,
             limit: get().limit,
             ...newSearch,
-            // 'text.en': `${get().searchValue}`,
-
             offset: get().offset * get().limit,
             'filter.query': [
               ...(get().categoryName === 'all' ? [] : [get().createFilterByCategoriesId(category)]),
@@ -173,7 +166,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
         .execute();
       set({ isLoading: false });
 
-      return productsList;
+      return productsList.body;
     } catch {
       set({ isLoading: false });
       throw new Error('no product by attribute or filter found');
