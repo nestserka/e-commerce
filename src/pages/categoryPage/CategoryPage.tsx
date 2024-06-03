@@ -10,6 +10,7 @@ import { useCatalogData } from '../../core/state/catalogState';
 import { createCategoriesList, getAttributesCategory, getSubCategory } from './utils';
 import InputCheckBox from '../../components/ui/checkbox/checkbox';
 import { OPTIONS_FROM_SORT } from '../../constants/constants';
+import SingleCheckboxGroup from '../../components/ui/singleCheckboxGroup/SingleCheckboxGroup';
 
 import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect } from './types';
@@ -24,13 +25,15 @@ import type {
 
 export default function CategoryPage(): JSX.Element {
   const { category }: Readonly<Params<string>> = useParams();
-  const [subtree, setSubtree] = useState<Category[]>([]);
+  const [subtree, setSubtree] = useState<OptionsFromSelect[]>([]);
   const [attributesList, setAttributesList] = useState<AttributeDefinition[]>([]);
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [categoryOptions, setCategoryOptions] = useState<OptionsFromSelect[]>([]);
   const [namePosition, setNamePosition] = useState<string | undefined>();
   const navigation = useNavigate();
+
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
 
   const {
     categoriesData,
@@ -67,6 +70,12 @@ export default function CategoryPage(): JSX.Element {
     }
   }, [categoriesData, category, getProductsList]);
 
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setSubtreesList(event.target.id,event.target.checked);
+    getProductListFromCategory();
+    setSelectedValue(event.target.checked ? event.target.value : null);
+  };
+
   const onSearch: SearchProps['onSearch'] = (value) => {
     setSearchValue(value);
     getProductListFromCategory();
@@ -84,16 +93,15 @@ export default function CategoryPage(): JSX.Element {
     getProductListFromCategory();
   };
 
-  const handleChangeSubTrees = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setSubtreesList(e.target.id, e.target.checked);
-    getProductListFromCategory();
-  };
 
   const handleChangeCategory = (option: OptionsFromSelect): void => {
     navigation(`/catalog/${option.value}`);
   };
 
   useEffect(() => {
+    setSubtreesList('', true);
+    setSelectedValue('')
+
     if (category) {
       setSubtree(getSubCategory(categoriesData, category));
       setAttributesList(getAttributesCategory(productTypesAttributes, category));
@@ -111,7 +119,7 @@ export default function CategoryPage(): JSX.Element {
 
       getProductListFromCategory();
     }
-  }, [categoriesData, category, getProductListFromCategory, getProductsList, productTypesAttributes, setCategoryName]);
+  }, [categoriesData, category, getProductListFromCategory, getProductsList, productTypesAttributes, setCategoryName, setSubtreesList]);
 
   return (
     <section className={style.category} data-testid={category}>
@@ -132,7 +140,7 @@ export default function CategoryPage(): JSX.Element {
             />
           </div>
           <div>
-            {subtree.map((subCategory) => (
+            {/* {subtree.map((subCategory) => (
               <InputCheckBox
                 key={subCategory.key}
                 id={subCategory.id}
@@ -140,7 +148,9 @@ export default function CategoryPage(): JSX.Element {
                 label={subCategory.name.en}
                 onChange={handleChangeSubTrees}
               />
-            ))}
+            ))} */}
+
+            <SingleCheckboxGroup options={subtree} selectedValue={selectedValue} onChange={handleCheckboxChange} />
           </div>
         </div>
 
@@ -148,7 +158,7 @@ export default function CategoryPage(): JSX.Element {
           <InputCheckBox
             key={attribute.name}
             id={attribute.name}
-            name='subtrees'
+            name="subtrees"
             label={attribute.name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               console.log('pop', e);

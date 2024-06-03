@@ -1,15 +1,23 @@
 import type { OptionsFromSelect } from './types';
 import type { AttributeDefinition, Category, ProductType } from '@commercetools/platform-sdk';
 
-export function getSubCategory(allCategories: Category[], nameCategory: string): Category[] {
+export function getSubCategory(allCategories: Category[], nameCategory: string): OptionsFromSelect[] {
   const dataCategory = allCategories.find((category: Category) => category.slug.en === nameCategory);
 
   if (dataCategory) {
     const categoryWithAncestors = allCategories.filter(
       (data: Category) => data.ancestors.length && data.ancestors[0].id === dataCategory.id,
     );
+    const optionsForSelect: OptionsFromSelect[] = [];
+    categoryWithAncestors.forEach((category: Category) => {
+      const option: OptionsFromSelect = {
+        value: category.id,
+        label: category.name.en,
+      };
+      optionsForSelect.push(option);
+    });
 
-    return categoryWithAncestors;
+    return optionsForSelect;
   }
 
   return [];

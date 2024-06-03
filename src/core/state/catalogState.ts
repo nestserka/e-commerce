@@ -13,7 +13,7 @@ import type {
 export interface CatalogStateData {
   categoryName: string;
   categoriesData: Category[];
-  subtreesList: string[];
+  subtreesList: string;
   parentsCategories: Category[];
   productTypesAttributes: ProductType[];
   isLoading: boolean;
@@ -41,7 +41,7 @@ export interface CatalogStateData {
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
   categoryName: 'all',
   categoriesData: [],
-  subtreesList: [],
+  subtreesList: '',
   parentsCategories: [],
   productTypesAttributes: [],
   isLoading: false,
@@ -57,10 +57,9 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   },
   setSubtreesList: (id: string, isStatus: boolean): void => {
     if (isStatus) {
-      get().subtreesList.push(id);
+      set(() => ({ subtreesList: id }));
     } else {
-      const newSubtreesList = get().subtreesList.filter((idSubtrees: string) => idSubtrees !== id);
-      set(() => ({ subtreesList: newSubtreesList }));
+      set(() => ({ subtreesList: '' }));
     }
   },
   createFilterByCategoriesId: (category?: string): string => {
@@ -69,11 +68,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
     }
 
     if (get().subtreesList.length) {
-      const newFilter = `categories.id: ${get()
-        .subtreesList.map((id) => `"${id}"`)
-        .join(',')}`;
-
-      return newFilter;
+      return `categories.id: "${get().subtreesList}"`;
     }
 
     return `categories.id: subtree("${category}")`;
