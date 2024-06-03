@@ -64,6 +64,7 @@ const DOT_ATOM = new RegExp(`^${ATEXT.source}+(\\.${ATEXT.source}+)*$`, 'i');
 
 export const EMAIL_VALIDATION_SCHEMA = z
   .string()
+  .max(254, { message: 'Email must be no longer than 254 characters.' })
   .refine(
     (value) => {
       if (value.includes('@')) {
@@ -129,6 +130,7 @@ const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, st
     .string()
     .trim()
     .min(1, `${fieldName} must contain at least one character.`)
+    .max(150, { message: 'Name and Surname must be no longer than 150 characters.' })
     .refine((value) => /^[a-zA-Z]+$/.test(value), {
       message: `${fieldName} must contain only letters (no special characters or numbers).`,
     });
@@ -168,6 +170,7 @@ const STREET_VALIDATION_SCHEMA = z
   .string()
   .trim()
   .min(1, `Street must contain at least one character.`)
+  .max(200, { message: 'Street must be no longer than 200 characters.' })
   .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
     message: `Street must contain only Latin characters, numbers, and spaces.`,
   });
@@ -176,11 +179,13 @@ const CITY_VALIDATION_SCHEMA = z
   .string()
   .trim()
   .min(1, `City must contain at least one character.`)
+  .max(150, { message: 'City must be no longer than 150 characters.' })
   .refine((value) => /^[a-zA-Z]*$/.test(value), {
     message: `City must contain only Latin characters and no spaces.`,
   });
 
 const validCountries = ['US', 'CA'];
+const validAddressType = ['shipping', 'billing'];
 
 const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.includes(value), {
   message: 'Country must be a valid country from the predefined list.',
@@ -219,6 +224,70 @@ export const ADDRESS_VALIDATION_SCHEMA = z
       });
     }
   });
+
+export const INPUT_DATE_VALIDATION_SCHEMA = z
+  .string()
+  .refine((value) => /^\d{2}\.\d{2}\.\d{4}$/.test(value), {
+    message: 'Invalid format',
+  })
+  .refine(
+    (value) => {
+      const parts = value.split('.');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+
+      if (day <= 0 || day > 31 || month < 0 || month > 11 || year <= 0) {
+        return false;
+      }
+
+      const daysInMonth = dayjs().set('year', year).set('month', month).daysInMonth();
+
+      if (day > daysInMonth) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: 'Invalid day, month, or year',
+    },
+  )
+  .refine(
+    (value) => {
+      const parts = value.split('.');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+      const parsedDate = new Date(year, month, day);
+      const dateOfBirth = dayjs(parsedDate);
+
+      if (dateOfBirth.isValid()) {
+        const today = dayjs();
+        const age = today.diff(dateOfBirth, 'year');
+
+        if (age < 13) {
+          return false;
+        }
+
+        return true;
+      }
+
+      return false;
+    },
+    {
+      message: 'You must be at least 13 years old.',
+    },
+  )
+  .transform((date) => {
+    const [day, month, year] = date.split('.');
+
+    return `${year}-${month}-${day}`;
+  });
+
+export const SHIPPING_TYPE_VALIDATION_SCHEMA = z.string().refine((value) => validAddressType.includes(value), {
+  message: 'Address type must be a valid type from the predefined list.',
+});
 
 export const LS_PREFIX = 'nasaStoreTeam';
 

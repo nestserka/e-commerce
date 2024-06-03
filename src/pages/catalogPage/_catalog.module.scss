@@ -4,13 +4,15 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  margin: 4em auto 1em;
 
-  @media (width >= 1800px) {
-    width: calc(90% - 6em);
-  }
+  width: 100%;
+  margin: 4em auto;
 
-  @media (width <= 1799px) {
-    width: calc(100% - 6em);
-  }
+  // @media (width >= 1800px) {
+  //   width: calc(90% - 6em);
+  // }
+
+  // @media (width <= 1799px) {
+  //   width: calc(100%);
+  // }
 }

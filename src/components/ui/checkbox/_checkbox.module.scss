@@ -1,6 +1,11 @@
 @import '../../../assets/styles/mixins';
 @import '../../../assets/styles/variables';
 
+.label {
+  font: inherit;
+  color: $font-color-primary-80;
+}
+
 .checkbox-wrapper {
   @include flex-row-center;
 
@@ -11,9 +16,15 @@
     width: 1.05em;
     height: 1.05em;
     accent-color: $background-color-secondary;
-  }
-}
 
-.label {
-  font: inherit;
+    &[aria-disabled='true'] {
+      pointer-events: none;
+      accent-color: $background-color-secondary !important;
+
+      + .label {
+        pointer-events: none;
+        color: $font-color-primary-40;
+      }
+    }
+  }
 }

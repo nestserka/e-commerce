@@ -1,5 +1,4 @@
-import { api } from './Api';
-import { apiRoot as adminApiRoot } from './AdminBuilder';
+import withClientCredentialsFlow from './middlewareFlows/withClientCredentials';
 
 import type {
   Category,
@@ -10,23 +9,14 @@ import type {
 
 export default class ProductList {
   public static async getAllCategories(): Promise<Category[]> {
-    const response = await api.root().categories().get().execute();
-    console.log(response);
+    const response = await withClientCredentialsFlow().categories().get().execute();
     const onlyWithoutAncestors = response.body.results.filter((data: Category) => data.ancestors.length === 0);
 
     return onlyWithoutAncestors;
   }
 
   public static async getOneCategory(category: string): Promise<Category[] | undefined> {
-    const response = await api
-      .root()
-      .categories()
-      .get({
-        queryArgs: {
-          limit: 100,
-        },
-      })
-      .execute();
+    const response = await withClientCredentialsFlow().categories().get().execute();
     const dataCategory = response.body.results.find((data: Category) => data.slug.en === category);
 
     if (dataCategory) {
@@ -41,8 +31,7 @@ export default class ProductList {
   }
 
   public static async returnProductsByCategoryKey(category: string): Promise<ClientResponse<Category>> {
-    const byCategoryKey = await api
-      .root()
+    const byCategoryKey = await withClientCredentialsFlow()
       .categories()
       .withKey({ key: `${category}` })
       .get()
@@ -68,8 +57,7 @@ export default class ProductList {
     // fuzzylevel?: number
   ): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> {
     try {
-      const productsList = await api
-        .root()
+      const productsList = await withClientCredentialsFlow()
         .productProjections()
         .search()
         .get({
@@ -80,15 +68,13 @@ export default class ProductList {
             // 'text.en-us': `${search}`,
             // fuzzy: true,
             // fuzzyLevel: Number(`${fuzzylevel}`),
-            // fuzzyLevel: 2,
             // offset: Number(`${limit}`) * Number(`${offset}`),
-            // offset:2,
             'filter.query': [
               `categories.id: ${subtrees}`,
               // `variants.attributes.color.key:${colour}`,
               // `variants.attributes.size.key:${size}`,
-              // `variants.attributes.bestseller: "true"`,
-              // `variants.attributes.discount.key:"10%-off", "20%-off"`,
+              // `variants.attributes.bestseller:${bestseller}`,
+              // `variants.attributes.sale:${sale}`,
               // `variants.attributes.winter:${winter}`,
               // `variants.attributes.brand.key:${brand}`,
               // `variants.price.centAmount:range (${priceRangeStart} to ${priceRangeFinish})`,
@@ -103,11 +89,9 @@ export default class ProductList {
     }
   }
 
-  public static async getProductTypeSizeAttribute(): Promise<ClientResponse<ProductType>> {
-    const key = 'space-food';
-
+  public static async getProductTypeSizeAttribute(key: string): Promise<ClientResponse<ProductType>> {
     try {
-      const productType = await adminApiRoot.productTypes().withKey({ key }).get().execute();
+      const productType = await withClientCredentialsFlow().productTypes().withKey({ key }).get().execute();
 
       return productType;
     } catch {

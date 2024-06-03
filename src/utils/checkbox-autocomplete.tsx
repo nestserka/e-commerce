@@ -28,9 +28,9 @@ export const useAddressAutoComplete = (
   useEffect(() => {
     if (isAutoCompleteChecked && address) {
       const updatedAddress = {
-        streetName: address.streetName,
-        city: address.city,
-        postalCode: address.postalCode,
+        streetName: address.streetName ?? '',
+        city: address.city ?? '',
+        postalCode: address.postalCode ?? '',
         country: address.country,
       };
 

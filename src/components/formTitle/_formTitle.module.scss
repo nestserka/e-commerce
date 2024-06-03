@@ -25,6 +25,14 @@
     sans-serif;
   color: $font-color-primary;
 
+  @media (width <= 1240px) {
+    font-size: 1.9em;
+  }
+
+  @media (width <= 1000px) {
+    font-size: 1.8em;
+  }
+
   @media (width <= 640px) {
     font-size: 1.5em;
   }

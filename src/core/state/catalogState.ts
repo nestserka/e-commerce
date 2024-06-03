@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 
-import { api } from '../../api/Api';
-import { apiRoot as adminApiRoot } from '../../api/AdminBuilder';
+import withClientCredentialsFlow from '../../api/middlewareFlows/withClientCredentials';
 
 import type { Category, ProductProjectionPagedSearchResponse, ProductType } from '@commercetools/platform-sdk';
 
@@ -112,8 +111,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
     set({ isLoading: true });
 
     try {
-      const response = await api
-        .root()
+      const response = await withClientCredentialsFlow()
         .categories()
         .get({
           queryArgs: {
@@ -134,7 +132,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
     set({ isLoading: true });
 
     try {
-      const productType = await adminApiRoot.productTypes().get().execute();
+      const productType = await withClientCredentialsFlow().productTypes().get().execute();
       set({
         productTypesAttributes: productType.body.results,
         isLoading: false,
@@ -150,8 +148,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
       : {};
 
     try {
-      const productsList = await api
-        .root()
+      const productsList = await withClientCredentialsFlow()
         .productProjections()
         .search()
         .get({

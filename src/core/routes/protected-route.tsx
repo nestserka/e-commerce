@@ -1,7 +1,7 @@
-import { Navigate } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 
 import { ROUTES } from '../../constants/constants';
-import { useLoginData } from '../state/loginState';
+import { useLoginData } from '../state/userState';
 
 export interface Protected {
   children: JSX.Element;
@@ -17,16 +17,6 @@ export function ProtectedRouteForAuth({ children }: Protected): JSX.Element {
   return children;
 }
 
-export function ProtectedRouteForNotAuth({ children }: Protected): JSX.Element {
-  const { isAuth } = useLoginData();
-
-  if (isAuth) {
-    return children;
-  }
-
-  return <Navigate to={ROUTES.SING_IN} replace />;
-}
-
 export function ProtectedRouteForCartForAuth({ children }: Protected): JSX.Element {
   const { isAuth, customerId } = useLoginData();
 
@@ -37,6 +27,17 @@ export function ProtectedRouteForCartForAuth({ children }: Protected): JSX.Eleme
   }
 
   return children;
+}
+
+export function ProtectedRouteForProfileForAuth({ children }: Protected): JSX.Element {
+  const { isAuth, customerId: authCustomerId } = useLoginData();
+  const { customerId: routeCustomerId } = useParams();
+
+  if (isAuth && authCustomerId === routeCustomerId) {
+    return children;
+  }
+
+  return <Navigate to={ROUTES.SING_IN} replace />;
 }
 
 export function ProtectedRouteForCartNotAuth({ children }: Protected): JSX.Element {

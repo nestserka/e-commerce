@@ -1,33 +1,21 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import style from './_header.module.scss';
 import Navigation from './navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
-import { LS_PREFIX, NAV_LINKS, ROUTES } from '../../constants/constants';
-import { useLoginData } from '../../core/state/loginState';
-import { api } from '../../api/Api';
-
-import type { CustomerCredentials } from '../../core/state/types';
+import { NAV_LINKS, ROUTES } from '../../constants/constants';
+import { useLoginData } from '../../core/state/userState';
+import { logOut } from '../../utils/logOut';
 
 export default function Header(): JSX.Element {
-  const { isAuth, customerId, setCustomerCredentials } = useLoginData();
+  const { isAuth, customerId } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const navigate = useNavigate();
 
   const onClickButton = (): void => {
-    const resetUser: CustomerCredentials = {
-      customerId: '',
-      isAuth: false,
-      valuePassword: '',
-      valueEmail: '',
-    };
-    setCustomerCredentials(resetUser);
-    localStorage.removeItem(`isAuth-${LS_PREFIX}`);
-    localStorage.removeItem(`customerId-${LS_PREFIX}`);
-    api.switchClientBuilders();
-    // api.getAllProduct().catch((error: Error) => {
-    //   console.log(error.message);
-    // });
+    logOut();
+    navigate(ROUTES.HOME);
   };
 
   const toggleNav = (): void => {

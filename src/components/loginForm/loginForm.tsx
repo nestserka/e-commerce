@@ -9,13 +9,14 @@ import Input from '../ui/input/input';
 import InputPassword from '../ui/inputPassword/inputPassword';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import FormTitle from '../formTitle/FormTitle';
-import { useLoginData } from '../../core/state/loginState';
 import { getInputProps, handleLoginError } from '../../utils/utils';
 import { EMAIL_VALIDATION_SCHEMA, LS_PREFIX, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../constants/constants';
-import { Api, api } from '../../api/Api';
+import loginUser from '../../api/me/loginUser';
+import getCustomerByEmail from '../../api/customer/getCustomerByEmail';
+import { useLoginData } from '../../core/state/userState';
 
 import type { ErrorLoginForm } from '../../utils/utils';
-import type { ClientResponse, CustomerPagedQueryResponse } from '@commercetools/platform-sdk';
+import type { CustomerPagedQueryResponse } from '@commercetools/platform-sdk';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -53,34 +54,30 @@ export default function LoginForm(): JSX.Element {
     setFormError('');
   }, [valuePassword]);
 
-  const onSubmit = (data: LoginFormValues): void => {
-    api
-      .loginUser(data.email.toLowerCase(), data.password)
+  const onSubmit = async (data: LoginFormValues): Promise<void> => {
+    await loginUser(data.email.toLowerCase(), data.password)
       .then((response) => {
         const customerCredentials = {
-          valueEmail: response.body.customer.email,
+          valueEmail: response.email,
           valuePassword: data.password,
           isAuth: true,
-          customerId: response.body.customer.id,
+          customerId: response.id,
         };
         setCustomerCredentials(customerCredentials);
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-        api.switchToPasswordFlow(data.email.toLowerCase(), data.password);
-        // api.getAllProduct().catch((error: Error) => {
-        //   console.log(error.message);
-        // });
         reset();
       })
       .catch(async () => {
         setFormEmailError('');
         setFormPasswordError('');
         setFormError('');
-        const isUserByEmailResponse: ClientResponse<CustomerPagedQueryResponse> | undefined =
-          await Api.getCustomerByEmail(data.email.toLowerCase());
+        const isUserByEmailResponse: CustomerPagedQueryResponse | undefined = await getCustomerByEmail(
+          data.email.toLowerCase(),
+        );
 
         if (isUserByEmailResponse) {
-          const errorResponse: ErrorLoginForm = handleLoginError(isUserByEmailResponse.body.count);
+          const errorResponse: ErrorLoginForm = handleLoginError(isUserByEmailResponse.count);
 
           if ('isEmail' in errorResponse.error) {
             setFormEmailError(errorResponse.error.message);

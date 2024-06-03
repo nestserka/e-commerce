@@ -1,0 +1,91 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.email-form,
+.password-form,
+.general-form,
+.address-form,
+.error-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.address-form,
+.error-form {
+  .confirm-text {
+    margin-top: 0.6em;
+    font-size: 1.2em;
+    color: $font-color-primary;
+    text-align: center;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5em;
+  width: 100%;
+
+  .input-section {
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    gap: 0.5em;
+
+    max-width: calc(50% - 0.75em);
+  }
+
+  @media (width <= 1240px) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  @media (width <= 900px) {
+    .input-section {
+      flex-basis: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+.button-group {
+  @include flex-justify-center;
+
+  gap: 1.5em;
+
+  .close-button,
+  .confirm-button {
+    cursor: pointer;
+
+    flex-basis: 50%;
+
+    max-width: calc(50% - 0.75em);
+    padding: 0.75em 3.8em;
+
+    font: inherit;
+    font-size: 1em;
+    color: $font-color-primary-60;
+
+    background: none;
+    border: 1px solid $border-color-default;
+    border-radius: 24px;
+
+    @media (width <= 900px) {
+      padding: 0.75em 2.3em;
+    }
+  }
+
+  .confirm-button {
+    @include font-arimo-bold;
+
+    color: $font-color-primary;
+    background-color: $bg-color-btn-default;
+    border: none;
+    transition: background-color 0.5s ease;
+
+    &:hover {
+      background-color: $bg-color-btn-hover;
+    }
+  }
+}
