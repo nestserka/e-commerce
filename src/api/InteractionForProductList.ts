@@ -1,5 +1,4 @@
-import { api } from './Api';
-import { apiRoot as adminApiRoot } from './AdminBuilder';
+import withClientCredentialsFlow from './middlewareFlows/withClientCredentials';
 
 import type {
   Category,
@@ -10,14 +9,14 @@ import type {
 
 export default class ProductList {
   public static async getAllCategories(): Promise<Category[]> {
-    const response = await api.root().categories().get().execute();
+    const response = await withClientCredentialsFlow().categories().get().execute();
     const onlyWithoutAncestors = response.body.results.filter((data: Category) => data.ancestors.length === 0);
 
     return onlyWithoutAncestors;
   }
 
   public static async getOneCategory(category: string): Promise<Category[] | undefined> {
-    const response = await api.root().categories().get().execute();
+    const response = await withClientCredentialsFlow().categories().get().execute();
     const dataCategory = response.body.results.find((data: Category) => data.slug.en === category);
 
     if (dataCategory) {
@@ -32,8 +31,7 @@ export default class ProductList {
   }
 
   public static async returnProductsByCategoryKey(category: string): Promise<ClientResponse<Category>> {
-    const byCategoryKey = await api
-      .root()
+    const byCategoryKey = await withClientCredentialsFlow()
       .categories()
       .withKey({ key: `${category}` })
       .get()
@@ -59,8 +57,7 @@ export default class ProductList {
     // fuzzylevel?: number
   ): Promise<ClientResponse<ProductProjectionPagedSearchResponse>> {
     try {
-      const productsList = await api
-        .root()
+      const productsList = await withClientCredentialsFlow()
         .productProjections()
         .search()
         .get({
@@ -94,7 +91,7 @@ export default class ProductList {
 
   public static async getProductTypeSizeAttribute(key: string): Promise<ClientResponse<ProductType>> {
     try {
-      const productType = await adminApiRoot.productTypes().withKey({ key }).get().execute();
+      const productType = await withClientCredentialsFlow().productTypes().withKey({ key }).get().execute();
 
       return productType;
     } catch {

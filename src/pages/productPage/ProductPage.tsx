@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 
 import style from './_product.module.scss';
 import Slider from '../../components/sliderProduct/slider';
-import { api } from '../../api/Api';
 import FormSubTitle from '../../components/formSubTitle/formSubTitle';
 import { formatPrice } from '../../utils/utils';
 import Badge from '../../components/badge/badge';
+import getProductById from '../../api/products/getProductById';
 
 import type { Params } from 'react-router';
 import type { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
@@ -55,7 +55,7 @@ export default function ProductPage(): JSX.Element {
     const fetchProduct = async (): Promise<void> => {
       try {
         if (productId) {
-          const data = await api.getProductById(productId);
+          const data = await getProductById(productId);
           setProduct(data);
           extractPrice(data);
         } else {

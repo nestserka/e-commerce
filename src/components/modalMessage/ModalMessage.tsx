@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { showModalMessage } from '../../core/state/loginState';
+import { showModalMessage } from '../../core/state/userState';
 import style from './_modalMessage.module.scss';
 import successIcon from '../../assets/images/icons/success-icon.svg';
 

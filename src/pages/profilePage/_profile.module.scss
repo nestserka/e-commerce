@@ -1,5 +1,49 @@
 @use '../../assets/styles/mixins' as *;
 
-.profile {
+.profile-content {
   @include page-layout-container;
+
+  justify-content: center;
+  margin: 4em 10% 1em;
+  max-width: none;
+
+  .profile-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    width: 80%;
+    padding: 0;
+  }
+
+  @media (width <= 1799px) {
+    margin: 4em 5% 1em;
+  }
+
+  @media (width <= 1440px) {
+    margin: 4em 6em;
+
+    .profile-content-wrapper {
+      width: 90%;
+    }
+  }
+
+  @media (width <= 1240px) {
+    margin: 4em;
+  }
+
+  @media (width <= 900px) {
+    margin: 3em 1em;
+
+    .profile-content-wrapper {
+      gap: 0.5em;
+    }
+  }
+
+  @media (width <= 640px) {
+    margin: 3em 0.5em;
+
+    .profile-content-wrapper {
+      width: 100%;
+    }
+  }
 }

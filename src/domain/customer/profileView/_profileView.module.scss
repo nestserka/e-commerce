@@ -1,0 +1,65 @@
+@import '../../../assets//styles/mixins';
+@import '../../../assets//styles/variables';
+
+.wrapper {
+  @include flex-justify-center;
+  flex-direction: column;
+  width: 100%;
+
+  .personal-section {
+    @include flex-justify-center;
+    flex-direction: row;
+    gap: 1.5em;
+    width: 100%;
+    align-items: stretch;
+    margin-top: 1.375em;
+
+    .personal-section-wrapper {
+      @include form-background-gradient;
+
+      display: flex;
+      flex-direction: column;
+      gap: 2em;
+      flex-grow: 1;
+      flex-basis: 50%;
+      border-radius: 24px;
+      padding: 2.813em;
+
+      .personal-section-group {
+        @include flex-start-space-between;
+        flex-direction: row;
+        gap: 7.5em;
+      }
+    }
+
+    .personal-section-button {
+      padding: 0.781em 1em;
+      border-radius: 24px;
+      border: 1px solid $border-color-default;
+      max-width: 11em;
+      background: none;
+      color: $font-color-primary-60;
+      font: inherit;
+      margin-left: auto;
+      cursor: pointer;
+    }
+  }
+
+  @media (width <=1240px) {
+    .personal-section {
+      display: flex;
+      flex-wrap: wrap;
+
+      .personal-section-wrapper {
+        flex-basis: 100%;
+        width: 100%;
+        flex-wrap: wrap;
+
+        .personal-section-group {
+          display: flex;
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+}

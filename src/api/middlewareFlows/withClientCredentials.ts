@@ -1,14 +1,15 @@
-import { type AuthMiddlewareOptions, ClientBuilder, type HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
+import { ClientBuilder } from '@commercetools/sdk-client-v2';
 
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
+import type { AuthMiddlewareOptions, HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 
-export const createClientBuilders = (): ByProjectKeyRequestBuilder => {
-  if (typeof import.meta.env.VITE_APP_CLIENT_ID !== 'string') {
+export default function withClientCredentialsFlow(): ByProjectKeyRequestBuilder {
+  if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_ID !== 'string') {
     throw new Error('no admin client id found');
   }
 
-  if (typeof import.meta.env.VITE_APP_CLIENT_SECRET !== 'string') {
+  if (typeof import.meta.env.VITE_APP_ADMIN_CLIENT_SECRET !== 'string') {
     throw new Error('no admin client secret found');
   }
 
@@ -28,10 +29,10 @@ export const createClientBuilders = (): ByProjectKeyRequestBuilder => {
     host: import.meta.env.VITE_APP_AUTH_URL,
     projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
     credentials: {
-      clientId: import.meta.env.VITE_APP_CLIENT_ID,
-      clientSecret: import.meta.env.VITE_APP_CLIENT_SECRET,
+      clientId: import.meta.env.VITE_APP_ADMIN_CLIENT_ID,
+      clientSecret: import.meta.env.VITE_APP_ADMIN_CLIENT_SECRET,
     },
-    scopes: [import.meta.env.VITE_APP_CLIENT_SCOPES],
+    scopes: [import.meta.env.VITE_APP_ADMIN_SCOPES],
     fetch,
   };
 
@@ -41,14 +42,11 @@ export const createClientBuilders = (): ByProjectKeyRequestBuilder => {
   };
 
   const ctpClient = new ClientBuilder()
+    .withProjectKey(import.meta.env.VITE_APP_PROJECT_KEY)
     .withClientCredentialsFlow(authMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
     .withLoggerMiddleware()
     .build();
 
-  const apiRoot = createApiBuilderFromCtpClient(ctpClient, import.meta.env.VITE_APP_AUTH_URL).withProjectKey({
-    projectKey: import.meta.env.VITE_APP_PROJECT_KEY,
-  });
-
-  return apiRoot;
-};
+  return createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: import.meta.env.VITE_APP_PROJECT_KEY });
+}

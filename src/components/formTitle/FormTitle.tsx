@@ -1,10 +1,15 @@
 import style from './_formTitle.module.scss';
 import icon from '../../assets/images/icons/icon-login.svg';
 
-export default function FormTitle({ title }: { title: string }): JSX.Element {
+interface FormTitleProps {
+  title: string;
+  isIcon?: boolean;
+}
+
+export default function FormTitle({ title, isIcon = true }: FormTitleProps): JSX.Element {
   return (
     <section className={style['form-title-wrapper']} data-testid="form-title">
-      <img src={icon} className={style['form-icon']} alt="" />
+      {isIcon && <img src={icon} className={style['form-icon']} alt="icon" />}
       <h1 className={style['form-title']}>{title}</h1>
     </section>
   );
