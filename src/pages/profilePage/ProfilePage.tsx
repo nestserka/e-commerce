@@ -63,8 +63,10 @@ export default function ProfilePage(): JSX.Element {
         })
         .catch((error: Error) => {
           handleOpenTokenWindow();
-          logOut();
           console.log(error);
+          setTimeout(() => {
+            logOut();
+          }, 3500);
         });
     };
 
