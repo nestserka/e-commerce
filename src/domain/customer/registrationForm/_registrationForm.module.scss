@@ -16,13 +16,14 @@
   .form-group {
     display: flex;
     flex-direction: row;
-    gap: 1.5em;
+    justify-content: space-between;
     width: 100%;
+    gap: 1.5em;
   }
 
   .input-section {
     display: flex;
-    flex-basis: 50%;
+    flex: 1;
     flex-direction: column;
     gap: 0.5em;
 
@@ -39,11 +40,12 @@
   }
 
   @media (width <= 1799px) {
-    width: calc(80% - 6em);
+    width: calc(90% - 6em);
   }
 
   @media (width <= 1440px) {
     width: calc(100% - 6em);
+    padding: 5em;
   }
 
   @media (width <= 1240px) {
