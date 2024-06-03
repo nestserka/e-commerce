@@ -2,7 +2,8 @@
 
 @import '../../assets/styles/variables';
 
-.product-page {
+.product-page,
+.layout-wrapper {
   @include page-layout-container;
 }
 

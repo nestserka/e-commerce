@@ -75,15 +75,15 @@ export default function ProductPage(): JSX.Element {
   }, [productId]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className={style['layout-wrapper']}>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <div className={style['layout-wrapper']}>{error}</div>;
   }
 
   if (!product) {
-    return <div>Product not found</div>;
+    return <div className={style['layout-wrapper']}>Product not found</div>;
   }
 
   const discountAttribute = product.body.masterVariant.attributes?.find((atr) => atr.name === 'discount') as
