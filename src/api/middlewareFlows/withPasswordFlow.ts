@@ -45,9 +45,6 @@ export default function withPasswordFlow(
     fetch,
   };
 
-  console.log(username);
-  console.log(password);
-
   const httpMiddlewareOptions: HttpMiddlewareOptions = {
     host: import.meta.env.VITE_APP_API_URL,
     fetch,

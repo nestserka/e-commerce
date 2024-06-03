@@ -13,7 +13,6 @@ export default async function createCustomer(data: CustomerDraft): Promise<Custo
       },
     })
     .execute();
-  console.log(data.password);
 
   if (data.password) {
     await loginUser(response.body.customer.email, data.password);

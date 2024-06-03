@@ -37,7 +37,7 @@ export function ProtectedRouteForProfileForAuth({ children }: Protected): JSX.El
     return children;
   }
 
-  return <Navigate to={ROUTES.NOT_FOUND} replace />;
+  return <Navigate to={ROUTES.SING_IN} replace />;
 }
 
 export function ProtectedRouteForCartNotAuth({ children }: Protected): JSX.Element {
