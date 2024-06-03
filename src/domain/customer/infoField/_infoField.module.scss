@@ -3,21 +3,22 @@
 
 .info-field-wrapper {
   @include flex-center-space-between;
+
   flex-direction: row;
-  width: 100%;
   gap: 5em;
+  width: 100%;
 
   .profile-subtitle {
-    @include font-default-regular;
-    color: $border-color-active;
-    text-transform: capitalize;
-    white-space: nowrap;
+    @include font-arimo-regular;
+
     min-width: 6.25em;
     color: $font-color-primary-60;
+    text-transform: capitalize;
+    white-space: nowrap;
   }
 
   .profile-field-input {
-    color: $checkbox-color-checked;
     flex-grow: 1;
+    color: $checkbox-color-checked;
   }
 }

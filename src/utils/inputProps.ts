@@ -1,6 +1,6 @@
 import { getInputProps } from './utils';
 
-export const inputEmailProps = getInputProps('email', 'email', 'Your email address', 'email');
+export const inputEmailProps = getInputProps('text', 'email', 'Your email address', 'email');
 
 export const inputPasswordProps = getInputProps('password', 'password', 'Create password', 'off');
 

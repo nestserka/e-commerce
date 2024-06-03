@@ -11,7 +11,7 @@ export const ROUTES = {
   SING_UP: '/sign_up',
   ABOUT: '/about',
   CATALOG: '/catalog',
-  CATALOG_ALL: '/catalog/all',
+  CATALOG_ALL: '/catalog/',
   CATEGORY: '/catalog/:category',
   PRODUCT: '/catalog/:category/:productId',
   PROFILE: '/profile/:customerId',
@@ -58,6 +58,9 @@ export const PASSWORD_VALIDATION_SCHEMA = z
     message: 'Password must not contain whitespace.',
   });
 
+const ATEXT = /[a-zA-Z0-9_]/i;
+const DOT_ATOM = new RegExp(`^${ATEXT.source}+(\\.${ATEXT.source}+)*$`, 'i');
+
 export const EMAIL_VALIDATION_SCHEMA = z
   .string()
   .max(254, { message: 'Email must be no longer than 254 characters.' })
@@ -88,7 +91,7 @@ export const EMAIL_VALIDATION_SCHEMA = z
         return false;
       }
 
-      if (!/^[a-zA-Z0-9._]*$/.test(parts[0]) || !/^[a-zA-Z.]*$/.test(parts[1])) {
+      if (!DOT_ATOM.test(parts[0]) || !/^[a-zA-Z.]*$/.test(parts[1])) {
         return false;
       }
 

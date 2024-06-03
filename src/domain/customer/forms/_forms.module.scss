@@ -54,6 +54,7 @@
     cursor: pointer;
 
     flex-basis: 50%;
+
     max-width: calc(50% - 0.75em);
     padding: 0.75em 3.8em;
 
@@ -71,7 +72,7 @@
   }
 
   .confirm-button {
-    @include font-default-bold;
+    @include font-arimo-bold;
 
     color: $font-color-primary;
     background-color: $bg-color-btn-default;

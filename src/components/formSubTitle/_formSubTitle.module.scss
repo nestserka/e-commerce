@@ -7,9 +7,9 @@
   gap: 1rem;
 
   .form-subtitle {
-    font:
-      1em DisplayMedium,
-      sans-serif;
+    @include font-arimo-bold;
+
+    font-size: 1em;
     color: $border-color-active;
     text-transform: uppercase;
     white-space: nowrap;

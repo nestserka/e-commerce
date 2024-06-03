@@ -15,7 +15,7 @@
     width: 100%;
 
     .profile-subtitle {
-      @include font-default-regular;
+      @include font-arimo-regular;
 
       color: $font-color-primary-60;
       text-transform: capitalize;

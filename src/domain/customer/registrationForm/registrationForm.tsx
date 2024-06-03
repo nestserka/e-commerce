@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DatePicker, Select } from 'antd';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import icon from '../../../assets/images/icons/icon-calendar.svg';
 import style from './_registrationForm.module.scss';
@@ -57,11 +57,12 @@ const schema = z.object({
 export type RegistrationFormValues = z.infer<typeof schema>;
 
 export default function RegistrationForm(): JSX.Element {
-  const { control, register, handleSubmit, formState, reset, setValue } = useForm<RegistrationFormValues>({
-    resolver: zodResolver(schema),
-    mode: 'onChange',
-  });
-  const { errors } = formState;
+  const { control, register, handleSubmit, formState, reset, setValue, watch, trigger } =
+    useForm<RegistrationFormValues>({
+      resolver: zodResolver(schema),
+      mode: 'onChange',
+    });
+  const { errors, isDirty, isValid, isSubmitting } = formState;
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [formEmailError, setFormEmailError] = useState<string>('');
   const { setCustomerCredentials } = useLoginData();
@@ -71,6 +72,12 @@ export default function RegistrationForm(): JSX.Element {
     name: 'shippingAddress',
   });
 
+  const valueEmail = watch('email');
+
+  useEffect(() => {
+    setFormEmailError('');
+  }, [valueEmail]);
+
   const handleShippingAutoComplete = useAddressAutoComplete(
     shippingAddress,
     isShippingCompleteChecked,
@@ -78,6 +85,26 @@ export default function RegistrationForm(): JSX.Element {
     setShippingCompleteChecked,
     'billing',
   );
+
+  useEffect(() => {
+    const subscription = watch((_value, { name }) => {
+      if (name === 'shippingAddress.country') {
+        trigger(['shippingAddress.postalCode']).catch((error) => {
+          console.error('Error triggering shippingAddress.postalCode:', error);
+        });
+      }
+
+      if (name === 'billingAddress.country') {
+        trigger(['billingAddress.postalCode']).catch((error) => {
+          console.error('Error triggering billingAddress.postalCode:', error);
+        });
+      }
+    });
+
+    return (): void => {
+      subscription.unsubscribe();
+    };
+  }, [watch, trigger]);
 
   const { setIsShown } = showModalMessage();
 
@@ -331,7 +358,11 @@ export default function RegistrationForm(): JSX.Element {
           <InputCheckBox onChange={onChange} id="billing" name="billing" label="Set Billing Address as default" />
         )}
       />
-      <button type="submit" className="button-primary button-registration">
+      <button
+        type="submit"
+        className="button-primary button-registration"
+        disabled={!isDirty || !isValid || isSubmitting}
+      >
         Create Your Account
       </button>
       <section>

@@ -1,5 +1,18 @@
 @use '../../assets/styles/mixins' as *;
 
 .catalog {
-  @include page-layout-container;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  width: 100%;
+  margin: 4em auto;
+
+  // @media (width >= 1800px) {
+  //   width: calc(90% - 6em);
+  // }
+
+  // @media (width <= 1799px) {
+  //   width: calc(100%);
+  // }
 }

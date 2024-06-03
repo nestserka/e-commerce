@@ -58,3 +58,7 @@ export const extractShippingAddresses = (
       ...address,
       isDefault: defaultgAddressId !== undefined && address.id !== undefined && address.id === defaultgAddressId,
     }));
+
+export function formatPrice(num: number): string {
+  return `$${(num / 100).toFixed(2)}`;
+}

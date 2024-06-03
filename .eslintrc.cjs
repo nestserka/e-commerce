@@ -53,6 +53,12 @@ module.exports = {
     'require-atomic-updates': 'error',
     'import/prefer-default-export': 'off',
     'import/no-empty-named-blocks': 'error',
+    'import/no-unresolved': [
+      'error',
+      {
+        ignore: ['^swiper/'],
+      },
+    ],
     'import/no-useless-path-segments': [
       'error',
       {
@@ -266,6 +272,12 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'import/no-unresolved': [
+      'error',
+      {
+        ignore: ['^swiper/'],
+      },
+    ],
   },
   settings: {
     react: {
