@@ -10,10 +10,10 @@ import Badge from '../../components/badge/badge';
 import getProductById from '../../api/products/getProductById';
 import homeIcon from '../../assets/images/icons/home-icon.svg';
 import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
-import { ROUTES } from '../../constants/constants';
+import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 
 import type { Params } from 'react-router';
-import type { ClientResponse, ProductProjection } from '@commercetools/platform-sdk';
+import type { ProductProjection } from '@commercetools/platform-sdk';
 
 interface AttributeBestseller {
   name: 'bestseller';
@@ -33,49 +33,44 @@ interface Discount {
 export default function ProductPage(): JSX.Element {
   const { productId }: Readonly<Params<string>> = useParams();
 
-  const [product, setProduct] = useState<ClientResponse<ProductProjection> | undefined>(undefined);
+  const [product, setProduct] = useState<ProductProjection>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const [price, setPrice] = useState<string | null>(null);
   const [discount, setDiscount] = useState<string | null>(null);
 
-  const extractPrice = (res: ClientResponse<ProductProjection> | undefined): void => {
-    if (res) {
-      const { prices } = res.body.masterVariant;
+  const extractPrice = (res: ProductProjection): void => {
+    const { prices } = res.masterVariant;
 
-      if (prices) {
-        const priceStr = formatPrice(prices[0].value.centAmount);
-        setPrice(priceStr);
+    if (prices) {
+      const priceStr: string = formatPrice(prices[0].value.centAmount);
+      setPrice(priceStr);
 
-        const discountNum = prices[0].discounted?.value.centAmount;
+      const discountNum = prices[0].discounted?.value.centAmount;
 
-        if (discountNum) setDiscount(formatPrice(discountNum));
-      }
+      if (discountNum) setDiscount(formatPrice(discountNum));
     }
   };
 
   useEffect(() => {
-    const fetchProduct = async (): Promise<void> => {
-      try {
-        if (productId) {
-          const data = await getProductById(productId);
-          setProduct(data);
-          extractPrice(data);
-        } else {
-          setError('Product ID is missing');
-        }
-      } catch (err) {
-        console.log(err);
-        setError('Failed to fetch product');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct().catch((err) => {
-      console.log(err);
-    });
+    if (productId) {
+      setLoading(true);
+      getProductById(productId)
+        .then((response) => {
+          setProduct(response);
+          extractPrice(response);
+        })
+        .catch((err: Error) => {
+          console.log(err.message);
+          setError('Failed to fetch product');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setError('Product ID is missing');
+    }
   }, [productId]);
 
   if (loading) {
@@ -90,21 +85,24 @@ export default function ProductPage(): JSX.Element {
     return <div className={style['layout-wrapper']}>Product not found</div>;
   }
 
-  const discountAttribute = product.body.masterVariant.attributes?.find((atr) => atr.name === 'discount') as
+  const discountAttribute = product.masterVariant.attributes?.find((atr) => atr.name === 'discount') as
     | AttributeDiscount
     | undefined;
 
   const discountLabel = discountAttribute?.value[0].label;
 
-  const bestsellerAttribute = product.body.masterVariant.attributes?.find((atr) => atr.name === 'bestseller') as
+  const bestsellerAttribute = product.masterVariant.attributes?.find((atr) => atr.name === 'bestseller') as
     | AttributeBestseller
     | undefined;
   const bestsellerName = bestsellerAttribute?.name;
 
-  const categoryNameRoute = product.body.categories.map((atr) => atr.obj?.parent?.obj?.slug.en).join('');
-  const categoryNameStr = product.body.categories.map((atr) => atr.obj?.parent?.obj?.name.en).join('');
-  const productName = product.body.name.en;
-  const productImages = product.body.masterVariant.images;
+  const categoryNameRoute = product.categories.map((atr) => atr.obj?.parent?.obj?.slug.en).join('');
+  const categoryNameStr = product.categories.map((atr) => atr.obj?.parent?.obj?.name.en).join('');
+  const subCategoryNameRoute = product.categories.map((atr) => atr.obj?.slug.en).join('');
+  const subCategoryNameStr = product.categories.map((atr) => atr.obj?.name.en).join('');
+  const productName = product.name.en;
+  const productImages = product.masterVariant.images;
+  console.log(categoryNameRoute )
 
   return (
     <>
@@ -113,11 +111,19 @@ export default function ProductPage(): JSX.Element {
           <img src={homeIcon} className="home-icon" alt="NASA Store Homepage" />
         </Link>
         <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${ROUTES.CATALOG}/${categoryNameRoute}/`} className={style['breadcrumbs-link']}>
+        <Link to={`${ROUTES.CATALOG_ALL}${categoryNameRoute}`} className={style['breadcrumbs-link']}>
+          Catalog
+        </Link>
+        <img src={chevronIcon} className="chevron-icon" alt="" />
+        <Link to={`${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}`} className={style['breadcrumbs-link']}>
           {categoryNameStr}
         </Link>
         <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${ROUTES.CATALOG}/${categoryNameRoute}/${productId}`} className={style['breadcrumbs-link']}>
+        <Link to={`${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}/${subCategoryNameRoute}`} className={style['breadcrumbs-link']}>
+          {subCategoryNameStr}
+        </Link>
+        <img src={chevronIcon} className="chevron-icon" alt="" />
+        <Link to={`${DYNAMIC_ROUTES.PRODUCT}${productId}`} className={style['breadcrumbs-link']}>
           {productName}
         </Link>
       </section>
@@ -134,7 +140,7 @@ export default function ProductPage(): JSX.Element {
                 {bestsellerName && <Badge type="bestseller" text={bestsellerName} />}
               </div>
               <FormSubTitle subTitle="Product Description" />
-              <p className={style.description}>{product.body.description?.en}</p>
+              <p className={style.description}>{product.description?.en}</p>
               <FormSubTitle subTitle="Shipping & Delivery Information" />
               <p className={style.description}>
                 We partner with trusted carriers like USPS, UPS, and FedEx to ensure your orders reach you promptly and

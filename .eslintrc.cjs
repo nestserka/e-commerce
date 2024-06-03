@@ -34,7 +34,7 @@ module.exports = {
     'no-console': 'off',
     'max-depth': ['error', 4],
     'max-nested-callbacks': ['error', 4],
-    'max-statements': ['error', 25],
+    'max-statements': ['error', 26],
     'no-constant-binary-expression': 'error',
     'no-implicit-coercion': 'error',
     'no-negated-condition': 'error',

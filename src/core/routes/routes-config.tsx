@@ -35,10 +35,6 @@ export const routesConfig: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: ROUTES.PRODUCT_BESTSELLER,
-        element: <ProductPage />,
-      },
-      {
         path: ROUTES.ABOUT,
         element: <AboutPage />,
       },
@@ -48,6 +44,10 @@ export const routesConfig: RouteObject[] = [
         children: [
           {
             path: ROUTES.CATEGORY,
+            element: <CategoryPage />,
+          },
+          {
+            path: ROUTES.SUBTREES,
             element: <CategoryPage />,
           },
         ],

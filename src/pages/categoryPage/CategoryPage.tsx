@@ -2,17 +2,20 @@ import { useNavigate, useParams } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
 import { Input, Select, Space } from 'antd';
 import ReactSlider from 'react-slider';
+import { Link } from 'react-router-dom';
 
 import style from './_category.module.scss';
 import Card from '../../components/cards/card/Card';
 import { useCatalogData } from '../../core/state/catalogState';
 import { createCategoriesList, getAttributesCategory, getSubCategory } from './utils';
 import InputCheckBox from '../../components/ui/checkbox/checkbox';
-import { OPTIONS_FROM_SORT } from '../../constants/constants';
+import { DYNAMIC_ROUTES, OPTIONS_FROM_SORT, ROUTES } from '../../constants/constants';
 import SingleCheckboxGroup from '../../components/ui/singleCheckboxGroup/SingleCheckboxGroup';
+import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
+import homeIcon from '../../assets/images/icons/home-icon.svg';
 
 import type { SearchProps } from 'antd/es/input';
-import type { OptionsFromSelect } from './types';
+import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
 import type { Params } from 'react-router';
 import type {
   AttributeDefinition,
@@ -22,8 +25,8 @@ import type {
 } from '@commercetools/platform-sdk';
 
 export default function CategoryPage(): JSX.Element {
-  const { category }: Readonly<Params<string>> = useParams();
-  const [subtree, setSubtree] = useState<OptionsFromSelect[]>([]);
+  const { category, subtree }: Readonly<Params<string>> = useParams();
+  const [subtrees, setSubtree] = useState<OptionsFromSelect[]>([]);
   const [attributesList, setAttributesList] = useState<AttributeDefinition[]>([]);
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
@@ -71,15 +74,10 @@ export default function CategoryPage(): JSX.Element {
   }, [categoriesData, category, getProductsList]);
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.checked) {
-      setNameSubtree(event.target.id);
-      setSelectedValue(event.target.value);
+      navigation(`${DYNAMIC_ROUTES.CATALOG}${category}/${event.target.dataset.id}`);
     } else {
-      setNameSubtree('');
-      setSelectedValue(null);
+      navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
     }
-
-    setSubtreesList(event.target.value, event.target.checked);
-    getProductListFromCategory();
   };
   const onSearch: SearchProps['onSearch'] = (value) => {
     setSearchValue(value);
@@ -92,12 +90,12 @@ export default function CategoryPage(): JSX.Element {
     }
   };
 
-  const handleChangeSort = (option: OptionsFromSelect): void => {
+  const handleChangeSort = (option: OptionsFromSelectSort): void => {
     setSort(option.value);
     getProductListFromCategory();
   };
   const handleChangeCategory = (option: OptionsFromSelect): void => {
-    navigation(`/catalog/${option.value}`);
+    navigation(`${DYNAMIC_ROUTES.CATALOG}${option.value}`);
   };
   const handleClickForCategory = (): void => {
     setSelectedValue('');
@@ -110,31 +108,42 @@ export default function CategoryPage(): JSX.Element {
     setSelectedValue('');
     setNameSubtree('');
     setSubtreesList('', true);
-    setActiveCategory('Select by Category');
-    navigation('/catalog/all');
+    navigation(ROUTES.CATALOG_ALL);
   };
 
   useEffect(() => {
-    setSubtreesList('', true);
-    setSelectedValue('');
+    console.log(category,subtree)
 
     if (category) {
-      setSubtree(getSubCategory(categoriesData, category));
+      const allSubtrees = getSubCategory(categoriesData, category);
+      setSubtree(allSubtrees);
       setAttributesList(getAttributesCategory(productTypesAttributes, category));
       const newOptionCategoriesList = createCategoriesList(categoriesData);
       setCategoryOptions(newOptionCategoriesList);
 
+      if (subtree) {
+        console.log('pop')
+        const nameCategory = allSubtrees.find((option: OptionsFromSelect) => option.key === subtree);
+        setSelectedValue(subtree);
+        setSubtreesList(nameCategory?.value ?? '', true);
+        setNameSubtree(nameCategory?.label ?? '');
+      } else {
+        setSubtreesList('', true);
+        setNameSubtree('');
+        setSelectedValue(null);
+      }
+
       if (category === 'all') {
         setActiveCategory('Select by Category');
       } else {
-        const nameCategory = newOptionCategoriesList.find((option) => option.value === category);
+        const nameCategory = newOptionCategoriesList.find((option: OptionsFromSelect) => option.value === category);
         setNamePosition(nameCategory?.label);
         setActiveCategory(nameCategory?.label ?? '');
         setCategoryName(category);
       }
-
-      getProductListFromCategory();
     }
+
+    getProductListFromCategory();
   }, [
     categoriesData,
     category,
@@ -143,17 +152,20 @@ export default function CategoryPage(): JSX.Element {
     productTypesAttributes,
     setCategoryName,
     setSubtreesList,
+    subtree,
   ]);
-
-  console.log(attributesList);
 
   return (
     <section className={style.category} data-testid={category}>
       <header className={style['category-header']}>
+        <Link to={ROUTES.HOME} className={style['breadcrumbs-link']}>
+          <img src={homeIcon} className="home-icon" alt="NASA Store Homepage" />
+        </Link>
+        <img src={chevronIcon} className="chevron-icon" alt="" />
         <button className={style['category-header-link']} type="button" onClick={handleClickForCatalog}>
           All categories
         </button>
-        {category === 'all' ? '' : <span className={style['category-header-link']}>/</span>}
+        {category === 'all' ? '' : <img src={chevronIcon} className="chevron-icon" alt="" />}
         {category === 'all' ? (
           ''
         ) : (
@@ -161,7 +173,7 @@ export default function CategoryPage(): JSX.Element {
             {namePosition}
           </button>
         )}
-        {nameSubtree ? <span className={style['category-header-link']}>/</span> : ''}
+        {nameSubtree ?  <img src={chevronIcon} className="chevron-icon" alt="" /> : ''}
         {nameSubtree ? <span className={style['category-header-link']}>{nameSubtree}</span> : ''}
       </header>
       <main className={style.main}>
@@ -169,10 +181,9 @@ export default function CategoryPage(): JSX.Element {
           <div className={style['filters-section-first']}>
             <h3 className={style['filters-header-title']}> FILTERS</h3>
           </div>
-
           <details className={style['filters-section']} open>
             <summary className={style['filters-header-title']}>Categories</summary>
-            <div className={style['products-sort']}>
+            <div key={activeCategory} className={style['select-sort']}>
               <Select
                 labelInValue
                 className={style.subtrees}
@@ -182,12 +193,12 @@ export default function CategoryPage(): JSX.Element {
               />
             </div>
             <div>
-              <SingleCheckboxGroup options={subtree} selectedValue={selectedValue} onChange={handleCheckboxChange} />
+              <SingleCheckboxGroup options={subtrees} selectedValue={selectedValue} onChange={handleCheckboxChange} />
             </div>
           </details>
           <details className={style['filters-section']} open>
             <summary className={style['filters-header-title']}>Promo-Actions</summary>
-            <div className={style['products-sort']}>
+            <div className={style['select-sort']}>
               <div className={style['checkbox-wrapper']}>
                 <InputCheckBox
                   id="discount"
@@ -212,7 +223,6 @@ export default function CategoryPage(): JSX.Element {
               </div>
             </div>
           </details>
-
           <details className={style['filters-section']} open>
             <summary className={style['filters-header-title']}>Price Range</summary>
             <div className={style['price-range']}>
@@ -235,7 +245,6 @@ export default function CategoryPage(): JSX.Element {
                 onAfterChange={() => {
                   getProductListFromCategory();
                 }}
-                renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
               />
             </div>
           </details>
@@ -280,7 +289,7 @@ export default function CategoryPage(): JSX.Element {
             {productsList.length ? (
               productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
             ) : (
-              <div>No product by attribute or filter found</div>
+              <div className={style['products-list-empty']}>No product by attribute or filter found</div>
             )}
           </div>
         </section>

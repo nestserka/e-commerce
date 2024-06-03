@@ -1,9 +1,6 @@
 import styles from './singleCheckboxGroup.module.scss';
 
-export interface Option {
-  label: string;
-  value: string;
-}
+import type { OptionsFromSelect } from '../../../pages/categoryPage/types';
 
 export default function SingleCheckboxGroup({
   selectedValue,
@@ -11,7 +8,7 @@ export default function SingleCheckboxGroup({
   onChange,
 }: {
   selectedValue: string | null;
-  options: Option[];
+  options: OptionsFromSelect[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }): JSX.Element {
   return (
@@ -20,10 +17,11 @@ export default function SingleCheckboxGroup({
         <div className={styles['checkbox-wrapper']} key={option.value}>
           <input
             type="checkbox"
+            data-id={option.key}
             id={option.label}
             value={option.value}
             className={styles.input}
-            checked={selectedValue === option.value}
+            checked={selectedValue === option.key}
             onChange={onChange}
           />
           <label className={styles.label} htmlFor={option.value}>

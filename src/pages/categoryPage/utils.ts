@@ -13,6 +13,7 @@ export function getSubCategory(allCategories: Category[], nameCategory: string):
       const option: OptionsFromSelect = {
         value: category.id,
         label: category.name.en,
+        key: category.slug.en,
       };
       optionsForSelect.push(option);
     });
@@ -34,8 +35,9 @@ export function createCategoriesList(categoriesData: Category[]): OptionsFromSel
   categoriesData.forEach((category: Category) => {
     if (!category.ancestors.length) {
       const option: OptionsFromSelect = {
-        value: category.key ? category.key : '',
+        value: category.slug.en,
         label: category.name.en,
+        key: category.id,
       };
       optionsForSelect.push(option);
     }
