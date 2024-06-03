@@ -29,7 +29,7 @@ export default function CategoryPage(): JSX.Element {
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>('');
   const [categoryOptions, setCategoryOptions] = useState<OptionsFromSelect[]>([]);
-  const [namePosition, setNamePosition] = useState<string|undefined>();
+  const [namePosition, setNamePosition] = useState<string | undefined>();
   const navigation = useNavigate();
 
   const {
@@ -99,13 +99,13 @@ export default function CategoryPage(): JSX.Element {
       setAttributesList(getAttributesCategory(productTypesAttributes, category));
       const newOptionCategoriesList = createCategoriesList(categoriesData);
       setCategoryOptions(newOptionCategoriesList);
-      
+
       if (category === 'all') {
         setActiveCategory('Select by Category');
       } else {
-        const nameCategory = newOptionCategoriesList.find((option)=>option.value === category);
+        const nameCategory = newOptionCategoriesList.find((option) => option.value === category);
         setNamePosition(nameCategory?.label);
-        setActiveCategory(nameCategory?.label??'');
+        setActiveCategory(nameCategory?.label ?? '');
         setCategoryName(category);
       }
 
@@ -148,7 +148,7 @@ export default function CategoryPage(): JSX.Element {
           <InputCheckBox
             key={attribute.name}
             id={attribute.name}
-            name={attribute.name}
+            name='subtrees'
             label={attribute.name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               console.log('pop', e);
