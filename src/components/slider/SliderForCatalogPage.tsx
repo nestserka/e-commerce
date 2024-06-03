@@ -16,7 +16,6 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
   return (
     <div className="slider-wrapper">
       <Swiper
-        loop
         grabCursor
         initialSlide={1}
         pagination={{
