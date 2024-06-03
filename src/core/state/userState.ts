@@ -43,6 +43,16 @@ export const useLoginData = create<LoginState>((set) => ({
       valueEmail,
     }));
   },
+  reset: (): void => {
+    set({
+      valueEmail: '',
+      valuePassword: '',
+      isAuth: false,
+      customerId: '',
+      customerRefreshToken: '',
+      accessToken: '',
+    });
+  },
 }));
 
 export const showModalMessage = create<IsShownModal>((set) => ({

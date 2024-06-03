@@ -21,6 +21,7 @@ export interface LoginState {
   setValueEmail: (email: string) => void;
   setValuePassword: (password: string) => void;
   setCustomerCredentials: (customerCredentials: CustomerCredentials) => void;
+  reset: () => void;
 }
 
 export interface IsShownModal {

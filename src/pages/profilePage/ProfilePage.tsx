@@ -8,6 +8,9 @@ import { showModalMessage, useCustomerInfo } from '../../core/state/userState';
 import ProfileView from '../../domain/customer/profileView/profileView';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 import getUser from '../../api/me/getUser';
+import { useToggleModal } from '../../utils/useToggleModal';
+import ErrorWindow from '../../components/errorWindow/errorWindow';
+import { logOut } from '../../utils/logOut';
 
 import type { Params } from 'react-router-dom';
 
@@ -22,6 +25,7 @@ export default function ProfilePage(): JSX.Element {
   const { setCustomerInfo, isSet } = useCustomerInfo();
   const { isShown } = showModalMessage();
   const { type, title, message } = modalMessageSuccessUpdateProps;
+  const [isTokenErrorWindonOpen, openTokenWindow, closeTokenWindow] = useToggleModal();
 
   useEffect(() => {
     const fetchCustomer = async (): Promise<void> => {
@@ -51,18 +55,24 @@ export default function ProfilePage(): JSX.Element {
           setCustomerInfo(customerInfo);
         }
       } catch (error) {
-        console.error('Error fetching customer info:', error);
+        if (error instanceof Error) {
+          openTokenWindow();
+          setTimeout(() => {
+            logOut();
+          }, 5000);
+        }
       }
     };
 
     fetchCustomer().catch((error) => {
       console.error('Error executing fetchCustomer:', error);
     });
-  }, [customerId, setCustomerInfo]);
+  }, [customerId, setCustomerInfo, openTokenWindow]);
 
   return (
     <section className={style['profile-content']} data-testid="profile">
       <div className={style['profile-content-wrapper']}>
+        {isTokenErrorWindonOpen && <ErrorWindow isOpen={isTokenErrorWindonOpen} onClose={closeTokenWindow} />}
         <ProfileAvatar />
         {isShown && <ModalMessage type={type} title={title} message={message} />}
         {isSet ? <ProfileView /> : <div className="loading">Loading...</div>}

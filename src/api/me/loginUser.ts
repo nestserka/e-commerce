@@ -20,10 +20,5 @@ export default async function loginUser(email: string, password: string): Promis
     })
     .execute();
 
-  const { refreshToken } = tokenCache.get();
-  console.log(refreshToken);
-
-  if (refreshToken) localStorage.setItem('token', refreshToken);
-
   return response.body.customer;
 }

@@ -4,16 +4,21 @@
 .email-form,
 .password-form,
 .general-form,
-.address-form {
+.address-form,
+.error-form {
   display: flex;
   flex-direction: column;
   gap: 2em;
 }
 
-.address-form .confirm-text {
-  margin-top: 0.6em;
-  font-size: 1.2em;
-  text-align: center;
+.address-form,
+.error-form {
+  .confirm-text {
+    margin-top: 0.6em;
+    font-size: 1.2em;
+    color: $font-color-primary;
+    text-align: center;
+  }
 }
 
 .form-group {

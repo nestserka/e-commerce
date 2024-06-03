@@ -1,4 +1,5 @@
 import withRefreshToken from '../middlewareFlows/withRefreshToken';
+import { tokenCache } from '../token/MyTokenCache';
 
 import type { Address, Customer, MyCustomerUpdateAction } from '@commercetools/platform-sdk';
 
@@ -8,7 +9,7 @@ export default async function createNewAddress(
   data: Address,
   isDefault: boolean,
 ): Promise<Customer> {
-  const accessToken = localStorage.getItem('token');
+  const accessToken = tokenCache.get().refreshToken;
   const body: MyCustomerUpdateAction[] = [
     {
       action: 'addAddress',
