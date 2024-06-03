@@ -8,7 +8,7 @@ import { logOut } from '../../utils/logOut';
 
 export default function ErrorWindow({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }): JSX.Element {
   const navigate = useNavigate();
-  const redirectToLogin = () : void => {
+  const redirectToLogin = (): void => {
     onClose();
     logOut();
     navigate(ROUTES.SING_IN);
