@@ -55,46 +55,20 @@ export type AuthMiddlewareBaseOptions = requestBaseOptions & {
   fetch: Fetcher;
 };
 
-// export interface HttpError {
-//   statusCode: number;
-//   message: string;
-//   errors?: { code: string; message: string }[];
-//   error?: string;
-//   error_description?: string;
-// }
+export interface HttpError {
+  statusCode: number;
+  message: string;
+  errors?: { code: string; message: string }[];
+  error?: string;
+}
 
-// export function isErrorType(value: unknown): value is HttpError {
-//   return (
-//     Boolean(value) &&
-//     typeof value === 'object' &&
-//     value !== null &&
-//     'statusCode' in value &&
-//     typeof (value as HttpError).statusCode === 'number' &&
-//     'message' in value &&
-//     typeof (value as HttpError).message === 'string' &&
-//     ('errors' in value ? Array.isArray(value.errors) : true) &&
-//     ('error' in value ? typeof (value as HttpError).error === 'string' : true) &&
-//     ('error_description' in value ? typeof (value as HttpError).error_description === 'string' : true)
-//   );
-// }
-
-// export function parseHttpError(text: string): HttpError | null {
-//   const data = JSON.parse(text);
-
-//   if (typeof data !== 'object' || data === null) {
-//     console.warn("Invalid JSON format");
-
-//     return null;
-//   }
-
-//   if (!('statusCode' in data) || typeof data.statusCode !== 'number') {
-//     console.warn("Missing or invalid 'statusCode' property");
-
-//     return null;
-//   }
-
-//   return {
-//     statusCode: data.statusCode,
-//     message: data.message || "",
-//   };
-// }
+export function isErrorType(value: unknown): value is HttpError {
+  return (
+    Boolean(value) &&
+    typeof value === 'object' &&
+    value !== null &&
+    'statusCode' in value &&
+    'message' in value &&
+    'error' in value
+  );
+}

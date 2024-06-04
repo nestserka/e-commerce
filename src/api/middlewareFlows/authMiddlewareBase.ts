@@ -1,5 +1,10 @@
 import { buildRequestForRefreshTokenFlow } from './buildRequestForRefreshTokenFlow';
-import { type AuthMiddlewareBaseOptions, type ExecuteRequestOptions, isTokenInfo } from '../../utils/types';
+import {
+  type AuthMiddlewareBaseOptions,
+  type ExecuteRequestOptions,
+  isErrorType,
+  isTokenInfo,
+} from '../../utils/types';
 
 import type {
   AuthMiddlewareOptions,
@@ -83,25 +88,23 @@ async function executeRequest({
     }
 
     const text: string = await res.text();
-    console.log(text);
 
-    // try {
-    //   // const parsedData = parseHttpError(text);
+    try {
+      const parsedData: unknown = JSON.parse(text);
 
-    //   // if(parsedData){
-    //     // const error = JSON.stringify(parsedData, Object.getOwnPropertyNames(parsedData))
-    //     // response.reject(parsedData);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-
-    // const error: ErrorResponse = new Error(parsed ? parsed.message : text);
-
-    // if (parsed) error.body = parsed;
-    requestState.set(false);
-    console.log(response.error);
-    // response.reject(JSON.parse(text));
+      if (isErrorType(parsedData)) {
+        const { statusCode, message, error } = parsedData;
+        const myJsonObject = {
+          statusCode,
+          message,
+          error,
+        };
+        response.reject(myJsonObject);
+        requestState.set(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   } catch (error) {
     requestState.set(false);
   }
