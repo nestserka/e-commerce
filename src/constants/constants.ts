@@ -317,3 +317,9 @@ export const requiredEnvVariables = {
   VITE_APP_PROJECT_KEY: 'project key',
   VITE_APP_API_URL: 'api url',
 };
+
+export const ERROR_TYPES = {
+  INVALID_TOKEN: 'refresh token',
+  VERSION_ERROR: 'different version than expected',
+  INVALID_JSON: 'JSON',
+} as const;

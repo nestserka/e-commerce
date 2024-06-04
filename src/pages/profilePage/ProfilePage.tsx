@@ -64,7 +64,7 @@ export default function ProfilePage(): JSX.Element {
         });
     };
 
-    fetchCustomer().catch((error : Error) => {
+    fetchCustomer().catch((error: Error) => {
       console.log(error);
     });
   }, [customerId, setCustomerInfo, setErrorIsShown]);

@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 
 import style from '../_forms.module.scss';
-import { ADDRESS_VALIDATION_SCHEMA, SHIPPING_TYPE_VALIDATION_SCHEMA } from '../../../../constants/constants';
+import { ADDRESS_VALIDATION_SCHEMA, ERROR_TYPES, SHIPPING_TYPE_VALIDATION_SCHEMA } from '../../../../constants/constants';
 import FormTitle from '../../../../components/formTitle/FormTitle';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
 import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
 import Input from '../../../../components/ui/input/input';
-import { showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
+import { showErrorMessage, showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
 import {
   inputShippingCityProps,
   inputShippingPostalCodeProps,
@@ -39,6 +39,7 @@ export default function AddressForm({ isOpen, onClose }: FormModal): JSX.Element
   const { errors, isDirty, isValid, isSubmitting } = formState;
   const { setIsShown } = showModalMessage();
   const [formError, setFormError] = useState<string>('');
+  const { setErrorIsShown } = showErrorMessage();
 
   useEffect(() => {
     const subscription = watch((_value, { name }) => {
@@ -68,14 +69,14 @@ export default function AddressForm({ isOpen, onClose }: FormModal): JSX.Element
         reset();
       })
       .catch((error: Error) => {
-        setFormError('');
-
-        if (error.message.includes('different version')) {
+        if (error.message.includes(ERROR_TYPES.VERSION_ERROR)) {
           setFormError(VERSION_ERROR_MESSAGE);
-        }
-
-        if (error.message.includes('JSON')) {
+        } else if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
+          setErrorIsShown(true);
+        } else if(error.message.includes(ERROR_TYPES.INVALID_JSON)){
           setFormError('Something wrong with the data, try to insert again');
+        } else {
+          setFormError(error.message);
         }
       });
   };

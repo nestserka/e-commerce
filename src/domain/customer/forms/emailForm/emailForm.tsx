@@ -4,13 +4,13 @@ import { z } from 'zod';
 import { useEffect, useState } from 'react';
 
 import style from '../_forms.module.scss';
-import { EMAIL_VALIDATION_SCHEMA } from '../../../../constants/constants';
+import { EMAIL_VALIDATION_SCHEMA, ERROR_TYPES } from '../../../../constants/constants';
 import FormTitle from '../../../../components/formTitle/FormTitle';
 import { inputEmailProps } from '../../../../utils/inputProps';
 import Input from '../../../../components/ui/input/input';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
-import { showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
+import { showErrorMessage, showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
 import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
 import updateCustomer from '../../../../api/me/updateCustomer';
 
@@ -40,6 +40,7 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
   const { errors, isDirty, isValid, isSubmitting } = formState;
   const [formEmailError, setFormEmailError] = useState<string>('');
   const { setIsShown } = showModalMessage();
+  const { setErrorIsShown } = showErrorMessage();
 
   const newEmail = watch('email');
 
@@ -69,8 +70,10 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
       .catch((error: Error) => {
         setFormEmailError('');
 
-        if (error.message.includes('different version')) {
+        if (error.message.includes(ERROR_TYPES.VERSION_ERROR)) {
           setFormEmailError(VERSION_ERROR_MESSAGE);
+        } else if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
+          setErrorIsShown(true);
         } else {
           setFormEmailError(error.message);
         }

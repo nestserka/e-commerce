@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { useEffect, useState } from 'react';
 
 import style from '../_forms.module.scss';
-import { PASSWORD_VALIDATION_SCHEMA } from '../../../../constants/constants';
+import { ERROR_TYPES, PASSWORD_VALIDATION_SCHEMA } from '../../../../constants/constants';
 import FormTitle from '../../../../components/formTitle/FormTitle';
 import {
   inputConfirmPasswordProps,
@@ -15,7 +15,7 @@ import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
 import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
 import InputPassword from '../../../../components/ui/inputPassword/inputPassword';
-import { showModalMessage, useCustomerInfo, useLoginData } from '../../../../core/state/userState';
+import { showErrorMessage, showModalMessage, useCustomerInfo, useLoginData } from '../../../../core/state/userState';
 import updateCustomerPassword from '../../../../api/me/changePassword';
 import loginUser from '../../../../api/me/loginUser';
 
@@ -45,6 +45,7 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
   const { errors, isDirty, isValid, isSubmitting } = formState;
   const { setIsShown } = showModalMessage();
   const [formPasswordError, setFormPasswordError] = useState<string>('');
+  const { setErrorIsShown } = showErrorMessage();
 
   useEffect(() => {
     const subscription = watch((_value, { name }) => {
@@ -78,10 +79,10 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
       .catch((error: Error) => {
         setFormPasswordError('');
 
-        if (error.message.includes('different version')) {
+        if (error.message.includes(ERROR_TYPES.VERSION_ERROR)) {
           setFormPasswordError(VERSION_ERROR_MESSAGE);
-        } else {
-          setFormPasswordError(error.message);
+        } else if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
+          setErrorIsShown(true);
         }
       });
     await loginUser(valueEmail, body.newPassword);
