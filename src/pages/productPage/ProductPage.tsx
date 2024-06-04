@@ -102,7 +102,6 @@ export default function ProductPage(): JSX.Element {
   const subCategoryNameStr = product.categories.map((atr) => atr.obj?.name.en).join('');
   const productName = product.name.en;
   const productImages = product.masterVariant.images;
-  
 
   return (
     <>

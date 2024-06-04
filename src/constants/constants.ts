@@ -13,7 +13,7 @@ export const ROUTES = {
   CATALOG: '/catalog',
   CATALOG_ALL: '/catalog/all',
   CATEGORY: '/catalog/:category',
-  SUBTREES: '/catalog/:category/:subtree',
+  CATALOG_SUBTREES: '/catalog/:category/:subtree',
   PRODUCT: '/product/:productId',
   PROFILE: '/profile/:customerId',
   CART_CUSTOMER: '/cart/:customerId',

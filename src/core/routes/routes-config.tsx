@@ -47,7 +47,7 @@ export const routesConfig: RouteObject[] = [
             element: <CategoryPage />,
           },
           {
-            path: ROUTES.SUBTREES,
+            path: ROUTES.CATALOG_SUBTREES,
             element: <CategoryPage />,
           },
         ],
