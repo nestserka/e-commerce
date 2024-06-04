@@ -273,9 +273,10 @@ export default function CategoryPage(): JSX.Element {
               </Space>
             </div>
             <div className={style['products-sort']}>
+              <span className={style['sort-title']}>Sort by:</span>
               <Select
                 labelInValue
-                placeholder="Sort by"
+                placeholder="Price from low to high"
                 style={{ width: 200 }}
                 onChange={handleChangeSort}
                 options={OPTIONS_FROM_SORT}

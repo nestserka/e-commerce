@@ -110,7 +110,7 @@ export default function ProductPage(): JSX.Element {
           <img src={homeIcon} className="home-icon" alt="NASA Store Homepage" />
         </Link>
         <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${ROUTES.CATALOG_ALL}${categoryNameRoute}`} className={style['breadcrumbs-link']}>
+        <Link to={`${ROUTES.CATALOG_ALL}`} className={style['breadcrumbs-link']}>
           Catalog
         </Link>
         <img src={chevronIcon} className="chevron-icon" alt="" />

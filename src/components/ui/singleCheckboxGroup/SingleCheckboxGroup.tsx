@@ -24,7 +24,7 @@ export default function SingleCheckboxGroup({
             checked={selectedValue === option.key}
             onChange={onChange}
           />
-          <label className={styles.label} htmlFor={option.value}>
+          <label className={styles.label} htmlFor={option.label}>
             {option.label}
           </label>
         </div>
