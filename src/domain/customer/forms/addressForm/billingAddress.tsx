@@ -127,7 +127,7 @@ export default function BillingAddressForm({ isOpen, onClose, billingAddressId }
           setFormError(VERSION_ERROR_MESSAGE);
         } else if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
           setErrorIsShown(true);
-        } else if(error.message.includes(ERROR_TYPES.INVALID_JSON)){
+        } else if (error.message.includes(ERROR_TYPES.INVALID_JSON)) {
           setFormError('Something wrong with the data, try to insert again');
         } else {
           setFormError(error.message);

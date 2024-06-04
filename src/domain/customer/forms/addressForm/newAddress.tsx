@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 
 import style from '../_forms.module.scss';
-import { ADDRESS_VALIDATION_SCHEMA, ERROR_TYPES, SHIPPING_TYPE_VALIDATION_SCHEMA } from '../../../../constants/constants';
+import {
+  ADDRESS_VALIDATION_SCHEMA,
+  ERROR_TYPES,
+  SHIPPING_TYPE_VALIDATION_SCHEMA,
+} from '../../../../constants/constants';
 import FormTitle from '../../../../components/formTitle/FormTitle';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
@@ -73,7 +77,7 @@ export default function AddressForm({ isOpen, onClose }: FormModal): JSX.Element
           setFormError(VERSION_ERROR_MESSAGE);
         } else if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
           setErrorIsShown(true);
-        } else if(error.message.includes(ERROR_TYPES.INVALID_JSON)){
+        } else if (error.message.includes(ERROR_TYPES.INVALID_JSON)) {
           setFormError('Something wrong with the data, try to insert again');
         } else {
           setFormError(error.message);
