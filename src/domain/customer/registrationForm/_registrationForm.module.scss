@@ -16,9 +16,10 @@
   .form-group {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
     gap: 1.5em;
+    justify-content: space-between;
+
+    width: 100%;
   }
 
   .input-section {
@@ -54,6 +55,12 @@
     .form-group {
       display: flex;
       flex-wrap: wrap;
+    }
+
+    .input-section {
+      display: flex;
+      flex-basis: 50%;
+      max-width: calc(50% - 0.75em);
     }
   }
 
