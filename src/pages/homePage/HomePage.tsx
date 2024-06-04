@@ -30,7 +30,7 @@ const navItemsContent = [
   {
     title: 'Browse our catalog to discover our latest products and offerings.',
     icon: `${catalogIcon}`,
-    route: `${ROUTES.CATALOG}`,
+    route: `${ROUTES.CATALOG_ALL}`,
     linkLabel: 'Catalog',
   },
 ];

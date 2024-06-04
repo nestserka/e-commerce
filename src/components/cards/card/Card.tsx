@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import style from './card.module.scss';
 import { createParamsfromCard } from './utils';
+import { DYNAMIC_ROUTES } from '../../../constants/constants';
 
 import type { PropsCard } from './types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
@@ -11,7 +12,7 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
   const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
 
   return (
-    <Link to={product.cardKey} className={style.card}>
+    <Link to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`} className={style.card}>
       <div className={style['card-pic']}>
         <div className={style['information-block']}>
           {product.discountedName && <span className={style['discount-name']}>{product.discountedName.label}</span>}

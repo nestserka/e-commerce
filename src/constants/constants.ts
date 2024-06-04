@@ -1,32 +1,31 @@
 import { z } from 'zod';
 import dayjs from 'dayjs';
 
-import type { OptionsFromSelect } from '../pages/categoryPage/types';
+import type { OptionsFromSelectSort } from '../pages/categoryPage/types';
 import type { NavLinkProps } from '../domain/header/navigation/types';
 
 export const ROUTES = {
   START: '/',
   HOME: '/home',
-  PRODUCT_BESTSELLER: 'main/:productId',
   SING_IN: '/sign_in',
   SING_UP: '/sign_up',
   ABOUT: '/about',
   CATALOG: '/catalog',
   CATALOG_ALL: '/catalog/all',
   CATEGORY: '/catalog/:category',
-  PRODUCT: '/catalog/:category/:productId',
+  CATALOG_SUBTREES: '/catalog/:category/:subtree',
+  PRODUCT: '/product/:productId',
   PROFILE: '/profile/:customerId',
-  CART: '/cart',
   CART_CUSTOMER: '/cart/:customerId',
+  CART: '/cart',
   NOT_FOUND: '*',
 } as const;
 
 export const DYNAMIC_ROUTES = {
   PROFILE: '/profile/',
-  PRODUCT: '/catalog/',
-  CARD: '/card/',
-  CATEGORY: '/catalog',
-  BESTSELLER: 'main/',
+  CATALOG: '/catalog/',
+  CART: '/cart/',
+  PRODUCT: '/product/',
 } as const;
 
 export const NAV_LINKS: NavLinkProps[] = [
@@ -291,7 +290,7 @@ export const SHIPPING_TYPE_VALIDATION_SCHEMA = z.string().refine((value) => vali
 
 export const LS_PREFIX = 'nasaStoreTeam';
 
-export const OPTIONS_FROM_SORT: OptionsFromSelect[] = [
+export const OPTIONS_FROM_SORT: OptionsFromSelectSort[] = [
   {
     value: 'name.en asc',
     label: 'Name from A to Z',
