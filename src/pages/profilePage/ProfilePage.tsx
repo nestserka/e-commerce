@@ -20,7 +20,7 @@ const modalMessageSuccessUpdateProps = {
 const modalErrorOnToken = {
   errorType: 'error',
   errorTitle: 'Session expired',
-  errorMessage: 'Your session was expired. Please try to login again.',
+  errorMessage: 'Your session was expired. You will be shortly redirected to login page.',
 };
 
 export default function ProfilePage(): JSX.Element {
