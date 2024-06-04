@@ -44,6 +44,19 @@ class MyTokenCache implements TokenCache {
     this.tokenData = { token: '', expirationTime: 0, refreshToken: '' };
     localStorage.removeItem(`token-${LS_PREFIX}`);
   }
+
+  update(): boolean {
+    this.get();
+    this.tokenData = {
+      token: '',
+      expirationTime: this.tokenData.expirationTime,
+      refreshToken: this.tokenData.refreshToken,
+    };
+    const serializedCache = JSON.stringify(this.tokenData);
+    localStorage.setItem(`token-${LS_PREFIX}`, serializedCache);
+
+    return true;
+  }
 }
 
 export const tokenCache = new MyTokenCache();

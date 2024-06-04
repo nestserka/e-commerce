@@ -8,6 +8,8 @@ import { showErrorMessage, showModalMessage, useCustomerInfo } from '../../core/
 import ProfileView from '../../domain/customer/profileView/profileView';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 import getUser from '../../api/me/getUser';
+import { tokenCache } from '../../api/token/MyTokenCache';
+import { ERROR_TYPES } from '../../constants/constants';
 
 import type { Params } from 'react-router-dom';
 
@@ -59,8 +61,14 @@ export default function ProfilePage(): JSX.Element {
             setCustomerInfo(customerInfo);
           }
         })
-        .catch(() => {
-          setErrorIsShown(true);
+        .catch(async (error: Error) => {
+          if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
+            if (tokenCache.update()) {
+              await fetchCustomer().catch();
+            }
+          } else {
+            setErrorIsShown(true);
+          }
         });
     };
 

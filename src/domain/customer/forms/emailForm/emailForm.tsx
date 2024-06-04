@@ -72,7 +72,7 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
 
         if (error.message.includes(ERROR_TYPES.VERSION_ERROR)) {
           setFormEmailError(VERSION_ERROR_MESSAGE);
-        } else if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
+        } else if (error.message.includes(ERROR_TYPES.INVALID_REFRESH_TOKEN)) {
           setErrorIsShown(true);
         } else {
           setFormEmailError(error.message);

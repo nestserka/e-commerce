@@ -319,7 +319,8 @@ export const requiredEnvVariables = {
 };
 
 export const ERROR_TYPES = {
-  INVALID_TOKEN: 'refresh token',
+  INVALID_REFRESH_TOKEN: 'refresh token',
   VERSION_ERROR: 'different version than expected',
   INVALID_JSON: 'JSON',
+  INVALID_TOKEN: 'invalid_token',
 } as const;

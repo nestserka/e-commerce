@@ -81,7 +81,7 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
 
         if (error.message.includes(ERROR_TYPES.VERSION_ERROR)) {
           setFormPasswordError(VERSION_ERROR_MESSAGE);
-        } else if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
+        } else if (error.message.includes(ERROR_TYPES.INVALID_REFRESH_TOKEN)) {
           setErrorIsShown(true);
         }
       });
