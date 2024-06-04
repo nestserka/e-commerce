@@ -9,30 +9,22 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/thumbs';
 import style from './_slider.module.scss';
+import { emptyImagesListReplacement } from '../../constants/constants';
 
+import type { Image, SliderProps } from './types';
 import type { CSSProperties } from 'react';
-
-interface Image {
-  dimensions: {
-    h: number;
-    w: number;
-  };
-  url: string;
-}
-
-interface SliderProps {
-  images: Image[] | undefined;
-}
 
 export default function Slider({ images }: SliderProps): JSX.Element {
   const [productSwiper, setProductSwiper] = useState<SwiperProps | null>(null);
   const [modalProductSwiper, setModalProductSwiper] = useState<SwiperProps | null>(null);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperProps | null>(null);
   const [isModalSwiperShown, setIsModalSwiperShown] = useState<boolean>(false);
+  const [ImagesList] = useState<Image[]>(images?.length ? images : emptyImagesListReplacement);
 
   return (
     <>
       <Swiper
+        loop
         modules={[Controller, FreeMode, Navigation, Pagination, Scrollbar, A11y, Thumbs]}
         spaceBetween={0}
         slidesPerView={1}
@@ -44,9 +36,9 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         onSwiper={setProductSwiper}
         style={{ '--swiper-theme-color': '#dcebea' } as CSSProperties}
       >
-        {images?.map((image, index) => (
+        {ImagesList.map((image, index) => (
           <SwiperSlide
-            key={image.url}
+            key={`Slide ${index + 1}`}
             onClick={() => {
               setIsModalSwiperShown(true);
             }}
@@ -71,8 +63,8 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           },
         }}
       >
-        {images?.map((image, index) => (
-          <SwiperSlide key={image.url}>
+        {ImagesList.map((image, index) => (
+          <SwiperSlide key={`Slide ${index + 1}`}>
             <img src={image.url} alt={`Slide ${index}`} />
           </SwiperSlide>
         ))}
@@ -99,8 +91,8 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           onSwiper={setModalProductSwiper}
           style={{ '--swiper-theme-color': '#dcebea' } as CSSProperties}
         >
-          {images?.map((image, index) => (
-            <SwiperSlide key={image.url}>
+          {ImagesList.map((image, index) => (
+            <SwiperSlide key={`Slide ${index + 1}`}>
               <img src={image.url} alt={`Slide ${index}`} />
             </SwiperSlide>
           ))}

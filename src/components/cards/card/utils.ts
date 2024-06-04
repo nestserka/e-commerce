@@ -4,7 +4,7 @@ import type { Attribute, Image, ProductProjection } from '@commercetools/platfor
 import type { DataDiscountedName, PropsCard } from './types';
 
 export function createParamsfromCard(params: ProductProjection): PropsCard {
-  const cardImages: string[] = params.masterVariant.images
+  const cardImages: string[] = params.masterVariant.images?.length
     ? params.masterVariant.images.map((image: Image) => image.url)
     : [imageForCard];
   const lackOfDescription: string = 'Product information will be available at a later date';
