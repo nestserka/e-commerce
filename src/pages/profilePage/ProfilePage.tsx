@@ -9,7 +9,6 @@ import ProfileView from '../../domain/customer/profileView/profileView';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 import getUser from '../../api/me/getUser';
 import ErrorWindow from '../../components/errorWindow/errorWindow';
-import { logOut } from '../../utils/logOut';
 
 import type { Params } from 'react-router-dom';
 
@@ -25,10 +24,6 @@ export default function ProfilePage(): JSX.Element {
   const { isShown } = showModalMessage();
   const { type, title, message } = modalMessageSuccessUpdateProps;
   const [isTokenErrorWindonOpen, setIsTokenErrorWindonOpen] = useState(false);
-
-  const handleOpenTokenWindow = (): void => {
-    setIsTokenErrorWindonOpen(true);
-  };
 
   const handleCloseTokenWindow = (): void => {
     setIsTokenErrorWindonOpen(false);
@@ -62,11 +57,11 @@ export default function ProfilePage(): JSX.Element {
           }
         })
         .catch((error: Error) => {
-          handleOpenTokenWindow();
+          // handleOpenTokenWindow();
           console.log(error);
-          setTimeout(() => {
-            logOut();
-          }, 3500);
+          // setTimeout(() => {
+          //   logOut();
+          // }, 3500);
         });
     };
 

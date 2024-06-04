@@ -309,3 +309,11 @@ export const OPTIONS_FROM_SORT: OptionsFromSelect[] = [
     label: 'Price from high to low',
   },
 ];
+
+export const requiredEnvVariables = {
+  VITE_APP_PASSWORD_FLOW_SECRET: 'login with password client id',
+  VITE_APP_PASSWORD_FLOW_ID: 'login with password client secret',
+  VITE_APP_AUTH_URL: 'auth url',
+  VITE_APP_PROJECT_KEY: 'project key',
+  VITE_APP_API_URL: 'api url',
+};

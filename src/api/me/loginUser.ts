@@ -1,6 +1,5 @@
 import { tokenCache } from '../token/MyTokenCache';
 import withPasswordFlow from '../middlewareFlows/withPasswordFlow';
-import { LS_PREFIX } from '../../constants/constants';
 
 import type { ClientResponse, Customer, CustomerSignInResult } from '@commercetools/platform-sdk';
 
@@ -20,9 +19,6 @@ export default async function loginUser(email: string, password: string): Promis
       },
     })
     .execute();
-
-  const serializedCache = JSON.stringify(tokenCache.get());
-  localStorage.setItem(`token-${LS_PREFIX}`, serializedCache);
 
   return response.body.customer;
 }
