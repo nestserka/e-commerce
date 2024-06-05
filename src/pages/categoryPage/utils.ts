@@ -1,5 +1,10 @@
 import type { OptionsFromSelect } from './types';
-import type { AttributeDefinition, Category, ProductType } from '@commercetools/platform-sdk';
+import type {
+  AttributeDefinition,
+  AttributeLocalizedEnumType,
+  Category,
+  ProductType,
+} from '@commercetools/platform-sdk';
 
 export function getSubCategory(allCategories: Category[], nameCategory: string): OptionsFromSelect[] {
   const dataCategory = allCategories.find((category: Category) => category.slug.en === nameCategory);
@@ -32,6 +37,10 @@ export function getAttributesCategory(allProductTypes: ProductType[], nameCatego
   );
 
   return arrAttribute ?? [];
+}
+
+export function isAttributeLocalizedEnumType(value: unknown): value is AttributeLocalizedEnumType {
+  return typeof value === 'object' && value !== null && 'name' in value && value.name === 'lenum';
 }
 
 export function createCategoriesList(categoriesData: Category[]): OptionsFromSelect[] {

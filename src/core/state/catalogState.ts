@@ -161,7 +161,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
               ...(get().categoryName === 'all' ? [] : [get().createFilterByCategoriesId(category)]),
               ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),
               ...(get().isDiscount ? [`variants.attributes.discount.key: "10%-off", "15%-off", "20%-off"`] : []),
-              // `variants.attributes.brand.key:${brand}`,
+              `variants.attributes.brand.key:"apm","omegon"`,
               `variants.price.centAmount:range (${get().priceRange[0] * 100}to ${get().priceRange[1] * 100})`,
             ],
           },
