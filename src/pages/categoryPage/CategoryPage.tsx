@@ -261,7 +261,7 @@ export default function CategoryPage(): JSX.Element {
               <Space direction="vertical">
                 <Search
                   className={style.search}
-                  placeholder="Search For..."
+                  placeholder="Search for..."
                   enterButton
                   onSearch={onSearch}
                   style={{ width: 300 }}
