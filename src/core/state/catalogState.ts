@@ -48,7 +48,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   refractorList: [],
   materialList: [],
   categoryName: 'all',
-  priceRange: [0, 17000],
+  priceRange: [0, 1700000],
   categoriesData: [],
   subtreesList: '',
   parentsCategories: [],
@@ -224,7 +224,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
                       .join(',')}`,
                   ]
                 : []),
-              `variants.price.centAmount:range (${get().priceRange[0] * 100}to ${get().priceRange[1] * 100})`,
+              `variants.price.centAmount:range (${get().priceRange[0]}to ${get().priceRange[1]})`,
             ],
           },
         })

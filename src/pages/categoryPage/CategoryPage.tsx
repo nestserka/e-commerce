@@ -133,8 +133,8 @@ export default function CategoryPage(): JSX.Element {
   };
 
   const handleDeleteFilters = (): void => {
-    setPriceRange([0, 17000]);
-    setPriceRange([0, 17000]);
+    setPriceRange([0, 1700000]);
+    setPriceRange([0, 1700000]);
     setBestsellerStatus(false);
     setDiscountStatus(false);
     setBrandListDefault();
@@ -303,17 +303,17 @@ export default function CategoryPage(): JSX.Element {
             <div className={style['price-range']}>
               <div className={style['price-range-value']}>
                 <span>Price</span>
-                <span>${priceRange[0]}</span>
+                <span>${(priceRange[0]/100).toFixed(2)}</span>
                 <span>-</span>
-                <span>${priceRange[1]}</span>
+                <span>${(priceRange[1]/100).toFixed(2)}</span>
               </div>
               <ReactSlider
                 className="horizontal-slider"
                 thumbClassName="example-thumb"
                 trackClassName="example-track"
-                defaultValue={[0, 17000]}
+                defaultValue={[0, 1700000]}
                 value={priceRange}
-                max={17000}
+                max={1700000}
                 min={0}
                 onChange={(value) => {
                   setPriceRange(value);
