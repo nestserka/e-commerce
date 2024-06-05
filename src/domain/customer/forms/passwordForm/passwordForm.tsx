@@ -69,12 +69,13 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
       newPassword: data.newPassword,
     };
     await updateCustomerPassword(body)
-      .then((response) => {
+      .then(async (response) => {
         setValueVersion(response.version);
         setIsShown(true);
         onClose();
         reset();
         setFormPasswordError('');
+        await loginUser(valueEmail, body.newPassword);
       })
       .catch((error: Error) => {
         setFormPasswordError('');
@@ -85,7 +86,6 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
           setErrorIsShown(true);
         }
       });
-    await loginUser(valueEmail, body.newPassword);
   };
 
   return (

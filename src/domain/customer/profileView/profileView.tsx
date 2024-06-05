@@ -25,12 +25,12 @@ export default function ProfileView(): JSX.Element {
   const [isNewAddressModalOpen, openNewAddressModal, closeNewAddressModal] = useToggleModal();
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
 
-  const handleEditAddressClick = (addressId: string) : void  => {
+  const handleEditAddressClick = (addressId: string): void => {
     setSelectedAddressId(addressId);
     openAddressModal();
   };
 
-  const handleEditBillingAddressClick = (addressId: string) : void => {
+  const handleEditBillingAddressClick = (addressId: string): void => {
     setSelectedAddressId(addressId);
     openBillingAddressModal();
   };
@@ -78,7 +78,9 @@ export default function ProfileView(): JSX.Element {
                   <ProfileField
                     title="Shipping Address"
                     id={address.id ?? ''}
-                    onEditClick={() => { handleEditAddressClick(address.id ?? ''); }}
+                    onEditClick={() => {
+                      handleEditAddressClick(address.id ?? '');
+                    }}
                     inputVal={`${address.streetName}, ${address.city}, ${address.postalCode}, ${address.country}`}
                     isAddress
                     isDefault={address.isDefault ?? false}
@@ -113,12 +115,14 @@ export default function ProfileView(): JSX.Element {
                   <ProfileField
                     title="Billing Address"
                     id={address.id ?? ''}
-                    onEditClick={() => { handleEditBillingAddressClick(address.id ?? ''); }}
+                    onEditClick={() => {
+                      handleEditBillingAddressClick(address.id ?? '');
+                    }}
                     inputVal={`${address.streetName}, ${address.city}, ${address.postalCode},  ${address.country}`}
                     isAddress
                     isDefault={address.isDefault ?? false}
                   />
-                  {isBillingAddressModalOpen&& selectedAddressId === address.id && (
+                  {isBillingAddressModalOpen && selectedAddressId === address.id && (
                     <BillingAddressForm
                       isOpen={isBillingAddressModalOpen}
                       onClose={closeBillingAddressModal}

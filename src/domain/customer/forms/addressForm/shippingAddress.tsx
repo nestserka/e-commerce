@@ -32,7 +32,7 @@ export type ShippingFormValues = z.infer<typeof schema>;
 
 export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId }: FormModal): JSX.Element {
   const { shippingAddress, version, updateAddress, setDefault } = useCustomerInfo();
-  console.log(`${shippingAddressId  }T`);
+  console.log(`${shippingAddressId}T`);
   const address = shippingAddress.find((addr) => addr.id === shippingAddressId);
   console.log(address);
   const { setErrorIsShown } = showErrorMessage();
@@ -83,11 +83,11 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
 
         if (updatedAddress && shippingAddressId) {
           updateAddress(shippingAddressId, updatedAddress, response.version, 'shipping');
-          console.log()
+          console.log();
         }
 
         if (address?.isDefault !== data.defaultShippingAddress && shippingAddressId) {
-          console.log("iamhere");
+          console.log('iamhere');
 
           if (data.defaultShippingAddress) {
             const setDefaultAddress: MyCustomerUpdateAction[] = [
