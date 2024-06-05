@@ -43,6 +43,10 @@ export default function CategoryPage(): JSX.Element {
   const [brandListAttribute, setBrandListAttribute] = useState<AttributeLocalizedEnumValue[]>([]);
   const [refractorListAttribute, setRefractorListAttribute] = useState<AttributeLocalizedEnumValue[]>([]);
   const [materialListAttribute, setMaterialListAttribute] = useState<AttributeLocalizedEnumValue[]>([]);
+  const [isCheckedBrandList, setIsCheckedBrandList] = useState(false);
+  const [isCheckedMaterialList, setIsCheckedMaterialList] = useState(false);
+  const [isCheckedRefractorList, setIsCheckedRefractorList] = useState(false);
+
   const navigation = useNavigate();
   const {
     categoriesData,
@@ -58,6 +62,12 @@ export default function CategoryPage(): JSX.Element {
     setBestsellerStatus,
     setDiscountStatus,
     setPriceRange,
+    setBrandList,
+    setBrandListDefault,
+    setMaterialListDefault,
+    setMaterialList,
+    setRefractorListDefault,
+    setRefractorList,
   } = useCatalogData();
   const { Search } = Input;
   const getProductListFromCategory = useCallback(() => {
@@ -112,9 +122,6 @@ export default function CategoryPage(): JSX.Element {
     setSelectedValue('');
     setNameSubtree('');
     setSubtreesList('', true);
-    // setRefractorListAttribute([]);
-    // setBrandListAttribute([]);
-    // setMaterialListAttribute([]);
     getProductListFromCategory();
   };
 
@@ -127,10 +134,21 @@ export default function CategoryPage(): JSX.Element {
 
   const handleDeleteFilters = (): void => {
     setPriceRange([0, 17000]);
+    setPriceRange([0, 17000]);
     setBestsellerStatus(false);
     setDiscountStatus(false);
-    setPriceRange([0, 17000]);
-    handleClickForCategory();
+    setBrandListDefault();
+    setMaterialListDefault();
+    setRefractorListDefault();
+    setIsCheckedBrandList(true);
+    setIsCheckedMaterialList(true);
+    setIsCheckedRefractorList(true);
+    setTimeout(() => {
+      setIsCheckedBrandList(false);
+      setIsCheckedMaterialList(false);
+      setIsCheckedRefractorList(false);
+    }, 0);
+    getProductListFromCategory();
   };
 
   useEffect(() => {
@@ -216,7 +234,7 @@ export default function CategoryPage(): JSX.Element {
         <Link to={ROUTES.HOME} className={style['breadcrumbs-link']}>
           <img src={homeIcon} className="home-icon" alt="NASA Store Homepage" />
         </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
+        <img src={chevronIcon} className="chevron-icon" alt="chevron" />
         <button className={style['category-header-link']} type="button" onClick={handleClickForCatalog}>
           All categories
         </button>
@@ -306,12 +324,6 @@ export default function CategoryPage(): JSX.Element {
               />
             </div>
           </details>
-          <div className={style['filters-section']}>
-            <button className={style['filters-button']} type="button" onClick={handleDeleteFilters}>
-              <span className={style['filters-button-span']}>Clear Filters</span>
-              <img src={iconDelete} alt="delete" />
-            </button>
-          </div>
 
           <details
             className={brandListAttribute.length ? style['filters-section'] : style['filters-section-display-none']}
@@ -325,8 +337,10 @@ export default function CategoryPage(): JSX.Element {
                     id={attribute.key}
                     name={attribute.label.en}
                     label={attribute.label.en}
+                    isValue={isCheckedBrandList}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      console.log('pop', e.target);
+                      setBrandList(e.target.id, e.target.checked);
+                      getProductListFromCategory();
                     }}
                   />
                 ))
@@ -346,8 +360,10 @@ export default function CategoryPage(): JSX.Element {
                     id={attribute.key}
                     name={attribute.label.en}
                     label={attribute.label.en}
+                    isValue={isCheckedMaterialList}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      console.log('pop', e.target);
+                      setMaterialList(e.target.id, e.target.checked);
+                      getProductListFromCategory();
                     }}
                   />
                 ))
@@ -365,13 +381,21 @@ export default function CategoryPage(): JSX.Element {
                     id={attribute.key}
                     name={attribute.label.en}
                     label={attribute.label.en}
+                    isValue={isCheckedRefractorList}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      console.log('pop', e.target);
+                      setRefractorList(e.target.id, e.target.checked);
+                      getProductListFromCategory();
                     }}
                   />
                 ))
               : ''}
           </details>
+          <div className={style['filters-section']}>
+            <button className={style['filters-button']} type="button" onClick={handleDeleteFilters}>
+              <span className={style['filters-button-span']}>Clear Filters</span>
+              <img src={iconDelete} alt="delete" />
+            </button>
+          </div>
         </aside>
         <section className={style.products}>
           <header className={style['products-header']}>
