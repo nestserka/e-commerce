@@ -244,15 +244,41 @@ export const INPUT_DATE_VALIDATION_SCHEMA = z
       }
 
       const daysInMonth = dayjs().set('year', year).set('month', month).daysInMonth();
+      const currentYear = dayjs().year();
 
       if (day > daysInMonth) {
+        return false;
+      }
+
+      if (year > currentYear) {
         return false;
       }
 
       return true;
     },
     {
-      message: 'Invalid day, month, or year',
+      message: 'Invalid day, month, or year.',
+    },
+  )
+  .refine(
+    (value) => {
+      const parts = value.split('.');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+
+      if (day <= 0 || day > 31 || month < 0 || month > 11 || year <= 0) {
+        return false;
+      }
+
+      if (year < 1900) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: 'The max age to be set is starting from 1900',
     },
   )
   .refine(
