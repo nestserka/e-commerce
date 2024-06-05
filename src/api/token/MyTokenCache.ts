@@ -15,7 +15,13 @@ class MyTokenCache implements TokenCache {
   }
 
   set(newCache: TokenStore): void {
-    Object.assign(this.tokenData, newCache);
+    if (newCache.refreshToken === undefined && (newCache.expirationTime !== 0 || newCache.token !== '')) {
+      this.tokenData.token = newCache.token;
+      this.tokenData.expirationTime = newCache.expirationTime;
+    } else {
+      Object.assign(this.tokenData, newCache);
+    }
+
     const serializedCache = JSON.stringify(this.tokenData);
     localStorage.setItem(`token-${LS_PREFIX}`, serializedCache);
   }
@@ -27,11 +33,7 @@ class MyTokenCache implements TokenCache {
       const parsedToken: unknown = JSON.parse(token);
 
       if (isTokenStore(parsedToken)) {
-        if (parsedToken.expirationTime && parsedToken.expirationTime < Date.now()) {
-          this.clear();
-        } else {
-          this.tokenData = parsedToken;
-        }
+        this.tokenData = parsedToken;
       }
     }
 
@@ -41,7 +43,19 @@ class MyTokenCache implements TokenCache {
   clear(): void {
     this.tokenData = { token: '', expirationTime: 0, refreshToken: '' };
     localStorage.removeItem(`token-${LS_PREFIX}`);
-    localStorage.removeItem('token');
+  }
+
+  update(): boolean {
+    this.get();
+    this.tokenData = {
+      token: '',
+      expirationTime: this.tokenData.expirationTime,
+      refreshToken: this.tokenData.refreshToken,
+    };
+    const serializedCache = JSON.stringify(this.tokenData);
+    localStorage.setItem(`token-${LS_PREFIX}`, serializedCache);
+
+    return true;
   }
 }
 

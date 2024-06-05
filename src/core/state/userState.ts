@@ -3,7 +3,14 @@ import { create } from 'zustand';
 import { LS_PREFIX } from '../../constants/constants';
 
 import type { Address } from '../../utils/types';
-import type { CustomerCredentials, CustomerInfo, CustomerInfoState, IsShownModal, LoginState } from './types';
+import type {
+  CustomerCredentials,
+  CustomerInfo,
+  CustomerInfoState,
+  IsShownModal,
+  LoginState,
+  ShowErrorMessage,
+} from './types';
 
 const localIsAuth = localStorage.getItem(`isAuth-${LS_PREFIX}`);
 const localCustomerId = localStorage.getItem(`customerId-${LS_PREFIX}`);
@@ -164,5 +171,12 @@ export const useCustomerInfo = create<CustomerInfoState>((set) => ({
       })),
       version,
     }));
+  },
+}));
+
+export const showErrorMessage = create<ShowErrorMessage>((set) => ({
+  isErrorShown: false,
+  setErrorIsShown: (isErrorShown: boolean): void => {
+    set(() => ({ isErrorShown }));
   },
 }));

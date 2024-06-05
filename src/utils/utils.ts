@@ -62,3 +62,19 @@ export const extractShippingAddresses = (
 export function formatPrice(num: number): string {
   return `$${(num / 100).toFixed(2)}`;
 }
+
+export interface BooleanStore {
+  get: () => boolean;
+  set: (hasValue: boolean) => void;
+}
+
+export function createBooleanState(initialValue: boolean): BooleanStore {
+  let hasValue: boolean = initialValue;
+
+  return {
+    get: () => hasValue,
+    set: (newValue: boolean): void => {
+      hasValue = newValue;
+    },
+  };
+}

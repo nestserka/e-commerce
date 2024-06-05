@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 
-import { showModalMessage } from '../../core/state/userState';
+import { showErrorMessage, showModalMessage } from '../../core/state/userState';
 import style from './_modalMessage.module.scss';
 import successIcon from '../../assets/images/icons/success-icon.svg';
+import { logOut } from '../../utils/logOut';
 
 export default function ModalMessage({
   type,
@@ -14,6 +15,7 @@ export default function ModalMessage({
   message: string;
 }): JSX.Element {
   const { isShown, setIsShown } = showModalMessage();
+  const { isErrorShown, setErrorIsShown } = showErrorMessage();
 
   useEffect(() => {
     if (isShown) {
@@ -23,14 +25,24 @@ export default function ModalMessage({
     }
   }, [isShown, setIsShown]);
 
+  useEffect(() => {
+    if (isErrorShown) {
+      setTimeout(() => {
+        setErrorIsShown(false);
+        logOut();
+      }, 5000);
+    }
+  }, [isErrorShown, setErrorIsShown]);
+
   return (
-    <section className={`${style.wrapper} ${style.visible}`} data-testid="modal-message">
+    <section className={`${style.wrapper} ${isErrorShown ? style.error : style.visible}`} data-testid="modal-message">
       <button
         aria-label="Close"
         type="button"
         className={style['close-button']}
         onClick={(): void => {
           setIsShown(false);
+          setErrorIsShown(false);
         }}
       />
       <div className={style['title-wrapper']}>

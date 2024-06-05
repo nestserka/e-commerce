@@ -1,15 +1,15 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import style from './_profile.module.scss';
 import ProfileAvatar from '../../domain/customer/avatar/profileAvatar';
 import { extractShippingAddresses, formatDateOfBirth } from '../../utils/utils';
-import { showModalMessage, useCustomerInfo } from '../../core/state/userState';
+import { showErrorMessage, showModalMessage, useCustomerInfo } from '../../core/state/userState';
 import ProfileView from '../../domain/customer/profileView/profileView';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 import getUser from '../../api/me/getUser';
-import ErrorWindow from '../../components/errorWindow/errorWindow';
-import { logOut } from '../../utils/logOut';
+import { tokenCache } from '../../api/token/MyTokenCache';
+import { ERROR_TYPES } from '../../constants/constants';
 
 import type { Params } from 'react-router-dom';
 
@@ -19,20 +19,20 @@ const modalMessageSuccessUpdateProps = {
   message: 'Your profile was updated.',
 };
 
+const modalErrorOnToken = {
+  errorType: 'error',
+  errorTitle: 'Session expired',
+  errorMessage: 'Your session was expired. You will be shortly redirected to login page.',
+};
+
 export default function ProfilePage(): JSX.Element {
   const { customerId }: Readonly<Params<string>> = useParams();
   const { setCustomerInfo, isSet } = useCustomerInfo();
   const { isShown } = showModalMessage();
+  const { isErrorShown } = showErrorMessage();
   const { type, title, message } = modalMessageSuccessUpdateProps;
-  const [isTokenErrorWindonOpen, setIsTokenErrorWindonOpen] = useState(false);
-
-  const handleOpenTokenWindow = (): void => {
-    setIsTokenErrorWindonOpen(true);
-  };
-
-  const handleCloseTokenWindow = (): void => {
-    setIsTokenErrorWindonOpen(false);
-  };
+  const { errorType, errorTitle, errorMessage } = modalErrorOnToken;
+  const { setErrorIsShown } = showErrorMessage();
 
   useEffect(() => {
     const fetchCustomer = async (): Promise<void> => {
@@ -61,26 +61,28 @@ export default function ProfilePage(): JSX.Element {
             setCustomerInfo(customerInfo);
           }
         })
-        .catch((error: Error) => {
-          handleOpenTokenWindow();
-          console.log(error);
-          setTimeout(() => {
-            logOut();
-          }, 3500);
+        .catch(async (error: Error) => {
+          if (error.message.includes(ERROR_TYPES.INVALID_TOKEN)) {
+            if (tokenCache.update()) {
+              await fetchCustomer().catch();
+            }
+          } else {
+            setErrorIsShown(true);
+          }
         });
     };
 
-    fetchCustomer().catch((error) => {
-      console.error('Error executing fetchCustomer:', error);
+    fetchCustomer().catch((error: Error) => {
+      console.log(error);
     });
-  }, [customerId, setCustomerInfo]);
+  }, [customerId, setCustomerInfo, setErrorIsShown]);
 
   return (
     <section className={style['profile-content']} data-testid="profile">
       <div className={style['profile-content-wrapper']}>
         <ProfileAvatar />
-        {isTokenErrorWindonOpen && <ErrorWindow isOpen={isTokenErrorWindonOpen} onClose={handleCloseTokenWindow} />}
         {isShown && <ModalMessage type={type} title={title} message={message} />}
+        {isErrorShown && <ModalMessage type={errorType} title={errorTitle} message={errorMessage} />}
         {isSet ? <ProfileView /> : <div className="loading">Loading...</div>}
       </div>
     </section>

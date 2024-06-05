@@ -328,3 +328,18 @@ export const EMPTY_IMAGES_LIST_REPLACEMENT: Image[] = [
     url: imageForCard,
   },
 ];
+
+export const requiredEnvVariables = {
+  VITE_APP_PASSWORD_FLOW_SECRET: 'login with password client id',
+  VITE_APP_PASSWORD_FLOW_ID: 'login with password client secret',
+  VITE_APP_AUTH_URL: 'auth url',
+  VITE_APP_PROJECT_KEY: 'project key',
+  VITE_APP_API_URL: 'api url',
+};
+
+export const ERROR_TYPES = {
+  INVALID_REFRESH_TOKEN: 'refresh token',
+  VERSION_ERROR: 'different version than expected',
+  INVALID_JSON: 'JSON',
+  INVALID_TOKEN: 'invalid_token',
+} as const;

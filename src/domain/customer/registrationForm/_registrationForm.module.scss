@@ -16,9 +16,10 @@
   .form-group {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
     gap: 1.5em;
+    justify-content: space-between;
+
+    width: 100%;
   }
 
   .input-section {
@@ -43,17 +44,23 @@
     width: calc(90% - 6em);
   }
 
-  @media (width <= 1440px) {
+  @media (width <= 1613px) {
     width: calc(100% - 6em);
     padding: 5em;
   }
 
-  @media (width <= 1240px) {
+  @media (width <= 1300px) {
     padding: 4em;
 
     .form-group {
       display: flex;
       flex-wrap: wrap;
+    }
+
+    .input-section {
+      display: flex;
+      flex-basis: 50%;
+      max-width: calc(50% - 0.75em);
     }
   }
 

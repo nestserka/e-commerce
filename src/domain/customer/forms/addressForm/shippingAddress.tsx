@@ -5,13 +5,13 @@ import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 
 import style from '../_forms.module.scss';
-import { ADDRESS_VALIDATION_SCHEMA } from '../../../../constants/constants';
+import { ADDRESS_VALIDATION_SCHEMA, ERROR_TYPES } from '../../../../constants/constants';
 import FormTitle from '../../../../components/formTitle/FormTitle';
 import ErrorMessage from '../../../../components/errorMessage/ErrorMessage';
 import ModalProfile from '../../../../components/modalProfile/ModalProfile';
 import { type FormModal, VERSION_ERROR_MESSAGE } from '../../../../utils/types';
 import Input from '../../../../components/ui/input/input';
-import { showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
+import { showErrorMessage, showModalMessage, useCustomerInfo } from '../../../../core/state/userState';
 import {
   inputShippingCityProps,
   inputShippingPostalCodeProps,
@@ -32,7 +32,10 @@ export type ShippingFormValues = z.infer<typeof schema>;
 
 export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId }: FormModal): JSX.Element {
   const { shippingAddress, version, updateAddress, setDefault } = useCustomerInfo();
+  console.log(`${shippingAddressId  }T`);
   const address = shippingAddress.find((addr) => addr.id === shippingAddressId);
+  console.log(address);
+  const { setErrorIsShown } = showErrorMessage();
 
   const { register, handleSubmit, formState, reset, control, watch, trigger } = useForm<ShippingFormValues>({
     resolver: zodResolver(schema),
@@ -80,21 +83,20 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
 
         if (updatedAddress && shippingAddressId) {
           updateAddress(shippingAddressId, updatedAddress, response.version, 'shipping');
+          console.log()
         }
 
         if (address?.isDefault !== data.defaultShippingAddress && shippingAddressId) {
+          console.log("iamhere");
+
           if (data.defaultShippingAddress) {
             const setDefaultAddress: MyCustomerUpdateAction[] = [
               {
                 action: 'setDefaultShippingAddress',
                 addressId: shippingAddressId,
               },
-              {
-                action: 'addShippingAddressId',
-                addressId: shippingAddressId,
-              },
             ];
-            await updateCustomer(version, setDefaultAddress).then((res) => {
+            await updateCustomer(response.version, setDefaultAddress).then((res) => {
               setDefault(shippingAddressId, res.version, true, 'shipping');
             });
           } else {
@@ -108,7 +110,7 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
                 addressId: shippingAddressId,
               },
             ];
-            await updateCustomer(version, removeDefaultAddress).then((resp) => {
+            await updateCustomer(response.version, removeDefaultAddress).then((resp) => {
               setDefault(shippingAddressId, resp.version, false, 'shipping');
             });
           }
@@ -121,12 +123,14 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
       .catch((error: Error) => {
         setFormError('');
 
-        if (error.message.includes('different version')) {
+        if (error.message.includes(ERROR_TYPES.VERSION_ERROR)) {
           setFormError(VERSION_ERROR_MESSAGE);
-        }
-
-        if (error.message.includes('JSON')) {
+        } else if (error.message.includes(ERROR_TYPES.INVALID_REFRESH_TOKEN)) {
+          setErrorIsShown(true);
+        } else if (error.message.includes(ERROR_TYPES.INVALID_JSON)) {
           setFormError('Something wrong with the data, try to insert again');
+        } else {
+          setFormError(error.message);
         }
       });
   };

@@ -26,6 +26,11 @@
     animation-iteration-count: 1;
   }
 
+  &.error {
+    animation: open-modal 6s forwards;
+    animation-iteration-count: 1;
+  }
+
   @keyframes open-modal {
     0% {
       transform: translateX(0);

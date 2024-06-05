@@ -63,3 +63,8 @@ export interface CustomerInfoState {
   addAddress: (newAddress: Address, version: number, addressType: 'shipping' | 'billing', isDefault: boolean) => void;
   removeAddress: (addressId: string, addressType: 'shipping' | 'billing', version: number) => void;
 }
+
+export interface ShowErrorMessage {
+  isErrorShown: boolean;
+  setErrorIsShown: (isErrorShown: boolean) => void;
+}
