@@ -18,7 +18,7 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
           {product.discountedName && <span className={style['discount-name']}>{product.discountedName.label}</span>}
           {product.isCardBestseller && <span className={style.bestseller}>BESTSELLER</span>}
         </div>
-        <img className={style['card-pic-img']} src={product.cardImages[0]} alt="" />
+        <img className={style['card-pic-img']} src={product.cardImages[0]} alt={product.cardName} />
       </div>
 
       <div className={style['card-info-wrapper']}>

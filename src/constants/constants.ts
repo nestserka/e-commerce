@@ -1,8 +1,11 @@
 import { z } from 'zod';
 import dayjs from 'dayjs';
 
+import imageForCard from '../assets/images/card/empty-state-img.jpg';
+
 import type { OptionsFromSelectSort } from '../pages/categoryPage/types';
 import type { NavLinkProps } from '../domain/header/navigation/types';
+import type { Image } from '../components/sliderProduct/types';
 
 export const ROUTES = {
   START: '/',
@@ -306,5 +309,22 @@ export const OPTIONS_FROM_SORT: OptionsFromSelectSort[] = [
   {
     value: 'name.en desc',
     label: 'Name from Z to A',
+  },
+];
+
+export const EMPTY_IMAGES_LIST_REPLACEMENT: Image[] = [
+  {
+    dimensions: {
+      h: 1400,
+      w: 1400,
+    },
+    url: imageForCard,
+  },
+  {
+    dimensions: {
+      h: 1400,
+      w: 1400,
+    },
+    url: imageForCard,
   },
 ];

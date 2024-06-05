@@ -1,10 +1,10 @@
-import imageForCard from '../../../assets/images/card/2d4d9c82621446798b761cf3c957865b.jpg';
+import imageForCard from '../../../assets/images/card/empty-state-img.jpg';
 
 import type { Attribute, Image, ProductProjection } from '@commercetools/platform-sdk';
 import type { DataDiscountedName, PropsCard } from './types';
 
 export function createParamsfromCard(params: ProductProjection): PropsCard {
-  const cardImages: string[] = params.masterVariant.images
+  const cardImages: string[] = params.masterVariant.images?.length
     ? params.masterVariant.images.map((image: Image) => image.url)
     : [imageForCard];
   const lackOfDescription: string = 'Product information will be available at a later date';
