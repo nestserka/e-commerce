@@ -78,7 +78,6 @@ export default function BillingAddressForm({ isOpen, onClose, billingAddressId }
     await updateCustomer(version, body)
       .then(async (response) => {
         const updatedAddress = response.addresses.find((addr) => addr.id === billingAddressId);
-        console.log(updateAddress);
 
         if (updatedAddress && billingAddressId) {
           updateAddress(billingAddressId, updatedAddress, response.version, 'billing');
@@ -91,12 +90,8 @@ export default function BillingAddressForm({ isOpen, onClose, billingAddressId }
                 action: 'setDefaultBillingAddress',
                 addressId: billingAddressId,
               },
-              {
-                action: 'addBillingAddressId',
-                addressId: billingAddressId,
-              },
             ];
-            await updateCustomer(version, setDefaultAddress).then((res) => {
+            await updateCustomer(response.version, setDefaultAddress).then((res) => {
               setDefault(billingAddressId, res.version, true, 'billing');
             });
           } else {
@@ -110,7 +105,7 @@ export default function BillingAddressForm({ isOpen, onClose, billingAddressId }
                 addressId: billingAddressId,
               },
             ];
-            await updateCustomer(version, removeDefaultAddress).then((resp) => {
+            await updateCustomer(response.version, removeDefaultAddress).then((resp) => {
               setDefault(billingAddressId, resp.version, false, 'billing');
             });
           }
