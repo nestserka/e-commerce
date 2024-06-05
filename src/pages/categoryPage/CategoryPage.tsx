@@ -175,11 +175,10 @@ export default function CategoryPage(): JSX.Element {
       </header>
       <main className={style.main}>
         <aside className={style['products-filters']}>
-          <div className={style['filters-section-first']}>
-            <h3 className={style['filters-header-title']}> FILTERS</h3>
-          </div>
+          <h3 className={style['filters-header']}>Filters</h3>
+
           <details className={style['filters-section']} open>
-            <summary className={style['filters-header-title']}>Categories</summary>
+            <summary className={style['filter-title']}>Categories</summary>
             <div key={activeCategory} className={style['select-sort']}>
               <Select
                 labelInValue
@@ -194,7 +193,7 @@ export default function CategoryPage(): JSX.Element {
             </div>
           </details>
           <details className={style['filters-section']} open>
-            <summary className={style['filters-header-title']}>Promo-Actions</summary>
+            <summary className={style['filter-title']}>Promo-Actions</summary>
             <div className={style['select-sort']}>
               <div className={style['checkbox-wrapper']}>
                 <InputCheckBox
@@ -221,13 +220,11 @@ export default function CategoryPage(): JSX.Element {
             </div>
           </details>
           <details className={style['filters-section']} open>
-            <summary className={style['filters-header-title']}>Price Range</summary>
+            <summary className={style['filter-title']}>Price Range</summary>
             <div className={style['price-range']}>
-              <div className={style['price-range-value']}>
-                <span>Price</span>
-                <span>${priceRange[0]}</span>
-                <span>-</span>
-                <span>${priceRange[1]}</span>
+              <div className={style['price-range-inputs']}>
+                <span className={style['price-range-value']}>$ {priceRange[0]}</span>
+                <span className={style['price-range-value']}>$ {priceRange[1]}</span>
               </div>
               <ReactSlider
                 className="horizontal-slider"
