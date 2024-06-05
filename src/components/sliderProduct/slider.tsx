@@ -9,7 +9,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/thumbs';
 import style from './_slider.module.scss';
-import { emptyImagesListReplacement } from '../../constants/constants';
+import { EMPTY_IMAGES_LIST_REPLACEMENT } from '../../constants/constants';
 
 import type { Image, SliderProps } from './types';
 import type { CSSProperties } from 'react';
@@ -19,7 +19,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
   const [modalProductSwiper, setModalProductSwiper] = useState<SwiperProps | null>(null);
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperProps | null>(null);
   const [isModalSwiperShown, setIsModalSwiperShown] = useState<boolean>(false);
-  const [ImagesList] = useState<Image[]>(images?.length ? images : emptyImagesListReplacement);
+  const [ImagesList] = useState<Image[]>(images?.length ? images : EMPTY_IMAGES_LIST_REPLACEMENT);
 
   return (
     <>

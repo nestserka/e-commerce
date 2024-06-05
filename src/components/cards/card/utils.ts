@@ -1,4 +1,4 @@
-import imageForCard from '../../../assets/images/card/2d4d9c82621446798b761cf3c957865b.jpg';
+import imageForCard from '../../../assets/images/card/empty-state-img.jpg';
 
 import type { Attribute, Image, ProductProjection } from '@commercetools/platform-sdk';
 import type { DataDiscountedName, PropsCard } from './types';

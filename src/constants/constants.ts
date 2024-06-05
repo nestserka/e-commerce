@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import dayjs from 'dayjs';
 
-import imageForCard from '../assets/images/card/2d4d9c82621446798b761cf3c957865b.jpg';
+import imageForCard from '../assets/images/card/empty-state-img.jpg';
 
 import type { OptionsFromSelectSort } from '../pages/categoryPage/types';
 import type { NavLinkProps } from '../domain/header/navigation/types';
@@ -312,7 +312,7 @@ export const OPTIONS_FROM_SORT: OptionsFromSelectSort[] = [
   },
 ];
 
-export const emptyImagesListReplacement: Image[] = [
+export const EMPTY_IMAGES_LIST_REPLACEMENT: Image[] = [
   {
     dimensions: {
       h: 1400,
