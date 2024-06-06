@@ -6,6 +6,9 @@ import type { Category, ProductProjectionPagedSearchResponse, ProductType } from
 
 export interface CatalogStateData {
   categoryName: string;
+  brandList: string[];
+  materialList: string[];
+  refractorList: string[];
   categoriesData: Category[];
   priceRange: number[];
   subtreesList: string;
@@ -19,6 +22,12 @@ export interface CatalogStateData {
   isBestseller: boolean;
   isDiscount: boolean;
   offset: number;
+  setRefractorList: (nameRefractor: string, isStatus: boolean) => void;
+  setRefractorListDefault: () => void;
+  setBrandList: (nameBrand: string, isStatus: boolean) => void;
+  setBrandListDefault: () => void;
+  setMaterialList: (nameMaterial: string, isStatus: boolean) => void;
+  setMaterialListDefault: () => void;
   setPriceRange: (newRange: number[]) => void;
   setCategoryName: (newName: string) => void;
   createFilterByCategoriesId: (category?: string) => string;
@@ -35,8 +44,11 @@ export interface CatalogStateData {
 }
 
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
+  brandList: [],
+  refractorList: [],
+  materialList: [],
   categoryName: 'all',
-  priceRange: [0, 17000],
+  priceRange: [0, 1700000],
   categoriesData: [],
   subtreesList: '',
   parentsCategories: [],
@@ -49,6 +61,36 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   isBestseller: false,
   isDiscount: false,
   offset: 0,
+  setRefractorList: (nameRefractor: string, isStatus: boolean): void => {
+    if (isStatus) {
+      get().refractorList.push(nameRefractor);
+    } else {
+      set(() => ({ refractorList: get().refractorList.filter((refractorItem) => refractorItem !== nameRefractor) }));
+    }
+  },
+  setRefractorListDefault: (): void => {
+    set(() => ({ refractorList: [] }));
+  },
+  setBrandList: (nameBrand: string, isStatus: boolean): void => {
+    if (isStatus) {
+      get().brandList.push(nameBrand);
+    } else {
+      set(() => ({ brandList: get().brandList.filter((brandItem) => brandItem !== nameBrand) }));
+    }
+  },
+  setBrandListDefault: (): void => {
+    set(() => ({ brandList: [] }));
+  },
+  setMaterialList: (nameMaterial: string, isStatus: boolean): void => {
+    if (isStatus) {
+      get().materialList.push(nameMaterial);
+    } else {
+      set(() => ({ materialList: get().materialList.filter((materialItem) => materialItem !== nameMaterial) }));
+    }
+  },
+  setMaterialListDefault: (): void => {
+    set(() => ({ materialList: [] }));
+  },
   setPriceRange: (newRange: number[]): void => {
     set(() => ({ priceRange: newRange }));
   },
@@ -161,8 +203,28 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
               ...(get().categoryName === 'all' ? [] : [get().createFilterByCategoriesId(category)]),
               ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),
               ...(get().isDiscount ? [`variants.attributes.discount.key: "10%-off", "15%-off", "20%-off"`] : []),
-              // `variants.attributes.brand.key:${brand}`,
-              `variants.price.centAmount:range (${get().priceRange[0] * 100}to ${get().priceRange[1] * 100})`,
+              ...(get().brandList.length
+                ? [
+                    `variants.attributes.brand.key: ${get()
+                      .brandList.map((name) => `"${name}"`)
+                      .join(',')}`,
+                  ]
+                : []),
+              ...(get().materialList.length
+                ? [
+                    `variants.attributes.material.key: ${get()
+                      .materialList.map((name) => `"${name}"`)
+                      .join(',')}`,
+                  ]
+                : []),
+              ...(get().refractorList.length
+                ? [
+                    `variants.attributes.refractor.key: ${get()
+                      .refractorList.map((name) => `"${name}"`)
+                      .join(',')}`,
+                  ]
+                : []),
+              `variants.price.centAmount:range (${get().priceRange[0]}to ${get().priceRange[1]})`,
             ],
           },
         })
