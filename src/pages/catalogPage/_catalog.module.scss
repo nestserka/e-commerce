@@ -6,11 +6,11 @@
   flex-grow: 1;
 
   width: 100%;
-  margin: 4em auto;
+  margin: 4rem auto;
 
-  // @media (width >= 1800px) {
-  //   width: calc(90% - 6em);
-  // }
+  @media (width <= 480px) {
+    margin: 2rem auto;
+  }
 
   // @media (width <= 1799px) {
   //   width: calc(100%);

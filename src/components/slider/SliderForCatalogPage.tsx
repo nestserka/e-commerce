@@ -36,7 +36,7 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
             500: {
               slidesPerView: 1.5,
             },
-            840: {
+            720: {
               slidesPerView: 2,
             },
             980: {
