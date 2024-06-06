@@ -1,27 +1,39 @@
 import { z } from 'zod';
 import dayjs from 'dayjs';
 
+import imageForCard from '../assets/images/card/empty-state-img.jpg';
+
+import type { OptionsFromSelectSort } from '../pages/categoryPage/types';
 import type { NavLinkProps } from '../domain/header/navigation/types';
+import type { Image } from '../components/sliderProduct/types';
 
 export const ROUTES = {
   START: '/',
   HOME: '/home',
-  PRODUCT_BESTSELLER: 'main/:productId',
   SING_IN: '/sign_in',
   SING_UP: '/sign_up',
   ABOUT: '/about',
   CATALOG: '/catalog',
+  CATALOG_ALL: '/catalog/all',
   CATEGORY: '/catalog/:category',
-  PRODUCT: '/catalog/:category/:productId',
+  CATALOG_SUBTREES: '/catalog/:category/:subtree',
+  PRODUCT: '/product/:productId',
   PROFILE: '/profile/:customerId',
-  CART: '/cart',
   CART_CUSTOMER: '/cart/:customerId',
+  CART: '/cart',
   NOT_FOUND: '*',
+} as const;
+
+export const DYNAMIC_ROUTES = {
+  PROFILE: '/profile/',
+  CATALOG: '/catalog/',
+  CART: '/cart/',
+  PRODUCT: '/product/',
 } as const;
 
 export const NAV_LINKS: NavLinkProps[] = [
   { title: 'Home', route: ROUTES.HOME },
-  { title: 'Catalog', route: ROUTES.CATALOG },
+  { title: 'Catalog', route: ROUTES.CATALOG_ALL },
   { title: 'About', route: ROUTES.ABOUT },
   { title: 'Sign In', route: ROUTES.SING_IN },
   { title: 'Sign Up', route: ROUTES.SING_UP },
@@ -49,8 +61,12 @@ export const PASSWORD_VALIDATION_SCHEMA = z
     message: 'Password must not contain whitespace.',
   });
 
+const ATEXT = /[a-zA-Z0-9_]/i;
+const DOT_ATOM = new RegExp(`^${ATEXT.source}+(\\.${ATEXT.source}+)*$`, 'i');
+
 export const EMAIL_VALIDATION_SCHEMA = z
   .string()
+  .max(254, { message: 'Email must be no longer than 254 characters.' })
   .refine(
     (value) => {
       if (value.includes('@')) {
@@ -78,7 +94,7 @@ export const EMAIL_VALIDATION_SCHEMA = z
         return false;
       }
 
-      if (!/^[a-zA-Z0-9._]*$/.test(parts[0]) || !/^[a-zA-Z.]*$/.test(parts[1])) {
+      if (!DOT_ATOM.test(parts[0]) || !/^[a-zA-Z.]*$/.test(parts[1])) {
         return false;
       }
 
@@ -116,6 +132,7 @@ const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, st
     .string()
     .trim()
     .min(1, `${fieldName} must contain at least one character.`)
+    .max(150, { message: 'Name and Surname must be no longer than 150 characters.' })
     .refine((value) => /^[a-zA-Z]+$/.test(value), {
       message: `${fieldName} must contain only letters (no special characters or numbers).`,
     });
@@ -155,6 +172,7 @@ const STREET_VALIDATION_SCHEMA = z
   .string()
   .trim()
   .min(1, `Street must contain at least one character.`)
+  .max(200, { message: 'Street must be no longer than 200 characters.' })
   .refine((value) => /^[a-zA-Z0-9\s]*$/.test(value), {
     message: `Street must contain only Latin characters, numbers, and spaces.`,
   });
@@ -163,11 +181,13 @@ const CITY_VALIDATION_SCHEMA = z
   .string()
   .trim()
   .min(1, `City must contain at least one character.`)
+  .max(150, { message: 'City must be no longer than 150 characters.' })
   .refine((value) => /^[a-zA-Z]*$/.test(value), {
     message: `City must contain only Latin characters and no spaces.`,
   });
 
 const validCountries = ['US', 'CA'];
+const validAddressType = ['shipping', 'billing'];
 
 const COUNTRY_VALIDATION_SCHEMA = z.string().refine((value) => validCountries.includes(value), {
   message: 'Country must be a valid country from the predefined list.',
@@ -207,4 +227,145 @@ export const ADDRESS_VALIDATION_SCHEMA = z
     }
   });
 
+export const INPUT_DATE_VALIDATION_SCHEMA = z
+  .string()
+  .refine((value) => /^\d{2}\.\d{2}\.\d{4}$/.test(value), {
+    message: 'Invalid format',
+  })
+  .refine(
+    (value) => {
+      const parts = value.split('.');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+
+      if (day <= 0 || day > 31 || month < 0 || month > 11 || year <= 0) {
+        return false;
+      }
+
+      const daysInMonth = dayjs().set('year', year).set('month', month).daysInMonth();
+      const currentYear = dayjs().year();
+
+      if (day > daysInMonth) {
+        return false;
+      }
+
+      if (year > currentYear) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: 'Invalid day, month, or year.',
+    },
+  )
+  .refine(
+    (value) => {
+      const parts = value.split('.');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+
+      if (day <= 0 || day > 31 || month < 0 || month > 11 || year <= 0) {
+        return false;
+      }
+
+      if (year < 1900) {
+        return false;
+      }
+
+      return true;
+    },
+    {
+      message: 'The max age to be set is starting from 1900',
+    },
+  )
+  .refine(
+    (value) => {
+      const parts = value.split('.');
+      const day = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const year = parseInt(parts[2], 10);
+      const parsedDate = new Date(year, month, day);
+      const dateOfBirth = dayjs(parsedDate);
+
+      if (dateOfBirth.isValid()) {
+        const today = dayjs();
+        const age = today.diff(dateOfBirth, 'year');
+
+        if (age < 13) {
+          return false;
+        }
+
+        return true;
+      }
+
+      return false;
+    },
+    {
+      message: 'You must be at least 13 years old.',
+    },
+  )
+  .transform((date) => {
+    const [day, month, year] = date.split('.');
+
+    return `${year}-${month}-${day}`;
+  });
+
+export const SHIPPING_TYPE_VALIDATION_SCHEMA = z.string().refine((value) => validAddressType.includes(value), {
+  message: 'Address type must be a valid type from the predefined list.',
+});
+
 export const LS_PREFIX = 'nasaStoreTeam';
+
+export const OPTIONS_FROM_SORT: OptionsFromSelectSort[] = [
+  {
+    value: 'price asc',
+    label: 'Price from low to high',
+  },
+  {
+    value: 'price desc',
+    label: 'Price from high to low',
+  },
+  {
+    value: 'name.en asc',
+    label: 'Name from A to Z',
+  },
+  {
+    value: 'name.en desc',
+    label: 'Name from Z to A',
+  },
+];
+
+export const EMPTY_IMAGES_LIST_REPLACEMENT: Image[] = [
+  {
+    dimensions: {
+      h: 1400,
+      w: 1400,
+    },
+    url: imageForCard,
+  },
+  {
+    dimensions: {
+      h: 1400,
+      w: 1400,
+    },
+    url: imageForCard,
+  },
+];
+
+export const requiredEnvVariables = {
+  VITE_APP_PASSWORD_FLOW_SECRET: 'login with password client id',
+  VITE_APP_PASSWORD_FLOW_ID: 'login with password client secret',
+  VITE_APP_AUTH_URL: 'auth url',
+  VITE_APP_PROJECT_KEY: 'project key',
+  VITE_APP_API_URL: 'api url',
+};
+
+export const ERROR_TYPES = {
+  INVALID_REFRESH_TOKEN: 'refresh token',
+  VERSION_ERROR: 'different version than expected',
+  INVALID_JSON: 'JSON',
+  INVALID_TOKEN: 'invalid_token',
+} as const;

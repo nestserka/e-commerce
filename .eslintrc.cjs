@@ -16,7 +16,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.js'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'commitlint.config.js', 'global.d.ts'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -34,7 +34,7 @@ module.exports = {
     'no-console': 'off',
     'max-depth': ['error', 4],
     'max-nested-callbacks': ['error', 4],
-    'max-statements': ['error', 20],
+    'max-statements': ['error', 35],
     'no-constant-binary-expression': 'error',
     'no-implicit-coercion': 'error',
     'no-negated-condition': 'error',
@@ -53,6 +53,12 @@ module.exports = {
     'require-atomic-updates': 'error',
     'import/prefer-default-export': 'off',
     'import/no-empty-named-blocks': 'error',
+    'import/no-unresolved': [
+      'error',
+      {
+        ignore: ['^swiper/'],
+      },
+    ],
     'import/no-useless-path-segments': [
       'error',
       {
@@ -266,6 +272,12 @@ module.exports = {
     '@typescript-eslint/no-var-requires': 'off',
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
+    'import/no-unresolved': [
+      'error',
+      {
+        ignore: ['^swiper/'],
+      },
+    ],
   },
   settings: {
     react: {

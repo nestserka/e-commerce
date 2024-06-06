@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DatePicker, Select } from 'antd';
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import icon from '../../../assets/images/icons/icon-calendar.svg';
 import style from './_registrationForm.module.scss';
@@ -39,8 +39,8 @@ import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
 import RegistrationData from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
-import { showModalMessage, useLoginData } from '../../../core/state/loginState';
-import { Api, api } from '../../../api/Api';
+import { showModalMessage, useLoginData } from '../../../core/state/userState';
+import createCustomer from '../../../api/customer/createCustomer';
 
 const schema = z.object({
   email: EMAIL_VALIDATION_SCHEMA,
@@ -57,11 +57,12 @@ const schema = z.object({
 export type RegistrationFormValues = z.infer<typeof schema>;
 
 export default function RegistrationForm(): JSX.Element {
-  const { control, register, handleSubmit, formState, reset, setValue } = useForm<RegistrationFormValues>({
-    resolver: zodResolver(schema),
-    mode: 'onChange',
-  });
-  const { errors } = formState;
+  const { control, register, handleSubmit, formState, reset, setValue, watch, trigger } =
+    useForm<RegistrationFormValues>({
+      resolver: zodResolver(schema),
+      mode: 'onChange',
+    });
+  const { errors, isDirty, isValid, isSubmitting } = formState;
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [formEmailError, setFormEmailError] = useState<string>('');
   const { setCustomerCredentials } = useLoginData();
@@ -71,6 +72,12 @@ export default function RegistrationForm(): JSX.Element {
     name: 'shippingAddress',
   });
 
+  const valueEmail = watch('email');
+
+  useEffect(() => {
+    setFormEmailError('');
+  }, [valueEmail]);
+
   const handleShippingAutoComplete = useAddressAutoComplete(
     shippingAddress,
     isShippingCompleteChecked,
@@ -79,9 +86,29 @@ export default function RegistrationForm(): JSX.Element {
     'billing',
   );
 
+  useEffect(() => {
+    const subscription = watch((_value, { name }) => {
+      if (name === 'shippingAddress.country') {
+        trigger(['shippingAddress.postalCode']).catch((error) => {
+          console.error('Error triggering shippingAddress.postalCode:', error);
+        });
+      }
+
+      if (name === 'billingAddress.country') {
+        trigger(['billingAddress.postalCode']).catch((error) => {
+          console.error('Error triggering billingAddress.postalCode:', error);
+        });
+      }
+    });
+
+    return (): void => {
+      subscription.unsubscribe();
+    };
+  }, [watch, trigger]);
+
   const { setIsShown } = showModalMessage();
 
-  const onSubmit = (data: RegistrationFormValues): void => {
+  const onSubmit = async (data: RegistrationFormValues): Promise<void> => {
     setShippingCompleteChecked(false);
     const registrationData = new RegistrationData();
     registrationData.setEmail(data.email);
@@ -101,21 +128,17 @@ export default function RegistrationForm(): JSX.Element {
       registrationData.setDefaultBillingAddress(1);
     }
 
-    Api.createCustomer(registrationData.getState())
+    await createCustomer(registrationData.getState())
       .then((response) => {
         const customerCredentials = {
-          valueEmail: response.body.customer.email,
+          valueEmail: response.email,
           valuePassword: data.password,
           isAuth: true,
-          customerId: response.body.customer.id,
+          customerId: response.id,
         };
         setCustomerCredentials(customerCredentials);
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-        api.switchToPasswordFlow(data.email.toLowerCase(), data.password);
-        api.loginUser(data.email.toLowerCase(), data.password).catch((error: Error) => {
-          console.log(error.message);
-        });
         reset();
         setIsShown(true);
       })
@@ -335,7 +358,11 @@ export default function RegistrationForm(): JSX.Element {
           <InputCheckBox onChange={onChange} id="billing" name="billing" label="Set Billing Address as default" />
         )}
       />
-      <button type="submit" className="button-primary button-registration">
+      <button
+        type="submit"
+        className="button-primary button-registration"
+        disabled={!isDirty || !isValid || isSubmitting}
+      >
         Create Your Account
       </button>
       <section>

@@ -5,15 +5,17 @@ interface InputCheckboxProps {
   id: string;
   label: string;
   isCheckBoxDisabled?: boolean;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isValue?: boolean;
 }
 
 export default function InputCheckBox({
   name,
   id,
   label,
-  onChange,
+  onChange = (): void => {},
   isCheckBoxDisabled = false,
+  isValue = false,
 }: InputCheckboxProps): JSX.Element {
   return (
     <section className={styles['checkbox-wrapper']}>
@@ -22,8 +24,9 @@ export default function InputCheckBox({
         id={id}
         name={name}
         className={styles.input}
-        disabled={isCheckBoxDisabled}
+        {...(isCheckBoxDisabled && { 'aria-disabled': 'true' })}
         onChange={onChange}
+        {...(isValue && { checked: true })}
       />
       <label htmlFor={id} className={styles.label}>
         {label} <span className={styles.required} />

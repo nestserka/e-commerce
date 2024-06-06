@@ -1,19 +1,28 @@
-import { Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { Suspense, useEffect } from 'react';
 
 import style from './_catalog.module.scss';
+import SliderCatalogPage from '../../components/slider/SliderForCatalogPage';
+import { useCatalogData } from '../../core/state/catalogState';
 
 export default function CatalogPage(): JSX.Element {
-  const elem = 'name-category';
-  const elem2 = 'name-category2';
-  const elem3 = 'name-category3';
-  const elem4 = 'name-category4';
+  const { setCategoriesData, setProductTypesAttributes, parentsCategories } = useCatalogData();
+
+  useEffect(() => {
+    setCategoriesData().catch((error: Error) => {
+      console.log(error.message);
+    });
+    setProductTypesAttributes().catch((error: Error) => {
+      console.log(error.message);
+    });
+  }, [setCategoriesData, setProductTypesAttributes]);
 
   return (
     <section className={style.catalog} data-testid="catalog">
-      <Link to={`${elem}`}>Name Category</Link>
-      <Link to={`${elem2}`}>Name Category2</Link>
-      <Link to={`${elem3}`}>Name Category3</Link>
-      <Link to={`${elem4}`}>Name Category4</Link>
+      <SliderCatalogPage allCategories={parentsCategories} />
+      <Suspense fallback={<div className="loading">Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </section>
   );
 }

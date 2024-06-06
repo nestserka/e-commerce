@@ -10,9 +10,12 @@
   min-height: 70px;
 }
 
-.logo-wrapper,
-.burger-wrapper {
-  min-width: 110px;
+.logo-wrapper {
+  min-width: calc(100% / 3);
+
+  @media (width <= 1200px) {
+    min-width: calc(100% / 4);
+  }
 }
 
 .burger-wrapper {

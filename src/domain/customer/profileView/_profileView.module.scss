@@ -1,0 +1,82 @@
+@import '../../../assets//styles/mixins';
+@import '../../../assets//styles/variables';
+
+.wrapper {
+  @include flex-justify-center;
+
+  flex-direction: column;
+  width: 100%;
+
+  .personal-section {
+    @include flex-justify-center;
+
+    flex-direction: row;
+    gap: 1.5em;
+    align-items: stretch;
+
+    width: 100%;
+    margin-top: 1.375em;
+
+    .personal-section-wrapper {
+      @include form-background-gradient;
+
+      display: flex;
+      flex-basis: 50%;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 2em;
+
+      padding: 2.813em;
+
+      border-radius: 24px;
+
+      .personal-section-group {
+        @include flex-start-space-between;
+
+        flex-direction: row;
+        gap: 7.5em;
+      }
+    }
+
+    .personal-section-button {
+      cursor: pointer;
+
+      max-width: 11em;
+      margin-left: auto;
+      padding: 0.781em 1em;
+
+      font: inherit;
+      color: $font-color-primary-60;
+
+      background: none;
+      border: 1px solid $border-color-default;
+      border-radius: 24px;
+      transition:
+        background-color 0.5s ease,
+        color 0.5s ease;
+
+      &:hover {
+        color: $font-color-primary;
+        background-color: $bg-color-btn-default;
+      }
+    }
+  }
+
+  @media (width <=1240px) {
+    .personal-section {
+      display: flex;
+      flex-wrap: wrap;
+
+      .personal-section-wrapper {
+        flex-basis: 100%;
+        flex-wrap: wrap;
+        width: 100%;
+
+        .personal-section-group {
+          display: flex;
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+}

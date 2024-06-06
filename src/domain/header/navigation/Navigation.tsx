@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom';
 
 import style from './_navigation.module.scss';
-import { ROUTES } from '../../../constants/constants';
+import { DYNAMIC_ROUTES, ROUTES } from '../../../constants/constants';
+import icon from '../../../../public/assets/icons/astronaut-icon.jpg';
 
 import type { NavLinkProps, NavigationProps } from './types';
 
@@ -11,6 +12,7 @@ export default function Navigation({
   isNavOpen,
   handleClickLogOut,
   onClick,
+  customerId,
 }: NavigationProps): JSX.Element {
   return (
     <nav className={`${style.nav} ${isNavOpen ? style['nav-open'] : ''}`} data-testid="navigation">
@@ -18,7 +20,8 @@ export default function Navigation({
         {links
           .filter(
             (link: NavLinkProps): boolean =>
-              !isStatus || (link.route !== ROUTES.SING_IN && link.route !== ROUTES.SING_UP),
+              (!isStatus || (link.route !== ROUTES.SING_IN && link.route !== ROUTES.SING_UP)) &&
+              link.route !== ROUTES.PROFILE,
           )
           .map(
             (link: NavLinkProps): JSX.Element => (
@@ -37,11 +40,22 @@ export default function Navigation({
           </li>
         )}
       </ul>
-      {/* TODO:  to realize at the 3rd sprint */}
-      {/* <ul className={style['nav-list-user']}>
-        <li className={style['nav-item']}>Profile</li>
-        <li className={style['nav-item']}>Cart</li>
-      </ul> */}
+      <ul className={style['nav-list-user']}>
+        {isStatus && customerId && (
+          <NavLink to={`${DYNAMIC_ROUTES.PROFILE}${customerId}`} onClick={onClick}>
+            <li className={style['nav-item-profile']} key={customerId}>
+              <div className={style['profile-wrapper']}>
+                <img src={icon} className={style['profile-icon']} alt="" />
+              </div>
+              <span className={style['profile-title']}>Profile</span>
+            </li>
+          </NavLink>
+        )}
+        <li className={style['nav-item-cart']}>
+          <div className={style['cart-wrapper']} />
+          <span className={style['cart-title']}>Cart</span>
+        </li>
+      </ul>
     </nav>
   );
 }

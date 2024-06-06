@@ -6,7 +6,7 @@ import {
   ProtectedRouteForAuth,
   ProtectedRouteForCartForAuth,
   ProtectedRouteForCartNotAuth,
-  ProtectedRouteForNotAuth,
+  ProtectedRouteForProfileForAuth,
 } from './protected-route';
 import {
   AboutPage,
@@ -35,20 +35,22 @@ export const routesConfig: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: ROUTES.PRODUCT_BESTSELLER,
-        element: <ProductPage />,
-      },
-      {
         path: ROUTES.ABOUT,
         element: <AboutPage />,
       },
       {
         path: ROUTES.CATALOG,
         element: <CatalogPage />,
-      },
-      {
-        path: ROUTES.CATEGORY,
-        element: <CategoryPage />,
+        children: [
+          {
+            path: ROUTES.CATEGORY,
+            element: <CategoryPage />,
+          },
+          {
+            path: ROUTES.CATALOG_SUBTREES,
+            element: <CategoryPage />,
+          },
+        ],
       },
       {
         path: ROUTES.PRODUCT,
@@ -73,9 +75,9 @@ export const routesConfig: RouteObject[] = [
       {
         path: ROUTES.PROFILE,
         element: (
-          <ProtectedRouteForNotAuth>
+          <ProtectedRouteForProfileForAuth>
             <ProfilePage />
-          </ProtectedRouteForNotAuth>
+          </ProtectedRouteForProfileForAuth>
         ),
       },
       {

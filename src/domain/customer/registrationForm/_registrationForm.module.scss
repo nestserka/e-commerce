@@ -17,12 +17,14 @@
     display: flex;
     flex-direction: row;
     gap: 1.5em;
+    justify-content: space-between;
+
     width: 100%;
   }
 
   .input-section {
     display: flex;
-    flex-basis: 50%;
+    flex: 1;
     flex-direction: column;
     gap: 0.5em;
 
@@ -39,19 +41,26 @@
   }
 
   @media (width <= 1799px) {
-    width: calc(80% - 6em);
+    width: calc(90% - 6em);
   }
 
-  @media (width <= 1440px) {
+  @media (width <= 1613px) {
     width: calc(100% - 6em);
+    padding: 5em;
   }
 
-  @media (width <= 1240px) {
+  @media (width <= 1300px) {
     padding: 4em;
 
     .form-group {
       display: flex;
       flex-wrap: wrap;
+    }
+
+    .input-section {
+      display: flex;
+      flex-basis: 50%;
+      max-width: calc(50% - 0.75em);
     }
   }
 
@@ -78,7 +87,7 @@
   padding: 1.125em;
 
   font: 0.875rem;
-  color: $font-color-primary-60;
+  color: $font-color-primary-80;
 
   background-color: $background-color-secondary;
   border: 1px solid $background-color-secondary;
