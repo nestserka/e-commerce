@@ -151,7 +151,7 @@ export default function ProductPage(): JSX.Element {
             </div>
             <section className={style['price-info']}>
               {discount && <span className={style.price}>{discount}</span>}
-              <span className={discount?style.discount:style.price}>{price}</span>
+              <span className={discount ? style.discount : style.price}>{price}</span>
             </section>
           </section>
         </section>

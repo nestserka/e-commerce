@@ -32,7 +32,7 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
           </button>
           <div className={style['block-price']}>
             <span className={style.price}>{product.cardDiscounted}</span>
-            <span className={product.cardDiscounted?style.discount:style.price}>{product.cardPrice}</span>
+            <span className={product.cardDiscounted ? style.discount : style.price}>{product.cardPrice}</span>
           </div>
         </div>
       </div>

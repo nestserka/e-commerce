@@ -25,12 +25,6 @@ import type {
   ProductProjectionPagedSearchResponse,
 } from '@commercetools/platform-sdk';
 
-// export function assertsEnum(value: unknown): asserts value is AttributeLocalizedEnumType {
-//   if (!(typeof value === 'object' && value !== null && 'name' in value && value.name === 'lenum')) {
-//     throw new Error();
-//   }
-// }
-
 export default function CategoryPage(): JSX.Element {
   const { category, subtree }: Readonly<Params<string>> = useParams();
   const [subtrees, setSubtree] = useState<OptionsFromSelect[]>([]);
@@ -133,7 +127,6 @@ export default function CategoryPage(): JSX.Element {
   };
 
   const handleDeleteFilters = (): void => {
-    setPriceRange([0, 1700000]);
     setPriceRange([0, 1700000]);
     setBestsellerStatus(false);
     setDiscountStatus(false);
@@ -301,8 +294,8 @@ export default function CategoryPage(): JSX.Element {
             <summary className={style['filter-title']}>Price Range</summary>
             <div className={style['price-range']}>
               <div className={style['price-range-inputs']}>
-                <span className={style['price-range-value']}>$ {priceRange[0]}</span>
-                <span className={style['price-range-value']}>$ {priceRange[1]}</span>
+                <span className={style['price-range-value']}>$ {(priceRange[0] / 100).toFixed(2)}</span>
+                <span className={style['price-range-value']}>$ {(priceRange[1] / 100).toFixed(2)}</span>
               </div>
               <ReactSlider
                 className="horizontal-slider"
