@@ -187,12 +187,8 @@ a:hover {
 
 .horizontal-slider {
   width: 100%;
-  max-width: 500px;
   height: 50px;
   margin: 0.5em 0;
-
-  background-color: $font-color-title-dark;
-  border-radius: 15px;
 }
 
 .horizontal-slider .example-track {
@@ -201,15 +197,15 @@ a:hover {
 }
 
 .example-track.example-track-0 {
-  background: rgb(198 190 190);
+  background: $background-color-secondary;
 }
 
 .example-track.example-track-1 {
-  background: $font-color-link-hover;
+  background: $bg-color-btn-default;
 }
 
 .example-track.example-track-2 {
-  background: rgb(198 190 190);
+  background: $background-color-secondary;
 }
 
 .horizontal-slider .example-thumb {
@@ -221,7 +217,7 @@ a:hover {
   width: 20px;
   height: 20px;
 
-  background-color: $font-color-link-hover;
-  border: 5px solid gray;
+  background-color: $bg-color-btn-default;
+  border: 4px solid $font-color-primary-60;
   border-radius: 50%;
 }

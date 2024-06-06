@@ -84,6 +84,7 @@ export default function ShippingAddressForm({ isOpen, onClose, shippingAddressId
         }
 
         if (address?.isDefault !== data.defaultShippingAddress && shippingAddressId) {
+          
           if (data.defaultShippingAddress) {
             const setDefaultAddress: MyCustomerUpdateAction[] = [
               {
