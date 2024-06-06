@@ -273,11 +273,3 @@
     display: none;
   }
 }
-
-summary {
-  list-style-type: '⇃   ';
-}
-
-details[open] > summary {
-  list-style-type: '↾   ';
-}
