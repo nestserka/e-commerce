@@ -264,6 +264,38 @@
   @media (width <= 800px) {
     padding: 1rem;
   }
+
+  .filters-button {
+    cursor: pointer;
+
+    display: block;
+
+    padding: 12px 16px;
+
+    font-size: inherit;
+    color: $checkbox-color-checked;
+    text-decoration: none;
+
+    background-color: transparent;
+    border: 1px solid $border-color-default;
+    border-radius: 24px;
+
+    transition: 300ms;
+
+    &:hover {
+      color: $font-color-primary;
+      background-color: $bg-color-btn-default;
+      border: 1px solid $bg-color-btn-default;
+    }
+
+    &-span {
+      margin-right: 5px;
+    }
+  }
+}
+
+.filters-section-display-none {
+  display: none;
 }
 
 .filters-section-first {

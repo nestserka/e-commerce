@@ -47,6 +47,12 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
   const [formPasswordError, setFormPasswordError] = useState<string>('');
   const { setErrorIsShown } = showErrorMessage();
 
+  const valuePassword = watch('currentPassword');
+
+  useEffect(() => {
+    setFormPasswordError('');
+  }, [valuePassword]);
+
   useEffect(() => {
     const subscription = watch((_value, { name }) => {
       if (name === 'newPassword') {
@@ -69,12 +75,12 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
       newPassword: data.newPassword,
     };
     await updateCustomerPassword(body)
-      .then((response) => {
+      .then(async (response) => {
         setValueVersion(response.version);
         setIsShown(true);
         onClose();
         reset();
-        setFormPasswordError('');
+        await loginUser(valueEmail, body.newPassword);
       })
       .catch((error: Error) => {
         setFormPasswordError('');
@@ -83,9 +89,10 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
           setFormPasswordError(VERSION_ERROR_MESSAGE);
         } else if (error.message.includes(ERROR_TYPES.INVALID_REFRESH_TOKEN)) {
           setErrorIsShown(true);
+        } else {
+          setFormPasswordError(error.message);
         }
       });
-    await loginUser(valueEmail, body.newPassword);
   };
 
   return (
