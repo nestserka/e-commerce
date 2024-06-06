@@ -11,6 +11,8 @@ import getProductById from '../../api/products/getProductById';
 import homeIcon from '../../assets/images/icons/home-icon.svg';
 import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
+import createCustomerCart from '../../api/me/createCustomerCart';
+import getActiveCustomerCart from '../../api/me/getActiveCustomerCart';
 
 import type { Params } from 'react-router';
 import type { ProductProjection } from '@commercetools/platform-sdk';
@@ -103,6 +105,17 @@ export default function ProductPage(): JSX.Element {
   const productName = product.name.en;
   const productImages = product.masterVariant.images;
 
+  const addToCart = async (): Promise<void> => {
+    const cart = await getActiveCustomerCart();
+
+    if (!cart) {
+      const newCart = await createCustomerCart();
+      console.log(newCart);
+    }
+
+    console.log(cart);
+  };
+
   return (
     <>
       <section className={style['breadcrumbs-wrapper']}>
@@ -153,6 +166,9 @@ export default function ProductPage(): JSX.Element {
               {discount && <span className={style.price}>{discount}</span>}
               <span className={discount ? style.discount : style.price}>{price}</span>
             </section>
+            <button className="button-primary" type="button" onClick={addToCart}>
+              Add to cart
+            </button>
           </section>
         </section>
       </section>
