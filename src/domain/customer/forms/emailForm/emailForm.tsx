@@ -55,7 +55,6 @@ export default function EmailForm({ isOpen, onClose }: FormModal): JSX.Element {
         email: data.email.toLowerCase(),
       },
     ];
-    console.log(body);
     await updateCustomer(version, body)
       .then((response) => {
         const customerInfo = {

@@ -47,6 +47,12 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
   const [formPasswordError, setFormPasswordError] = useState<string>('');
   const { setErrorIsShown } = showErrorMessage();
 
+  const valuePassword = watch('currentPassword');
+
+  useEffect(() => {
+    setFormPasswordError('');
+  }, [valuePassword]);
+
   useEffect(() => {
     const subscription = watch((_value, { name }) => {
       if (name === 'newPassword') {
@@ -74,7 +80,6 @@ export default function PasswordForm({ isOpen, onClose }: FormModal): JSX.Elemen
         setIsShown(true);
         onClose();
         reset();
-        setFormPasswordError('');
         await loginUser(valueEmail, body.newPassword);
       })
       .catch((error: Error) => {
