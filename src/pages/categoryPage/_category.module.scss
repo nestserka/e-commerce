@@ -2,8 +2,6 @@
 @import '../../assets/styles/variables';
 
 .category {
-  @include page-layout-container;
-
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -53,7 +51,7 @@
     gap: 2rem;
     justify-content: center;
 
-    @media (width <= 800px) {
+    @media (width <= 960px) {
       display: block;
     }
   }
@@ -97,7 +95,7 @@
       background-color: $border-color-default;
     }
 
-    @media (width <= 800px) {
+    @media (width <= 960px) {
       width: 100%;
     }
   }
@@ -170,7 +168,7 @@
       width: 100%;
 
       @media (width <= 540px) {
-        padding: 0 3rem;
+        padding: 0 4rem;
       }
 
       @media (width <= 420px) {
