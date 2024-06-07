@@ -1,4 +1,4 @@
-import anonymousSession from '../token/anonymousSession';
+import withAnonymousFlow from '../token/anonymousSession';
 
 import type { Cart, ClientResponse } from '@commercetools/platform-sdk';
 
@@ -7,7 +7,7 @@ export default async function createAnonymousCart(): Promise<Cart> {
     currency: 'USD',
   };
 
-  const response: ClientResponse<Cart> = await anonymousSession()
+  const response: ClientResponse<Cart> = await withAnonymousFlow()
     .me()
     .carts()
     .post({

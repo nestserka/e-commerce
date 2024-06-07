@@ -4,7 +4,7 @@ import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import type { AnonymousAuthMiddlewareOptions, HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 
-export default function anonymousSession(): ByProjectKeyRequestBuilder {
+export default function withAnonymousFlow(): ByProjectKeyRequestBuilder {
   if (typeof import.meta.env.VITE_APP_AUTH_URL !== 'string') {
     throw new Error('no auth url found');
   }

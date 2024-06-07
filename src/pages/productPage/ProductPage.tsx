@@ -11,8 +11,6 @@ import getProductById from '../../api/products/getProductById';
 import homeIcon from '../../assets/images/icons/home-icon.svg';
 import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
-import createCustomerCart from '../../api/me/createCustomerCart';
-import getActiveCustomerCart from '../../api/me/getActiveCustomerCart';
 import createAnonymousCart from '../../api/me/createAnonimousCart';
 
 import type { Params } from 'react-router';
