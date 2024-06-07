@@ -1,6 +1,8 @@
 import { ClientBuilder } from '@commercetools/sdk-client-v2';
 import { createApiBuilderFromCtpClient } from '@commercetools/platform-sdk';
 
+import { tokenCache } from '../token/MyTokenCache';
+
 import type { ByProjectKeyRequestBuilder } from '@commercetools/platform-sdk';
 import type { AnonymousAuthMiddlewareOptions, HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
 
@@ -37,7 +39,7 @@ export default function withAnonymousFlow(): ByProjectKeyRequestBuilder {
       clientSecret: import.meta.env.VITE_APP_CLIENT_SECRET,
     },
     scopes: [import.meta.env.VITE_APP_CLIENT_SCOPES],
-    // tokenCache,
+    tokenCache,
     fetch,
   };
 
@@ -50,6 +52,7 @@ export default function withAnonymousFlow(): ByProjectKeyRequestBuilder {
     .withProjectKey(import.meta.env.VITE_APP_PROJECT_KEY)
     .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
+    .withLoggerMiddleware()
     .build();
 
   return createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: import.meta.env.VITE_APP_PROJECT_KEY });

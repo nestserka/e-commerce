@@ -11,7 +11,8 @@ import getProductById from '../../api/products/getProductById';
 import homeIcon from '../../assets/images/icons/home-icon.svg';
 import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
-import createAnonymousCart from '../../api/me/createAnonimousCart';
+import { useCartData } from '../../core/state/cartState';
+import { useLoginData } from '../../core/state/userState';
 
 import type { Params } from 'react-router';
 import type { ProductProjection } from '@commercetools/platform-sdk';
@@ -40,6 +41,18 @@ export default function ProductPage(): JSX.Element {
 
   const [price, setPrice] = useState<string | null>(null);
   const [discount, setDiscount] = useState<string | null>(null);
+
+  const { addProduct } = useCartData();
+  const { customerId } = useLoginData();
+
+  const handleAddToCart = (): void => {
+    if (product) {
+      addProduct(product.id, customerId).catch((err: Error) => {
+        console.log(err.message);
+        setError('Failed to add product to cart');
+      });
+    }
+  };
 
   const extractPrice = (res: ProductProjection): void => {
     const { prices } = res.masterVariant;
@@ -104,11 +117,6 @@ export default function ProductPage(): JSX.Element {
   const productName = product.name.en;
   const productImages = product.masterVariant.images;
 
-  const addToCart = async (): Promise<void> => {
-    const anonimCart = await createAnonymousCart();
-    console.log(anonimCart);
-  };
-
   return (
     <>
       <section className={style['breadcrumbs-wrapper']}>
@@ -159,7 +167,7 @@ export default function ProductPage(): JSX.Element {
               {discount && <span className={style.price}>{discount}</span>}
               <span className={discount ? style.discount : style.price}>{price}</span>
             </section>
-            <button className="button-primary" type="button" onClick={addToCart}>
+            <button className="button-primary" type="button" onClick={handleAddToCart}>
               Add to cart
             </button>
           </section>

@@ -7,5 +7,6 @@ export function logOut(): void {
   useLoginData.getState().reset();
   localStorage.removeItem(`isAuth-${LS_PREFIX}`);
   localStorage.removeItem(`customerId-${LS_PREFIX}`);
+  localStorage.removeItem(`customerCart-${LS_PREFIX}`);
   tokenCache.clear();
 }

@@ -68,3 +68,9 @@ export interface ShowErrorMessage {
   isErrorShown: boolean;
   setErrorIsShown: (isErrorShown: boolean) => void;
 }
+
+export interface CartState {
+  cartId: string;
+  setActiveCartId: (id: string) => void;
+  reset: () => void;
+}
