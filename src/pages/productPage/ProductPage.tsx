@@ -1,6 +1,5 @@
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import style from './_product.module.scss';
 import Slider from '../../components/sliderProduct/slider';
@@ -8,11 +7,10 @@ import FormSubTitle from '../../components/formSubTitle/formSubTitle';
 import { formatPrice } from '../../utils/utils';
 import Badge from '../../components/badge/badge';
 import getProductById from '../../api/products/getProductById';
-import homeIcon from '../../assets/images/icons/home-icon.svg';
-import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 import { useCartData } from '../../core/state/cartState';
 import { useLoginData } from '../../core/state/userState';
+import Breadcrumbs from '../../components/breadCrumbs/breadCrumbs';
 
 import type { Params } from 'react-router';
 import type { ProductProjection } from '@commercetools/platform-sdk';
@@ -117,32 +115,28 @@ export default function ProductPage(): JSX.Element {
   const productName = product.name.en;
   const productImages = product.masterVariant.images;
 
+  const breadCrumbsProps = [
+    {
+      label: 'Catalog',
+      route: `${ROUTES.CATALOG_ALL}`,
+    },
+    {
+      label: `${categoryNameStr}`,
+      route: `${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}`,
+    },
+    {
+      label: `${subCategoryNameStr}`,
+      route: `${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}/${subCategoryNameRoute}`,
+    },
+    {
+      label: `${productName}`,
+      route: `${DYNAMIC_ROUTES.PRODUCT}${productId}`,
+    },
+  ];
+
   return (
     <>
-      <section className={style['breadcrumbs-wrapper']}>
-        <Link to={ROUTES.HOME} className={style['breadcrumbs-link']}>
-          <img src={homeIcon} className="home-icon" alt="NASA Store Homepage" />
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${ROUTES.CATALOG_ALL}`} className={style['breadcrumbs-link']}>
-          Catalog
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}`} className={style['breadcrumbs-link']}>
-          {categoryNameStr}
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link
-          to={`${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}/${subCategoryNameRoute}`}
-          className={style['breadcrumbs-link']}
-        >
-          {subCategoryNameStr}
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${DYNAMIC_ROUTES.PRODUCT}${productId}`} className={style['breadcrumbs-link']}>
-          {productName}
-        </Link>
-      </section>
+      <Breadcrumbs links={breadCrumbsProps} />
       <section className={style['product-page']} data-testid="product-page">
         <section className={style['content-wrapper']}>
           <section className={style['slider-wrapper']}>
