@@ -14,7 +14,6 @@ interface CartState {
   isLoading: boolean;
   error: string;
   setAnonymousCartId: (id: string) => void;
-
   setCustomerCartId: (id: string) => void;
   addProduct: (productId: string, customerId: string) => Promise<void>;
 }

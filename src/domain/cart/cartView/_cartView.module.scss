@@ -1,0 +1,27 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets//styles/variables';
+
+.wrapper {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.aside-wrapper {
+  display: flex;
+  flex-basis: 435px;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.products-list-wrapper {
+  flex-grow: 1;
+}
+
+.products-list-wrapper,
+.summary-wrapper,
+.promocode-wrapper {
+  padding: 2.25rem;
+  background-color: $background-color-primary-two;
+  border-radius: 1.5rem;
+}

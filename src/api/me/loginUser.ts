@@ -13,6 +13,7 @@ export default async function loginUser(email: string, password: string): Promis
       body: {
         email,
         password,
+        activeCartSignInMode: 'MergeWithExistingCustomerCart',
       },
       headers: {
         'Content-Type': 'application/json',
