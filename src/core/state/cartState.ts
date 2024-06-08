@@ -4,6 +4,8 @@ import createCustomerCart from '../../api/me/createCustomerCart';
 import createAnonymousCart from '../../api/me/createAnonimousCart';
 import addProductToCart from '../../api/me/addProductToCart';
 import { LS_PREFIX } from '../../constants/constants';
+import getCustomerActiveCart from '../../api/me/getActiveCustomerCart';
+import getAnonymousCart from '../../api/me/getAnonymousCart';
 
 const anonymousCartIdLocal = localStorage.getItem(`anonymousCart-${LS_PREFIX}`) ?? '';
 const customerCartIdLocal = localStorage.getItem(`customerCart-${LS_PREFIX}`) ?? '';
@@ -35,6 +37,8 @@ export const useCartData = create<CartState>((set) => ({
     try {
       if (customerId) {
         let { customerCartId } = useCartData.getState();
+        const activeCart = await getCustomerActiveCart();
+        customerCartId = activeCart?.id ?? '';
 
         if (!customerCartId) {
           const customerCart = await createCustomerCart();
@@ -48,13 +52,15 @@ export const useCartData = create<CartState>((set) => ({
       } else {
         let { anonymousCartId } = useCartData.getState();
 
-        if (!anonymousCartId) {
+        try {
+          const anonymousCart = await getAnonymousCart();
+          anonymousCartId = anonymousCart.id;
+        } catch {
           const anonimousCart = await createAnonymousCart();
           anonymousCartId = anonimousCart.id;
+          set({ anonymousCartId });
+          localStorage.setItem(`anonymousCart-${LS_PREFIX}`, anonymousCartId);
         }
-
-        set({ anonymousCartId });
-        localStorage.setItem(`anonymousCart-${LS_PREFIX}`, anonymousCartId);
 
         await addProductToCart(anonymousCartId, productId);
       }
