@@ -7,6 +7,15 @@
   width: 100%;
 }
 
+.header {
+  display: flex;
+}
+
+.title {
+  flex-grow: 1;
+  text-align: center;
+}
+
 .aside-wrapper {
   display: flex;
   flex-basis: 435px;
