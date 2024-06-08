@@ -7,16 +7,20 @@ import { LS_PREFIX } from '../../constants/constants';
 import getCustomerActiveCart from '../../api/me/getActiveCustomerCart';
 import getAnonymousCart from '../../api/me/getAnonymousCart';
 
+import type { Cart } from '@commercetools/platform-sdk';
+
 const anonymousCartIdLocal = localStorage.getItem(`anonymousCart-${LS_PREFIX}`) ?? '';
 const customerCartIdLocal = localStorage.getItem(`customerCart-${LS_PREFIX}`) ?? '';
 
 interface CartState {
   anonymousCartId: string;
   customerCartId: string;
+  activeCart: Cart | null;
   isLoading: boolean;
   error: string;
   setAnonymousCartId: (id: string) => void;
   setCustomerCartId: (id: string) => void;
+  setActiveCart: (cart: Cart) => void;
   addProduct: (productId: string, customerId: string) => Promise<void>;
 }
 
@@ -24,6 +28,7 @@ interface CartState {
 export const useCartData = create<CartState>((set) => ({
   anonymousCartId: anonymousCartIdLocal,
   customerCartId: customerCartIdLocal,
+  activeCart: null,
   isLoading: false,
   error: '',
   setAnonymousCartId: (id): void => {
@@ -31,6 +36,9 @@ export const useCartData = create<CartState>((set) => ({
   },
   setCustomerCartId: (id): void => {
     set({ customerCartId: id });
+  },
+  setActiveCart: (activeCart: Cart): void => {
+    set({ activeCart });
   },
 
   // TODO этот метод вызывается по клику на кнопку Add to cart

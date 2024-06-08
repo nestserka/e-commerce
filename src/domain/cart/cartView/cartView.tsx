@@ -19,6 +19,7 @@ export default function CartView(): JSX.Element {
         <BackButton />
         <h1 className={style.title}>Shopping Cart</h1>
       </header>
+
       <div className={style.wrapper}>
         <section className={style['products-list-wrapper']} data-testid="products-list-wrapper">
           <FormSubTitle subTitle="Products" />
