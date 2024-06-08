@@ -20,6 +20,7 @@ interface CartState {
   addProduct: (productId: string, customerId: string) => Promise<void>;
 }
 
+// TODO стейт корзины находится тут
 export const useCartData = create<CartState>((set) => ({
   anonymousCartId: anonymousCartIdLocal,
   customerCartId: customerCartIdLocal,
@@ -31,15 +32,19 @@ export const useCartData = create<CartState>((set) => ({
   setCustomerCartId: (id): void => {
     set({ customerCartId: id });
   },
+
+  // TODO этот метод вызывается по клику на кнопку Add to cart
   addProduct: async (productId, customerId): Promise<void> => {
     set({ isLoading: true, error: '' });
 
     try {
+      // TODO проверка по customerId, если есть то запрашиваю активную корзину через Password Flow
       if (customerId) {
         let { customerCartId } = useCartData.getState();
         const activeCart = await getCustomerActiveCart();
         customerCartId = activeCart?.id ?? '';
 
+        // TODO не знаю может быть customerCartId и не нужно хранить пока еще не разобралась
         if (!customerCartId) {
           const customerCart = await createCustomerCart();
           customerCartId = customerCart.id;
@@ -48,10 +53,12 @@ export const useCartData = create<CartState>((set) => ({
         set({ customerCartId });
         localStorage.setItem(`customerCart-${LS_PREFIX}`, customerCartId);
 
+        // TODO это пока заглушка с логированием id корзины в консоль
         await addProductToCart(customerCartId, productId);
       } else {
         let { anonymousCartId } = useCartData.getState();
 
+        // TODO тут запрашиваю анонмную корзину, она падает 404 ответом, в блоке catch создаю новую, при релаоде страницы корзина остается той же по id
         try {
           const anonymousCart = await getAnonymousCart();
           anonymousCartId = anonymousCart.id;

@@ -37,6 +37,7 @@ export default function withAnonymousFlow(): ByProjectKeyRequestBuilder {
     credentials: {
       clientId: import.meta.env.VITE_APP_CLIENT_ID,
       clientSecret: import.meta.env.VITE_APP_CLIENT_SECRET,
+      // TODO вот тут надо передать anonymousId (можно сгенерировать его самим или он сгенерится автоматом и его надо получить и как-то хранить и использовать при логине для мержа корзин)
     },
     scopes: [import.meta.env.VITE_APP_CLIENT_SCOPES],
     tokenCache,

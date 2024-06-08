@@ -10,6 +10,7 @@ export default async function loginUser(email: string, password: string): Promis
     .me()
     .login()
     .post({
+      // TODO вот тут в боди надо передать anonymousId для мержка корзин
       body: {
         email,
         password,
