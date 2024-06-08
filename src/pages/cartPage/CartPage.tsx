@@ -4,9 +4,9 @@ import { useEffect } from 'react';
 
 import style from './_cart.module.scss';
 import CartView from '../../domain/cart/cartView/cartView';
-import getCustomerActiveCart from '../../api/me/getActiveCustomerCart';
+import getCustomerActiveCart from '../../api/me/cart/getActiveCustomerCart';
 import { useCartData } from '../../core/state/cartState';
-import getAnonymousCart from '../../api/me/getAnonymousCart';
+import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 
 import type { Cart } from '@commercetools/platform-sdk';
 

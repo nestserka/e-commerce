@@ -1,5 +1,5 @@
-import withRefreshToken from '../middlewareFlows/withRefreshToken';
-import { tokenCache } from '../token/MyTokenCache';
+import withRefreshToken from '../../middlewareFlows/withRefreshToken';
+import { tokenCache } from '../../token/MyTokenCache';
 
 import type { Cart, ClientResponse } from '@commercetools/platform-sdk';
 

@@ -1,4 +1,4 @@
-import withAnonymousFlow from '../middlewareFlows/withAnonymousFlow';
+import withAnonymousFlow from '../../middlewareFlows/withAnonymousFlow';
 
 import type { Cart, ClientResponse } from '@commercetools/platform-sdk';
 

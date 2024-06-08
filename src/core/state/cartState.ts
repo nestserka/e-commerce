@@ -1,11 +1,12 @@
 import { create } from 'zustand';
 
-import createCustomerCart from '../../api/me/createCustomerCart';
-import createAnonymousCart from '../../api/me/createAnonimousCart';
-import addProductToCart from '../../api/me/addProductToCart';
+import createCustomerCart from '../../api/me/cart/createCustomerCart';
+import createAnonymousCart from '../../api/me/cart/createAnonimousCart';
+import addProductToCustomerCart from '../../api/me/cart/addProductToCustomerCart';
 import { LS_PREFIX } from '../../constants/constants';
-import getCustomerActiveCart from '../../api/me/getActiveCustomerCart';
-import getAnonymousCart from '../../api/me/getAnonymousCart';
+import getCustomerActiveCart from '../../api/me/cart/getActiveCustomerCart';
+import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
+import addProductToAnonymousCart from '../../api/me/cart/addProductToAnonymousCart';
 
 import type { Cart } from '@commercetools/platform-sdk';
 
@@ -49,35 +50,41 @@ export const useCartData = create<CartState>((set) => ({
       // TODO проверка по customerId, если есть то запрашиваю активную корзину через Password Flow
       if (customerId) {
         let { customerCartId } = useCartData.getState();
+
         const activeCart = await getCustomerActiveCart();
         customerCartId = activeCart?.id ?? '';
+        let cartVersion = activeCart?.version;
 
         // TODO не знаю может быть customerCartId и не нужно хранить пока еще не разобралась
         if (!customerCartId) {
           const customerCart = await createCustomerCart();
           customerCartId = customerCart.id;
+          cartVersion = customerCart.version;
         }
 
         set({ customerCartId });
         localStorage.setItem(`customerCart-${LS_PREFIX}`, customerCartId);
 
         // TODO это пока заглушка с логированием id корзины в консоль
-        await addProductToCart(customerCartId, productId);
+        if (cartVersion) await addProductToCustomerCart(customerCartId, productId, cartVersion);
       } else {
         let { anonymousCartId } = useCartData.getState();
+        let cartVersion;
 
         // TODO тут запрашиваю анонмную корзину, она падает 404 ответом, в блоке catch создаю новую, при релаоде страницы корзина остается той же по id
         try {
           const anonymousCart = await getAnonymousCart();
           anonymousCartId = anonymousCart.id;
+          cartVersion = anonymousCart.version;
         } catch {
           const anonimousCart = await createAnonymousCart();
           anonymousCartId = anonimousCart.id;
+          cartVersion = anonimousCart.version;
           set({ anonymousCartId });
           localStorage.setItem(`anonymousCart-${LS_PREFIX}`, anonymousCartId);
         }
 
-        await addProductToCart(anonymousCartId, productId);
+        await addProductToAnonymousCart(anonymousCartId, productId, cartVersion);
       }
 
       set({ isLoading: false });
