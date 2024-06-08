@@ -3,6 +3,7 @@ import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import Breadcrumbs from '../../../components/breadCrumbs/breadCrumbs';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import BackButton from '../../../components/backButton/backButton';
+import { useCartData } from '../../../core/state/cartState';
 
 const breadCrumbsProps = [
   {
@@ -12,6 +13,8 @@ const breadCrumbsProps = [
 ];
 
 export default function CartView(): JSX.Element {
+  const { itemsInCart } = useCartData();
+
   return (
     <>
       <Breadcrumbs links={[...breadCrumbsProps]} />
@@ -23,6 +26,9 @@ export default function CartView(): JSX.Element {
       <div className={style.wrapper}>
         <section className={style['products-list-wrapper']} data-testid="products-list-wrapper">
           <FormSubTitle subTitle="Products" />
+          <div className={style['products-wrapper']}>
+            {itemsInCart?.map((item) => <p key={item.id}>{item.name.en}</p>)}
+          </div>
         </section>
         <aside className={style['aside-wrapper']}>
           <section className={style['summary-wrapper']}>
