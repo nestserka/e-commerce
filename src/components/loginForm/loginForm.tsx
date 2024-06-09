@@ -66,7 +66,8 @@ export default function LoginForm(): JSX.Element {
         setCustomerCredentials(customerCredentials);
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-        localStorage.removeItem(`anonymousCart-${LS_PREFIX}`);
+        localStorage.removeItem(`anonymousCartId-${LS_PREFIX}`);
+        localStorage.removeItem(`anonymousId-${LS_PREFIX}`);
         reset();
       })
       .catch(async () => {

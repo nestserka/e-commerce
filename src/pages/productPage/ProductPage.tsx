@@ -40,12 +40,19 @@ export default function ProductPage(): JSX.Element {
   const [price, setPrice] = useState<string | null>(null);
   const [discount, setDiscount] = useState<string | null>(null);
 
-  const { addProduct } = useCartData();
+  const { activeCart, setCart, addProductToCart } = useCartData();
   const { customerId } = useLoginData();
 
   const handleAddToCart = (): void => {
     if (product) {
-      addProduct(product.id, customerId).catch((err: Error) => {
+      if (!activeCart) {
+        setCart(customerId).catch((err: Error) => {
+          console.log(err.message);
+          setError('Failed to set active cart');
+        });
+      }
+
+      addProductToCart(product.id, customerId).catch((err: Error) => {
         console.log(err.message);
         setError('Failed to add product to cart');
       });
