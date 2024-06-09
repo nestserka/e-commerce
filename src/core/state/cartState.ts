@@ -22,10 +22,6 @@ interface CartState {
   itemsInCart: LineItem[] | null;
   isLoading: boolean;
   error: string;
-  setAnonymousCartId: (id: string) => void;
-  setCustomerCartId: (id: string) => void;
-  setActiveCart: (cart: Cart) => void;
-  setItemsInCart: (itemsInCart: LineItem[]) => void;
   addProductToCart: (productId: string, customerId: string) => Promise<void>;
   setCart: (customerId: string) => Promise<void>;
   reset: () => void;
@@ -40,18 +36,6 @@ export const useCartData = create<CartState>((set) => ({
   itemsInCart: null,
   isLoading: false,
   error: '',
-  setAnonymousCartId: (id): void => {
-    set({ anonymousCartId: id });
-  },
-  setCustomerCartId: (id): void => {
-    set({ customerCartId: id });
-  },
-  setActiveCart: (activeCart: Cart): void => {
-    set({ activeCart });
-  },
-  setItemsInCart: (itemsInCart: LineItem[]): void => {
-    set({ itemsInCart });
-  },
 
   // TODO этот метод вызываю при заходе на страницу корзины, он получает или создают либо анонимную либо пользовательскую корзину
   // activeCart это активная корзина на данный момент
