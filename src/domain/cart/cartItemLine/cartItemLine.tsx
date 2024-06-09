@@ -1,42 +1,42 @@
 import style from './_cartItemLine.module.scss';
 import iconDelete from '../../../assets/images/icons/icon-delete.svg';
 
-interface CartItemLineProps {
-  imageUrl: string;
-  productName: string;
-  currentPrice: number;
-  discount: string;
-  priceBeforeDiscount: number;
-  quantity: number;
-  totalInitialPrice: number;
-}
+import type { CartItemLineProps } from '../../../utils/types';
 
 export default function CartItemLine({
   imageUrl,
   productName,
-  currentPrice,
-  discount,
-  priceBeforeDiscount,
+  discountedPricePerItem,
+  discountLabel,
+  pricePerItem,
   quantity,
-  totalInitialPrice,
+  totalPrice,
 }: CartItemLineProps): JSX.Element {
   return (
     <section className={style['item-line-wrapper']} data-testid="cart-item-line">
-      <img src={imageUrl} alt={productName} />
-      <h3 className={style.title}>{productName}</h3>
+      <img src={imageUrl} alt={productName} className={style['product-img']} />
+      <div className={style['title-discount-wrapper']}>
+        {discountLabel && <div className={style['discount-badge']}>{discountLabel}</div>}
+        <h3 className={style.title}>{productName}</h3>
+      </div>
       <section className={style['price-wrapper']}>
         <div className={style['current-price-wrapper']}>
-          <p className={style['current-price-value']}>{currentPrice}</p>
-          <div className={style['discount-badge']}>{discount}</div>
+          <p className={style['current-price-value']}>{discountedPricePerItem ?? pricePerItem}</p>
         </div>
-        <p className={style['old-price-value']}>{priceBeforeDiscount}</p>
+        {discountedPricePerItem && <p className={style['old-price-value']}>{pricePerItem}</p>}
       </section>
       <section className={style['quantity-input-wrapper']}>
-        <button type="button">-</button>
+        <button type="button" className={style['quantity-input-control']}>
+          –
+        </button>
         <p className={style['quantity-number']}>{quantity}</p>
-        <button type="button">+</button>
+        <button type="button" className={style['quantity-input-control']}>
+          +
+        </button>
       </section>
-      <p className={style['total-price']}>{totalInitialPrice}</p>
+      <p className={style['total-price']} title={totalPrice}>
+        {totalPrice}
+      </p>
       <button type="button" className={style['remove-item-btn']}>
         <img src={iconDelete} alt="Edit" className={style['icon-delete']} />
       </button>

@@ -12,23 +12,9 @@ import { useCartData } from '../../core/state/cartState';
 import { useLoginData } from '../../core/state/userState';
 import Breadcrumbs from '../../components/breadCrumbs/breadCrumbs';
 
+import type { AttributeBestseller, AttributeDiscount } from '../../utils/types';
 import type { Params } from 'react-router';
 import type { ProductProjection } from '@commercetools/platform-sdk';
-
-interface AttributeBestseller {
-  name: 'bestseller';
-  value: boolean[];
-}
-
-interface AttributeDiscount {
-  name: 'discount';
-  value: Discount[];
-}
-
-interface Discount {
-  key: string;
-  label: string;
-}
 
 export default function ProductPage(): JSX.Element {
   const { productId }: Readonly<Params<string>> = useParams();
