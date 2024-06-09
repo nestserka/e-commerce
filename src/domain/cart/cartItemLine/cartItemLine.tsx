@@ -3,15 +3,9 @@ import iconDelete from '../../../assets/images/icons/icon-delete.svg';
 
 import type { CartItemLineProps } from '../../../utils/types';
 
-export default function CartItemLine({
-  imageUrl,
-  productName,
-  discountedPricePerItem,
-  discountLabel,
-  pricePerItem,
-  quantity,
-  totalPrice,
-}: CartItemLineProps): JSX.Element {
+export default function CartItemLine(props: CartItemLineProps): JSX.Element {
+  const { imageUrl, productName, discountLabel, discountedPricePerItem, pricePerItem, quantity, totalPrice } = props;
+
   return (
     <section className={style['item-line-wrapper']} data-testid="cart-item-line">
       <img src={imageUrl} alt={productName} className={style['product-img']} />

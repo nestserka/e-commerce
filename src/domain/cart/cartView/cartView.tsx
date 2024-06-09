@@ -33,7 +33,7 @@ export default function CartView(): JSX.Element {
               const cartItemLineProps = getLineItemProps(item);
 
               // eslint-disable-next-line react/jsx-props-no-spreading
-              return <CartItemLine {...cartItemLineProps} />;
+              return <CartItemLine key={item.name.en} {...cartItemLineProps} />;
             })}
           </div>
         </section>

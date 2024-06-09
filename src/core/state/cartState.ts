@@ -11,10 +11,8 @@ import type { Cart, LineItem } from '@commercetools/platform-sdk';
 
 const anonymousCartIdLocal = localStorage.getItem(`anonymousCartId-${LS_PREFIX}`) ?? '';
 const customerCartIdLocal = localStorage.getItem(`customerCart-${LS_PREFIX}`) ?? '';
-const anonymousIdLocal = localStorage.getItem(`anonymousId-${LS_PREFIX}`) ?? '';
 
 interface CartState {
-  anonymousId: string;
   anonymousCartId: string;
   customerCartId: string;
   activeCart: Cart | undefined;
@@ -26,18 +24,13 @@ interface CartState {
   reset: () => void;
 }
 
-// TODO стейт корзины находится тут
 export const useCartData = create<CartState>((set) => ({
-  anonymousId: anonymousIdLocal,
   anonymousCartId: anonymousCartIdLocal,
   customerCartId: customerCartIdLocal,
   activeCart: undefined,
   itemsInCart: null,
   isLoading: false,
   error: '',
-
-  // TODO этот метод вызываю при заходе на страницу корзины, он получает или создают либо анонимную либо пользовательскую корзину
-  // activeCart это активная корзина на данный момент
 
   setCart: async (customerId): Promise<void> => {
     set({ isLoading: true, error: '' });
@@ -79,25 +72,16 @@ export const useCartData = create<CartState>((set) => ({
       }
 
       set({ activeCart });
-      set({ anonymousId: activeCart.anonymousId });
-      console.log('setCart', activeCart.anonymousId);
       set({ anonymousCartId: activeCart.id });
       set({ itemsInCart: activeCart.lineItems });
 
-      const { anonymousId } = useCartData.getState();
-
-      // TODO эти данные сохраняю в локалсторадж чтобы сохранять анонимную корзину на релоад страницы
-      // а также чтобы передать id анонимной корзины при логине но пока что корзины смержить не получилось увы
-
-      localStorage.setItem(`anonymousId-${LS_PREFIX}`, anonymousId);
-
+      console.log('setCart', activeCart.id);
       localStorage.setItem(`anonymousCartId-${LS_PREFIX}`, activeCart.id);
     }
 
     set({ isLoading: false });
   },
 
-  // TODO этот метод вызывается по клику на кнопку Add to cart
   addProductToCart: async (productId, customerId): Promise<void> => {
     set({ isLoading: true, error: '' });
 

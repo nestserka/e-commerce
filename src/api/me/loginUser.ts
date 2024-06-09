@@ -10,8 +10,6 @@ export default async function loginUser(email: string, password: string): Promis
 
   const anonymousCartId = localStorage.getItem(`anonymousCartId-${LS_PREFIX}`) ?? '';
 
-  console.log('loginUser', anonymousCartId);
-
   const body = {
     email,
     password,
