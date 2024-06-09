@@ -43,19 +43,25 @@ export default function ProductPage(): JSX.Element {
   const { activeCart, setCart, addProductToCart } = useCartData();
   const { customerId } = useLoginData();
 
-  const handleAddToCart = (): void => {
+  const handleAddToCart = async (): Promise<void> => {
     if (product) {
       if (!activeCart) {
-        setCart(customerId).catch((err: Error) => {
-          console.log(err.message);
+        try {
+          await setCart(customerId);
+        } catch (err) {
+          console.log((err as Error).message);
           setError('Failed to set active cart');
-        });
+
+          return;
+        }
       }
 
-      addProductToCart(product.id, customerId).catch((err: Error) => {
-        console.log(err.message);
+      try {
+        await addProductToCart(product.id, customerId);
+      } catch (err) {
+        console.log((err as Error).message);
         setError('Failed to add product to cart');
-      });
+      }
     }
   };
 
