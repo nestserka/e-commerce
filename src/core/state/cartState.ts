@@ -2,11 +2,10 @@ import { create } from 'zustand';
 
 import createCustomerCart from '../../api/me/cart/createCustomerCart';
 import createAnonymousCart from '../../api/me/cart/createAnonimousCart';
-import addProductToCustomerCart from '../../api/me/cart/addProductToCustomerCart';
 import { LS_PREFIX } from '../../constants/constants';
 import getCustomerActiveCart from '../../api/me/cart/getActiveCustomerCart';
 import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
-import addProductToAnonymousCart from '../../api/me/cart/addProductToAnonymousCart';
+import addProductToCart from '../../api/me/cart/addProductToCart';
 
 import type { Cart, LineItem } from '@commercetools/platform-sdk';
 
@@ -112,14 +111,14 @@ export const useCartData = create<CartState>((set) => ({
       if (customerId) {
         try {
           const { customerCartId } = useCartData.getState();
-          await addProductToCustomerCart(customerCartId, productId, version);
+          await addProductToCart(customerCartId, productId, version);
           console.log(`Product ${productId} added to cart with id ${customerCartId}`);
         } catch (err) {
           console.log(err);
         }
       } else {
         const { anonymousCartId } = useCartData.getState();
-        await addProductToAnonymousCart(anonymousCartId, productId, version);
+        await addProductToCart(anonymousCartId, productId, version);
         console.log(`Product ${productId} added to cart with id ${anonymousCartId}`);
       }
     }

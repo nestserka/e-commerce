@@ -9,7 +9,8 @@ export default async function addProductToCustomerCart(
   version: number,
   quantity: number = 1,
 ): Promise<void> {
-  const accessToken = tokenCache.get().refreshToken;
+  const token = tokenCache.get().refreshToken;
+
   const body = {
     version,
     actions: [
@@ -21,17 +22,13 @@ export default async function addProductToCustomerCart(
     ],
   };
 
-  try {
-    const response: ClientResponse<Cart> = await withRefreshToken(accessToken ?? '')
-      .me()
-      .carts()
-      .withId({ ID: cartId })
-      .post({ body })
-      .execute();
+  const response: ClientResponse<Cart> = await withRefreshToken(token ?? '')
+    .me()
+    .carts()
+    .withId({ ID: cartId })
+    .post({ body })
+    .execute();
 
-    console.log(`Product ${productId} added to cart with id ${cartId}`);
-    console.log('Updated cart:', response.body);
-  } catch (error) {
-    console.error(`Error adding product ${productId} to cart with id ${cartId}:`, error);
-  }
+  console.log(`Product ${productId} added to cart with id ${cartId}`);
+  console.log('Updated cart:', response.body);
 }
