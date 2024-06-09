@@ -3,7 +3,7 @@ import { create } from 'zustand';
 import createCustomerCart from '../../api/me/cart/createCustomerCart';
 import createAnonymousCart from '../../api/me/cart/createAnonimousCart';
 import { LS_PREFIX } from '../../constants/constants';
-import getCustomerActiveCart from '../../api/me/cart/getActiveCustomerCart';
+import getActiveCart from '../../api/me/cart/getActiveCart';
 import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 import addProductToCart from '../../api/me/cart/addProductToCart';
 
@@ -39,7 +39,7 @@ export const useCartData = create<CartState>((set) => ({
 
     if (customerId) {
       try {
-        activeCart = await getCustomerActiveCart();
+        activeCart = await getActiveCart();
       } catch (err) {
         console.log('Failed to get active customer cart', err);
       }
