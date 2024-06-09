@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 import style from './_breadCrumbs.module.scss';
 import homeIcon from '../../assets/images/icons/home-icon.svg';
@@ -17,12 +18,12 @@ export default function Breadcrumbs({ links }: BreadcrumbsProps): JSX.Element {
       </Link>
 
       {[...links].map((link) => (
-        <>
+        <React.Fragment key={link.route}>
           <img src={chevronIcon} className="chevron-icon" alt="" />
           <Link to={link.route} className={style['breadcrumbs-link']}>
             {link.label}
           </Link>
-        </>
+        </React.Fragment>
       ))}
     </section>
   );
