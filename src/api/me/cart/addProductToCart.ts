@@ -11,15 +11,15 @@ export default async function addProductToCustomerCart(
 ): Promise<Cart> {
   const token = tokenCache.get().refreshToken;
 
+  const itemData: MyCartAddLineItemAction = {
+    action: 'addLineItem',
+    productId,
+    quantity,
+  };
+
   const body = {
     version,
-    actions: [
-      {
-        action: 'addLineItem',
-        productId,
-        quantity,
-      } as MyCartAddLineItemAction,
-    ],
+    actions: [itemData],
   };
 
   const response: ClientResponse<Cart> = await withRefreshToken(token ?? '')
