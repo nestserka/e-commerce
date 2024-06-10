@@ -8,7 +8,7 @@ export default async function addProductToCustomerCart(
   productId: string,
   version: number,
   quantity: number = 1,
-): Promise<void> {
+): Promise<Cart> {
   const token = tokenCache.get().refreshToken;
 
   const body = {
@@ -31,4 +31,6 @@ export default async function addProductToCustomerCart(
 
   console.log(`Product ${productId} added to cart with id ${cartId}`);
   console.log('Updated cart:', response.body);
+
+  return response.body;
 }

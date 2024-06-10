@@ -16,6 +16,7 @@ interface CartState {
   anonymousCartId: string;
   customerCartId: string;
   activeCart: Cart | undefined;
+  version: number | null;
   itemsInCart: LineItem[] | null;
   isLoading: boolean;
   error: string;
@@ -28,6 +29,7 @@ export const useCartData = create<CartState>((set) => ({
   anonymousCartId: anonymousCartIdLocal,
   customerCartId: customerCartIdLocal,
   activeCart: undefined,
+  version: null,
   itemsInCart: null,
   isLoading: false,
   error: '',
@@ -54,6 +56,7 @@ export const useCartData = create<CartState>((set) => ({
 
       if (activeCart) {
         set({ activeCart });
+        set({ version: activeCart.version });
         set({ customerCartId: activeCart.id });
         set({ itemsInCart: activeCart.lineItems });
 
@@ -72,6 +75,7 @@ export const useCartData = create<CartState>((set) => ({
       }
 
       set({ activeCart });
+      set({ version: activeCart.version });
       set({ anonymousCartId: activeCart.id });
       set({ itemsInCart: activeCart.lineItems });
 
@@ -94,16 +98,13 @@ export const useCartData = create<CartState>((set) => ({
 
       if (customerId) {
         try {
-          const { customerCartId } = useCartData.getState();
-          await addProductToCart(customerCartId, productId, version);
-          console.log(`Product ${productId} added to cart with id ${customerCartId}`);
+          const { customerCartId, anonymousCartId } = useCartData.getState();
+          const cartId = customerId ? customerCartId : anonymousCartId;
+          const updatedCart = await addProductToCart(cartId, productId, version);
+          set({ version: updatedCart.version });
         } catch (err) {
           console.log(err);
         }
-      } else {
-        const { anonymousCartId } = useCartData.getState();
-        await addProductToCart(anonymousCartId, productId, version);
-        console.log(`Product ${productId} added to cart with id ${anonymousCartId}`);
       }
     }
   },
