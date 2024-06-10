@@ -39,7 +39,7 @@ import ControllerLabel from '../../../components/ui/controllerLabel/label';
 import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
 import RegistrationData from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
-import { showModalMessage, useLoginData } from '../../../core/state/userState';
+import { showModalMessage, useCustomerInfo, useLoginData } from '../../../core/state/userState';
 import createCustomer from '../../../api/customer/createCustomer';
 
 const schema = z.object({
@@ -66,6 +66,7 @@ export default function RegistrationForm(): JSX.Element {
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [formEmailError, setFormEmailError] = useState<string>('');
   const { setCustomerCredentials } = useLoginData();
+  const { setUpdatedGeneraValues } = useCustomerInfo();
 
   const shippingAddress = useWatch({
     control,
@@ -137,6 +138,7 @@ export default function RegistrationForm(): JSX.Element {
           customerId: response.id,
         };
         setCustomerCredentials(customerCredentials);
+        setUpdatedGeneraValues({ firstName: data.firstName });
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
         reset();
