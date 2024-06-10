@@ -238,3 +238,27 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
     }
   },
 }));
+
+export interface CatalogCheckAttributeState {
+  isCheckedBrandList: boolean;
+  isCheckedMaterialList: boolean;
+  isCheckedRefractorList: boolean;
+  setIsCheckedBrandList: (isStatus: boolean) => void;
+  setIsCheckedRefractorList: (isStatus: boolean) => void;
+  setIsCheckedMaterialList: (isStatus: boolean) => void;
+}
+
+export const useCatalogCheckAttributeState = create<CatalogCheckAttributeState>((set) => ({
+  isCheckedBrandList: false,
+  isCheckedMaterialList: false,
+  isCheckedRefractorList: false,
+  setIsCheckedBrandList: (isStatus: boolean): void => {
+    set(() => ({ isCheckedBrandList: isStatus }));
+  },
+  setIsCheckedRefractorList: (isStatus: boolean): void => {
+    set(() => ({ isCheckedRefractorList: isStatus }));
+  },
+  setIsCheckedMaterialList: (isStatus: boolean): void => {
+    set(() => ({ isCheckedMaterialList: isStatus }));
+  },
+}));
