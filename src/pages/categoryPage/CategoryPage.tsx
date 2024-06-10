@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
-import { Input, Select, Space } from 'antd';
+import { Select } from 'antd';
 import ReactSlider from 'react-slider';
 import { Link } from 'react-router-dom';
 
@@ -9,11 +9,12 @@ import Card from '../../components/cards/card/Card';
 import { useCatalogData } from '../../core/state/catalogState';
 import { createCategoriesList, getAttributesCategory, getSubCategory, isAttributeLocalizedEnumType } from './utils';
 import InputCheckBox from '../../components/ui/checkbox/checkbox';
-import { DYNAMIC_ROUTES, OPTIONS_FROM_SORT, ROUTES } from '../../constants/constants';
+import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 import SingleCheckboxGroup from '../../components/ui/singleCheckboxGroup/SingleCheckboxGroup';
 import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
 import homeIcon from '../../assets/images/icons/home-icon.svg';
 import iconDelete from '../../assets/images/icons/delete.png';
+import HeaderCatalog from '../../domain/catalog/HeaderCatalog/HeaderCatalog';
 
 import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
@@ -63,7 +64,7 @@ export default function CategoryPage(): JSX.Element {
     setRefractorListDefault,
     setRefractorList,
   } = useCatalogData();
-  const { Search } = Input;
+
   const getProductListFromCategory = useCallback(() => {
     if (category === 'all') {
       getProductsList()
@@ -94,11 +95,12 @@ export default function CategoryPage(): JSX.Element {
       navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
     }
   };
-  const onSearch: SearchProps['onSearch'] = (value) => {
+  const handleSearch: SearchProps['onSearch'] = (value: string) => {
+    console.log(value);
     setSearchValue(value);
     getProductListFromCategory();
   };
-  const onChange: SearchProps['onChange'] = (e) => {
+  const handleChangeCapture: SearchProps['onChange'] = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value.length) {
       setSearchValue(e.target.value);
       getProductListFromCategory();
@@ -388,30 +390,11 @@ export default function CategoryPage(): JSX.Element {
           </div>
         </aside>
         <section className={style.products}>
-          <header className={style['products-header']}>
-            <div className={style['products-search']}>
-              <Space direction="vertical">
-                <Search
-                  className={style.search}
-                  placeholder="Search for..."
-                  enterButton
-                  onSearch={onSearch}
-                  style={{ width: 300 }}
-                  onChangeCapture={onChange}
-                />
-              </Space>
-            </div>
-            <div className={style['products-sort']}>
-              <span className={style['sort-title']}>Sort by:</span>
-              <Select
-                labelInValue
-                placeholder="Price from low to high"
-                style={{ width: 200 }}
-                onChange={handleChangeSort}
-                options={OPTIONS_FROM_SORT}
-              />
-            </div>
-          </header>
+          <HeaderCatalog
+            handleSearch={handleSearch}
+            handleChangeSort={handleChangeSort}
+            handleChangeCapture={handleChangeCapture}
+          />
           <div className={style['products-block']}>
             {productsList.length ? (
               productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
