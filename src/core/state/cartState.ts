@@ -102,6 +102,8 @@ export const useCartData = create<CartState>((set) => ({
           const cartId = customerId ? customerCartId : anonymousCartId;
           const updatedCart = await addProductToCart(cartId, productId, version);
           set({ version: updatedCart.version });
+          set({ activeCart: updatedCart });
+          set({ itemsInCart: updatedCart.lineItems });
         } catch (err) {
           console.log(err);
         }
