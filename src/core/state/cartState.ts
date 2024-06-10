@@ -96,17 +96,15 @@ export const useCartData = create<CartState>((set) => ({
     if (activeCart) {
       const { version } = activeCart;
 
-      if (customerId) {
-        try {
-          const { customerCartId, anonymousCartId } = useCartData.getState();
-          const cartId = customerId ? customerCartId : anonymousCartId;
-          const updatedCart = await addProductToCart(cartId, productId, version);
-          set({ version: updatedCart.version });
-          set({ activeCart: updatedCart });
-          set({ itemsInCart: updatedCart.lineItems });
-        } catch (err) {
-          console.log(err);
-        }
+      try {
+        const { customerCartId, anonymousCartId } = useCartData.getState();
+        const cartId = customerId ? customerCartId : anonymousCartId;
+        const updatedCart = await addProductToCart(cartId, productId, version);
+        set({ version: updatedCart.version });
+        set({ activeCart: updatedCart });
+        set({ itemsInCart: updatedCart.lineItems });
+      } catch (err) {
+        console.log(err);
       }
     }
   },
