@@ -72,3 +72,28 @@ export function isErrorType(value: unknown): value is HttpError {
     'error' in value
   );
 }
+
+export interface AttributeBestseller {
+  name: 'bestseller';
+  value: boolean[];
+}
+
+export interface AttributeDiscount {
+  name: 'discount';
+  value: Discount[];
+}
+
+export interface Discount {
+  key: string;
+  label: string;
+}
+
+export interface CartItemLineProps {
+  imageUrl: string;
+  productName: string;
+  discountedPricePerItem: string | undefined;
+  discountLabel: string;
+  pricePerItem: string;
+  quantity: number;
+  totalPrice: string;
+}

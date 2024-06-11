@@ -2,4 +2,8 @@
 
 .cart {
   @include page-layout-container;
+
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
 }
