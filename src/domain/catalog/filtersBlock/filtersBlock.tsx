@@ -12,19 +12,9 @@ import iconDelete from '../../../assets/images/icons/delete.png';
 import InputCheckBox from '../../../components/ui/checkbox/checkbox';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
 
-import type { AttributeLocalizedEnumValue } from '@commercetools/platform-sdk';
 import type { OptionsFromSelect } from '../../../pages/categoryPage/types';
-
-export interface FiltersBlockProps {
-  category: string | undefined;
-  nameCategory: string;
-  categoryOptions: OptionsFromSelect[];
-  subtrees: OptionsFromSelect[];
-  selectedValue: string | null;
-  getProductListFromCategory: () => void;
-  resetAttributesForCategory: () => void;
-  handleClickForCategory: () => void;
-}
+import type { FiltersBlockProps } from '../types';
+import type { AttributeLocalizedEnumValue } from '@commercetools/platform-sdk';
 
 export default function FiltersBlock({
   category,

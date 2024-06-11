@@ -2,46 +2,8 @@ import { create } from 'zustand';
 
 import withClientCredentialsFlow from '../../api/middlewareFlows/withClientCredentials';
 
-import type { Category, ProductProjectionPagedSearchResponse, ProductType } from '@commercetools/platform-sdk';
-
-export interface CatalogStateData {
-  categoryName: string;
-  brandList: string[];
-  materialList: string[];
-  refractorList: string[];
-  categoriesData: Category[];
-  priceRange: number[];
-  subtreesList: string;
-  parentsCategories: Category[];
-  productTypesAttributes: ProductType[];
-  isLoading: boolean;
-  limit: number;
-  fuzzyLevelValue: number;
-  sortValue: string;
-  searchValue: string;
-  isBestseller: boolean;
-  isDiscount: boolean;
-  offset: number;
-  setRefractorList: (nameRefractor: string, isStatus: boolean) => void;
-  setRefractorListDefault: () => void;
-  setBrandList: (nameBrand: string, isStatus: boolean) => void;
-  setBrandListDefault: () => void;
-  setMaterialList: (nameMaterial: string, isStatus: boolean) => void;
-  setMaterialListDefault: () => void;
-  setPriceRange: (newRange: number[]) => void;
-  setCategoryName: (newName: string) => void;
-  createFilterByCategoriesId: (category?: string) => string;
-  setOffset: (page: number) => void;
-  setSort: (newSort: string) => void;
-  setSubtreesList: (id: string, isStatus: boolean) => void;
-  setBestsellerStatus: (isStatus: boolean) => void;
-  setDiscountStatus: (iStatus: boolean) => void;
-  setSearchValue: (newSearch: string) => void;
-  setFuzzyLevel: () => number;
-  setCategoriesData: () => Promise<void>;
-  setProductTypesAttributes: () => Promise<void>;
-  getProductsList: (subtrees?: string) => Promise<ProductProjectionPagedSearchResponse>;
-}
+import type { CatalogCheckAttributeState, CatalogStateData } from './types';
+import type { Category, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
   brandList: [],
@@ -238,15 +200,6 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
     }
   },
 }));
-
-export interface CatalogCheckAttributeState {
-  isCheckedBrandList: boolean;
-  isCheckedMaterialList: boolean;
-  isCheckedRefractorList: boolean;
-  setIsCheckedBrandList: (isStatus: boolean) => void;
-  setIsCheckedRefractorList: (isStatus: boolean) => void;
-  setIsCheckedMaterialList: (isStatus: boolean) => void;
-}
 
 export const useCatalogCheckAttributeState = create<CatalogCheckAttributeState>((set) => ({
   isCheckedBrandList: false,

@@ -1,4 +1,5 @@
-import type { OptionsFromSelectSort } from '../../pages/categoryPage/types';
+import type { AttributeLocalizedEnumValue } from '@commercetools/platform-sdk';
+import type { OptionsFromSelect, OptionsFromSelectSort } from '../../pages/categoryPage/types';
 import type { FormEventHandler } from 'react';
 import type { SearchProps } from 'antd/es/input';
 
@@ -18,4 +19,22 @@ export interface BreadCrumbsCatalogProps {
 
 export interface PriceRangeFilterProps {
   getProductListFromCategory: () => void;
+}
+
+export interface AttributeBlockProps {
+  attributeArray: AttributeLocalizedEnumValue[];
+  nameAttribute: string;
+  isCheckedAttributeList: boolean;
+  handleClickForCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface FiltersBlockProps {
+  category: string | undefined;
+  nameCategory: string;
+  categoryOptions: OptionsFromSelect[];
+  subtrees: OptionsFromSelect[];
+  selectedValue: string | null;
+  getProductListFromCategory: () => void;
+  resetAttributesForCategory: () => void;
+  handleClickForCategory: () => void;
 }
