@@ -1,7 +1,7 @@
 import { Input, Select, Space } from 'antd';
 
 import { OPTIONS_FROM_SORT } from '../../../constants/constants';
-import style from './headerCatalog.module.scss';
+import styles from './_headerCatalog.module.scss';
 
 import type { HeaderCatalogProps } from '../types';
 
@@ -13,11 +13,11 @@ export default function HeaderCatalog({
   const { Search } = Input;
 
   return (
-    <header className={style['products-header']}>
-      <div className={style['products-search']}>
+    <header className={styles['products-header']}>
+      <div className={styles['products-search']}>
         <Space direction="vertical">
           <Search
-            className={style.search}
+            className={styles.search}
             placeholder="Search for..."
             enterButton
             onSearch={handleSearch}
@@ -26,8 +26,8 @@ export default function HeaderCatalog({
           />
         </Space>
       </div>
-      <div className={style['products-sort']}>
-        <span className={style['sort-title']}>Sort by:</span>
+      <div className={styles['products-sort']}>
+        <span className={styles['sort-title']}>Sort by:</span>
         <Select
           labelInValue
           placeholder="Price from low to high"

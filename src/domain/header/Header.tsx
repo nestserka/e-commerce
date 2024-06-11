@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import style from './_header.module.scss';
+import styles from './_header.module.scss';
 import Navigation from './navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
 import { NAV_LINKS, ROUTES } from '../../constants/constants';
@@ -23,8 +23,8 @@ export default function Header(): JSX.Element {
   };
 
   return (
-    <header className={style.header} data-testid="header">
-      <section className={style['logo-wrapper']}>
+    <header className={styles.header} data-testid="header">
+      <section className={styles['logo-wrapper']}>
         <Link to={ROUTES.HOME}>
           <img src={logo} className="ns-logo" alt="NASA Store logotype" />
         </Link>
@@ -39,14 +39,14 @@ export default function Header(): JSX.Element {
         customerId={customerId}
       />
 
-      <section className={style['burger-wrapper']}>
+      <section className={styles['burger-wrapper']}>
         <button
-          className={`${style['burger-button']} ${style.hidden}`}
+          className={`${styles['burger-button']} ${styles.hidden}`}
           onClick={toggleNav}
           aria-label="burger"
           type="button"
         >
-          <span className={style.dot} />
+          <span className={styles.dot} />
         </button>
       </section>
     </header>

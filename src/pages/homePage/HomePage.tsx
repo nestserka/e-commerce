@@ -1,4 +1,4 @@
-import style from './_home.module.scss';
+import styles from './_home.module.scss';
 import { ROUTES } from '../../constants/constants';
 import HomeNavItem from '../../components/homeNavItem/HomeNavItem';
 import regIcon from '../../assets/images/icons/register-nav-icon.svg';
@@ -46,14 +46,14 @@ export default function HomePage(): JSX.Element {
   const { type, title, message } = modalMessageSuccessRegistrationProps;
 
   return (
-    <section className={style.home} data-testid="home">
+    <section className={styles.home} data-testid="home">
       {isShown && <ModalMessage type={type} title={title} message={message} />}
-      <h1 className={style.title}>
-        <span className={style['accent-text']}>Hello, stranger!</span>
+      <h1 className={styles.title}>
+        <span className={styles['accent-text']}>Hello, stranger!</span>
         <br />
         Feel free to explore our digital hub.
       </h1>
-      <section className={style['nav-wrapper']}>
+      <section className={styles['nav-wrapper']}>
         {navItemsContent.map((content, index) => (
           <HomeNavItem
             key={content.linkLabel}

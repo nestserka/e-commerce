@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 import { useNavigate } from 'react-router';
 
-import style from './filtersBlock.module.scss';
+import styles from './_filtersBlock.module.scss';
 import { useCatalogCheckAttributeState, useCatalogData } from '../../../core/state/catalogState';
 import { getAttributesCategory, isAttributeLocalizedEnumType } from '../../../pages/categoryPage/utils';
 import SingleCheckboxGroup from '../../../components/ui/singleCheckboxGroup/SingleCheckboxGroup';
@@ -103,15 +103,15 @@ export default function FiltersBlock({
   }, [category, productTypesAttributes]);
 
   return (
-    <aside className={style['products-filters']}>
-      <h3 className={style['filters-header']}>Filters</h3>
+    <aside className={styles['products-filters']}>
+      <h3 className={styles['filters-header']}>Filters</h3>
 
-      <details className={style['filters-section']} open>
-        <summary className={style['filter-title']}>Categories</summary>
-        <div key={nameCategory} className={style['select-sort']}>
+      <details className={styles['filters-section']} open>
+        <summary className={styles['filter-title']}>Categories</summary>
+        <div key={nameCategory} className={styles['select-sort']}>
           <Select
             labelInValue
-            className={style.subtrees}
+            className={styles.subtrees}
             placeholder={nameCategory}
             onChange={handleChangeCategory}
             options={categoryOptions}
@@ -121,10 +121,10 @@ export default function FiltersBlock({
           <SingleCheckboxGroup options={subtrees} selectedValue={selectedValue} onChange={handleCheckboxChange} />
         </div>
       </details>
-      <details className={style['filters-section']} open>
-        <summary className={style['filter-title']}>Promo-Actions</summary>
-        <div className={style['select-sort']}>
-          <div className={style['checkbox-wrapper']}>
+      <details className={styles['filters-section']} open>
+        <summary className={styles['filter-title']}>Promo-Actions</summary>
+        <div className={styles['select-sort']}>
+          <div className={styles['checkbox-wrapper']}>
             <InputCheckBox
               id="discount"
               name="Discount"
@@ -136,7 +136,7 @@ export default function FiltersBlock({
               }}
             />
           </div>
-          <div className={style['checkbox-wrapper']}>
+          <div className={styles['checkbox-wrapper']}>
             <InputCheckBox
               id="bestseller"
               name="Bestseller"
@@ -181,9 +181,9 @@ export default function FiltersBlock({
           getProductListFromCategory();
         }}
       />
-      <div className={style['filters-section']}>
-        <button className={style['filters-button']} type="button" onClick={handleResetAllFilters}>
-          <span className={style['filters-button-span']}>Clear Filters</span>
+      <div className={styles['filters-section']}>
+        <button className={styles['filters-button']} type="button" onClick={handleResetAllFilters}>
+          <span className={styles['filters-button-span']}>Clear Filters</span>
           <img src={iconDelete} alt="delete" />
         </button>
       </div>

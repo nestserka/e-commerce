@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Scrollbar } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import './slider-catalog-page.scss';
+import './_sliderForCatalogPage.scss';
 import { NavLink } from 'react-router-dom';
 
 import type { CSSProperties } from 'react';

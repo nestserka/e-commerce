@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
 
-import style from './_category.module.scss';
+import styles from './_category.module.scss';
 import Card from '../../domain/catalog/card/Card';
 import { useCatalogCheckAttributeState, useCatalogData } from '../../core/state/catalogState';
 import { createCategoriesList, getSubCategory } from './utils';
@@ -111,6 +111,14 @@ export default function CategoryPage(): JSX.Element {
     navigation(ROUTES.CATALOG_ALL);
   };
 
+  // const handleResetAllFilters = (): void => {
+  //   setPriceRange([0, 1700000]);
+  //   setBestsellerStatus(false);
+  //   setDiscountStatus(false);
+  //   resetAttributesForCategory();
+  //   handleClickForCategory();
+  // };
+
   useEffect(() => {
     if (category) {
       const allSubtrees = getSubCategory(categoriesData, category);
@@ -151,7 +159,7 @@ export default function CategoryPage(): JSX.Element {
   ]);
 
   return (
-    <section className={style.category} data-testid={category}>
+    <section className={styles.category} data-testid={category}>
       <BreadCrumbsCatalog
         category={category}
         namePosition={namePosition}
@@ -159,7 +167,7 @@ export default function CategoryPage(): JSX.Element {
         handleClickForCatalog={handleClickForCatalog}
         handleClickForCategory={handleClickForCategory}
       />
-      <main className={style.main}>
+      <main className={styles.main}>
         <FiltersBlock
           category={category}
           subtrees={subtrees}
@@ -171,17 +179,17 @@ export default function CategoryPage(): JSX.Element {
           handleClickForCategory={handleClickForCategory}
         />
 
-        <section className={style.products}>
+        <section className={styles.products}>
           <HeaderCatalog
             handleSearch={handleSearch}
             handleChangeSort={handleChangeSort}
             handleChangeCapture={handleChangeCapture}
           />
-          <div className={style['products-block']}>
+          <div className={styles['products-block']}>
             {productsList.length ? (
               productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
             ) : (
-              <div className={style['products-list-empty']}>No product by attribute or filter found</div>
+              <div className={styles['products-list-empty']}>No product by attribute or filter found</div>
             )}
           </div>
         </section>

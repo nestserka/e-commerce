@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import chevronIcon from '../../../assets/images/icons/chevron-icon.svg';
 import homeIcon from '../../../assets/images/icons/home-icon.svg';
 import { ROUTES } from '../../../constants/constants';
-import style from './breadCrumbsCatalog.module.scss';
+import style from './_breadCrumbsCatalog.module.scss';
 
 import type { BreadCrumbsCatalogProps } from '../types';
 

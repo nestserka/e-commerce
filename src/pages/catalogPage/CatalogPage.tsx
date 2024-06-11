@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
 
-import style from './_catalog.module.scss';
+import styles from './_catalog.module.scss';
 import SliderCatalogPage from '../../domain/catalog/sliderForCatalogPage/SliderForCatalogPage';
 import { useCatalogData } from '../../core/state/catalogState';
 
@@ -18,7 +18,7 @@ export default function CatalogPage(): JSX.Element {
   }, [setCategoriesData, setProductTypesAttributes]);
 
   return (
-    <section className={style.catalog} data-testid="catalog">
+    <section className={styles.catalog} data-testid="catalog">
       <SliderCatalogPage allCategories={parentsCategories} />
       <Suspense fallback={<div className="loading">Loading...</div>}>
         <Outlet />

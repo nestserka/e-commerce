@@ -1,6 +1,6 @@
 import ReactSlider from 'react-slider';
 
-import style from '../filtersBlock.module.scss';
+import style from '../_filtersBlock.module.scss';
 import { useCatalogData } from '../../../../core/state/catalogState';
 
 import type { PriceRangeFilterProps } from '../../types';
