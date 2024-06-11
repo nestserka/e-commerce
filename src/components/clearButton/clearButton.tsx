@@ -1,5 +1,5 @@
 import style from './_clearButton.module.scss';
-import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
+import removeIcon from '../../assets/images/icons/icon-delete.svg';
 
 // это заглушка
 const handleClick = (): Promise<void> =>
@@ -7,13 +7,11 @@ const handleClick = (): Promise<void> =>
     resolve();
   });
 
-export default function ClearButton(callback: () => Promise<void> = handleClick): JSX.Element {
+export default function ClearButton(): JSX.Element {
   return (
-    <div className={style.wrapper}>
-      <button onClick={callback} type="button" className={style['clear-button']}>
-        Clear all
-      </button>
-      <img src={chevronIcon} alt="" className={style.icon} />
-    </div>
+    <button onClick={handleClick} type="button" className={`${style['clear-button']} button-secondary`}>
+      <span>Clear all</span>
+      <img src={removeIcon} alt="" className={style.icon} />
+    </button>
   );
 }

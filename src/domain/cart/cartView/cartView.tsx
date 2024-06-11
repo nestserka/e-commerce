@@ -7,6 +7,7 @@ import { useCartData } from '../../../core/state/cartState';
 import CartItemLine from '../cartItemLine/cartItemLine';
 import { getLineItemProps } from '../../../utils/utils';
 import EmptyCartState from '../emptyCartView/emptyCartState';
+import ClearButton from '../../../components/clearButton/clearButton';
 
 const breadCrumbsProps = [
   {
@@ -39,6 +40,9 @@ export default function CartView(): JSX.Element {
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 return <CartItemLine key={item.name.en} {...cartItemLineProps} />;
               })}
+            </div>
+            <div className={style['clear-all-wrapper']}>
+              <ClearButton />
             </div>
           </section>
           <aside className={style['aside-wrapper']}>
