@@ -288,10 +288,16 @@ export default function RegistrationForm(): JSX.Element {
         control={control}
         name="defaultShippingAddress"
         render={({ field: { onChange, value } }) => (
-          <InputCheckBox onChange={onChange} id="shipping" name="shipping" label="Set Shipping Address as default" isValue={value} />
+          <InputCheckBox
+            onChange={onChange}
+            id="shipping"
+            name="shipping"
+            label="Set Shipping Address as default"
+            isValue={value}
+          />
         )}
       />
-      <InputCheckBox id="main" name="main" label="Bill to Shipping Address " onChange={handleShippingAutoComplete}/>
+      <InputCheckBox id="main" name="main" label="Bill to Shipping Address " onChange={handleShippingAutoComplete} />
       <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
@@ -357,7 +363,13 @@ export default function RegistrationForm(): JSX.Element {
         control={control}
         name="defaultBillingAddress"
         render={({ field: { onChange, value } }) => (
-          <InputCheckBox onChange={onChange} id="billing" name="billing" label="Set Billing Address as default" isValue={value} />
+          <InputCheckBox
+            onChange={onChange}
+            id="billing"
+            name="billing"
+            label="Set Billing Address as default"
+            isValue={value}
+          />
         )}
       />
       <button

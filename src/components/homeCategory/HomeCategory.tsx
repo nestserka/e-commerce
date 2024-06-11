@@ -18,15 +18,33 @@ export default function HomeCategory(): JSX.Element {
           </a>
         </div>
         <div className={style['meteorite-images']}>
-  
-          <img src={meteoryte1} alt="Meteoryte 1"className={style['meteorite-image-1']} />
-        
- 
-          <img src={meteoryte2} alt="Meteoryte 2" className={style['meteorite-image-2']}/>
-       
-       
-          <img src={meteoryte3} alt="Meteoryte 3" className={style['meteorite-image-3']}/>
-       
+          <img src={meteoryte1} alt="Meteoryte 1" className={style['meteorite-image-1']} />
+
+          <img src={meteoryte2} alt="Meteoryte 2" className={style['meteorite-image-2']} />
+
+          <img src={meteoryte3} alt="Meteoryte 3" className={style['meteorite-image-3']} />
+        </div>
+      </section>
+      <section className={`${style['category-container']} ${style.astronaut}`}>
+        <div className={style['text-wrapper']}>
+          <h2 className={style.title}>Space Suits</h2>
+          <p className={style['product-description']}>
+          Discover a stunning collection of unique spacesuits, featuring meticulously crafted replicas from iconic astronauts.
+          </p>
+          <a className={`${style['category-button']} ${style.astronout} `} href={`${DYNAMIC_ROUTES.CATALOG}meteorite`}>
+            Explore Now
+          </a>
+        </div>
+      </section>
+      <section className={`${style['category-container']} ${style.food}`}>
+        <div className={style['text-wrapper']}>
+          <h2 className={style.title}>Space Food</h2>
+          <p className={style['product-description']}>
+          Explore delicious space food and treats available for purchase here!
+          </p>
+          <a className={style['category-button']} href={`${DYNAMIC_ROUTES.CATALOG}meteorite`}>
+            Explore Now
+          </a>
         </div>
       </section>
     </section>
