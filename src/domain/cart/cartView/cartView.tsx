@@ -16,6 +16,11 @@ const breadCrumbsProps = [
   },
 ];
 
+const dateNow = new Date();
+
+const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+const formattedDate = dateNow.toLocaleDateString('en-US', options);
+
 export default function CartView(): JSX.Element {
   const { itemsInCart } = useCartData();
 
@@ -42,6 +47,9 @@ export default function CartView(): JSX.Element {
               })}
             </div>
             <div className={style['clear-all-wrapper']}>
+              <div className={style['date-wrapper']}>
+                <span>Nearest shipping date</span> <span className={style.date}>{formattedDate}</span>
+              </div>
               <ClearButton />
             </div>
           </section>

@@ -38,3 +38,16 @@
 .products-wrapper {
   margin: 2rem 0;
 }
+
+.clear-all-wrapper {
+  @include flex-center-space-between;
+}
+
+.date-wrapper {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.date {
+  color: $font-color-primary;
+}
