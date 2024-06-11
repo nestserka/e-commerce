@@ -39,12 +39,6 @@ export const NAV_LINKS: NavLinkProps[] = [
   { title: 'Sign Up', route: ROUTES.SING_UP },
 ] as const;
 
-export const FOOTER_NAV_LINKS: NavLinkProps[] = [
-  { title: 'Home', route: ROUTES.HOME },
-  { title: 'Catalog', route: ROUTES.CATALOG_ALL },
-  { title: 'About', route: ROUTES.ABOUT },
-] as const;
-
 export const PASSWORD_VALIDATION_SCHEMA = z
   .string()
   .min(8, 'Password must be at least 8 characters long.')
