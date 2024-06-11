@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router';
 import { useCallback, useEffect, useState } from 'react';
 
 import style from './_category.module.scss';
-import Card from '../../components/cards/card/Card';
+import Card from '../../domain/catalog/card/Card';
 import { useCatalogCheckAttributeState, useCatalogData } from '../../core/state/catalogState';
 import { createCategoriesList, getSubCategory } from './utils';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';

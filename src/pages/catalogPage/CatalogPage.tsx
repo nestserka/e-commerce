@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
 
 import style from './_catalog.module.scss';
-import SliderCatalogPage from '../../components/slider/SliderForCatalogPage';
+import SliderCatalogPage from '../../domain/catalog/sliderForCatalogPage/SliderForCatalogPage';
 import { useCatalogData } from '../../core/state/catalogState';
 
 export default function CatalogPage(): JSX.Element {
