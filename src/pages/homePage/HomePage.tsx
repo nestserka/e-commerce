@@ -2,6 +2,7 @@ import style from './_home.module.scss';
 import { showModalMessage, useCustomerInfo, useLoginData } from '../../core/state/userState';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 import icon from '../../../public/assets/icons/rocket-icon.svg';
+import HomeCategory from '../../components/homeCategory/HomeCategory';
 
 const modalMessageSuccessRegistrationProps = {
   type: 'success',
@@ -49,6 +50,7 @@ export default function HomePage(): JSX.Element {
           </div>
         </div>
       </section>
+      <HomeCategory />
     </section>
   );
 }

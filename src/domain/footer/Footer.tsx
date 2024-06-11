@@ -35,7 +35,7 @@ export default function Footer(): JSX.Element {
         </p>
       </section>
       <section className={`${style.wrapper} ${style.contact}`}>
-      <a
+        <a
           className={style['footer-section-rss']}
           href="https://rs.school/courses/javascript-mentoring-program"
           target="_blank"
@@ -43,64 +43,64 @@ export default function Footer(): JSX.Element {
         >
           <img src={logo} className="rs-logo" alt="RS School logotype" />
         </a>
-      <h4  className={style['contact-title']}>Contact us</h4>
-      <section  className={style['contact-information']}>
-      <a
-          className={style['footer-section']}
-          href="https://rs.school/courses/javascript-mentoring-program"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src={gitLogo} className={style['contact-logo']} alt="Github" />
-        </a>
-        <a
-          className={style['footer-section']}
-          href="https://rs.school/courses/javascript-mentoring-program"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src={gmailLogo} className={style['contact-logo']} alt="Gmail" />
-        </a>
-      <h4 className={style['address-text']}>Tasha Grischenok</h4>
-      </section>
-      <section  className={style['contact-information']}>
-      <a
-          className={style['footer-section']}
-          href="https://rs.school/courses/javascript-mentoring-program"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src={gitLogo} className={style['contact-logo']} alt="Github" />
-        </a>
-        <a
-          className={style['footer-section']}
-          href="https://rs.school/courses/javascript-mentoring-program"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src={gmailLogo} className={style['contact-logo']} alt="Gmail" />
-        </a>
-      <h4 className={style['address-text']}>Ania Chebysheva</h4>
-      </section>
-      <section  className={style['contact-information']}>
-      <a
-          className={style['footer-section']}
-          href="https://rs.school/courses/javascript-mentoring-program"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src={gitLogo} className={style['contact-logo']} alt="Github" />
-        </a>
-        <a
-          className={style['footer-section']}
-          href="https://rs.school/courses/javascript-mentoring-program"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <img src={gmailLogo} className={style['contact-logo']} alt="Gmail" />
-        </a>
-      <h4 className={style['address-text']}>Katsia Nestserava</h4>
-      </section>
+        <h4 className={style['contact-title']}>Contact us</h4>
+        <section className={style['contact-information']}>
+          <a
+            className={style['footer-section']}
+            href="https://rs.school/courses/javascript-mentoring-program"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={gitLogo} className={style['contact-logo']} alt="Github" />
+          </a>
+          <a
+            className={style['footer-section']}
+            href="https://rs.school/courses/javascript-mentoring-program"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={gmailLogo} className={style['contact-logo']} alt="Gmail" />
+          </a>
+          <h4 className={style['address-text']}>Tasha Grischenok</h4>
+        </section>
+        <section className={style['contact-information']}>
+          <a
+            className={style['footer-section']}
+            href="https://rs.school/courses/javascript-mentoring-program"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={gitLogo} className={style['contact-logo']} alt="Github" />
+          </a>
+          <a
+            className={style['footer-section']}
+            href="https://rs.school/courses/javascript-mentoring-program"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={gmailLogo} className={style['contact-logo']} alt="Gmail" />
+          </a>
+          <h4 className={style['address-text']}>Ania Chebysheva</h4>
+        </section>
+        <section className={style['contact-information']}>
+          <a
+            className={style['footer-section']}
+            href="https://rs.school/courses/javascript-mentoring-program"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={gitLogo} className={style['contact-logo']} alt="Github" />
+          </a>
+          <a
+            className={style['footer-section']}
+            href="https://rs.school/courses/javascript-mentoring-program"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={gmailLogo} className={style['contact-logo']} alt="Gmail" />
+          </a>
+          <h4 className={style['address-text']}>Katsia Nestserava</h4>
+        </section>
       </section>
     </footer>
   );

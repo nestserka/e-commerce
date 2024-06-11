@@ -12,8 +12,7 @@
 @mixin page-home-layout-container {
   display: flex;
   flex-grow: 1;
-  max-width: 1440px;
-  margin: 4em auto 1em;
+  margin: 6.938em auto 1em;
 }
 
 @mixin flex-center-space-between {

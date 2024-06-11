@@ -1,0 +1,130 @@
+@use '../../assets/styles/mixins' as *;
+
+@import '../../assets/styles/variables';
+
+.category-section {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  padding: 3.25em 0;
+
+  .category-container {
+    width: 67%;
+    padding: 4em 7.5em;
+    height: 20em;
+
+    .title {
+      @include font-firs-regular;
+      font-size: 2.25em;
+      line-height: 100%;
+      color: $font-color-primary;
+      text-transform: uppercase;
+    }
+
+    .text-wrapper {
+      @include flex-justify-start;
+      flex-direction: column;
+      gap: 1.563em;
+
+      .product-description {
+        max-width: 12.813em;
+        color: $checkbox-color-checked;
+        opacity: 41%;
+        line-height: 100%;
+      }
+
+      .category-button {
+        cursor: pointer;
+        padding: 0.625em 1em;
+
+        font: inherit;
+        color: $checkbox-color-checked;
+
+        background: none;
+        border: 1px solid $border-color-default;
+        border-radius: 24px;
+        transition:
+          background-color 0.5s ease,
+          color 0.5s ease;
+
+        &:hover {
+          color: $font-color-primary;
+          background-color: $bg-color-btn-default;
+        }
+      }
+    }
+
+    @media (width <= 1400px) {
+      width: 80%;
+    }
+
+    @media (width <= 1165px) {
+      width: 100%;
+    }
+
+    @media (width <= 640px) {
+      margin-right: -1rem;
+      padding-left: 4em;
+      padding-right: 2em;
+
+      .title {
+        font-size: 1.4em;
+      }
+    }
+  }
+
+  .meteorites {
+    @include flex-center-space-between;
+    border-top-left-radius: 12em;
+    border-bottom-left-radius: 12em;
+    background-image: url('../../assets/images/bg/bg-banner-1.jpg');
+    background-position: center;
+    background-size: cover;
+    margin-right: -3rem;
+    gap: 1em;
+
+    .meteorite-images {
+      display: flex;
+      flex-direction: column;
+      .meteorite-image-1 {
+        transform: translate(20%, 20%);
+      }
+
+      .meteorite-image-2 {
+        transform: translate(-10%, -5%);
+        height: 9em;
+        width: 13em;
+      }
+
+      .meteorite-image-3 {
+        transform: translate(80%, -75%);
+        height: 10em;
+        width: 10em;
+      }
+
+      @media (width <= 800px) {
+        .meteorite-image-2 {
+          display: none;
+        }
+
+        .meteorite-image-1 {
+          transform: translate(-10%, 10%);
+          height: 10em;
+          width: 10em;
+        }
+
+        .meteorite-image-3 {
+          transform: translate(-50%, 10%);
+          height: 10em;
+          width: 10em;
+        }
+      }
+      @media (width <= 460px) {
+        .meteorite-image-3,
+        .meteorite-image-1 {
+          display: none;
+        }
+      }
+    }
+  }
+}

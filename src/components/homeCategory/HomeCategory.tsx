@@ -1,0 +1,34 @@
+import { DYNAMIC_ROUTES } from '../../constants/constants';
+import style from './_homeCategory.module.scss';
+import meteoryte1 from '../../../public/assets/images/home/meteorite-1.png';
+import meteoryte2 from '../../../public/assets/images/home/meteorite-2.png';
+import meteoryte3 from '../../../public/assets/images/home/meteorite-3.png';
+
+export default function HomeCategory(): JSX.Element {
+  return (
+    <section className={style['category-section']}>
+      <section className={`${style['category-container']} ${style.meteorites}`}>
+        <div className={style['text-wrapper']}>
+          <h2 className={style.title}>Rare meteorites</h2>
+          <p className={style['product-description']}>
+            Create a new account on our cosmic e-commerce hub to start shopping today!
+          </p>
+          <a className={style['category-button']} href={`${DYNAMIC_ROUTES.CATALOG}meteorite`}>
+            Explore Now
+          </a>
+        </div>
+        <div className={style['meteorite-images']}>
+  
+          <img src={meteoryte1} alt="Meteoryte 1"className={style['meteorite-image-1']} />
+        
+ 
+          <img src={meteoryte2} alt="Meteoryte 2" className={style['meteorite-image-2']}/>
+       
+       
+          <img src={meteoryte3} alt="Meteoryte 3" className={style['meteorite-image-3']}/>
+       
+        </div>
+      </section>
+    </section>
+  );
+}
