@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import type { LineItem } from '@commercetools/platform-sdk';
+import type { LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
 import type { Address, AttributeDiscount, CartItemLineProps, InputProps } from './types';
 
 export const getInputProps = (type: string, id: string, placeholder: string, autoComplete: string): InputProps => ({
@@ -114,4 +114,15 @@ export function getLineItemProps(lineItem: LineItem): CartItemLineProps {
   };
 
   return lineItemProps;
+}
+
+const ACTION = {
+  REMOVE: 'removeLineItem' as const,
+};
+
+export function getLineItemsPropsToRemove(arrIds: string[]): MyCartRemoveLineItemAction[] {
+  return arrIds.map((item) => ({
+    action: ACTION.REMOVE,
+    lineItemId: item,
+  }));
 }

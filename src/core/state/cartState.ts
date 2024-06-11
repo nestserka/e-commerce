@@ -23,6 +23,7 @@ interface CartState {
   error: string;
   addProductToCart: (productId: string, customerId: string) => Promise<void>;
   removeProductFromCart: (productId: string, customerId: string) => Promise<void>;
+  getItemsIds: () => string[] | undefined;
   setCart: (customerId: string) => Promise<void>;
   reset: () => void;
 }
@@ -131,6 +132,12 @@ export const useCartData = create<CartState>((set) => ({
     }
 
     set({ isLoading: false });
+  },
+  getItemsIds: (): string[] | undefined => {
+    const { itemsInCart } = useCartData.getState();
+    const arrIds = itemsInCart?.map((item) => item.id);
+
+    return arrIds;
   },
   reset: (): void => {
     set({

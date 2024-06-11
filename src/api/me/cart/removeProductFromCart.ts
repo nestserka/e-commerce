@@ -3,6 +3,10 @@ import { tokenCache } from '../../token/MyTokenCache';
 
 import type { Cart, ClientResponse, MyCartUpdateAction } from '@commercetools/platform-sdk';
 
+interface itemData {
+  cartId: string;
+}
+
 export default async function removeProductFromCart(
   cartId: string,
   productId: string,
