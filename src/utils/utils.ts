@@ -81,6 +81,7 @@ export function formatPrice(num: number): string {
 }
 
 export function getLineItemProps(lineItem: LineItem): CartItemLineProps {
+  const { id } = lineItem;
   const productName = lineItem.name.en;
   const { images } = lineItem.variant;
   const { quantity } = lineItem;
@@ -102,6 +103,7 @@ export function getLineItemProps(lineItem: LineItem): CartItemLineProps {
   }
 
   const lineItemProps = {
+    id,
     imageUrl,
     productName,
     discountedPricePerItem: discountStr,

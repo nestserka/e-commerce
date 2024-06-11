@@ -1,10 +1,23 @@
 import style from './_cartItemLine.module.scss';
 import iconDelete from '../../../assets/images/icons/icon-delete.svg';
+import { useCartData } from '../../../core/state/cartState';
+import { useLoginData } from '../../../core/state/userState';
 
 import type { CartItemLineProps } from '../../../utils/types';
 
 export default function CartItemLine(props: CartItemLineProps): JSX.Element {
-  const { imageUrl, productName, discountLabel, discountedPricePerItem, pricePerItem, quantity, totalPrice } = props;
+  const { imageUrl, productName, discountLabel, discountedPricePerItem, pricePerItem, quantity, totalPrice, id } =
+    props;
+  const { customerId } = useLoginData();
+  const { removeProductFromCart } = useCartData();
+
+  const handleRemoveClick = async (): Promise<void> => {
+    try {
+      await removeProductFromCart(id, customerId);
+    } catch (err) {
+      console.log('Failed to remove product from the cart', err);
+    }
+  };
 
   return (
     <section className={style['item-line-wrapper']} data-testid="cart-item-line">
@@ -31,7 +44,12 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
       <p className={style['total-price']} title={totalPrice}>
         {totalPrice}
       </p>
-      <button type="button" className={style['remove-item-btn']}>
+      <button
+        type="button"
+        className={style['remove-item-btn']}
+        aria-label="Rremove product from cart"
+        onClick={handleRemoveClick}
+      >
         <img src={iconDelete} alt="Edit" className={style['icon-delete']} />
       </button>
     </section>
