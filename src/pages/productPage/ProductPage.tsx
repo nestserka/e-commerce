@@ -8,8 +8,6 @@ import { formatPrice } from '../../utils/utils';
 import Badge from '../../components/badge/badge';
 import getProductById from '../../api/products/getProductById';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
-// import { useCartData } from '../../core/state/cartState';
-// import { useLoginData } from '../../core/state/userState';
 import Breadcrumbs from '../../components/breadCrumbs/breadCrumbs';
 import CartToggleButton from '../../domain/cart/сartToggleButton/cartToggleButton';
 
@@ -28,32 +26,7 @@ export default function ProductPage(): JSX.Element {
   const [price, setPrice] = useState<string | null>(null);
   const [discount, setDiscount] = useState<string | null>(null);
 
-  // const { activeCart, setCart, addProductToCart } = useCartData();
-  // const { customerId } = useLoginData();
-
   const currentPage: keyof typeof PAGES = 'PRODUCT';
-
-  // const handleAddToCart = async (): Promise<void> => {
-  //   if (product) {
-  //     if (!activeCart) {
-  //       try {
-  //         await setCart(customerId);
-  //       } catch (err) {
-  //         console.log((err as Error).message);
-  //         setError('Failed to set active cart');
-
-  //         return;
-  //       }
-  //     }
-
-  //     try {
-  //       await addProductToCart(product.id, customerId);
-  //     } catch (err) {
-  //       console.log((err as Error).message);
-  //       setError('Failed to add product to cart');
-  //     }
-  //   }
-  // };
 
   const extractPrice = (res: ProductProjection): void => {
     const { prices } = res.masterVariant;
