@@ -23,16 +23,20 @@ export default function BreadCrumbsCatalog({
       <button className={style['category-header-link']} type="button" onClick={handleClickForCatalog}>
         All categories
       </button>
-      {category === 'all' ? '' : <img src={chevronIcon} className="chevron-icon" alt="chevron" />}
-      {category === 'all' ? (
-        ''
-      ) : (
-        <button className={style['category-header-link']} type="button" onClick={handleClickForCategory}>
-          {namePosition}
-        </button>
+      {category !== 'all' && (
+        <>
+          <img src={chevronIcon} className="chevron-icon" alt="chevron" />
+          <button className={style['category-header-link']} type="button" onClick={handleClickForCategory}>
+            {namePosition}
+          </button>
+        </>
       )}
-      {nameSubtree ? <img src={chevronIcon} className="chevron-icon" alt="chevron" /> : ''}
-      {nameSubtree ? <span className={style['category-header-link']}>{nameSubtree}</span> : ''}
+      {nameSubtree && (
+        <>
+          <img src={chevronIcon} className="chevron-icon" alt="chevron" />
+          <span className={style['category-header-link']}>{nameSubtree}</span>
+        </>
+      )}
     </header>
   );
 }

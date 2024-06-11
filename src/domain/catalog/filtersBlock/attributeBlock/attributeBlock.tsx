@@ -16,12 +16,12 @@ export default function AttributeBlock({
   isCheckedAttributeList,
   handleClickForCheckbox,
 }: AttributeBlockProps): JSX.Element {
+ 
   return (
     <details className={attributeArray.length ? style['filters-section'] : style['filters-section-display-none']} open>
       <summary className={style['filters-title']}>{nameAttribute}</summary>
       <div className={style['select-sort']}>
-        {attributeArray.length
-          ? attributeArray.map((attribute) => (
+        { attributeArray.map((attribute) => (
               <div className={style['checkbox-wrapper']}>
                 <InputCheckBox
                   key={attribute.key}
@@ -33,7 +33,7 @@ export default function AttributeBlock({
                 />
               </div>
             ))
-          : ''}
+          }
       </div>
     </details>
   );
