@@ -1,4 +1,3 @@
-import style from './_cartToggleButton.module.scss';
 import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 
@@ -11,7 +10,7 @@ interface CartToggleButtonProps {
 
 export default function CartToggleButton({ productId, page }: CartToggleButtonProps): JSX.Element {
   const { customerId } = useLoginData();
-  const { activeCart, setCart, addProductToCart } = useCartData();
+  const { activeCart, setCart, addProductToCart, isInCart } = useCartData();
 
   const handleAddToCart = async (): Promise<void> => {
     if (!activeCart) {
@@ -33,13 +32,16 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
     }
   };
 
+  const productInCart = productId ? isInCart(productId) : false;
+
   return (
     <button
       type="button"
       onClick={handleAddToCart}
-      className={page === 'PRODUCT' ? 'button-primary' : style['toggle-cart-button-catalog']}
+      disabled={productInCart}
+      className={page === 'PRODUCT' ? 'button-primary' : 'button-secondary'}
     >
-      Add to Cart
+      {productId && isInCart(productId) ? 'Already in Cart' : 'Add to Cart'}
     </button>
   );
 }

@@ -164,10 +164,6 @@ export default function ProductPage(): JSX.Element {
               {discount && <span className={style.price}>{discount}</span>}
               <span className={discount ? style.discount : style.price}>{price}</span>
             </section>
-            {/* <button className="button-primary" type="button" onClick={handleAddToCart}>
-              Add to cart
-            </button> */}
-
             <CartToggleButton productId={product.id} page={currentPage} />
           </section>
         </section>
