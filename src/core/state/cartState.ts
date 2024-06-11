@@ -8,7 +8,7 @@ import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 import addProductToCart from '../../api/me/cart/addProductToCart';
 import removeProductFromCart from '../../api/me/cart/removeProductFromCart';
 
-import type { Cart, LineItem } from '@commercetools/platform-sdk';
+import type { Cart, LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
 
 const anonymousCartIdLocal = localStorage.getItem(`anonymousCartId-${LS_PREFIX}`) ?? '';
 const customerCartIdLocal = localStorage.getItem(`customerCart-${LS_PREFIX}`) ?? '';
@@ -22,7 +22,7 @@ interface CartState {
   isLoading: boolean;
   error: string;
   addProductToCart: (productId: string, customerId: string) => Promise<void>;
-  removeProductFromCart: (productId: string, customerId: string) => Promise<void>;
+  removeProductFromCart: (items: MyCartRemoveLineItemAction[], customerId: string) => Promise<void>;
   getItemsIds: () => string[] | undefined;
   setCart: (customerId: string) => Promise<void>;
   reset: () => void;
@@ -111,7 +111,7 @@ export const useCartData = create<CartState>((set) => ({
 
     set({ isLoading: false });
   },
-  removeProductFromCart: async (productId, customerId): Promise<void> => {
+  removeProductFromCart: async (action, customerId): Promise<void> => {
     set({ isLoading: true, error: '' });
 
     const { activeCart } = useCartData.getState();
@@ -122,7 +122,7 @@ export const useCartData = create<CartState>((set) => ({
       try {
         const { customerCartId, anonymousCartId } = useCartData.getState();
         const cartId = customerId ? customerCartId : anonymousCartId;
-        const updatedCart = await removeProductFromCart(cartId, productId, version);
+        const updatedCart = await removeProductFromCart(cartId, action, version);
         set({ version: updatedCart.version });
         set({ activeCart: updatedCart });
         set({ itemsInCart: updatedCart.lineItems });

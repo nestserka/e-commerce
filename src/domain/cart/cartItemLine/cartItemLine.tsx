@@ -2,6 +2,7 @@ import style from './_cartItemLine.module.scss';
 import iconDelete from '../../../assets/images/icons/icon-delete.svg';
 import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
+import { getLineItemsPropsToRemove } from '../../../utils/utils';
 
 import type { CartItemLineProps } from '../../../utils/types';
 
@@ -13,7 +14,8 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
 
   const handleRemoveClick = async (): Promise<void> => {
     try {
-      await removeProductFromCart(id, customerId);
+      const action = getLineItemsPropsToRemove([id]);
+      await removeProductFromCart(action, customerId);
     } catch (err) {
       console.log('Failed to remove product from the cart', err);
     }

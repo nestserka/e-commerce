@@ -1,34 +1,18 @@
 import withRefreshToken from '../../middlewareFlows/withRefreshToken';
 import { tokenCache } from '../../token/MyTokenCache';
 
-import type { Cart, ClientResponse, MyCartUpdateAction } from '@commercetools/platform-sdk';
-
-interface itemData {
-  cartId: string;
-}
+import type { Cart, ClientResponse, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
 
 export default async function removeProductFromCart(
   cartId: string,
-  productId: string,
+  action: MyCartRemoveLineItemAction[],
   version: number,
-  quantity?: number | undefined,
 ): Promise<Cart> {
   const token = tokenCache.get().refreshToken;
 
-  const itemData: MyCartUpdateAction = quantity
-    ? {
-        action: 'changeLineItemQuantity',
-        lineItemId: productId,
-        quantity,
-      }
-    : {
-        action: 'removeLineItem',
-        lineItemId: productId,
-      };
-
   const body = {
     version,
-    actions: [itemData],
+    actions: action,
   };
 
   const response: ClientResponse<Cart> = await withRefreshToken(token ?? '')
@@ -38,7 +22,7 @@ export default async function removeProductFromCart(
     .post({ body })
     .execute();
 
-  console.log(`Product ${productId} removed from cart with id ${cartId}`);
+  console.log(`Product removed from cart with id ${cartId}`);
   console.log('Updated cart:', response.body);
 
   return response.body;
