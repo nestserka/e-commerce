@@ -1,6 +1,5 @@
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import style from './_product.module.scss';
 import Slider from '../../components/sliderProduct/slider';
@@ -8,27 +7,14 @@ import FormSubTitle from '../../components/formSubTitle/formSubTitle';
 import { formatPrice } from '../../utils/utils';
 import Badge from '../../components/badge/badge';
 import getProductById from '../../api/products/getProductById';
-import homeIcon from '../../assets/images/icons/home-icon.svg';
-import chevronIcon from '../../assets/images/icons/chevron-icon.svg';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
+import Breadcrumbs from '../../components/breadCrumbs/breadCrumbs';
+import CartToggleButton from '../../domain/cart/сartToggleButton/cartToggleButton';
 
+import type { PAGES } from '../../constants/constants';
+import type { AttributeBestseller, AttributeDiscount } from '../../utils/types';
 import type { Params } from 'react-router';
 import type { ProductProjection } from '@commercetools/platform-sdk';
-
-interface AttributeBestseller {
-  name: 'bestseller';
-  value: boolean[];
-}
-
-interface AttributeDiscount {
-  name: 'discount';
-  value: Discount[];
-}
-
-interface Discount {
-  key: string;
-  label: string;
-}
 
 export default function ProductPage(): JSX.Element {
   const { productId }: Readonly<Params<string>> = useParams();
@@ -39,6 +25,8 @@ export default function ProductPage(): JSX.Element {
 
   const [price, setPrice] = useState<string | null>(null);
   const [discount, setDiscount] = useState<string | null>(null);
+
+  const currentPage: keyof typeof PAGES = 'PRODUCT';
 
   const extractPrice = (res: ProductProjection): void => {
     const { prices } = res.masterVariant;
@@ -103,32 +91,28 @@ export default function ProductPage(): JSX.Element {
   const productName = product.name.en;
   const productImages = product.masterVariant.images;
 
+  const breadCrumbsProps = [
+    {
+      label: 'Catalog',
+      route: `${ROUTES.CATALOG_ALL}`,
+    },
+    {
+      label: `${categoryNameStr}`,
+      route: `${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}`,
+    },
+    {
+      label: `${subCategoryNameStr}`,
+      route: `${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}/${subCategoryNameRoute}`,
+    },
+    {
+      label: `${productName}`,
+      route: `${DYNAMIC_ROUTES.PRODUCT}${productId}`,
+    },
+  ];
+
   return (
     <>
-      <section className={style['breadcrumbs-wrapper']}>
-        <Link to={ROUTES.HOME} className={style['breadcrumbs-link']}>
-          <img src={homeIcon} className="home-icon" alt="NASA Store Homepage" />
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${ROUTES.CATALOG_ALL}`} className={style['breadcrumbs-link']}>
-          Catalog
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}`} className={style['breadcrumbs-link']}>
-          {categoryNameStr}
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link
-          to={`${DYNAMIC_ROUTES.CATALOG}${categoryNameRoute}/${subCategoryNameRoute}`}
-          className={style['breadcrumbs-link']}
-        >
-          {subCategoryNameStr}
-        </Link>
-        <img src={chevronIcon} className="chevron-icon" alt="" />
-        <Link to={`${DYNAMIC_ROUTES.PRODUCT}${productId}`} className={style['breadcrumbs-link']}>
-          {productName}
-        </Link>
-      </section>
+      <Breadcrumbs links={breadCrumbsProps} />
       <section className={style['product-page']} data-testid="product-page">
         <section className={style['content-wrapper']}>
           <section className={style['slider-wrapper']}>
@@ -153,6 +137,7 @@ export default function ProductPage(): JSX.Element {
               {discount && <span className={style.price}>{discount}</span>}
               <span className={discount ? style.discount : style.price}>{price}</span>
             </section>
+            <CartToggleButton productId={product.id} page={currentPage} />
           </section>
         </section>
       </section>

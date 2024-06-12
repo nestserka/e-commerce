@@ -51,10 +51,12 @@ export default function Navigation({
             </li>
           </NavLink>
         )}
-        <li className={styles['nav-item-cart']}>
-          <div className={styles['cart-wrapper']} />
-          <span className={styles['cart-title']}>Cart</span>
-        </li>
+        <NavLink to={`${DYNAMIC_ROUTES.CART}`} onClick={onClick}>
+          <li className={styles['nav-item-cart']}>
+            <div className={styles['cart-wrapper']} />
+            <span className={styles['cart-title']}>Cart</span>
+          </li>
+        </NavLink>
       </ul>
     </nav>
   );

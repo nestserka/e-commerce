@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 
-import type { Address, InputProps } from './types';
+import type { LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
+import type { Address, AttributeDiscount, CartItemLineProps, InputProps } from './types';
 
 export const getInputProps = (type: string, id: string, placeholder: string, autoComplete: string): InputProps => ({
   type,
@@ -59,10 +60,6 @@ export const extractShippingAddresses = (
       isDefault: defaultgAddressId !== undefined && address.id !== undefined && address.id === defaultgAddressId,
     }));
 
-export function formatPrice(num: number): string {
-  return `$${(num / 100).toFixed(2)}`;
-}
-
 export interface BooleanStore {
   get: () => boolean;
   set: (hasValue: boolean) => void;
@@ -77,4 +74,55 @@ export function createBooleanState(initialValue: boolean): BooleanStore {
       hasValue = newValue;
     },
   };
+}
+
+export function formatPrice(num: number): string {
+  return `$${(num / 100).toFixed(2)}`;
+}
+
+export function getLineItemProps(lineItem: LineItem): CartItemLineProps {
+  const { id } = lineItem;
+  const productName = lineItem.name.en;
+  const { images } = lineItem.variant;
+  const { quantity } = lineItem;
+  const totalPrice = formatPrice(lineItem.totalPrice.centAmount);
+  const pricePerItem = formatPrice(lineItem.price.value.centAmount);
+  const imageUrl = images?.find((img) => img.url)?.url ?? '';
+  const discountedPricePerItem = lineItem.price.discounted?.value.centAmount;
+  let discountStr;
+  let discountLabel = '';
+
+  if (discountedPricePerItem) {
+    discountStr = formatPrice(discountedPricePerItem);
+
+    const discountAttribute = lineItem.variant.attributes?.find((atr) => atr.name === 'discount') as
+      | AttributeDiscount
+      | undefined;
+
+    discountLabel = discountAttribute?.value[0].label ?? '';
+  }
+
+  const lineItemProps = {
+    id,
+    imageUrl,
+    productName,
+    discountedPricePerItem: discountStr,
+    discountLabel,
+    pricePerItem,
+    quantity,
+    totalPrice,
+  };
+
+  return lineItemProps;
+}
+
+const ACTION = {
+  REMOVE: 'removeLineItem' as const,
+};
+
+export function getLineItemsPropsToRemove(arrIds: string[]): MyCartRemoveLineItemAction[] {
+  return arrIds.map((item) => ({
+    action: ACTION.REMOVE,
+    lineItemId: item,
+  }));
 }

@@ -219,7 +219,6 @@ export default function CategoryPage(): JSX.Element {
             defaultPageSize={limit}
             handleChangePage={handleChangePage}
           />
-      
         </section>
       </main>
     </section>
