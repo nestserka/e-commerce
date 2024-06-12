@@ -7,6 +7,7 @@ import { useCartData } from '../../../core/state/cartState';
 import CartItemLine from '../cartItemLine/cartItemLine';
 import { getLineItemProps } from '../../../utils/utils';
 import EmptyCartState from '../emptyCartView/emptyCartState';
+import ClearButton from '../../../components/clearButton/clearButton';
 
 const breadCrumbsProps = [
   {
@@ -14,6 +15,11 @@ const breadCrumbsProps = [
     route: `${DYNAMIC_ROUTES.CART}`,
   },
 ];
+
+const dateNow = new Date();
+
+const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+const formattedDate = dateNow.toLocaleDateString('en-US', options);
 
 export default function CartView(): JSX.Element {
   const { itemsInCart } = useCartData();
@@ -39,6 +45,12 @@ export default function CartView(): JSX.Element {
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 return <CartItemLine key={item.name.en} {...cartItemLineProps} />;
               })}
+            </div>
+            <div className={style['clear-all-wrapper']}>
+              <div className={style['date-wrapper']}>
+                <span>Nearest shipping date</span> <span className={style.date}>{formattedDate}</span>
+              </div>
+              <ClearButton />
             </div>
           </section>
           <aside className={style['aside-wrapper']}>

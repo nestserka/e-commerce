@@ -6,8 +6,9 @@ import { LS_PREFIX } from '../../constants/constants';
 import getActiveCart from '../../api/me/cart/getActiveCart';
 import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 import addProductToCart from '../../api/me/cart/addProductToCart';
+import removeProductFromCart from '../../api/me/cart/removeProductFromCart';
 
-import type { Cart, LineItem } from '@commercetools/platform-sdk';
+import type { Cart, LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
 
 const anonymousCartIdLocal = localStorage.getItem(`anonymousCartId-${LS_PREFIX}`) ?? '';
 const customerCartIdLocal = localStorage.getItem(`customerCart-${LS_PREFIX}`) ?? '';
@@ -22,6 +23,8 @@ interface CartState {
   error: string;
   isInCart: (productId: string) => boolean;
   addProductToCart: (productId: string, customerId: string) => Promise<void>;
+  removeProductFromCart: (items: MyCartRemoveLineItemAction[], customerId: string) => Promise<void>;
+  getItemsIds: () => string[] | undefined;
   setCart: (customerId: string) => Promise<void>;
   reset: () => void;
 }
@@ -97,8 +100,6 @@ export const useCartData = create<CartState>((set) => ({
 
     const { activeCart } = useCartData.getState();
 
-    console.log('addProductToCart', activeCart);
-
     if (activeCart) {
       const { version } = activeCart;
 
@@ -113,6 +114,36 @@ export const useCartData = create<CartState>((set) => ({
         console.log(err);
       }
     }
+
+    set({ isLoading: false });
+  },
+  removeProductFromCart: async (action, customerId): Promise<void> => {
+    set({ isLoading: true, error: '' });
+
+    const { activeCart } = useCartData.getState();
+
+    if (activeCart) {
+      const { version } = activeCart;
+
+      try {
+        const { customerCartId, anonymousCartId } = useCartData.getState();
+        const cartId = customerId ? customerCartId : anonymousCartId;
+        const updatedCart = await removeProductFromCart(cartId, action, version);
+        set({ version: updatedCart.version });
+        set({ activeCart: updatedCart });
+        set({ itemsInCart: updatedCart.lineItems });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    set({ isLoading: false });
+  },
+  getItemsIds: (): string[] | undefined => {
+    const { itemsInCart } = useCartData.getState();
+    const arrIds = itemsInCart?.map((item) => item.id);
+
+    return arrIds;
   },
   reset: (): void => {
     set({

@@ -89,6 +89,7 @@ export interface Discount {
 }
 
 export interface CartItemLineProps {
+  id: string;
   imageUrl: string;
   productName: string;
   discountedPricePerItem: string | undefined;
