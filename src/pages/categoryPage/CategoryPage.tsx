@@ -83,10 +83,10 @@ export default function CategoryPage(): JSX.Element {
     }
   }, [categoriesData, category, getProductsList, setTotal]);
 
-  const defaultPage= ():void=>{
+  const defaultPage = (): void => {
     setCurrentPage(1);
     setOffset(1);
-  }
+  };
 
   const handleSearch: SearchProps['onSearch'] = (value: string) => {
     setSearchValue(value);
@@ -219,6 +219,7 @@ export default function CategoryPage(): JSX.Element {
             defaultPageSize={limit}
             handleChangePage={handleChangePage}
           />
+      
         </section>
       </main>
     </section>

@@ -61,23 +61,23 @@ export default function FiltersBlock({
     handleClickForCategory();
   };
 
-  const defaultPage= ():void=>{
+  const defaultPage = (): void => {
     setCurrentPage(1);
     setOffset(1);
-  }
+  };
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.checked) {
-      defaultPage()
+      defaultPage();
       navigation(`${DYNAMIC_ROUTES.CATALOG}${category}/${event.target.dataset.id}`);
     } else {
-      defaultPage()
+      defaultPage();
       navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
     }
   };
 
   const handleChangeCategory = (option: OptionsFromSelect): void => {
-    defaultPage()
+    defaultPage();
     setRefractorListDefault();
     setBrandListDefault();
     setMaterialListDefault();
@@ -88,37 +88,37 @@ export default function FiltersBlock({
   };
 
   const handleCheckboxChangeBrandList = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    defaultPage()
+    defaultPage();
     setCheckedStatesBrandList({ ...checkedStatesBrandList, [e.target.id]: e.target.checked });
     setBrandList(e.target.id, e.target.checked);
     getProductListFromCategory();
   };
 
   const handleCheckboxChangeMaterialList = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    defaultPage()
+    defaultPage();
     setCheckedStatesMaterialList({ ...checkedStatesMaterialList, [e.target.id]: e.target.checked });
     setMaterialList(e.target.id, e.target.checked);
     getProductListFromCategory();
   };
 
   const handleCheckboxChangeRefractorList = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    defaultPage()
+    defaultPage();
     setCheckedStatesRefractorList({ ...checkedStatesRefractorList, [e.target.id]: e.target.checked });
     setRefractorList(e.target.id, e.target.checked);
     getProductListFromCategory();
   };
 
-  const handleCheckboxChangeBestseller= (e: React.ChangeEvent<HTMLInputElement>):void => {
-    defaultPage()
+  const handleCheckboxChangeBestseller = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    defaultPage();
     setBestsellerStatus(e.target.checked);
     getProductListFromCategory();
-  }
+  };
 
-  const handleCheckboxChangeDiscount=(e: React.ChangeEvent<HTMLInputElement>):void  => {
-    defaultPage()
+  const handleCheckboxChangeDiscount = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    defaultPage();
     setDiscountStatus(e.target.checked);
     getProductListFromCategory();
-  }
+  };
 
   useEffect(() => {
     if (category) {
@@ -176,6 +176,7 @@ export default function FiltersBlock({
           <SingleCheckboxGroup options={subtrees} selectedValue={selectedValue} onChange={handleCheckboxChange} />
         </div>
       </details>
+
       <details className={styles['filters-section']} open>
         <summary className={styles['filter-title']}>Promo-Actions</summary>
         <div className={styles['select-sort']}>
@@ -199,6 +200,7 @@ export default function FiltersBlock({
           </div>
         </div>
       </details>
+
       <PriceRangeFilter getProductListFromCategory={getProductListFromCategory} />
 
       <AttributeBlock
@@ -221,6 +223,7 @@ export default function FiltersBlock({
         checkedStates={checkedStatesRefractorList}
         handleClickForCheckbox={handleCheckboxChangeRefractorList}
       />
+
       <div className={styles['filters-section']}>
         <button className={styles['filters-button']} type="button" onClick={handleResetAllFilters}>
           <span className={styles['filters-button-span']}>Clear Filters</span>
