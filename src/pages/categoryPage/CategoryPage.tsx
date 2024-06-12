@@ -6,10 +6,10 @@ import Card from '../../domain/catalog/card/Card';
 import { useCatalogCheckAttributeState, useCatalogData } from '../../core/state/catalogState';
 import { createCategoriesList, getSubCategory } from './utils';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
-import HeaderCatalog from '../../domain/catalog/headerCatalog/HeaderCatalog';
-import FiltersBlock from '../../domain/catalog/filtersBlock/filtersBlock';
 import BreadCrumbsCatalog from '../../domain/catalog/breadCrumbsCatalog/BreadCrumbsCatalog';
 import PaginationBlock from '../../components/pagination/Patination';
+import HeaderCatalog from '../../domain/catalog/headerCatalog/HeaderCatalog';
+import FiltersBlock from '../../domain/catalog/filtersBlock/FiltersBlock';
 
 import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
