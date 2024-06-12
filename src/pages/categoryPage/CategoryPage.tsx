@@ -8,8 +8,8 @@ import { createCategoriesList, getSubCategory } from './utils';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 import BreadCrumbsCatalog from '../../domain/catalog/breadCrumbsCatalog/BreadCrumbsCatalog';
 import PaginationBlock from '../../components/pagination/Patination';
-import FiltersBlock from '../../domain/catalog/filtersBlock/FiltersBlock';
-import HeaderCatalog from '../../domain/catalog/headerCatalog/HeaderCatalogPage';
+import FiltersBlockForCategory from '../../domain/catalog/filtersBlock/FiltersBlockForCategoryPage';
+import HeaderCatalogPage from '../../domain/catalog/HeaderCatalog/HeaderCatalog';
 
 import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
@@ -190,7 +190,7 @@ export default function CategoryPage(): JSX.Element {
         handleClickForCategory={handleClickForCategory}
       />
       <main className={styles.main}>
-        <FiltersBlock
+        <FiltersBlockForCategory
           category={category}
           subtrees={subtrees}
           categoryOptions={categoryOptions}
@@ -201,7 +201,7 @@ export default function CategoryPage(): JSX.Element {
         />
 
         <section className={styles.products}>
-          <HeaderCatalog
+          <HeaderCatalogPage
             handleSearch={handleSearch}
             handleChangeSort={handleChangeSort}
             handleChangeCapture={handleChangeCapture}

@@ -15,7 +15,7 @@ import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import type { OptionsFromSelect } from '../../../pages/categoryPage/types';
 import type { FiltersBlockProps } from '../types';
 
-export default function FiltersBlock({
+export default function FiltersBlockForCategory({
   category,
   nameCategory,
   categoryOptions,

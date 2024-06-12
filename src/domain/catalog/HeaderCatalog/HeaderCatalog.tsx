@@ -5,7 +5,7 @@ import styles from './_headerCatalog.module.scss';
 
 import type { HeaderCatalogProps } from '../types';
 
-export default function HeaderCatalog({
+export default function HeaderCatalogPage({
   handleSearch,
   handleChangeSort,
   handleChangeCapture,
