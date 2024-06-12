@@ -29,7 +29,8 @@ export default function HomeCategory(): JSX.Element {
         <div className={style['text-wrapper']}>
           <h2 className={style.title}>Space Suits</h2>
           <p className={style['product-description']}>
-          Discover a stunning collection of unique spacesuits, featuring meticulously crafted replicas from iconic astronauts.
+            Discover a stunning collection of unique spacesuits, featuring meticulously crafted replicas from iconic
+            astronauts.
           </p>
           <a className={`${style['category-button']} ${style.astronout} `} href={`${DYNAMIC_ROUTES.CATALOG}meteorite`}>
             Explore Now
@@ -40,11 +41,22 @@ export default function HomeCategory(): JSX.Element {
         <div className={style['text-wrapper']}>
           <h2 className={style.title}>Space Food</h2>
           <p className={style['product-description']}>
-          Explore delicious space food and treats available for purchase here!
+            Uncover delicious space food and treats available for purchase here!
           </p>
           <a className={style['category-button']} href={`${DYNAMIC_ROUTES.CATALOG}meteorite`}>
             Explore Now
           </a>
+        </div>
+        <div className={style['food-images']}>
+          <img alt="Small Meteoryte 1" className={style['small-meteorite-image-1']} />
+
+          <img alt="Product Preview" className={style['space-food-image-1']} />
+        </div>
+        <div className={style['gradient-wrapper']}>
+        <img alt="Small Meteoryte 2" className={style['small-meteorite-image-2']} />
+          <div className={style['image-wrapper']}>
+            <img alt="Product Preview 2" className={style['space-food-image-2']} />
+          </div>
         </div>
       </section>
     </section>
