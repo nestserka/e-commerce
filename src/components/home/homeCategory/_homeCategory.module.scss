@@ -1,6 +1,6 @@
-@use '../../assets/styles/mixins' as *;
+@import '../../../assets/styles/mixins';
 
-@import '../../assets/styles/variables';
+@import '../../../assets/styles/variables';
 
 .category-section {
   display: flex;
@@ -86,7 +86,7 @@
 
   .astronaut {
     @include flex-right;
-    background-image: url('../../assets/images/bg/bg-banner-2.jpg');
+    background-image: url('../../../assets/images/bg/bg-banner-2.jpg');
     background-position: center;
     background-size: cover;
     border-top-right-radius: 12em;
@@ -121,7 +121,7 @@
     @include flex-center-space-between;
     border-top-left-radius: 12em;
     border-bottom-left-radius: 12em;
-    background-color: #1f212d;
+    background-color: $bg-home-cards;
     margin-right: -3rem;
     gap: 0.3em;
 
@@ -162,7 +162,7 @@
 
       .small-meteorite-image-2 {
         position: absolute;
-        content: url('../../../public/assets/images/home/category/small-meteorite-2.png');
+        content: url('../../../../public/assets/images/home/category/small-meteorite-2.png');
         top: 40%;
         right: 70%;
         z-index: 0;
@@ -178,7 +178,7 @@
         z-index: 2;
 
         .space-food-image-2 {
-          content: url('../../../public/assets/images/home/category/foot-preview.png');
+          content: url('../../../../public/assets/images/home/category/foot-preview.png');
           background-position: center;
         }
       }
@@ -187,12 +187,12 @@
       width: 15%;
       .small-meteorite-image-1 {
         position: absolute;
-        content: url('../../../public/assets/images/home/category/small-meteorite-1.png');
+        content: url('../../../../public/assets/images/home/category/small-meteorite-1.png');
         transform: translate(-100%, 70%);
       }
 
       .space-food-image-1 {
-        content: url('../../../public/assets/images/home/category/foot-main.png');
+        content: url('../../../../public/assets/images/home/category/foot-main.png');
         transform: translateX(-60%);
       }
 
@@ -209,7 +209,7 @@
     @include flex-center-space-between;
     border-top-left-radius: 12em;
     border-bottom-left-radius: 12em;
-    background-image: url('../../assets/images/bg/bg-banner-1.jpg');
+    background-image: url('../../../assets/images/bg/bg-banner-1.jpg');
     background-position: center;
     background-size: cover;
     margin-right: -3rem;

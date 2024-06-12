@@ -1,0 +1,64 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.card {
+  @include flex-justify-center;
+  flex-direction: column;
+  cursor: pointer;
+  background-color: $bg-home-cards;
+  box-sizing: border-box;
+  max-width: 17.125em;
+  height: 25.563em;
+  color: $font-color-primary-20;
+  padding: 1em;
+
+  &::after {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .card-pic {
+    position: relative;
+    display: inline-block;
+
+    .card-pic-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .card-title {
+    @include font-arimo-bold;
+    font-size: 1.125em;
+    line-height: 130%;
+    color: $checkbox-color-checked;
+    text-align: center;
+  }
+
+  .block-price {
+    margin-top: 1.5em;
+    @include flex-center-space-between;
+    flex-direction: column;
+    font-family: Arimo, sans-serif;
+    font-size: 1em;
+    line-height: 1.5em;
+    color: $font-color-primary;
+    gap: 0.5em;
+    width: 100%;
+
+    .discount {
+      justify-self: end;
+      align-self: end;
+      font-size: 14px;
+      line-height: 16.8px;
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+  }
+}

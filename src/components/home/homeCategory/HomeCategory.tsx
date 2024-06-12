@@ -1,10 +1,12 @@
-import { DYNAMIC_ROUTES } from '../../constants/constants';
+import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import style from './_homeCategory.module.scss';
-import meteoryte1 from '../../../public/assets/images/home/meteorite-1.png';
-import meteoryte2 from '../../../public/assets/images/home/meteorite-2.png';
-import meteoryte3 from '../../../public/assets/images/home/meteorite-3.png';
+import meteoryte1 from '../../../../public/assets/images/home/meteorite-1.png';
+import meteoryte2 from '../../../../public/assets/images/home/meteorite-2.png';
+import meteoryte3 from '../../../../public/assets/images/home/meteorite-3.png';
 
 export default function HomeCategory(): JSX.Element {
+
+  
   return (
     <section className={style['category-section']}>
       <section className={`${style['category-container']} ${style.meteorites}`}>
@@ -43,7 +45,7 @@ export default function HomeCategory(): JSX.Element {
           <p className={style['product-description']}>
             Uncover delicious space food and treats available for purchase here!
           </p>
-          <a className={style['category-button']} href={`${DYNAMIC_ROUTES.CATALOG}meteorite`}>
+          <a className={style['category-button']} href={`${DYNAMIC_ROUTES.CATALOG}space-food`}>
             Explore Now
           </a>
         </div>
@@ -53,7 +55,7 @@ export default function HomeCategory(): JSX.Element {
           <img alt="Product Preview" className={style['space-food-image-1']} />
         </div>
         <div className={style['gradient-wrapper']}>
-        <img alt="Small Meteoryte 2" className={style['small-meteorite-image-2']} />
+          <img alt="Small Meteoryte 2" className={style['small-meteorite-image-2']} />
           <div className={style['image-wrapper']}>
             <img alt="Product Preview 2" className={style['space-food-image-2']} />
           </div>
