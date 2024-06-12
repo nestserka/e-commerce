@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import styles from './_loginForm.module.scss';
+import styles from './_loginform.module.scss';
 import Input from '../../../components/ui/input/input';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
