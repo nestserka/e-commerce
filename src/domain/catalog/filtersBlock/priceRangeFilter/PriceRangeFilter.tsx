@@ -6,7 +6,7 @@ import { useCatalogData } from '../../../../core/state/catalogState';
 import type { PriceRangeFilterProps } from '../../types';
 
 export default function PriceRangeFilter({ getProductListFromCategory }: PriceRangeFilterProps): JSX.Element {
-  const { priceRange, setPriceRange } = useCatalogData();
+  const { priceRange,setCurrentPage,setOffset, setPriceRange } = useCatalogData();
 
   return (
     <details className={style['filters-section']} open>
@@ -25,6 +25,8 @@ export default function PriceRangeFilter({ getProductListFromCategory }: PriceRa
           max={1700000}
           min={0}
           onChange={(value) => {
+            setCurrentPage(1)
+            setOffset(1)
             setPriceRange(value);
           }}
           onAfterChange={getProductListFromCategory}

@@ -76,8 +76,10 @@ export interface ShowErrorMessage {
 }
 
 export interface CatalogStateData {
+  currentPage: number;
   categoryName: string;
   brandList: string[];
+  total: number;
   materialList: string[];
   refractorList: string[];
   categoriesData: Category[];
@@ -93,6 +95,8 @@ export interface CatalogStateData {
   isBestseller: boolean;
   isDiscount: boolean;
   offset: number;
+  setCurrentPage: (quantity: number) => void;
+  setTotal: (quantity: number) => void;
   setRefractorList: (nameRefractor: string, isStatus: boolean) => void;
   setRefractorListDefault: () => void;
   setBrandList: (nameBrand: string, isStatus: boolean) => void;

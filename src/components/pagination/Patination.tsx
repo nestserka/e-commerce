@@ -7,14 +7,19 @@ import './pagination.scss';
 
 import type { PaginationProps } from 'antd';
 
-export interface PaginationBlockProps{
-  defaultCurrent:number;
-  total:number;
-  defaultPageSize:number;
-  handleChangePage:(pageNumber: number)=>void;
+export interface PaginationBlockProps {
+  page: number;
+  total: number;
+  defaultPageSize: number;
+  handleChangePage: (pageNumber: number) => void;
 }
 
-export default function PaginationBlock({defaultCurrent,total,defaultPageSize, handleChangePage}:PaginationBlockProps): JSX.Element {
+export default function PaginationBlock({
+  page,
+  total,
+  defaultPageSize,
+  handleChangePage,
+}: PaginationBlockProps): JSX.Element {
   const onChange: PaginationProps['onChange'] = (pageNumber: number) => {
     handleChangePage(pageNumber);
   };
@@ -24,7 +29,7 @@ export default function PaginationBlock({defaultCurrent,total,defaultPageSize, h
       return (
         <div className="prev-block">
           <img className="prev-block-icon" src={IconPrev} alt="prev" />
-          <span> Previous </span>
+          <span className="prev-block-title"> Previous </span>
         </div>
       );
     }
@@ -32,7 +37,7 @@ export default function PaginationBlock({defaultCurrent,total,defaultPageSize, h
     if (type === 'next') {
       return (
         <div className="prev-block">
-          <span>Next</span>
+          <span className="prev-block-title">Next</span>
           <img className="prev-block-icon" src={IconNext} alt="next" />
         </div>
       );
@@ -43,7 +48,14 @@ export default function PaginationBlock({defaultCurrent,total,defaultPageSize, h
 
   return (
     <section className="wrapper">
-      <Pagination defaultCurrent={defaultCurrent} total={total} onChange={onChange} defaultPageSize={defaultPageSize} itemRender={itemRender} />
+      <Pagination
+        defaultCurrent={1}
+        current={page}
+        total={total}
+        onChange={onChange}
+        defaultPageSize={defaultPageSize}
+        itemRender={itemRender}
+      />
     </section>
   );
 }

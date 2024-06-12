@@ -14,6 +14,8 @@
     font-size: 16px;
     line-height: 17.5px;
     color: $font-color-primary;
+    width: 100%;
+    position: relative;
 
     .ant-pagination-prev,
     .ant-pagination-next,
@@ -27,6 +29,29 @@
         .prev-block-icon {
           display: inline-block;
           padding: 0 5px;
+        }
+      }
+    }
+
+    .ant-pagination-prev {
+      position: absolute;
+      left: 0;
+      @media (width <= 550px) {
+        position: relative;
+
+        .prev-block-title {
+          display: none;
+        }
+      }
+    }
+
+    .ant-pagination-next {
+      position: absolute;
+      right: 0;
+      @media (width <= 550px) {
+        position: relative;
+        .prev-block-title {
+          display: none;
         }
       }
     }

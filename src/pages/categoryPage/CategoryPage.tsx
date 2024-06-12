@@ -28,7 +28,13 @@ export default function CategoryPage(): JSX.Element {
 
   const navigation = useNavigate();
   const {
+    currentPage,
     categoriesData,
+    limit,
+    total,
+    setCurrentPage,
+    setTotal,
+    setOffset,
     setCategoryName,
     setSearchValue,
     getProductsList,
@@ -56,6 +62,7 @@ export default function CategoryPage(): JSX.Element {
       getProductsList()
         .then((productListData: ProductProjectionPagedSearchResponse) => {
           setProductsList(productListData.results);
+          setTotal(productListData.total ? productListData.total : 0);
         })
         .catch((error: Error) => {
           console.log(error.message);
@@ -68,20 +75,28 @@ export default function CategoryPage(): JSX.Element {
       getProductsList(dataCategory.id)
         .then((productListData: ProductProjectionPagedSearchResponse) => {
           setProductsList(productListData.results);
+          setTotal(productListData.total ? productListData.total : 0);
         })
         .catch((error: Error) => {
           console.log(error.message);
         });
     }
-  }, [categoriesData, category, getProductsList]);
+  }, [categoriesData, category, getProductsList, setTotal]);
+
+  const defaultPage= ():void=>{
+    setCurrentPage(1);
+    setOffset(1);
+  }
 
   const handleSearch: SearchProps['onSearch'] = (value: string) => {
     setSearchValue(value);
+    defaultPage();
     getProductListFromCategory();
   };
 
   const handleChangeCapture: SearchProps['onChange'] = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value.length) {
+      defaultPage();
       setSearchValue(e.target.value);
       getProductListFromCategory();
     }
@@ -92,11 +107,14 @@ export default function CategoryPage(): JSX.Element {
     getProductListFromCategory();
   };
 
-  const handleChangePage = (page:number): void =>{
-    console.log(page)
-  }
+  const handleChangePage = (page: number): void => {
+    setOffset(page);
+    setCurrentPage(page);
+    getProductListFromCategory();
+  };
 
   const resetAttributesForCategory = (): void => {
+    defaultPage();
     setSelectedValue('');
     setNameSubtree('');
     setSubtreesList('', true);
@@ -123,7 +141,7 @@ export default function CategoryPage(): JSX.Element {
     navigation(ROUTES.CATALOG_ALL);
   };
 
-  useEffect((): void  => {
+  useEffect((): void => {
     if (category) {
       const allSubtrees = getSubCategory(categoriesData, category);
       setSubtree(allSubtrees);
@@ -195,7 +213,12 @@ export default function CategoryPage(): JSX.Element {
               <div className={styles['products-list-empty']}>No product by attribute or filter found</div>
             )}
           </div>
-          <PaginationBlock defaultCurrent={1} total={66} defaultPageSize={6} handleChangePage={handleChangePage}/>
+          <PaginationBlock
+            page={currentPage}
+            total={total}
+            defaultPageSize={limit}
+            handleChangePage={handleChangePage}
+          />
         </section>
       </main>
     </section>

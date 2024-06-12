@@ -6,7 +6,9 @@ import type { CatalogCheckAttributeState, CatalogStateData } from './types';
 import type { Category, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
+  currentPage: 1,
   brandList: [],
+  total: 0,
   refractorList: [],
   materialList: [],
   categoryName: 'all',
@@ -23,6 +25,12 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   isBestseller: false,
   isDiscount: false,
   offset: 0,
+  setCurrentPage: (newPage: number): void => {
+    set(() => ({ currentPage: newPage }));
+  },
+  setTotal: (quantity: number): void => {
+    set(() => ({ total: quantity }));
+  },
   setRefractorList: (nameRefractor: string, isStatus: boolean): void => {
     if (isStatus) {
       get().refractorList.push(nameRefractor);
