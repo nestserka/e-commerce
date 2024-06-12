@@ -26,7 +26,8 @@ export default function InputCheckBox({
         className={styles.input}
         {...(isCheckBoxDisabled && { 'aria-disabled': 'true' })}
         onChange={onChange}
-        {...(isValue && { checked: true })}
+        // {...(isValue && { checked: true })}
+        checked={isValue}
       />
       <label htmlFor={id} className={styles.label}>
         {label} <span className={styles.required} />

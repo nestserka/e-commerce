@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import style from './_navigation.module.scss';
+import styles from './_navigation.module.scss';
 import { DYNAMIC_ROUTES, ROUTES } from '../../../constants/constants';
 import icon from '../../../../public/assets/icons/astronaut-icon.jpg';
 
@@ -15,8 +15,8 @@ export default function Navigation({
   customerId,
 }: NavigationProps): JSX.Element {
   return (
-    <nav className={`${style.nav} ${isNavOpen ? style['nav-open'] : ''}`} data-testid="navigation">
-      <ul className={style['nav-list']}>
+    <nav className={`${styles.nav} ${isNavOpen ? styles['nav-open'] : ''}`} data-testid="navigation">
+      <ul className={styles['nav-list']}>
         {links
           .filter(
             (link: NavLinkProps): boolean =>
@@ -26,7 +26,7 @@ export default function Navigation({
           .map(
             (link: NavLinkProps): JSX.Element => (
               <li key={link.title}>
-                <NavLink to={link.route} onClick={onClick} className={style['nav-item']}>
+                <NavLink to={link.route} onClick={onClick} className={styles['nav-item']}>
                   {link.title}
                 </NavLink>
               </li>
@@ -34,27 +34,27 @@ export default function Navigation({
           )}
         {isStatus && (
           <li>
-            <button type="button" onClick={handleClickLogOut} className={style['nav-button']}>
+            <button type="button" onClick={handleClickLogOut} className={styles['nav-button']}>
               Log Out
             </button>
           </li>
         )}
       </ul>
-      <ul className={style['nav-list-user']}>
+      <ul className={styles['nav-list-user']}>
         {isStatus && customerId && (
           <NavLink to={`${DYNAMIC_ROUTES.PROFILE}${customerId}`} onClick={onClick}>
-            <li className={style['nav-item-profile']} key={customerId}>
-              <div className={style['profile-wrapper']}>
-                <img src={icon} className={style['profile-icon']} alt="" />
+            <li className={styles['nav-item-profile']} key={customerId}>
+              <div className={styles['profile-wrapper']}>
+                <img src={icon} className={styles['profile-icon']} alt="" />
               </div>
-              <span className={style['profile-title']}>Profile</span>
+              <span className={styles['profile-title']}>Profile</span>
             </li>
           </NavLink>
         )}
         <NavLink to={`${DYNAMIC_ROUTES.CART}`} onClick={onClick}>
-          <li className={style['nav-item-cart']}>
-            <div className={style['cart-wrapper']} />
-            <span className={style['cart-title']}>Cart</span>
+          <li className={styles['nav-item-cart']}>
+            <div className={styles['cart-wrapper']} />
+            <span className={styles['cart-title']}>Cart</span>
           </li>
         </NavLink>
       </ul>

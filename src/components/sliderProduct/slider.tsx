@@ -8,7 +8,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/thumbs';
-import style from './_slider.module.scss';
+import styles from './_slider.module.scss';
 import { EMPTY_IMAGES_LIST_REPLACEMENT } from '../../constants/constants';
 
 import type { Image, SliderProps } from './types';
@@ -31,7 +31,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         navigation
         pagination={{ clickable: true }}
         thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
-        className={style.myswiper}
+        className={styles.myswiper}
         controller={{ control: modalProductSwiper }}
         onSwiper={setProductSwiper}
         style={{ '--swiper-theme-color': '#dcebea' } as CSSProperties}
@@ -55,7 +55,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         freeMode
         watchSlidesProgress
         modules={[FreeMode, Navigation, Thumbs]}
-        className={style.thumbs}
+        className={styles.thumbs}
         breakpoints={{
           1366: {
             slidesPerView: 5,
@@ -70,11 +70,11 @@ export default function Slider({ images }: SliderProps): JSX.Element {
         ))}
       </Swiper>
 
-      <section className={isModalSwiperShown ? style.modalopen : style.modalhide}>
+      <section className={isModalSwiperShown ? styles.modalopen : styles.modalhide}>
         <button
           aria-label="Close"
           type="button"
-          className={style['close-button']}
+          className={styles['close-button']}
           onClick={(): void => {
             setIsModalSwiperShown(false);
           }}
@@ -87,7 +87,7 @@ export default function Slider({ images }: SliderProps): JSX.Element {
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
           controller={{ control: productSwiper }}
-          className={style.modalswiper}
+          className={styles.modalswiper}
           onSwiper={setModalProductSwiper}
           style={{ '--swiper-theme-color': '#dcebea' } as CSSProperties}
         >

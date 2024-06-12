@@ -1,3 +1,9 @@
+import type {
+  AttributeLocalizedEnumValue,
+  Category,
+  ProductProjectionPagedSearchResponse,
+  ProductType,
+} from '@commercetools/platform-sdk';
 import type { Address } from '../../utils/types';
 
 export interface CustomerCredentials {
@@ -67,4 +73,62 @@ export interface CustomerInfoState {
 export interface ShowErrorMessage {
   isErrorShown: boolean;
   setErrorIsShown: (isErrorShown: boolean) => void;
+}
+
+export interface CatalogStateData {
+  currentPage: number;
+  categoryName: string;
+  brandList: string[];
+  total: number;
+  materialList: string[];
+  refractorList: string[];
+  categoriesData: Category[];
+  priceRange: number[];
+  subtreesList: string;
+  parentsCategories: Category[];
+  productTypesAttributes: ProductType[];
+  isLoading: boolean;
+  limit: number;
+  fuzzyLevelValue: number;
+  sortValue: string;
+  searchValue: string;
+  isBestseller: boolean;
+  isDiscount: boolean;
+  offset: number;
+  setCurrentPage: (quantity: number) => void;
+  setTotal: (quantity: number) => void;
+  setRefractorList: (nameRefractor: string, isStatus: boolean) => void;
+  setRefractorListDefault: () => void;
+  setBrandList: (nameBrand: string, isStatus: boolean) => void;
+  setBrandListDefault: () => void;
+  setMaterialList: (nameMaterial: string, isStatus: boolean) => void;
+  setMaterialListDefault: () => void;
+  setPriceRange: (newRange: number[]) => void;
+  setCategoryName: (newName: string) => void;
+  createFilterByCategoriesId: (category?: string) => string;
+  setOffset: (page: number) => void;
+  setSort: (newSort: string) => void;
+  setSubtreesList: (id: string, isStatus: boolean) => void;
+  setBestsellerStatus: (isStatus: boolean) => void;
+  setDiscountStatus: (iStatus: boolean) => void;
+  setSearchValue: (newSearch: string) => void;
+  setFuzzyLevel: () => number;
+  setCategoriesData: () => Promise<void>;
+  setProductTypesAttributes: () => Promise<void>;
+  getProductsList: (subtrees?: string) => Promise<ProductProjectionPagedSearchResponse>;
+}
+
+export interface CatalogCheckAttributeState {
+  brandListAttribute: AttributeLocalizedEnumValue[];
+  refractorListAttribute: AttributeLocalizedEnumValue[];
+  materialListAttribute: AttributeLocalizedEnumValue[];
+  checkedStatesBrandList: Record<string, boolean>;
+  checkedStatesRefractorList: Record<string, boolean>;
+  checkedStatesMaterialList: Record<string, boolean>;
+  setRefractorListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;
+  setMaterialListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;
+  setBrandListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;
+  setCheckedStatesBrandList: (newValue: Record<string, boolean>) => void;
+  setCheckedStatesRefractorList: (newValue: Record<string, boolean>) => void;
+  setCheckedStatesMaterialList: (newValue: Record<string, boolean>) => void;
 }

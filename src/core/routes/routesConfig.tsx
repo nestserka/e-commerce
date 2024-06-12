@@ -7,7 +7,7 @@ import {
   ProtectedRouteForCartForAuth,
   ProtectedRouteForCartNotAuth,
   ProtectedRouteForProfileForAuth,
-} from './protected-route';
+} from './protectedRoute';
 import {
   AboutPage,
   CartPage,
@@ -19,7 +19,7 @@ import {
   ProductPage,
   ProfilePage,
   RegistrationPage,
-} from './lazy-constant';
+} from './lazyConstant';
 
 export const routesConfig: RouteObject[] = [
   {

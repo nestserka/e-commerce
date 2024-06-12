@@ -1,4 +1,4 @@
-import LoginForm from '../../components/loginForm/loginForm';
+import LoginForm from '../../domain/customer/loginForm/loginForm';
 import style from './_login.module.scss';
 
 export default function LoginPage(): JSX.Element {

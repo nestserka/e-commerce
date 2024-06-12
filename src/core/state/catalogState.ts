@@ -2,49 +2,13 @@ import { create } from 'zustand';
 
 import withClientCredentialsFlow from '../../api/middlewareFlows/withClientCredentials';
 
-import type { Category, ProductProjectionPagedSearchResponse, ProductType } from '@commercetools/platform-sdk';
-
-export interface CatalogStateData {
-  categoryName: string;
-  brandList: string[];
-  materialList: string[];
-  refractorList: string[];
-  categoriesData: Category[];
-  priceRange: number[];
-  subtreesList: string;
-  parentsCategories: Category[];
-  productTypesAttributes: ProductType[];
-  isLoading: boolean;
-  limit: number;
-  fuzzyLevelValue: number;
-  sortValue: string;
-  searchValue: string;
-  isBestseller: boolean;
-  isDiscount: boolean;
-  offset: number;
-  setRefractorList: (nameRefractor: string, isStatus: boolean) => void;
-  setRefractorListDefault: () => void;
-  setBrandList: (nameBrand: string, isStatus: boolean) => void;
-  setBrandListDefault: () => void;
-  setMaterialList: (nameMaterial: string, isStatus: boolean) => void;
-  setMaterialListDefault: () => void;
-  setPriceRange: (newRange: number[]) => void;
-  setCategoryName: (newName: string) => void;
-  createFilterByCategoriesId: (category?: string) => string;
-  setOffset: (page: number) => void;
-  setSort: (newSort: string) => void;
-  setSubtreesList: (id: string, isStatus: boolean) => void;
-  setBestsellerStatus: (isStatus: boolean) => void;
-  setDiscountStatus: (iStatus: boolean) => void;
-  setSearchValue: (newSearch: string) => void;
-  setFuzzyLevel: () => number;
-  setCategoriesData: () => Promise<void>;
-  setProductTypesAttributes: () => Promise<void>;
-  getProductsList: (subtrees?: string) => Promise<ProductProjectionPagedSearchResponse>;
-}
+import type { CatalogCheckAttributeState, CatalogStateData } from './types';
+import type { Category, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
+  currentPage: 1,
   brandList: [],
+  total: 0,
   refractorList: [],
   materialList: [],
   categoryName: 'all',
@@ -54,13 +18,19 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   parentsCategories: [],
   productTypesAttributes: [],
   isLoading: false,
-  limit: 100,
+  limit: 6,
   fuzzyLevelValue: 0,
   sortValue: 'price asc',
   searchValue: '',
   isBestseller: false,
   isDiscount: false,
   offset: 0,
+  setCurrentPage: (newPage: number): void => {
+    set(() => ({ currentPage: newPage }));
+  },
+  setTotal: (quantity: number): void => {
+    set(() => ({ total: quantity }));
+  },
   setRefractorList: (nameRefractor: string, isStatus: boolean): void => {
     if (isStatus) {
       get().refractorList.push(nameRefractor);
@@ -197,8 +167,8 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
           queryArgs: {
             sort: get().sortValue,
             limit: get().limit,
-            ...newSearch,
             offset: get().offset * get().limit,
+            ...newSearch,
             'filter.query': [
               ...(get().categoryName === 'all' ? [] : [get().createFilterByCategoriesId(category)]),
               ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),
@@ -236,5 +206,32 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
       set({ isLoading: false });
       throw new Error('no product by attribute or filter found');
     }
+  },
+}));
+
+export const useCatalogCheckAttributeState = create<CatalogCheckAttributeState>((set) => ({
+  brandListAttribute: [],
+  refractorListAttribute: [],
+  materialListAttribute: [],
+  checkedStatesBrandList: {},
+  checkedStatesRefractorList: {},
+  checkedStatesMaterialList: {},
+  setRefractorListAttribute: (newArray): void => {
+    set({ refractorListAttribute: newArray });
+  },
+  setMaterialListAttribute: (newArray): void => {
+    set({ materialListAttribute: newArray });
+  },
+  setBrandListAttribute: (newArray): void => {
+    set({ brandListAttribute: newArray });
+  },
+  setCheckedStatesBrandList: (newValue): void => {
+    set({ checkedStatesBrandList: newValue });
+  },
+  setCheckedStatesRefractorList: (newValue): void => {
+    set({ checkedStatesRefractorList: newValue });
+  },
+  setCheckedStatesMaterialList: (newValue): void => {
+    set({ checkedStatesMaterialList: newValue });
   },
 }));
