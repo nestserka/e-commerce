@@ -14,15 +14,15 @@ export function DiscountCard({ dataCard }: { dataCard: ProductProjection }): JSX
   return (
     <Link to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`} className={style.card}>
       <div className={style['card-pic']}>
-      <img className={style['card-pic-img']} src={product.cardImages[0]} alt={product.cardName} />
+        <img className={style['card-pic-img']} src={product.cardImages[0]} alt={product.cardName} />
       </div>
-        <h2 className={style['card-title']} id={product.cardName} title={product.cardName}>
-          {product.cardName}
-        </h2>
-        <div className={style['block-price']}>
-          <span className={style.price}>{product.cardDiscounted}</span>
-          <span className={product.cardDiscounted ? style.discount : style.price}>{product.cardPrice}</span>
-        </div>
+      <h2 className={style['card-title']} id={product.cardName} title={product.cardName}>
+        {product.cardName}
+      </h2>
+      <div className={style['block-price']}>
+        <span className={style.price}>{product.cardDiscounted}</span>
+        <span className={product.cardDiscounted ? style.discount : style.price}>{product.cardPrice}</span>
+      </div>
     </Link>
   );
 }

@@ -69,14 +69,13 @@ export default function DiscountProduct(): JSX.Element {
               2100: {
                 slidesPerView: 7,
               },
-            }}            
+            }}
             slidesPerView={5}
             watchSlidesProgress
             slideActiveClass={style['active-class']}
             centeredSlides
             coverflowEffect={{
               rotate: 20,
-              slideShadows: true,
               depth: 3,
             }}
             modules={[EffectCoverflow, Pagination, Navigation]}

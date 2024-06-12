@@ -5,8 +5,6 @@ import meteoryte2 from '../../../../public/assets/images/home/meteorite-2.png';
 import meteoryte3 from '../../../../public/assets/images/home/meteorite-3.png';
 
 export default function HomeCategory(): JSX.Element {
-
-  
   return (
     <section className={style['category-section']}>
       <section className={`${style['category-container']} ${style.meteorites}`}>
