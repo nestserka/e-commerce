@@ -20,6 +20,7 @@ interface CartState {
   itemsInCart: LineItem[] | null;
   isLoading: boolean;
   error: string;
+  isInCart: (productId: string) => boolean;
   addProductToCart: (productId: string, customerId: string) => Promise<void>;
   setCart: (customerId: string) => Promise<void>;
   reset: () => void;
@@ -33,6 +34,11 @@ export const useCartData = create<CartState>((set) => ({
   itemsInCart: null,
   isLoading: false,
   error: '',
+  isInCart: (productId: string): boolean => {
+    const { itemsInCart } = useCartData.getState();
+
+    return !!itemsInCart?.filter((item) => item.id === productId || item.productId === productId).length;
+  },
 
   setCart: async (customerId): Promise<void> => {
     set({ isLoading: true, error: '' });

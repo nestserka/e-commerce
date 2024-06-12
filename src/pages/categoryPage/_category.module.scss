@@ -253,16 +253,12 @@
       display: flex;
       justify-content: center;
 
-      width: 78px;
+      width: max-content;
       padding: 8px;
 
       background-color: $background-color-secondary;
       border-radius: 6px;
     }
-  }
-
-  @media (width <= 800px) {
-    padding: 1rem;
   }
 
   .filters-button {
@@ -291,6 +287,10 @@
     &-span {
       margin-right: 5px;
     }
+  }
+
+  @media (width <= 800px) {
+    padding: 1rem;
   }
 }
 

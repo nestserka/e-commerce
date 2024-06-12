@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import style from './card.module.scss';
 import { createParamsfromCard } from './utils';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
+import CartToggleButton from '../../../domain/cart/сartToggleButton/cartToggleButton';
 
+import type { PAGES } from '../../../constants/constants';
 import type { PropsCard } from './types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
   const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
+  const currentPage: keyof typeof PAGES = 'CATALOG';
 
   return (
     <Link to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`} className={style.card}>
@@ -27,9 +30,7 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
         </h2>
         <div className={style['card-description']}>{product.cardDescription}</div>
         <div className={style['block-buy']}>
-          <button type="button" className={style['card-button']}>
-            View Details
-          </button>
+          <CartToggleButton productId={dataCard.id} page={currentPage} />
           <div className={style['block-price']}>
             <span className={style.price}>{product.cardDiscounted}</span>
             <span className={product.cardDiscounted ? style.discount : style.price}>{product.cardPrice}</span>
