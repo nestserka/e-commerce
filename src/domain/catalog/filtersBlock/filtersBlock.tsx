@@ -73,7 +73,7 @@ export default function FiltersBlock({
     setMaterialListDefault();
     setMaterialListAttribute([]);
     setBrandListAttribute([]);
-    setRefractorListAttribute([])
+    setRefractorListAttribute([]);
     navigation(`${DYNAMIC_ROUTES.CATALOG}${option.value}`);
   };
 

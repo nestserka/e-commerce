@@ -1,0 +1,65 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+.wrapper {
+  padding: 10px;
+  background-color: $background-color-primary-two;
+  border-radius: 500px;
+
+  .ant-pagination {
+    display: flex;
+    justify-content: center;
+
+    font-family: Arimo, sans-serif;
+    font-size: 16px;
+    line-height: 17.5px;
+    color: $font-color-primary;
+
+    .ant-pagination-prev,
+    .ant-pagination-next,
+    .ant-pagination-item a {
+      color: $font-color-primary;
+      transition: 300ms;
+
+      .prev-block {
+        margin: 0 5px;
+
+        .prev-block-icon {
+          display: inline-block;
+          padding: 0 5px;
+        }
+      }
+    }
+
+    .ant-pagination-next:hover,
+    .ant-pagination-prev:hover,
+    .ant-pagination-item:hover {
+      text-decoration: underline;
+    }
+
+    .ant-pagination-jump-prev,
+    .ant-pagination-jump-next {
+      .ant-pagination-item-link {
+        .ant-pagination-item-container {
+          position: relative;
+
+          .ant-pagination-item-ellipsis {
+            position: absolute;
+            top: 10px;
+            color: $font-color-primary;
+          }
+        }
+      }
+    }
+
+    .ant-pagination-item-active {
+      color: $font-color-primary;
+      background-color: $bg-color-btn-default;
+      border: none;
+    }
+
+    .ant-pagination-options {
+      display: none;
+    }
+  }
+}

@@ -16,7 +16,7 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   parentsCategories: [],
   productTypesAttributes: [],
   isLoading: false,
-  limit: 100,
+  limit: 6,
   fuzzyLevelValue: 0,
   sortValue: 'price asc',
   searchValue: '',
@@ -159,8 +159,8 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
           queryArgs: {
             sort: get().sortValue,
             limit: get().limit,
-            ...newSearch,
             offset: get().offset * get().limit,
+            ...newSearch,
             'filter.query': [
               ...(get().categoryName === 'all' ? [] : [get().createFilterByCategoriesId(category)]),
               ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),

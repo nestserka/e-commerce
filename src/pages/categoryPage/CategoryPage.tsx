@@ -9,6 +9,7 @@ import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 import HeaderCatalog from '../../domain/catalog/headerCatalog/HeaderCatalog';
 import FiltersBlock from '../../domain/catalog/filtersBlock/filtersBlock';
 import BreadCrumbsCatalog from '../../domain/catalog/breadCrumbsCatalog/BreadCrumbsCatalog';
+import PaginationBlock from '../../components/pagination/Patination';
 
 import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
@@ -91,6 +92,10 @@ export default function CategoryPage(): JSX.Element {
     getProductListFromCategory();
   };
 
+  const handleChangePage = (page:number): void =>{
+    console.log(page)
+  }
+
   const resetAttributesForCategory = (): void => {
     setSelectedValue('');
     setNameSubtree('');
@@ -118,7 +123,7 @@ export default function CategoryPage(): JSX.Element {
     navigation(ROUTES.CATALOG_ALL);
   };
 
-  useEffect(() => {
+  useEffect((): void  => {
     if (category) {
       const allSubtrees = getSubCategory(categoriesData, category);
       setSubtree(allSubtrees);
@@ -190,6 +195,7 @@ export default function CategoryPage(): JSX.Element {
               <div className={styles['products-list-empty']}>No product by attribute or filter found</div>
             )}
           </div>
+          <PaginationBlock defaultCurrent={1} total={66} defaultPageSize={6} handleChangePage={handleChangePage}/>
         </section>
       </main>
     </section>
