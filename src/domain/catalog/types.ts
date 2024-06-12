@@ -24,7 +24,7 @@ export interface PriceRangeFilterProps {
 export interface AttributeBlockProps {
   attributeArray: AttributeLocalizedEnumValue[];
   nameAttribute: string;
-  isCheckedAttributeList: boolean;
+  checkedStates: Record<string, boolean>;
   handleClickForCheckbox: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -35,6 +35,5 @@ export interface FiltersBlockProps {
   subtrees: OptionsFromSelect[];
   selectedValue: string | null;
   getProductListFromCategory: () => void;
-  resetAttributesForCategory: () => void;
   handleClickForCategory: () => void;
 }

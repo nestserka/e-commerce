@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Select } from 'antd';
 import { useNavigate } from 'react-router';
 
@@ -14,7 +14,6 @@ import { DYNAMIC_ROUTES } from '../../../constants/constants';
 
 import type { OptionsFromSelect } from '../../../pages/categoryPage/types';
 import type { FiltersBlockProps } from '../types';
-import type { AttributeLocalizedEnumValue } from '@commercetools/platform-sdk';
 
 export default function FiltersBlock({
   category,
@@ -23,32 +22,40 @@ export default function FiltersBlock({
   subtrees,
   selectedValue,
   getProductListFromCategory,
-  resetAttributesForCategory,
   handleClickForCategory,
 }: FiltersBlockProps): JSX.Element {
   const navigation = useNavigate();
-  const [brandListAttribute, setBrandListAttribute] = useState<AttributeLocalizedEnumValue[]>([]);
-  const [refractorListAttribute, setRefractorListAttribute] = useState<AttributeLocalizedEnumValue[]>([]);
-  const [materialListAttribute, setMaterialListAttribute] = useState<AttributeLocalizedEnumValue[]>([]);
+
   const {
     productTypesAttributes,
     isDiscount,
     isBestseller,
     setBestsellerStatus,
     setDiscountStatus,
-    setPriceRange,
     setRefractorList,
     setMaterialList,
     setBrandList,
+    setBrandListDefault,
+    setMaterialListDefault,
+    setRefractorListDefault,
   } = useCatalogData();
 
-  const { isCheckedBrandList, isCheckedMaterialList, isCheckedRefractorList } = useCatalogCheckAttributeState();
+  const {
+    brandListAttribute,
+    refractorListAttribute,
+    materialListAttribute,
+    checkedStatesBrandList,
+    checkedStatesRefractorList,
+    checkedStatesMaterialList,
+    setRefractorListAttribute,
+    setMaterialListAttribute,
+    setBrandListAttribute,
+    setCheckedStatesBrandList,
+    setCheckedStatesRefractorList,
+    setCheckedStatesMaterialList,
+  } = useCatalogCheckAttributeState();
 
   const handleResetAllFilters = (): void => {
-    setPriceRange([0, 1700000]);
-    setBestsellerStatus(false);
-    setDiscountStatus(false);
-    resetAttributesForCategory();
     handleClickForCategory();
   };
 
@@ -61,46 +68,70 @@ export default function FiltersBlock({
   };
 
   const handleChangeCategory = (option: OptionsFromSelect): void => {
+    setRefractorListDefault();
+    setBrandListDefault();
+    setMaterialListDefault();
+    setMaterialListAttribute([]);
+    setBrandListAttribute([]);
+    setRefractorListAttribute([])
     navigation(`${DYNAMIC_ROUTES.CATALOG}${option.value}`);
+  };
+
+  const handleCheckboxChangeBrandList = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setCheckedStatesBrandList({ ...checkedStatesBrandList, [e.target.id]: e.target.checked });
+    setBrandList(e.target.id, e.target.checked);
+    getProductListFromCategory();
+  };
+
+  const handleCheckboxChangeMaterialList = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setCheckedStatesMaterialList({ ...checkedStatesMaterialList, [e.target.id]: e.target.checked });
+    console.log(checkedStatesMaterialList);
+    setMaterialList(e.target.id, e.target.checked);
+    getProductListFromCategory();
+  };
+
+  const handleCheckboxChangeRefractorList = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setCheckedStatesRefractorList({ ...checkedStatesRefractorList, [e.target.id]: e.target.checked });
+    setRefractorList(e.target.id, e.target.checked);
+    getProductListFromCategory();
   };
 
   useEffect(() => {
     if (category) {
       const attributesCategory = getAttributesCategory(productTypesAttributes, category);
-
-      if (!attributesCategory.length) {
-        setRefractorListAttribute([]);
-        setBrandListAttribute([]);
-        setMaterialListAttribute([]);
-      }
-
-      const newListBrand = attributesCategory.find((attribute) => attribute.name === 'brand');
-      const newListMaterial = attributesCategory.find((attribute) => attribute.name === 'material');
-      const newListRefractor = attributesCategory.find((attribute) => attribute.name === 'refractor');
-
-      if (!newListBrand) {
-        setBrandListAttribute([]);
-      }
-
-      if (!newListMaterial) {
-        setMaterialListAttribute([]);
-      }
-
-      if (!newListRefractor) {
-        setRefractorListAttribute([]);
-      }
-
       attributesCategory.forEach((attribute) => {
         if (attribute.name === 'brand' && isAttributeLocalizedEnumType(attribute.type)) {
           setBrandListAttribute(attribute.type.values);
+          setCheckedStatesBrandList(
+            Object.fromEntries(attribute.type.values.map((attributeBrandList) => [attributeBrandList.key, false])),
+          );
         } else if (attribute.name === 'material' && isAttributeLocalizedEnumType(attribute.type)) {
           setMaterialListAttribute(attribute.type.values);
+          setCheckedStatesMaterialList(
+            Object.fromEntries(
+              attribute.type.values.map((attributeMaterialList) => [attributeMaterialList.key, false]),
+            ),
+          );
         } else if (attribute.name === 'refractor' && isAttributeLocalizedEnumType(attribute.type)) {
           setRefractorListAttribute(attribute.type.values);
+          setCheckedStatesRefractorList(
+            Object.fromEntries(
+              attribute.type.values.map((attributeRefractorList) => [attributeRefractorList.key, false]),
+            ),
+          );
         }
       });
     }
-  }, [category, productTypesAttributes]);
+  }, [
+    category,
+    productTypesAttributes,
+    setBrandListAttribute,
+    setCheckedStatesBrandList,
+    setCheckedStatesMaterialList,
+    setCheckedStatesRefractorList,
+    setMaterialListAttribute,
+    setRefractorListAttribute,
+  ]);
 
   return (
     <aside className={styles['products-filters']}>
@@ -155,31 +186,22 @@ export default function FiltersBlock({
       <AttributeBlock
         attributeArray={brandListAttribute}
         nameAttribute="Brand"
-        isCheckedAttributeList={isCheckedBrandList}
-        handleClickForCheckbox={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setBrandList(e.target.id, e.target.checked);
-          getProductListFromCategory();
-        }}
+        checkedStates={checkedStatesBrandList}
+        handleClickForCheckbox={handleCheckboxChangeBrandList}
       />
 
       <AttributeBlock
         attributeArray={materialListAttribute}
         nameAttribute="Material"
-        isCheckedAttributeList={isCheckedMaterialList}
-        handleClickForCheckbox={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setMaterialList(e.target.id, e.target.checked);
-          getProductListFromCategory();
-        }}
+        checkedStates={checkedStatesMaterialList}
+        handleClickForCheckbox={handleCheckboxChangeMaterialList}
       />
 
       <AttributeBlock
         attributeArray={refractorListAttribute}
         nameAttribute="Refractor"
-        isCheckedAttributeList={isCheckedRefractorList}
-        handleClickForCheckbox={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setRefractorList(e.target.id, e.target.checked);
-          getProductListFromCategory();
-        }}
+        checkedStates={checkedStatesRefractorList}
+        handleClickForCheckbox={handleCheckboxChangeRefractorList}
       />
       <div className={styles['filters-section']}>
         <button className={styles['filters-button']} type="button" onClick={handleResetAllFilters}>

@@ -1,4 +1,3 @@
-
 import style from '../_filtersBlock.module.scss';
 import InputCheckBox from '../../../../components/ui/checkbox/checkbox';
 
@@ -7,7 +6,7 @@ import type { AttributeBlockProps } from '../../types';
 export default function AttributeBlock({
   attributeArray,
   nameAttribute,
-  isCheckedAttributeList,
+  checkedStates,
   handleClickForCheckbox,
 }: AttributeBlockProps): JSX.Element {
   return (
@@ -20,7 +19,7 @@ export default function AttributeBlock({
               id={attribute.key}
               name={attribute.label.en}
               label={attribute.label.en}
-              isValue={isCheckedAttributeList}
+              isValue={checkedStates[attribute.key]}
               onChange={handleClickForCheckbox}
             />
           </div>

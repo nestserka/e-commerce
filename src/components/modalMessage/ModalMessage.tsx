@@ -35,7 +35,10 @@ export default function ModalMessage({
   }, [isErrorShown, setErrorIsShown]);
 
   return (
-    <section className={`${styles.wrapper} ${isErrorShown ? styles.error : styles.visible}`} data-testid="modal-message">
+    <section
+      className={`${styles.wrapper} ${isErrorShown ? styles.error : styles.visible}`}
+      data-testid="modal-message"
+    >
       <button
         aria-label="Close"
         type="button"

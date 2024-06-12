@@ -1,4 +1,9 @@
-import type { Category, ProductProjectionPagedSearchResponse, ProductType } from '@commercetools/platform-sdk';
+import type {
+  AttributeLocalizedEnumValue,
+  Category,
+  ProductProjectionPagedSearchResponse,
+  ProductType,
+} from '@commercetools/platform-sdk';
 import type { Address } from '../../utils/types';
 
 export interface CustomerCredentials {
@@ -110,10 +115,16 @@ export interface CatalogStateData {
 }
 
 export interface CatalogCheckAttributeState {
-  isCheckedBrandList: boolean;
-  isCheckedMaterialList: boolean;
-  isCheckedRefractorList: boolean;
-  setIsCheckedBrandList: (isStatus: boolean) => void;
-  setIsCheckedRefractorList: (isStatus: boolean) => void;
-  setIsCheckedMaterialList: (isStatus: boolean) => void;
+  brandListAttribute: AttributeLocalizedEnumValue[];
+  refractorListAttribute: AttributeLocalizedEnumValue[];
+  materialListAttribute: AttributeLocalizedEnumValue[];
+  checkedStatesBrandList: Record<string, boolean>;
+  checkedStatesRefractorList: Record<string, boolean>;
+  checkedStatesMaterialList: Record<string, boolean>;
+  setRefractorListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;
+  setMaterialListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;
+  setBrandListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;
+  setCheckedStatesBrandList: (newValue: Record<string, boolean>) => void;
+  setCheckedStatesRefractorList: (newValue: Record<string, boolean>) => void;
+  setCheckedStatesMaterialList: (newValue: Record<string, boolean>) => void;
 }

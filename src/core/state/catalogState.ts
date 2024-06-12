@@ -202,16 +202,28 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
 }));
 
 export const useCatalogCheckAttributeState = create<CatalogCheckAttributeState>((set) => ({
-  isCheckedBrandList: false,
-  isCheckedMaterialList: false,
-  isCheckedRefractorList: false,
-  setIsCheckedBrandList: (isStatus: boolean): void => {
-    set(() => ({ isCheckedBrandList: isStatus }));
+  brandListAttribute: [],
+  refractorListAttribute: [],
+  materialListAttribute: [],
+  checkedStatesBrandList: {},
+  checkedStatesRefractorList: {},
+  checkedStatesMaterialList: {},
+  setRefractorListAttribute: (newArray): void => {
+    set({ refractorListAttribute: newArray });
   },
-  setIsCheckedRefractorList: (isStatus: boolean): void => {
-    set(() => ({ isCheckedRefractorList: isStatus }));
+  setMaterialListAttribute: (newArray): void => {
+    set({ materialListAttribute: newArray });
   },
-  setIsCheckedMaterialList: (isStatus: boolean): void => {
-    set(() => ({ isCheckedMaterialList: isStatus }));
+  setBrandListAttribute: (newArray): void => {
+    set({ brandListAttribute: newArray });
+  },
+  setCheckedStatesBrandList: (newValue): void => {
+    set({ checkedStatesBrandList: newValue });
+  },
+  setCheckedStatesRefractorList: (newValue): void => {
+    set({ checkedStatesRefractorList: newValue });
+  },
+  setCheckedStatesMaterialList: (newValue): void => {
+    set({ checkedStatesMaterialList: newValue });
   },
 }));

@@ -36,10 +36,19 @@ export default function CategoryPage(): JSX.Element {
     setBrandListDefault,
     setMaterialListDefault,
     setRefractorListDefault,
+    setBestsellerStatus,
+    setDiscountStatus,
+    setPriceRange,
   } = useCatalogData();
 
-  const { setIsCheckedBrandList, setIsCheckedMaterialList, setIsCheckedRefractorList } =
-    useCatalogCheckAttributeState();
+  const {
+    brandListAttribute,
+    refractorListAttribute,
+    materialListAttribute,
+    setCheckedStatesBrandList,
+    setCheckedStatesRefractorList,
+    setCheckedStatesMaterialList,
+  } = useCatalogCheckAttributeState();
 
   const getProductListFromCategory = useCallback(() => {
     if (category === 'all') {
@@ -82,42 +91,32 @@ export default function CategoryPage(): JSX.Element {
     getProductListFromCategory();
   };
 
-  const handleClickForCategory = (): void => {
+  const resetAttributesForCategory = (): void => {
     setSelectedValue('');
     setNameSubtree('');
     setSubtreesList('', true);
-    navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
-  };
-
-  const resetAttributesForCategory = (): void => {
+    setPriceRange([0, 1700000]);
+    setBestsellerStatus(false);
+    setDiscountStatus(false);
     setBrandListDefault();
     setMaterialListDefault();
     setRefractorListDefault();
-    setIsCheckedBrandList(true);
-    setIsCheckedMaterialList(true);
-    setIsCheckedRefractorList(true);
-    setTimeout(() => {
-      setIsCheckedBrandList(false);
-      setIsCheckedMaterialList(false);
-      setIsCheckedRefractorList(false);
-    }, 0);
+    setCheckedStatesBrandList(Object.fromEntries(brandListAttribute.map((attribute) => [attribute.key, false])));
+    setCheckedStatesMaterialList(Object.fromEntries(materialListAttribute.map((attribute) => [attribute.key, false])));
+    setCheckedStatesRefractorList(
+      Object.fromEntries(refractorListAttribute.map((attribute) => [attribute.key, false])),
+    );
+  };
+
+  const handleClickForCategory = (): void => {
+    resetAttributesForCategory();
+    navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
   };
 
   const handleClickForCatalog = (): void => {
-    setSelectedValue('');
-    setNameSubtree('');
-    setSubtreesList('', true);
     resetAttributesForCategory();
     navigation(ROUTES.CATALOG_ALL);
   };
-
-  // const handleResetAllFilters = (): void => {
-  //   setPriceRange([0, 1700000]);
-  //   setBestsellerStatus(false);
-  //   setDiscountStatus(false);
-  //   resetAttributesForCategory();
-  //   handleClickForCategory();
-  // };
 
   useEffect(() => {
     if (category) {
@@ -175,7 +174,6 @@ export default function CategoryPage(): JSX.Element {
           nameCategory={activeCategory}
           selectedValue={selectedValue}
           getProductListFromCategory={getProductListFromCategory}
-          resetAttributesForCategory={resetAttributesForCategory}
           handleClickForCategory={handleClickForCategory}
         />
 
