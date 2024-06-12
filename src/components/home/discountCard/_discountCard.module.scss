@@ -7,20 +7,11 @@
   cursor: pointer;
   background-color: $bg-home-cards;
   box-sizing: border-box;
-  max-width: 17.125em;
-  height: 25.563em;
   color: $font-color-primary-20;
   padding: 1em;
-
-  &::after {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
-    position: absolute;
-    content: '';
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-  }
+  border-radius: 1.5rem;
+  max-width: 17rem !important;
+  position: relative;
 
   .card-pic {
     position: relative;
@@ -39,6 +30,7 @@
     line-height: 130%;
     color: $checkbox-color-checked;
     text-align: center;
+    z-index: 20;
   }
 
   .block-price {
@@ -51,6 +43,7 @@
     color: $font-color-primary;
     gap: 0.5em;
     width: 100%;
+    z-index: 20;
 
     .discount {
       justify-self: end;

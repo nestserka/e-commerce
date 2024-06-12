@@ -1,6 +1,12 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules';
+import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules';
 import { useEffect, useState } from 'react';
+
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
 
 
 import getProductsDiscountList from '../../../api/products/getProductsDiscountList';
@@ -32,24 +38,31 @@ export default function DiscountProduct(): JSX.Element {
     </section>
     <div className={style['products-block']}>
       {productsList.length ? (
-        <Swiper effect="coverFlow"
+        <Swiper effect="coverflow"
         grabCursor
-        centeredSlides
         loop
+        watchSlidesProgress
+        slideActiveClass={style['active-class']}
+        centeredSlides
         slidesPerView="auto"
         coverflowEffect={ {
-          rotate: 0,
-          stretch:0,
-          depth: 100,
-          modifier: 2.5,
+          rotate: 20,
+          slideShadows:true,
+          depth:3,
         }
-        }  className={style.swiper_container}>
+        }
+            modules={[EffectCoverflow, Pagination, Navigation]}
+        // pagination={{ el: '.swiper-pagination', clickable: true }}
+        
+        className={style['swiper-cont']}>
           {productsList.map((dataCard: ProductProjection) => (
             <SwiperSlide key={dataCard.name.en}>
               <DiscountCard dataCard={dataCard} />
             </SwiperSlide>
           ))}
+          
         </Swiper>
+        
       ) : (
         <div className={style['products-list-empty']}>No product by attribute or filter found</div>
       )}

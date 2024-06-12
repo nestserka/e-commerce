@@ -25,4 +25,49 @@
       font-size: 3.2em;
     }
   }
+  .products-block {
+    padding: 4.6rem 0;
+  }
+}
+
+.active-class::after {
+  background: linear-gradient(to top, rgba(62, 69, 230, 1) 0%, rgba(62, 69, 230, 0) 60%);
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  border-radius: 1.5rem;
+}
+
+.swiper-cont {
+  padding: 2rem 0;
+  position: relative;
+  width: 1440px;
+
+  @media (width <= 1390px) {
+    width: 75rem;
+  }
+
+  @media (width <= 1150px) {
+    width: 60rem;
+  }
+
+  @media (width <= 900px) {
+    width: 50rem;
+  }
+
+  @media (width <= 760px) {
+    width: 38rem;
+  }
+
+  @media (width <= 500px) {
+    width: 22.5em;
+  }
+}
+
+.swiper-cont .swiper-wrapper .swiper-slide {
+  max-width: 17rem !important;
+  position: relative;
 }
