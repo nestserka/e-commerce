@@ -97,4 +97,5 @@ export interface CartItemLineProps {
   pricePerItem: string;
   quantity: number;
   totalPrice: string;
+  productId: string;
 }

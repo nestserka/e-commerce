@@ -82,6 +82,7 @@ export function formatPrice(num: number): string {
 
 export function getLineItemProps(lineItem: LineItem): CartItemLineProps {
   const { id } = lineItem;
+  const { productId } = lineItem;
   const productName = lineItem.name.en;
   const { images } = lineItem.variant;
   const { quantity } = lineItem;
@@ -111,6 +112,7 @@ export function getLineItemProps(lineItem: LineItem): CartItemLineProps {
     pricePerItem,
     quantity,
     totalPrice,
+    productId,
   };
 
   return lineItemProps;
@@ -135,7 +137,7 @@ export function getTotalDiscount(lineItems: LineItem[]): number {
     return diff;
   });
 
-  totalDiscount = diffArr.reduce((acum, value) => acum + value);
+  totalDiscount = diffArr.reduce((acum, value) => acum + value, 0);
 
   return totalDiscount;
 }
@@ -144,9 +146,10 @@ const ACTION = {
   REMOVE: 'removeLineItem' as const,
 };
 
-export function getLineItemsPropsToRemove(arrIds: string[]): MyCartRemoveLineItemAction[] {
+export function getLineItemsPropsToRemove(arrIds: string[], quantity?: number): MyCartRemoveLineItemAction[] {
   return arrIds.map((item) => ({
     action: ACTION.REMOVE,
     lineItemId: item,
+    quantity,
   }));
 }

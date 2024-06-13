@@ -10,23 +10,35 @@ import type { ChangeEvent } from 'react';
 import type { CartItemLineProps } from '../../../utils/types';
 
 export default function CartItemLine(props: CartItemLineProps): JSX.Element {
-  const { imageUrl, productName, discountLabel, discountedPricePerItem, pricePerItem, quantity, totalPrice, id } =
-    props;
+  const {
+    imageUrl,
+    productName,
+    discountLabel,
+    discountedPricePerItem,
+    pricePerItem,
+    quantity,
+    totalPrice,
+    id,
+    productId,
+  } = props;
   const { customerId } = useLoginData();
-  const { removeProductFromCart } = useCartData();
+  const { addProductToCart, removeProductFromCart } = useCartData();
   const [itemQuantity, setItemQuantity] = useState<number | string>(quantity);
   const [totalItemCost, setTotalItemCost] = useState<string>(totalPrice);
+  const incrementPrice = discountedPricePerItem ? discountedPricePerItem.slice(1) : pricePerItem.slice(1);
 
-  const handleIncrement = (): void => {
+  const handleIncrement = async (): Promise<void> => {
     setItemQuantity(Number(itemQuantity) + 1);
-
-    setTotalItemCost(`$${((Number(itemQuantity) + 1) * Number(totalPrice.slice(1))).toFixed(2)}`);
+    await addProductToCart(productId, customerId, 1);
+    setTotalItemCost(`$${(Number(totalPrice.slice(1)) + Number(incrementPrice)).toFixed(2)}`);
   };
 
-  const handleDecrement = (): void => {
+  const handleDecrement = async (): Promise<void> => {
     if (Number(itemQuantity) > 1) {
       setItemQuantity(Number(itemQuantity) - 1);
-      setTotalItemCost(`$${((Number(itemQuantity) - 1) * Number(totalPrice.slice(1))).toFixed(2)}`);
+      const action = getLineItemsPropsToRemove([id], 1);
+      await removeProductFromCart(action, customerId);
+      setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
     }
   };
 

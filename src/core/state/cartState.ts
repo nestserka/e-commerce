@@ -24,7 +24,7 @@ interface CartState {
   isLoading: boolean;
   error: string;
   isInCart: (productId: string) => boolean;
-  addProductToCart: (productId: string, customerId: string) => Promise<void>;
+  addProductToCart: (productId: string, customerId: string, quantity?: number) => Promise<void>;
   removeProductFromCart: (items: MyCartRemoveLineItemAction[], customerId: string) => Promise<void>;
   getItemsIds: () => string[] | undefined;
   setCart: (customerId: string) => Promise<void>;
@@ -94,7 +94,7 @@ export const useCartData = create<CartState>((set, get) => ({
     });
   },
 
-  addProductToCart: async (productId, customerId): Promise<void> => {
+  addProductToCart: async (productId, customerId, quantity = 1): Promise<void> => {
     set({ isLoading: true, error: '' });
 
     const { activeCart } = useCartData.getState();
@@ -105,7 +105,7 @@ export const useCartData = create<CartState>((set, get) => ({
       try {
         const { customerCartId, anonymousCartId } = useCartData.getState();
         const cartId = customerId ? customerCartId : anonymousCartId;
-        const updatedCart = await addProductToCart(cartId, productId, version);
+        const updatedCart = await addProductToCart(cartId, productId, version, quantity);
         get().updateCartState(updatedCart);
       } catch (err) {
         console.log(err);
