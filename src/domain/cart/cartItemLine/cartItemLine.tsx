@@ -26,6 +26,7 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
   const [itemQuantity, setItemQuantity] = useState<number | string>(quantity);
   const [totalItemCost, setTotalItemCost] = useState<string>(totalPrice);
   const incrementPrice = discountedPricePerItem ? discountedPricePerItem.slice(1) : pricePerItem.slice(1);
+  const [prevQuantity, setPrevQuantity] = useState<number>(quantity);
 
   const handleIncrement = async (): Promise<void> => {
     setItemQuantity(Number(itemQuantity) + 1);
@@ -55,11 +56,11 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
     const { value } = event.target;
 
     if (value === '') {
-      setItemQuantity('');
+      setItemQuantity(1);
     } else if (value === '0') {
       setItemQuantity(1);
     } else {
-      const parsedValue = parseInt(value, 10);
+      const parsedValue = parseInt(event.target.value, 10);
 
       if (!Number.isNaN(parsedValue) && parsedValue > 0) {
         setItemQuantity(parsedValue);
@@ -67,12 +68,35 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
     }
   };
 
-  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>): void => {
+  const handleInputBlur = async (event: React.FocusEvent<HTMLInputElement>): Promise<void> => {
     if (event.target instanceof HTMLInputElement && (event.target.value === '' || event.target.value === '0')) {
       setItemQuantity(1);
+    } else {
+      const parsedValue = parseInt(event.target.value, 10);
+
+      if (!Number.isNaN(parsedValue) && parsedValue > 0) {
+        setPrevQuantity(Number(itemQuantity));
+        setItemQuantity(parsedValue);
+      }
+
+      const diff = Number(itemQuantity) - prevQuantity;
+      console.log('diff', diff);
+
+      if (diff > 0) {
+        await addProductToCart(productId, customerId, diff);
+        setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+      }
+
+      if (diff < 0) {
+        const action = getLineItemsPropsToRemove([id], Math.abs(diff));
+        await removeProductFromCart(action, customerId);
+        setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+      }
     }
 
-    setTotalItemCost(`$${(Number(itemQuantity) * Number(totalPrice.slice(1))).toFixed(2)}`);
+    console.log(prevQuantity, itemQuantity);
+
+    setTotalItemCost(`$${(Number(itemQuantity) * Number(incrementPrice)).toFixed(2)}`);
   };
 
   return (
@@ -94,7 +118,7 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
         </button>
         <input
           type="text"
-          value={itemQuantity}
+          value={itemQuantity === 0 ? '' : itemQuantity}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           className={style['quantity-input']}
