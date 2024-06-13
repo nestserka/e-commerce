@@ -1,0 +1,28 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets//styles/variables';
+
+.summary-wrapper {
+  padding: 2.25rem;
+  background-color: $background-color-primary-two;
+  border-radius: 1.5rem;
+}
+
+.info-wrapper {
+  padding: 3rem 0;
+}
+
+.line-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.line-info:not(:last-child) {
+  margin-bottom: 1rem;
+}
+
+.total-wrapper {
+  @include font-arimo-bold;
+
+  padding-top: 1rem;
+  border-top: 1px solid $border-color-default;
+}

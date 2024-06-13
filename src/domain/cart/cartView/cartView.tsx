@@ -8,6 +8,7 @@ import CartItemLine from '../cartItemLine/cartItemLine';
 import { getLineItemProps } from '../../../utils/utils';
 import EmptyCartState from '../emptyCartView/emptyCartState';
 import ClearButton from '../../../components/clearButton/clearButton';
+import CartSummary from '../cartSummary/cartSummary';
 
 const breadCrumbsProps = [
   {
@@ -54,9 +55,7 @@ export default function CartView(): JSX.Element {
             </div>
           </section>
           <aside className={style['aside-wrapper']}>
-            <section className={style['summary-wrapper']}>
-              <FormSubTitle subTitle="Summary" />
-            </section>
+            <CartSummary />
             <section className={style['promocode-wrapper']}>
               <FormSubTitle subTitle="Promocode" />
             </section>

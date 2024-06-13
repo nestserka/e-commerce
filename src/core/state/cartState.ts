@@ -7,6 +7,7 @@ import getActiveCart from '../../api/me/cart/getActiveCart';
 import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 import addProductToCart from '../../api/me/cart/addProductToCart';
 import removeProductFromCart from '../../api/me/cart/removeProductFromCart';
+import { getTotalDiscount } from '../../utils/utils';
 
 import type { Cart, LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
 
@@ -19,6 +20,7 @@ interface CartState {
   activeCart: Cart | undefined;
   version: number | null;
   itemsInCart: LineItem[] | null;
+  totalDiscount: number | null;
   isLoading: boolean;
   error: string;
   isInCart: (productId: string) => boolean;
@@ -35,6 +37,7 @@ export const useCartData = create<CartState>((set) => ({
   activeCart: undefined,
   version: null,
   itemsInCart: null,
+  totalDiscount: null,
   isLoading: false,
   error: '',
   isInCart: (productId: string): boolean => {
@@ -43,6 +46,7 @@ export const useCartData = create<CartState>((set) => ({
     return !!itemsInCart?.filter((item) => item.id === productId || item.productId === productId).length;
   },
 
+  // eslint-disable-next-line max-statements
   setCart: async (customerId): Promise<void> => {
     set({ isLoading: true, error: '' });
 
@@ -68,6 +72,7 @@ export const useCartData = create<CartState>((set) => ({
         set({ version: activeCart.version });
         set({ customerCartId: activeCart.id });
         set({ itemsInCart: activeCart.lineItems });
+        set({ totalDiscount: getTotalDiscount(activeCart.lineItems) });
 
         const { customerCartId } = useCartData.getState();
         localStorage.setItem(`customerCart-${LS_PREFIX}`, customerCartId);
@@ -87,6 +92,7 @@ export const useCartData = create<CartState>((set) => ({
       set({ version: activeCart.version });
       set({ anonymousCartId: activeCart.id });
       set({ itemsInCart: activeCart.lineItems });
+      set({ totalDiscount: getTotalDiscount(activeCart.lineItems) });
 
       console.log('setCart', activeCart.id);
       localStorage.setItem(`anonymousCartId-${LS_PREFIX}`, activeCart.id);
@@ -110,6 +116,7 @@ export const useCartData = create<CartState>((set) => ({
         set({ version: updatedCart.version });
         set({ activeCart: updatedCart });
         set({ itemsInCart: updatedCart.lineItems });
+        set({ totalDiscount: getTotalDiscount(activeCart.lineItems) });
       } catch (err) {
         console.log(err);
       }
@@ -129,9 +136,11 @@ export const useCartData = create<CartState>((set) => ({
         const { customerCartId, anonymousCartId } = useCartData.getState();
         const cartId = customerId ? customerCartId : anonymousCartId;
         const updatedCart = await removeProductFromCart(cartId, action, version);
+        const totalDiscountValue = getTotalDiscount(activeCart.lineItems);
         set({ version: updatedCart.version });
         set({ activeCart: updatedCart });
         set({ itemsInCart: updatedCart.lineItems });
+        set({ totalDiscount: totalDiscountValue });
       } catch (err) {
         console.log(err);
       }
@@ -151,6 +160,8 @@ export const useCartData = create<CartState>((set) => ({
       customerCartId: '',
       activeCart: undefined,
       itemsInCart: null,
+      version: null,
+      totalDiscount: null,
       isLoading: false,
       error: '',
     });

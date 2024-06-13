@@ -116,6 +116,30 @@ export function getLineItemProps(lineItem: LineItem): CartItemLineProps {
   return lineItemProps;
 }
 
+export function getTotalDiscount(lineItems: LineItem[]): number {
+  let totalDiscount = 0;
+
+  const diffArr = lineItems.map((item) => {
+    const value = item.price.discounted?.value.centAmount;
+    let diff = 0;
+
+    if (value) {
+      const discountedPrice = value;
+      const pricePerItem = item.price.value.centAmount;
+
+      if (typeof discountedPrice === 'number' && typeof pricePerItem === 'number') {
+        diff = pricePerItem - discountedPrice;
+      }
+    }
+
+    return diff;
+  });
+
+  totalDiscount = diffArr.reduce((acum, value) => acum + value);
+
+  return totalDiscount;
+}
+
 const ACTION = {
   REMOVE: 'removeLineItem' as const,
 };
