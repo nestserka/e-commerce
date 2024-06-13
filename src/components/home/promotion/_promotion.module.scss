@@ -70,9 +70,10 @@
       }
     }
 
-    @media (width <= 1100px) {
+    @media (width <= 1140px) {
       width: 80%;
     }
+
     @media (width <= 723px) {
       width: 100%;
     }
@@ -85,10 +86,13 @@
 
     .product-container {
       @include flex-justify-start;
+
       flex-basis: 50%;
       flex-direction: row;
+
       padding: 4.375em 2.5em 0;
-      background-color: rgba(33, 32, 46, 255);
+
+      background-color: rgb(33 32 46 / 25500%);
       border-radius: 20px;
 
       &.sub {
@@ -99,12 +103,12 @@
       }
 
       @media (width <= 1210px) {
+        flex-basis: 100%;
         justify-content: space-between;
         width: 100%;
-        flex-basis: 100%;
       }
 
-      @media (width <= 1100px) {
+      @media (width <= 1140px) {
         width: 80%;
       }
 
@@ -117,8 +121,9 @@
       }
     }
 
-    @media (width <= 1210px) {
+    @media (width <= 1140px) {
       @include flex-justify-center;
+
       flex-direction: column;
       width: 100%;
     }
@@ -139,7 +144,7 @@
       height: 13.188em;
     }
 
-    @media (width <= 1100px) {
+    @media (width <= 1140px) {
       .product {
         width: 10.25em;
         height: 13.188em;
@@ -155,6 +160,7 @@
 
     @media (width <= 700px) {
       padding-right: 2.5em;
+
       .product {
         display: none;
       }
@@ -174,7 +180,7 @@
     background-size: cover;
     border-radius: 20px;
 
-    @media (width <= 1100px) {
+    @media (width <= 1140px) {
       flex-direction: column;
       gap: 6em;
       height: auto;
@@ -266,10 +272,10 @@
   margin-left: auto;
 
   .display {
+    transform: translateY(-10%);
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transform: translateY(-10%);
 
     &.art-picture {
       transform: translate(20%, 0%);

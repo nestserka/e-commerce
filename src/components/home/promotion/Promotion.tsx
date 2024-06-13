@@ -1,7 +1,7 @@
 import style from './_promotion.module.scss';
 import binocular from '../../../assets/images/card/binocular.png';
 import spaceFood from '../../../assets/images/card/food.png';
-import poster from  '../../../assets/images/card/poster.png';
+import poster from '../../../assets/images/card/poster.png';
 import iconAllien from '../../../assets/images/icons/-icon-allien.svg';
 import { showModalMessage } from '../../../core/state/userState';
 import ModalMessage from '../../modalMessage/ModalMessage';
@@ -51,7 +51,7 @@ export default function HomePromotion(): JSX.Element {
             </h2>
           </div>
           <div className={style.poster}>
-          <img src={poster} alt="poster"  className={`${style.display} ${style['art-picture']}`}/>
+            <img src={poster} alt="poster" className={`${style.display} ${style['art-picture']}`} />
           </div>
         </div>
         <div className={`${style['product-container']} ${style.sub}`}>
@@ -60,7 +60,7 @@ export default function HomePromotion(): JSX.Element {
             <h2 className={`${style.title} ${style['sub-text']}`}>Unlock 20% off astronaut space food only today!</h2>
           </div>
           <div className={style.poster}>
-          <img src={spaceFood} alt="SpaceFood" className={style.display} />
+            <img src={spaceFood} alt="SpaceFood" className={style.display} />
           </div>
         </div>
       </div>
