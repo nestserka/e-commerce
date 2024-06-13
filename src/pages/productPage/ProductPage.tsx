@@ -63,7 +63,11 @@ export default function ProductPage(): JSX.Element {
   }, [productId]);
 
   if (loading) {
-    return <div className={style['layout-wrapper']}><Loader/></div>;
+    return (
+      <div className={style['layout-wrapper']}>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {

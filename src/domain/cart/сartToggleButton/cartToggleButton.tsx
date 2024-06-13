@@ -12,7 +12,11 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
   const { customerId } = useLoginData();
   const { activeCart, setCart, addProductToCart, isInCart } = useCartData();
 
-  const handleAddToCart = async (): Promise<void> => {
+  const handleAddToCart = async (event?:React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
+    if(event){
+      event.preventDefault();
+    }
+
     if (!activeCart) {
       try {
         await setCart(customerId);
@@ -37,7 +41,7 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
   return (
     <button
       type="button"
-      onClick={handleAddToCart}
+      onClick={(e)=>{handleAddToCart(e).catch((error:Error)=>{ console.log(error.message); })}}
       disabled={productInCart}
       className={page === 'PRODUCT' ? 'button-primary' : 'button-secondary'}
     >
