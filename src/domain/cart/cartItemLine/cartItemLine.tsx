@@ -15,14 +15,18 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
   const { customerId } = useLoginData();
   const { removeProductFromCart } = useCartData();
   const [itemQuantity, setItemQuantity] = useState<number | string>(quantity);
+  const [totalItemCost, setTotalItemCost] = useState<string>(totalPrice);
 
   const handleIncrement = (): void => {
     setItemQuantity(Number(itemQuantity) + 1);
+
+    setTotalItemCost(`$${((Number(itemQuantity) + 1) * Number(totalPrice.slice(1))).toFixed(2)}`);
   };
 
   const handleDecrement = (): void => {
     if (Number(itemQuantity) > 1) {
       setItemQuantity(Number(itemQuantity) - 1);
+      setTotalItemCost(`$${((Number(itemQuantity) - 1) * Number(totalPrice.slice(1))).toFixed(2)}`);
     }
   };
 
@@ -41,7 +45,7 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
     if (value === '') {
       setItemQuantity('');
     } else if (value === '0') {
-      setItemQuantity(0);
+      setItemQuantity(1);
     } else {
       const parsedValue = parseInt(value, 10);
 
@@ -55,6 +59,8 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
     if (event.target instanceof HTMLInputElement && (event.target.value === '' || event.target.value === '0')) {
       setItemQuantity(1);
     }
+
+    setTotalItemCost(`$${(Number(itemQuantity) * Number(totalPrice.slice(1))).toFixed(2)}`);
   };
 
   return (
@@ -85,8 +91,8 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
           +
         </button>
       </section>
-      <p className={style['total-price']} title={totalPrice}>
-        {totalPrice}
+      <p className={style['total-price']} title={totalItemCost}>
+        {totalItemCost}
       </p>
       <button
         type="button"
