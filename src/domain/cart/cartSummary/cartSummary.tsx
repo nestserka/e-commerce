@@ -8,10 +8,14 @@ import style from './_cartSummary.module.scss';
 export default function CartSummary(): JSX.Element {
   const { activeCart, itemsInCart, totalDiscount } = useCartData();
   const [discount, setDiscount] = useState<number | null>(totalDiscount);
+  const [itemsInOrder, setItemsInOrder] = useState<number | undefined>(itemsInCart?.length);
 
   useEffect(() => {
     if (itemsInCart) {
       setDiscount(getTotalDiscount(itemsInCart));
+      setTimeout(() => {
+        setItemsInOrder(itemsInCart.reduce((acum, item) => acum + item.quantity, 0));
+      }, 0);
     }
   }, [totalDiscount, itemsInCart]);
 
@@ -21,7 +25,7 @@ export default function CartSummary(): JSX.Element {
       <div className={style['info-wrapper']}>
         <div className={style['line-info']}>
           <p>Item in Order</p>
-          <p>{itemsInCart ? itemsInCart.length : 0}</p>
+          <p>{itemsInOrder ?? 0}</p>
         </div>
         <div className={style['line-info']}>
           <p>Order Price</p>

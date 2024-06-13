@@ -29,17 +29,25 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
   const [prevQuantity, setPrevQuantity] = useState<number>(quantity);
 
   const handleIncrement = async (): Promise<void> => {
-    setItemQuantity(Number(itemQuantity) + 1);
-    await addProductToCart(productId, customerId, 1);
-    setTotalItemCost(`$${(Number(totalPrice.slice(1)) + Number(incrementPrice)).toFixed(2)}`);
+    try {
+      await addProductToCart(productId, customerId, 1);
+      setItemQuantity(Number(itemQuantity) + 1);
+      setTotalItemCost(`$${(Number(totalPrice.slice(1)) + Number(incrementPrice)).toFixed(2)}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleDecrement = async (): Promise<void> => {
     if (Number(itemQuantity) > 1) {
-      setItemQuantity(Number(itemQuantity) - 1);
-      const action = getLineItemsPropsToRemove([id], 1);
-      await removeProductFromCart(action, customerId);
-      setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+      try {
+        const action = getLineItemsPropsToRemove([id], 1);
+        await removeProductFromCart(action, customerId);
+        setItemQuantity(Number(itemQuantity) - 1);
+        setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -83,14 +91,22 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
       console.log('diff', diff);
 
       if (diff > 0) {
-        await addProductToCart(productId, customerId, diff);
-        setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+        try {
+          await addProductToCart(productId, customerId, diff);
+          setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+        } catch (err) {
+          console.log(err);
+        }
       }
 
       if (diff < 0) {
-        const action = getLineItemsPropsToRemove([id], Math.abs(diff));
-        await removeProductFromCart(action, customerId);
-        setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+        try {
+          const action = getLineItemsPropsToRemove([id], Math.abs(diff));
+          await removeProductFromCart(action, customerId);
+          setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
 
