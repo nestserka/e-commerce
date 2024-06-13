@@ -32,11 +32,8 @@
 }
 
 .active-class {
-  max-width: 17rem;
-
   &::after {
     content: '';
-
     position: absolute;
     top: 0;
     left: 0;
@@ -52,7 +49,7 @@
 .swiper-cont {
   position: relative;
   width: 1440px;
-  padding: 2rem 0;
+  height: 409px;
 
   @media (width <= 1390px) {
     width: 75rem;
@@ -73,9 +70,4 @@
   @media (width <= 500px) {
     width: 22.5em;
   }
-}
-
-.swiper-cont .swiper-wrapper .swiper-slide {
-  position: relative;
-  max-width: 17rem !important;
 }

@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Navigation, Pagination } from 'swiper/modules';
+import { Autoplay, EffectCoverflow, FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { useEffect, useState } from 'react';
 
 import 'swiper/css';
@@ -7,24 +7,26 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-import getProductsDiscountList from '../../../api/products/getProductsDiscountList';
+
 import style from './_discountProduct.module.scss';
 import { DiscountCard } from '../discountCard/DiscountCard';
+import { useCatalogData } from '../../../core/state/homeState';
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 export default function DiscountProduct(): JSX.Element {
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
+  const { getDiscountedProductsList} = useCatalogData();
 
   useEffect(() => {
-    getProductsDiscountList()
+      getDiscountedProductsList()
       .then((response) => {
         setProductsList(response.results);
       })
       .catch((error: Error) => {
         console.log(error);
       });
-  }, []);
+  }, [getDiscountedProductsList]);
 
   return (
     <section className={style['discount-section']}>
@@ -39,48 +41,44 @@ export default function DiscountProduct(): JSX.Element {
         {productsList.length ? (
           <Swiper
             effect="coverflow"
-            grabCursor
+           grabCursor
             loop
+            centeredSlides
+            spaceBetween={20}
             breakpoints={{
+              0: {
+                slidesPerView: 1,
+              },
               400: {
-                slidesPerView: 1.5,
+                slidesPerView: 1.2,
               },
               500: {
                 slidesPerView: 2,
               },
-              750: {
-                slidesPerView: 3,
+              760: {
+                slidesPerView: 2.5,
               },
               900: {
-                slidesPerView: 3.5,
+                slidesPerView: 3,
               },
-              1200: {
-                slidesPerView: 5,
-              },
-              1390: {
-                slidesPerView: 5,
+              1150: {
+                slidesPerView:4,
               },
               1440: {
-                slidesPerView: 6,
+                slidesPerView: 5,
               },
-              1500: {
-                slidesPerView: 6,
-              },
-              2100: {
-                slidesPerView: 7,
+              1980: {
+                slidesPerView: 5,
+                spaceBetween:30
               },
             }}
-            slidesPerView={5}
             watchSlidesProgress
             slideActiveClass={style['active-class']}
-            centeredSlides
             coverflowEffect={{
               rotate: 20,
-              depth: 3,
             }}
-            modules={[EffectCoverflow, Pagination, Navigation]}
-            // pagination={{ el: '.swiper-pagination', clickable: true }}
-
+            modules={[FreeMode, Navigation, Thumbs, Autoplay, EffectCoverflow]}
+    
             className={style['swiper-cont']}
           >
             {productsList.map((dataCard: ProductProjection) => (
