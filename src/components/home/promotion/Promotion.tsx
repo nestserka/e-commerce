@@ -60,7 +60,7 @@ export default function HomePromotion(): JSX.Element {
             <h2 className={`${style.title} ${style['sub-text']}`}>Unlock 20% off astronaut space food only today!</h2>
           </div>
           <div className={style.poster}>
-            <img src={spaceFood} alt="SpaceFood" className={style.display} />
+            <img src={spaceFood} alt="SpaceFood" className={`${style.display} ${style['food-picture']}`} />
           </div>
         </div>
       </div>

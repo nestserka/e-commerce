@@ -53,7 +53,7 @@
         }
 
         &.sub-text {
-          max-width: 7em;
+          max-width: 7.5em;
 
           @media (width <= 550px) {
             max-width: 12em;
@@ -272,7 +272,7 @@
   margin-left: auto;
 
   .display {
-    transform: translateY(-10%);
+    transform: translateY(-5%);
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -282,6 +282,16 @@
 
       @media (width <= 1210px) {
         transform: translate(10%, 0%);
+      }
+    }
+
+    &.food-picture {
+      width: 255px;
+      height: 255px;
+
+      @media (width <= 1140px) {
+        width: 100%;
+        height: 100%;
       }
     }
   }
