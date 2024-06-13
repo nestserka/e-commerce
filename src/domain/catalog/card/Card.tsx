@@ -20,7 +20,8 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
     <Link
       to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`}
       onClick={() => {
-        setCurrentPage(1); setOffset(1);
+        setCurrentPage(1);
+        setOffset(1);
       }}
       className={styles.card}
     >

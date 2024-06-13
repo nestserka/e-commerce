@@ -10,12 +10,12 @@ import BreadCrumbsCatalog from '../../domain/catalog/breadCrumbsCatalog/BreadCru
 import PaginationBlock from '../../components/pagination/Patination';
 import FiltersBlockForCategory from '../../domain/catalog/filtersBlock/FiltersBlockForCategoryPage';
 import HeaderCatalogPage from '../../domain/catalog/HeaderCatalog/HeaderCatalog';
+import Loader from '../../components/loader/Loader';
 
 import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
 import type { Params } from 'react-router';
 import type { Category, ProductProjection, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
-import Loader from '../../components/loader/Loader';
 
 export default function CategoryPage(): JSX.Element {
   const { category, subtree }: Readonly<Params<string>> = useParams();
@@ -33,6 +33,7 @@ export default function CategoryPage(): JSX.Element {
     categoriesData,
     limit,
     total,
+    isLoading,
     setCurrentPage,
     setTotal,
     setOffset,
@@ -208,6 +209,12 @@ export default function CategoryPage(): JSX.Element {
             handleChangeCapture={handleChangeCapture}
           />
           <div className={styles['products-block']}>
+            {isLoading && (
+              <div className={styles.loader}>
+                <Loader />
+              </div>
+            )}
+
             {productsList.length ? (
               productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
             ) : (
@@ -220,7 +227,6 @@ export default function CategoryPage(): JSX.Element {
             defaultPageSize={limit}
             handleChangePage={handleChangePage}
           />
-          <Loader/>
         </section>
       </main>
     </section>

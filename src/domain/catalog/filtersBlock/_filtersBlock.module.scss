@@ -2,6 +2,7 @@
 @import '../../../assets/styles/variables';
 
 .products-filters {
+  box-sizing: border-box;
   width: 20%;
   min-width: 250px;
   height: fit-content;
