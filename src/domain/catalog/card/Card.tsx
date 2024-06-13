@@ -5,6 +5,7 @@ import styles from './_card.module.scss';
 import { createParamsfromCard } from './utils';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import CartToggleButton from '../../cart/сartToggleButton/cartToggleButton';
+import { useCatalogData } from '../../../core/state/catalogState';
 
 import type { PAGES } from '../../../constants/constants';
 import type { PropsCard } from './types';
@@ -13,9 +14,16 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
   const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
   const currentPage: keyof typeof PAGES = 'CATALOG';
+  const { setCurrentPage, setOffset } = useCatalogData();
 
   return (
-    <Link to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`} className={styles.card}>
+    <Link
+      to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`}
+      onClick={() => {
+        setCurrentPage(1); setOffset(1);
+      }}
+      className={styles.card}
+    >
       <div className={styles['card-pic']}>
         <div className={styles['information-block']}>
           {product.discountedName && <span className={styles['discount-name']}>{product.discountedName.label}</span>}

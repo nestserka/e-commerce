@@ -5,6 +5,8 @@ import 'swiper/css/pagination';
 import './_sliderForCatalogPage.scss';
 import { NavLink } from 'react-router-dom';
 
+import { useCatalogData } from '../../../core/state/catalogState';
+
 import type { CSSProperties } from 'react';
 import type { Category } from '@commercetools/platform-sdk';
 
@@ -13,6 +15,8 @@ export interface SliderCatalogPageProps {
 }
 
 export default function SliderCatalogPage({ allCategories }: SliderCatalogPageProps): JSX.Element {
+  const { setCurrentPage, setOffset } = useCatalogData();
+
   return (
     <div className="slider-wrapper">
       {allCategories.length ? (
@@ -63,7 +67,15 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
         >
           {allCategories.map((category: Category) => (
             <SwiperSlide key={category.slug.en}>
-              <NavLink className="slider-item" to={category.slug.en} key={category.slug.en}>
+              <NavLink
+                className="slider-item"
+                to={category.slug.en}
+                onClick={() => {
+                  setCurrentPage(1);
+                  setOffset(1);
+                }}
+                key={category.slug.en}
+              >
                 <h3 className="slider-title">{category.name.en}</h3>
                 <div className={`slider-img ${category.slug.en}`} />
               </NavLink>

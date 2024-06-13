@@ -7,11 +7,18 @@ import logo from '../../assets/images/ns-store-logo.svg';
 import { NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useLoginData } from '../../core/state/userState';
 import { logOut } from '../../utils/logOut';
+import { useCatalogData } from '../../core/state/catalogState';
 
 export default function Header(): JSX.Element {
   const { isAuth, customerId } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { setCurrentPage, setOffset } = useCatalogData();
   const navigate = useNavigate();
+
+  const defaultPage = (): void => {
+    setCurrentPage(1);
+    setOffset(1);
+  };
 
   const onClickButton = (): void => {
     logOut();
@@ -25,7 +32,7 @@ export default function Header(): JSX.Element {
   return (
     <header className={styles.header} data-testid="header">
       <section className={styles['logo-wrapper']}>
-        <Link to={ROUTES.HOME}>
+        <Link to={ROUTES.HOME} onClick={defaultPage}>
           <img src={logo} className="ns-logo" alt="NASA Store logotype" />
         </Link>
       </section>

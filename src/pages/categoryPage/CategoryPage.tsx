@@ -15,6 +15,7 @@ import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
 import type { Params } from 'react-router';
 import type { Category, ProductProjection, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
+import Loader from '../../components/loader/Loader';
 
 export default function CategoryPage(): JSX.Element {
   const { category, subtree }: Readonly<Params<string>> = useParams();
@@ -219,6 +220,7 @@ export default function CategoryPage(): JSX.Element {
             defaultPageSize={limit}
             handleChangePage={handleChangePage}
           />
+          <Loader/>
         </section>
       </main>
     </section>
