@@ -1,0 +1,169 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.promotion-section {
+  @include flex-justify-center;
+  flex-direction: column;
+  width: 100%;
+  margin: 4em auto 0;
+  gap: 1.5rem;
+
+  .promotion-wrapper {
+    @include flex-center-space-between;
+    flex-direction: row;
+    align-items: start;
+    width: 69.688em;
+    padding: 4.375em 2.5em 0;
+
+    .information-block {
+      @include flex-justify-start;
+      flex-direction: column;
+      gap: 1em;
+      font-family: DisplayMedium, sans-serif;
+      font-size: 14px;
+
+      .discount-name {
+        margin-right: 4px;
+        padding: 6px 8px 5px;
+        color: $checkbox-color-checked;
+        border-radius: 6px;
+        background-color: rgb(86 41 160);
+      }
+
+      .title {
+        @include font-firs-medium;
+        line-height: 2.118rem;
+        font-size: 1.75rem;
+        color: $font-color-primary;
+      }
+      .description {
+        @include font-arimo-regular;
+        font-size: 1em;
+        max-width: 24.688em;
+        line-height: 1.2em;
+      }
+    }
+  }
+
+  .double-layer {
+    padding: 0;
+    width: 69.688em;
+    gap: 1.25rem;
+
+    .art-container {
+      padding: 4.375em 2.5em 0;
+      background-image: url('../../../../public/assets/images/home/banner/bg-poster.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 27.5rem;
+      flex-basis: 50%;
+      border-radius: 20px;
+    }
+
+    .food-container {
+      padding: 4.375em 2.5em 0;
+      background-image: url('../../../../public/assets/images/home/banner/bg-food.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      height: 27.5rem;
+      flex-basis: 50%;
+      border-radius: 20px;
+      @include flex-justify-start;
+
+      .food {
+        width: 20rem;
+        height: 360px;
+        transform: translateY(-10%);
+      }
+    }
+
+    // .title {
+    //   max-width: 7.25em;
+    // }
+  }
+
+  .eyewear {
+    padding-right: 5.688em;
+    height: 20em;
+    background-image: url('../../../../public/assets/images/home/banner/bg-binocular.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px;
+  }
+  .product {
+    width: 20.25em;
+    height: 13.188em;
+  }
+
+  .promocode {
+    height: 20em;
+    background-image: url('../../../../public/assets/images/home/banner/bg-promocode.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px;
+    @include flex-justify-start;
+    gap: 3.625rem;
+
+    // .title {
+    //   max-width: 34.063rem;
+    // }
+  }
+
+  .coupang {
+    position: relative;
+
+    .sub-text {
+      font-size: 0.5em;
+      text-transform: lowercase;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    &::after {
+      content: '';
+      height: 8rem;
+      width: 100%;
+      position: absolute;
+      top: -4rem;
+      left: 43%;
+      background-image: url('../../../assets/images/card/ufo.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .promocode-clipper {
+      margin-top: 3.125rem;
+      @include flex-center-space-between;
+      @include font-firs-medium;
+      gap: 0.875rem;
+      background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
+      padding: 0.7em 1em;
+      border-radius: 2em;
+      text-transform: uppercase;
+      font-size: 1.75rem;
+      cursor: pointer;
+    }
+
+    .ufo-wrapper {
+      position: relative;
+
+      &::after {
+        content: '';
+        height: 13rem;
+        width: 100%;
+        position: absolute;
+        top: 1rem;
+        left: 3em;
+        background-image: url('../../../assets/images/card/ufo-light.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+    }
+  }
+}

@@ -7,7 +7,6 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-
 import style from './_discountProduct.module.scss';
 import { DiscountCard } from '../discountCard/DiscountCard';
 import { useCatalogData } from '../../../core/state/homeState';
@@ -16,10 +15,10 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 
 export default function DiscountProduct(): JSX.Element {
   const [productsList, setProductsList] = useState<ProductProjection[]>([]);
-  const { getDiscountedProductsList} = useCatalogData();
+  const { getDiscountedProductsList } = useCatalogData();
 
   useEffect(() => {
-      getDiscountedProductsList()
+    getDiscountedProductsList()
       .then((response) => {
         setProductsList(response.results);
       })
@@ -41,7 +40,7 @@ export default function DiscountProduct(): JSX.Element {
         {productsList.length ? (
           <Swiper
             effect="coverflow"
-           grabCursor
+            grabCursor
             loop
             centeredSlides
             spaceBetween={20}
@@ -62,14 +61,14 @@ export default function DiscountProduct(): JSX.Element {
                 slidesPerView: 3,
               },
               1150: {
-                slidesPerView:4,
+                slidesPerView: 4,
               },
               1440: {
                 slidesPerView: 5,
               },
               1980: {
                 slidesPerView: 5,
-                spaceBetween:30
+                spaceBetween: 30,
               },
             }}
             watchSlidesProgress
@@ -78,7 +77,6 @@ export default function DiscountProduct(): JSX.Element {
               rotate: 20,
             }}
             modules={[FreeMode, Navigation, Thumbs, Autoplay, EffectCoverflow]}
-    
             className={style['swiper-cont']}
           >
             {productsList.map((dataCard: ProductProjection) => (

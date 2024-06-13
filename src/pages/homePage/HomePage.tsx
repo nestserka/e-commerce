@@ -4,6 +4,7 @@ import ModalMessage from '../../components/modalMessage/ModalMessage';
 import icon from '../../../public/assets/icons/rocket-icon.svg';
 import HomeCategory from '../../components/home/homeCategory/HomeCategory';
 import DiscountProduct from '../../components/home/discountProduct/DiscountProduct';
+import HomePromotion from '../../components/home/promotion/Promotion';
 
 const modalMessageSuccessRegistrationProps = {
   type: 'success',
@@ -52,6 +53,7 @@ export default function HomePage(): JSX.Element {
         </div>
       </section>
       <HomeCategory />
+      <HomePromotion/>
       <DiscountProduct />
     </section>
   );
