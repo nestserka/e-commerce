@@ -14,7 +14,7 @@ export default function ModalMessage({
   title: string;
   message: string;
 }): JSX.Element {
-  const { isShown, setIsShown } = showModalMessage();
+  const { isShown, setIsShown,  isClipBoardShown, setIsClipShown } = showModalMessage();
   const { isErrorShown, setErrorIsShown } = showErrorMessage();
 
   useEffect(() => {
@@ -24,6 +24,14 @@ export default function ModalMessage({
       }, 3000);
     }
   }, [isShown, setIsShown]);
+
+  useEffect(() => {
+    if (isClipBoardShown) {
+      setTimeout(() => {
+        setIsClipShown(false);
+      }, 3000);
+    }
+  }, [isClipBoardShown, setIsClipShown]);
 
   useEffect(() => {
     if (isErrorShown) {

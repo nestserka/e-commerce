@@ -3,20 +3,25 @@
 
 .promotion-section {
   @include flex-justify-center;
+
   flex-direction: column;
-  width: 100%;
-  margin: 4em auto 0;
   gap: 1.5rem;
+  width: 69.688em;
+  margin: 4em auto 0;
 
   .promotion-wrapper {
     @include flex-center-space-between;
+
     flex-direction: row;
+    gap: 1em;
     align-items: start;
-    width: 69.688em;
+
+    width: 100%;
     padding: 4.375em 2.5em 0;
 
     .information-block {
       @include flex-justify-start;
+
       flex-direction: column;
       gap: 1em;
       font-family: DisplayMedium, sans-serif;
@@ -25,128 +30,226 @@
       .discount-name {
         margin-right: 4px;
         padding: 6px 8px 5px;
+
         color: $checkbox-color-checked;
-        border-radius: 6px;
+
         background-color: rgb(86 41 160);
+        border-radius: 6px;
       }
 
       .title {
         @include font-firs-medium;
-        line-height: 2.118rem;
+
         font-size: 1.75rem;
+        line-height: 2.118rem;
         color: $font-color-primary;
+
+        &.promocode-text {
+          max-width: 34.063rem;
+
+          @media (width <= 1290px) {
+            max-width: 24.063rem;
+          }
+        }
+
+        &.sub-text {
+          max-width: 7em;
+        }
       }
+
       .description {
         @include font-arimo-regular;
-        font-size: 1em;
+
         max-width: 24.688em;
+        font-size: 1em;
         line-height: 1.2em;
       }
     }
   }
 
   .double-layer {
-    padding: 0;
-    width: 69.688em;
     gap: 1.25rem;
+    width: 100%;
+    padding: 0;
 
     .art-container {
+      width: 50%;
+      height: 27.5rem;
       padding: 4.375em 2.5em 0;
+
       background-image: url('../../../../public/assets/images/home/banner/bg-poster.png');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
-      height: 27.5rem;
-      flex-basis: 50%;
       border-radius: 20px;
+
+      @media (width <= 1210px) {
+        width: 34.25em;
+        height: 20em;
+        padding: 2.5em;
+      }
+
+      @media (width <= 723px) {
+        width: 100%;
+        background-position: 100%;
+        background-size: cover;
+      }
     }
 
     .food-container {
+      @include flex-justify-start;
+
+      flex-direction: row;
+
+      width: 50%;
+      height: 27.5rem;
       padding: 4.375em 2.5em 0;
+
       background-image: url('../../../../public/assets/images/home/banner/bg-food.jpg');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
-      height: 27.5rem;
-      flex-basis: 50%;
       border-radius: 20px;
-      @include flex-justify-start;
 
       .food {
+        transform: translateY(-10%);
         width: 20rem;
         height: 360px;
-        transform: translateY(-10%);
+      }
+
+      @media (width <= 1210px) {
+        align-self: end;
+        justify-content: space-between;
+
+        width: 34.25em;
+        height: 20em;
+        padding: 2.5em;
+
+        .food {
+          width: 12em;
+          height: 15em;
+        }
+      }
+
+      @media (width <= 723px) {
+        width: 100%;
+
+        .food {
+          display: none;
+        }
       }
     }
 
-    // .title {
-    //   max-width: 7.25em;
-    // }
+    @media (width <= 1210px) {
+      @include flex-justify-start;
+
+      flex-direction: column;
+    }
   }
 
   .eyewear {
-    padding-right: 5.688em;
     height: 20em;
+    padding-right: 5.688em;
+
     background-image: url('../../../../public/assets/images/home/banner/bg-binocular.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     border-radius: 20px;
-  }
-  .product {
-    width: 20.25em;
-    height: 13.188em;
+
+    .product {
+      width: 20.25em;
+      height: 13.188em;
+    }
+
+    @media (width <= 1100px) {
+      .product {
+        width: 10.25em;
+        height: 13.188em;
+      }
+    }
+
+    @media (width <= 700px) {
+      .product {
+        display: none;
+      }
+    }
   }
 
   .promocode {
+    @include flex-justify-start;
+
+    gap: 3.625rem;
+
     height: 20em;
+
     background-image: url('../../../../public/assets/images/home/banner/bg-promocode.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     border-radius: 20px;
-    @include flex-justify-start;
-    gap: 3.625rem;
 
-    // .title {
-    //   max-width: 34.063rem;
-    // }
+    @media (width <= 1100px) {
+      flex-direction: column;
+      gap: 6em;
+
+      width: 34.25em;
+      height: auto;
+      margin-right: auto;
+      padding-bottom: 5rem;
+    }
+
+    @media (width <= 723px) {
+      width: 100%;
+    }
   }
 
   .coupang {
     position: relative;
 
-    .sub-text {
-      font-size: 0.5em;
-      text-transform: lowercase;
-      text-align: center;
-      margin-top: 10px;
-    }
-
     &::after {
       content: '';
-      height: 8rem;
-      width: 100%;
+
       position: absolute;
       top: -4rem;
       left: 43%;
+
+      width: 100%;
+      height: 8rem;
+
       background-image: url('../../../assets/images/card/ufo.png');
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
     }
 
+    .sub-text {
+      margin-top: 10px;
+      font-size: 0.5em;
+      text-align: center;
+      text-transform: lowercase;
+    }
+
     .promocode-clipper {
-      margin-top: 3.125rem;
       @include flex-center-space-between;
       @include font-firs-medium;
-      gap: 0.875rem;
-      background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
-      padding: 0.7em 1em;
-      border-radius: 2em;
-      text-transform: uppercase;
-      font-size: 1.75rem;
+
       cursor: pointer;
+
+      gap: 0.875rem;
+
+      margin-top: 3.125rem;
+      padding: 0.7em 1em;
+
+      font-size: 1.75rem;
+      text-transform: uppercase;
+
+      background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
+      border-radius: 2em;
+
+      @media (width <= 500px) {
+        font-size: 1.25rem;
+      }
     }
 
     .ufo-wrapper {
@@ -154,16 +257,23 @@
 
       &::after {
         content: '';
-        height: 13rem;
-        width: 100%;
+
         position: absolute;
         top: 1rem;
         left: 3em;
+
+        width: 100%;
+        height: 13rem;
+
         background-image: url('../../../assets/images/card/ufo-light.png');
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
       }
     }
+  }
+
+  @media (width <= 1290px) {
+    width: 100%;
   }
 }
