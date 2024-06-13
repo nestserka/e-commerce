@@ -47,13 +47,17 @@
         &.promocode-text {
           max-width: 34.063rem;
 
-          @media (width <= 1290px) {
-            max-width: 24.063rem;
+          @media (width <= 1170px) {
+            max-width: 28rem;
           }
         }
 
         &.sub-text {
           max-width: 7em;
+
+          @media (width <= 550px) {
+            max-width: 12em;
+          }
         }
       }
 
@@ -65,6 +69,13 @@
         line-height: 1.2em;
       }
     }
+
+    @media (width <= 1100px) {
+      width: 80%;
+    }
+    @media (width <= 723px) {
+      width: 100%;
+    }
   }
 
   .double-layer {
@@ -72,78 +83,44 @@
     width: 100%;
     padding: 0;
 
-    .art-container {
-      width: 50%;
-      height: 27.5rem;
+    .product-container {
+      @include flex-justify-start;
+      flex-basis: 50%;
+      flex-direction: row;
       padding: 4.375em 2.5em 0;
-
-      background-image: url('../../../../public/assets/images/home/banner/bg-poster.png');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
+      background-color: rgba(33, 32, 46, 255);
       border-radius: 20px;
 
-      @media (width <= 1210px) {
-        width: 34.25em;
-        height: 20em;
-        padding: 2.5em;
-      }
-
-      @media (width <= 723px) {
-        width: 100%;
-        background-position: 100%;
+      &.sub {
+        background-image: url('../../../../public/assets/images/home/banner/bg-food.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
         background-size: cover;
       }
-    }
-
-    .food-container {
-      @include flex-justify-start;
-
-      flex-direction: row;
-
-      width: 50%;
-      height: 27.5rem;
-      padding: 4.375em 2.5em 0;
-
-      background-image: url('../../../../public/assets/images/home/banner/bg-food.jpg');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      border-radius: 20px;
-
-      .food {
-        transform: translateY(-10%);
-        width: 20rem;
-        height: 360px;
-      }
 
       @media (width <= 1210px) {
-        align-self: end;
         justify-content: space-between;
+        width: 100%;
+        flex-basis: 100%;
+      }
 
-        width: 34.25em;
-        height: 20em;
-        padding: 2.5em;
-
-        .food {
-          width: 12em;
-          height: 15em;
-        }
+      @media (width <= 1100px) {
+        width: 80%;
       }
 
       @media (width <= 723px) {
         width: 100%;
+      }
 
-        .food {
-          display: none;
-        }
+      @media (width <= 550px) {
+        padding-bottom: 2em;
       }
     }
 
     @media (width <= 1210px) {
-      @include flex-justify-start;
-
+      @include flex-justify-center;
       flex-direction: column;
+      width: 100%;
     }
   }
 
@@ -169,7 +146,15 @@
       }
     }
 
+    @media (width <= 940px) {
+      .product {
+        width: 6em;
+        height: 8em;
+      }
+    }
+
     @media (width <= 700px) {
+      padding-right: 2.5em;
       .product {
         display: none;
       }
@@ -192,15 +177,12 @@
     @media (width <= 1100px) {
       flex-direction: column;
       gap: 6em;
-
-      width: 34.25em;
       height: auto;
-      margin-right: auto;
       padding-bottom: 5rem;
     }
 
     @media (width <= 723px) {
-      width: 100%;
+      align-items: start;
     }
   }
 
@@ -275,5 +257,40 @@
 
   @media (width <= 1290px) {
     width: 100%;
+  }
+}
+
+.poster {
+  width: 300px;
+  height: 300px;
+  margin-left: auto;
+
+  .display {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: translateY(-10%);
+
+    &.art-picture {
+      transform: translate(20%, 0%);
+
+      @media (width <= 1210px) {
+        transform: translate(10%, 0%);
+      }
+    }
+  }
+
+  @media (width <= 770px) {
+    width: 250px;
+    height: 250px;
+  }
+
+  @media (width <= 550px) {
+    width: 150px;
+    height: 150px;
+  }
+
+  @media (width <= 440px) {
+    display: none;
   }
 }

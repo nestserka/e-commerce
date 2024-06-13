@@ -1,6 +1,7 @@
 import style from './_promotion.module.scss';
 import binocular from '../../../assets/images/card/binocular.png';
 import spaceFood from '../../../assets/images/card/food.png';
+import poster from  '../../../assets/images/card/poster.png';
 import iconAllien from '../../../assets/images/icons/-icon-allien.svg';
 import { showModalMessage } from '../../../core/state/userState';
 import ModalMessage from '../../modalMessage/ModalMessage';
@@ -42,20 +43,25 @@ export default function HomePromotion(): JSX.Element {
         <img src={binocular} alt="EyewearImage" className={style.product} />
       </div>
       <div className={`${style['promotion-wrapper']} ${style['double-layer']}`}>
-        <div className={style['art-container']}>
+        <div className={style['product-container']}>
           <div className={style['information-block']}>
             <span className={style['discount-name']}>15% OFF</span>
             <h2 className={`${style.title} ${style['sub-text']}`}>
               15% discount on stunning space image canvas prints!
             </h2>
           </div>
+          <div className={style.poster}>
+          <img src={poster} alt="poster"  className={`${style.display} ${style['art-picture']}`}/>
+          </div>
         </div>
-        <div className={style['food-container']}>
+        <div className={`${style['product-container']} ${style.sub}`}>
           <div className={style['information-block']}>
             <span className={style['discount-name']}>20% OFF</span>
             <h2 className={`${style.title} ${style['sub-text']}`}>Unlock 20% off astronaut space food only today!</h2>
           </div>
-          <img src={spaceFood} alt="SpaceFood" className={style.food} />
+          <div className={style.poster}>
+          <img src={spaceFood} alt="SpaceFood" className={style.display} />
+          </div>
         </div>
       </div>
       <div className={`${style['promotion-wrapper']} ${style.promocode}`}>
