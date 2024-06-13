@@ -28,7 +28,6 @@ export default function HomePromotion(): JSX.Element {
       });
   };
 
-
   return (
     <section className={style['promotion-section']}>
       {isClipBoardShown && <ModalMessage type={type} title={title} message={message} />}

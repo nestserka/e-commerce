@@ -14,7 +14,7 @@ export default function ModalMessage({
   title: string;
   message: string;
 }): JSX.Element {
-  const { isShown, setIsShown,  isClipBoardShown, setIsClipShown } = showModalMessage();
+  const { isShown, setIsShown, isClipBoardShown, setIsClipShown } = showModalMessage();
   const { isErrorShown, setErrorIsShown } = showErrorMessage();
 
   useEffect(() => {

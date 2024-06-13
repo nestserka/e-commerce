@@ -53,7 +53,7 @@ export default function HomePage(): JSX.Element {
         </div>
       </section>
       <HomeCategory />
-      <HomePromotion/>
+      <HomePromotion />
       {/* <DiscountProduct /> */}
     </section>
   );
