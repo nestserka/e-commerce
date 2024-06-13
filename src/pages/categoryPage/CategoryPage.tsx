@@ -218,8 +218,10 @@ export default function CategoryPage(): JSX.Element {
             {productsList.length ? (
               productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
             ) : (
-              <div className={styles['products-list-empty']}>No product by attribute or filter found</div>
+              <div className={styles['products-list-empty']}><div className={styles['products-list-empty-text']}>Looks like even the stars couldn&lsquo;t find anything here. Try searching again! 💫</div>
+              </div>
             )}
+            
           </div>
           <PaginationBlock
             page={currentPage}
