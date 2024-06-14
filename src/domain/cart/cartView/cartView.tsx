@@ -42,6 +42,7 @@ export default function CartView(): JSX.Element {
             <div className={style['products-wrapper']}>
               {itemsInCart.map((item) => {
                 const cartItemLineProps = getLineItemProps(item);
+                console.log(item.name.en, cartItemLineProps);
 
                 // eslint-disable-next-line react/jsx-props-no-spreading
                 return <CartItemLine key={item.name.en} {...cartItemLineProps} />;

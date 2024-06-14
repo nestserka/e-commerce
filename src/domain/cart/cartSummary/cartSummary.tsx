@@ -29,10 +29,12 @@ export default function CartSummary(): JSX.Element {
           <p>Order Price</p>
           <p>{activeCart ? formatPrice(activeCart.totalPrice.centAmount) : 0}</p>
         </div>
-        <div className={style['line-info']}>
-          <p>Applied Discount</p>
-          <p>{activeCart ? `- ${getTotalItemsDiscount().toFixed(2)}` : 0}</p>
-        </div>
+        {getTotalItemsDiscount() !== 0 && (
+          <div className={style['line-info']}>
+            <p>Applied Discount</p>
+            <p>{activeCart ? `- $${getTotalItemsDiscount().toFixed(2)}` : 0}</p>
+          </div>
+        )}
       </div>
       <div className={style['total-wrapper']}>
         <div className={style['line-info']}>
