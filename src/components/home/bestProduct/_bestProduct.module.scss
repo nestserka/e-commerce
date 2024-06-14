@@ -1,0 +1,78 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.best-product-section {
+  @include flex-center-space-between;
+  flex-direction: row;
+  width: 80%;
+  max-width: 1850px;
+  margin: 7.225em auto 0;
+
+  .welcome-section {
+    flex-basis: 50%;
+    .title {
+      @include font-firs-regular;
+
+      font-size: 4em;
+      line-height: 100%;
+      color: $font-color-home-title;
+      text-transform: uppercase;
+
+      .accent-text {
+        color: $font-color-primary;
+      }
+
+      @media (width <= 1300px) {
+        font-size: 3em;
+      }
+
+      @media (width <= 440px) {
+        font-size: 2.4em;
+      }
+    }
+
+    .bar {
+      list-style: none;
+      padding: 0;
+      margin: 3.75em 0;
+
+      .subtitle {
+        @include font-arimo-regular;
+        text-transform: capitalize;
+        color: $font-color-primary-40;
+        padding-bottom: 2.813em;
+        font-size: 1.3em;
+        line-height: 1.2em;
+      }
+
+      > li {
+        position: relative;
+
+        &:before {
+          content: '\25CF';
+          margin-right: 10px;
+          font-size: 29px;
+        }
+
+        &:after {
+          position: absolute;
+          left: 0;
+          top: 0;
+          content: '';
+          border-left: 2px solid;
+          margin-left: 5px;
+          height: 100%;
+          border-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), #dcebea, rgba(0, 0, 0, 0)) 1;
+        }
+
+        &:first-of-type:after {
+          top: 50%;
+        }
+
+        &:last-of-type:after {
+          top: -50%;
+        }
+      }
+    }
+  }
+}

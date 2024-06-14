@@ -44,7 +44,7 @@ export const useHomeData = create<HometateData>((set) => ({
         'filter.query': [`variants.attributes.bestseller: "true"`],
       };
       const bestSellerList = await getHomeProductList(queryArgs);
-      set({ discountedProducts: bestSellerList.results });
+      set({ bestProducts: bestSellerList.results });
     } catch {
       throw new Error('Currently no product has been found');
     }
