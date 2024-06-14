@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import style from './_cartItemLine.module.scss';
 import iconDelete from '../../../assets/images/icons/icon-delete.svg';
 import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
+import { useDebounce } from '../../../utils/useDebounce';
 
 import type { ChangeEvent } from 'react';
 import type { CartItemLineProps } from '../../../utils/types';
@@ -28,26 +29,64 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
   const incrementPrice = discountedPricePerItem ? discountedPricePerItem.slice(1) : pricePerItem.slice(1);
   const [prevQuantity, setPrevQuantity] = useState<number>(quantity);
 
-  const handleIncrement = async (): Promise<void> => {
-    try {
-      await addProductToCart(productId, customerId, 1);
-      setItemQuantity(Number(itemQuantity) + 1);
-      setTotalItemCost(`$${(Number(totalPrice.slice(1)) + Number(incrementPrice)).toFixed(2)}`);
-    } catch (err) {
+  const debouncedItemQuantity = useDebounce(itemQuantity);
+
+  useEffect(() => {
+    const updateCart = async (): Promise<void> => {
+      const diff = Number(debouncedItemQuantity) - prevQuantity;
+
+      try {
+        if (diff > 0) {
+          await addProductToCart(productId, customerId, diff);
+        } else if (diff < 0) {
+          const action = getLineItemsPropsToRemove([id], Math.abs(diff));
+          await removeProductFromCart(action, customerId);
+        }
+
+        setPrevQuantity(Number(debouncedItemQuantity));
+        setTotalItemCost(`$${(Number(debouncedItemQuantity) * Number(incrementPrice)).toFixed(2)}`);
+      } catch (err) {
+        console.log('failed to modify item quantity', err);
+      }
+    };
+
+    updateCart().catch((err) => {
       console.log(err);
+    });
+  }, [
+    debouncedItemQuantity,
+    addProductToCart,
+    customerId,
+    id,
+    incrementPrice,
+    prevQuantity,
+    productId,
+    removeProductFromCart,
+  ]);
+
+  const handleIncrement = (): void => {
+    setItemQuantity(Number(itemQuantity) + 1);
+    setTotalItemCost(`$${(Number(totalPrice.slice(1)) + Number(incrementPrice)).toFixed(2)}`);
+  };
+
+  const handleDecrement = (): void => {
+    if (Number(itemQuantity) > 1) {
+      setItemQuantity(Number(itemQuantity) - 1);
+      setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
     }
   };
 
-  const handleDecrement = async (): Promise<void> => {
-    if (Number(itemQuantity) > 1) {
-      try {
-        const action = getLineItemsPropsToRemove([id], 1);
-        await removeProductFromCart(action, customerId);
-        setItemQuantity(Number(itemQuantity) - 1);
-        setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
-      } catch (err) {
-        console.log(err);
-      }
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { value } = event.target;
+
+    if (value === '' || value === '0') {
+      setItemQuantity(1);
+    }
+
+    const parsedValue = parseInt(value, 10);
+
+    if (!Number.isNaN(parsedValue) && parsedValue > 0) {
+      setItemQuantity(parsedValue);
     }
   };
 
@@ -60,59 +99,16 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
     }
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    const { value } = event.target;
-
-    if (value === '') {
-      setItemQuantity(1);
-    } else if (value === '0') {
+  const handleInputBlur = (): void => {
+    if (itemQuantity === '' || itemQuantity === '0') {
       setItemQuantity(1);
     } else {
-      const parsedValue = parseInt(event.target.value, 10);
+      const parsedValue = parseInt(String(itemQuantity), 10);
 
       if (!Number.isNaN(parsedValue) && parsedValue > 0) {
         setItemQuantity(parsedValue);
       }
     }
-  };
-
-  const handleInputBlur = async (event: React.FocusEvent<HTMLInputElement>): Promise<void> => {
-    if (event.target instanceof HTMLInputElement && (event.target.value === '' || event.target.value === '0')) {
-      setItemQuantity(1);
-    } else {
-      const parsedValue = parseInt(event.target.value, 10);
-
-      if (!Number.isNaN(parsedValue) && parsedValue > 0) {
-        setPrevQuantity(Number(itemQuantity));
-        setItemQuantity(parsedValue);
-      }
-
-      const diff = Number(itemQuantity) - prevQuantity;
-      console.log('diff', diff);
-
-      if (diff > 0) {
-        try {
-          await addProductToCart(productId, customerId, diff);
-          setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-
-      if (diff < 0) {
-        try {
-          const action = getLineItemsPropsToRemove([id], Math.abs(diff));
-          await removeProductFromCart(action, customerId);
-          setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    }
-
-    console.log(prevQuantity, itemQuantity);
-
-    setTotalItemCost(`$${(Number(itemQuantity) * Number(incrementPrice)).toFixed(2)}`);
   };
 
   return (
