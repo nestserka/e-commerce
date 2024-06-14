@@ -36,4 +36,5 @@ export interface FiltersBlockProps {
   selectedValue: string | null;
   getProductListFromCategory: () => void;
   handleClickForCategory: () => void;
+  nameSubtree: string | null;
 }

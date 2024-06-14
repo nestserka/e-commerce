@@ -45,7 +45,7 @@ export default function CategoryPage(): JSX.Element {
     resetAttributes,
   } = useCatalogData();
 
-  const { resetAttributesList,resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
+  const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   const getProductListFromCategory = useCallback(() => {
     if (category === 'all') {
@@ -107,8 +107,7 @@ export default function CategoryPage(): JSX.Element {
     setSelectedValue('');
     setNameSubtree('');
     resetAttributes();
-    resetCheckedStatesAttributesList()
-    // resetAttributesList();
+    resetCheckedStatesAttributesList();
   };
 
   const handleClickForCategory = (): void => {
@@ -179,6 +178,7 @@ export default function CategoryPage(): JSX.Element {
           selectedValue={selectedValue}
           getProductListFromCategory={getProductListFromCategory}
           handleClickForCategory={handleClickForCategory}
+          nameSubtree={nameSubtree}
         />
 
         <section className={styles.products}>

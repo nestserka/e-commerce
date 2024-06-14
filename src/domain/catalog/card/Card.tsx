@@ -15,7 +15,7 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
   const [product] = useState<PropsCard>(createParamsFromCard(dataCard));
   const currentPage: keyof typeof PAGES = 'CATALOG';
   const { resetAttributes } = useCatalogData();
-  const { resetAttributesList,resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
+  const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   return (
     <Link

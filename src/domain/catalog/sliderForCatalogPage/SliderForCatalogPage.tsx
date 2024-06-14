@@ -16,7 +16,7 @@ export interface SliderCatalogPageProps {
 
 export default function SliderCatalogPage({ allCategories }: SliderCatalogPageProps): JSX.Element {
   const { resetAttributes } = useCatalogData();
-  const { resetAttributesList,resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
+  const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   return (
     <div className="slider-wrapper">

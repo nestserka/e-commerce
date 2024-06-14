@@ -16,8 +16,8 @@ export default function BreadCrumbsCatalog({
   handleClickForCategory,
 }: BreadCrumbsCatalogProps): JSX.Element {
   const { resetAttributes } = useCatalogData();
-  const { resetAttributesList,resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
-  const handleClickForHome = ():void => {
+  const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
+  const handleClickForHome = (): void => {
     resetAttributes();
     resetAttributesList();
     resetCheckedStatesAttributesList();
