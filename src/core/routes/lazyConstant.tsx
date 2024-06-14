@@ -16,6 +16,4 @@ export const CartPage = lazy(() => import('../../pages/cartPage/CartPage'));
 
 export const CatalogPage = lazy(() => import('../../pages/catalogPage/CatalogPage'));
 
-export const CategoryPage = lazy(() => import('../../pages/categoryPage/CategoryPage'));
-
 export const NotFoundPage = lazy(() => import('../../pages/notFoundPage/NotFoundPage'));
