@@ -13,19 +13,23 @@ const Images: Record<string, number> = {
   'the-bullet-cluster-print-poster': 3,
 };
 
-export interface HometateData {
+export interface HomeStateData {
   discountedProducts: ProductProjection[];
   bestProducts: ProductProjection[];
+  leftSlider: ProductProjection[];
+  rightSlider: ProductProjection[];
   setBestProductList: () => Promise<void>;
   setDiscountedProductList: () => Promise<void>;
   images: Record<string, string>;
   setImages: (key: string) => number | undefined;
 }
 
-export const useHomeData = create<HometateData>((set) => ({
+export const useHomeData = create<HomeStateData>((set) => ({
   discountedProducts: [],
   bestProducts: [],
   images: {},
+  leftSlider: [],
+  rightSlider: [],
   setDiscountedProductList: async (): Promise<void> => {
     try {
       const queryArgs: QueryArgs = {
@@ -44,7 +48,11 @@ export const useHomeData = create<HometateData>((set) => ({
         'filter.query': [`variants.attributes.bestseller: "true"`],
       };
       const bestSellerList = await getHomeProductList(queryArgs);
-      set({ bestProducts: bestSellerList.results });
+      const bestProducts = bestSellerList.results;
+      const midIndex = Math.ceil(bestProducts.length / 2);
+      const firstHalf = bestProducts.slice(0, midIndex);
+      const secondHalf = bestProducts.slice(midIndex);
+      set({ bestProducts: bestSellerList.results, leftSlider: firstHalf, rightSlider: secondHalf });
     } catch {
       throw new Error('Currently no product has been found');
     }

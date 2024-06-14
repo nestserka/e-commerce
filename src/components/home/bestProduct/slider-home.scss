@@ -1,0 +1,22 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.swiper-best-products {
+  position: relative;
+  width: 16em;
+  height: 50em;
+
+  &.right-slider {
+    margin-top: 5.5em;
+  }
+}
+
+.swiper-pagination-bullet {
+  position: relative;
+  top: 28em;
+
+  width: 0.8em;
+  height: 0.8em;
+
+  background: $font-color-primary;
+}

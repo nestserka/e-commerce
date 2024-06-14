@@ -2,10 +2,10 @@ import style from './_promotion.module.scss';
 import binocular from '../../../assets/images/card/binocular.png';
 import spaceFood from '../../../assets/images/card/food.png';
 import poster from '../../../assets/images/card/poster.png';
-import iconAllien from '../../../assets/images/icons/-icon-allien.svg';
+import iconAllien from '../../../assets/images/icons/icon-allien.svg';
 import { showModalMessage } from '../../../core/state/userState';
 import ModalMessage from '../../modalMessage/ModalMessage';
-import { currentCoupong } from '../../../constants/constants';
+import { currentCoupon } from '../../../constants/constants';
 
 const modalMessageSuccessUpdateProps = {
   type: 'success',
@@ -20,7 +20,7 @@ export default function HomePromotion(): JSX.Element {
 
   const handleCopy = (): void => {
     navigator.clipboard
-      .writeText(currentCoupong)
+      .writeText(currentCoupon)
       .then(() => {
         setIsClipShown(true);
       })
@@ -75,7 +75,7 @@ export default function HomePromotion(): JSX.Element {
           <div className={style['ufo-wrapper']} />
           <button type="button" className={style['promocode-clipper']} onClick={handleCopy}>
             <img src={iconAllien} alt="Button icon" />
-            <span>{currentCoupong}</span>
+            <span>{currentCoupon}</span>
           </button>
           <p className={style['sub-text']}>Copy the promo by clicking on UFO icon on the left</p>
         </div>
