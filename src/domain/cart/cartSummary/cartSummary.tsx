@@ -30,7 +30,7 @@ export default function CartSummary(): JSX.Element {
           <p>{activeCart ? formatPrice(activeCart.totalPrice.centAmount) : 0}</p>
         </div>
         <div className={style['line-info']}>
-          <p>Discount</p>
+          <p>Applied Discount</p>
           <p>{activeCart ? `- ${getTotalItemsDiscount().toFixed(2)}` : 0}</p>
         </div>
       </div>
