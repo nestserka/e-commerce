@@ -5,7 +5,7 @@
   @include flex-center-space-between;
   flex-direction: row;
   width: 80%;
-  max-width: 1850px;
+  max-width: 1440px;
   margin: 7.225em auto 0;
 
   .welcome-section {
@@ -75,4 +75,15 @@
       }
     }
   }
+}
+
+.bestseller-block {
+  @include flex-justify-center;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.swiper-best-products {
+  width: 16em;
+  height: 50em;
 }

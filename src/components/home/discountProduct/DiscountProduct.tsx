@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, EffectCoverflow, FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { EffectCoverflow, FreeMode, Navigation, Thumbs } from 'swiper/modules';
 import { useEffect } from 'react';
 
 import 'swiper/css';
@@ -58,19 +58,19 @@ export default function DiscountProduct(): JSX.Element {
                 900: { slidesPerView: 3 },
                 1150: { slidesPerView: 3.5 },
                 1300: { slidesPerView: 4 },
-                1440: { slidesPerView: 4.5 },
+                1440: { slidesPerView: 5 },
                 1980: { slidesPerView: 5, spaceBetween: 30 },
               }}
               watchSlidesProgress
               slidesPerView={5}
               slideActiveClass={style['active-class']}
               coverflowEffect={{ rotate: 20 }}
-              modules={[FreeMode, Navigation, Thumbs, Autoplay, EffectCoverflow]}
+              modules={[FreeMode, Navigation, Thumbs, EffectCoverflow]}
               className={style['swiper-cont']}
             >
               {discountedProducts.map((dataCard: ProductProjection) => (
                 <SwiperSlide key={dataCard.name.en}>
-                  <HomeCard dataCard={dataCard} />
+                  <HomeCard dataCard={dataCard} isVertical={false} />
                 </SwiperSlide>
               ))}
             </Swiper>
