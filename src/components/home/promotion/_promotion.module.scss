@@ -6,7 +6,6 @@
 
   flex-direction: column;
   gap: 1.5rem;
-  width: 69.688em;
   margin: 4em auto 0;
 
   .promotion-wrapper {
@@ -169,16 +168,18 @@
 
   .promocode {
     @include flex-justify-start;
-
-    gap: 3.625rem;
-
+    justify-content: space-between;
+    padding: 4.375em 9em 0 2.5em;
     height: 20em;
-
     background-image: url('../../../../public/assets/images/home/banner/bg-promocode.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
     border-radius: 20px;
+
+    @media (width <= 1540px) {
+      padding-right: 8em;
+    }
 
     @media (width <= 1140px) {
       flex-direction: column;
@@ -221,14 +222,12 @@
     .promocode-clipper {
       @include flex-center-space-between;
       @include font-firs-medium;
-
       cursor: pointer;
 
       gap: 0.875rem;
 
       margin-top: 3.125rem;
       padding: 0.7em 1em;
-
       font-size: 1.75rem;
       text-transform: uppercase;
 
@@ -259,6 +258,18 @@
         background-size: cover;
       }
     }
+  }
+
+  @media (width >= 1800px) {
+    width: 80rem;
+  }
+
+  @media (width <= 1500px) {
+    width: calc(100% - 14em);
+  }
+
+  @media (width <= 1380px) {
+    width: calc(100% - 7em);
   }
 
   @media (width <= 1290px) {

@@ -369,3 +369,5 @@ export const ERROR_TYPES = {
   INVALID_JSON: 'JSON',
   INVALID_TOKEN: 'invalid_token',
 } as const;
+
+export const currentCoupong = 'LUCKY_MARTIAN';

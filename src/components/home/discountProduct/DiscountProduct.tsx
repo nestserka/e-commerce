@@ -31,9 +31,7 @@ export default function DiscountProduct(): JSX.Element {
     <section className={style['discount-section']}>
       <section className={style['welcome-section']}>
         <h1 className={style.title}>
-          <span className={style['accent-text']}>Embark </span> on a journey with
-        
-          our discounted products!
+          <span className={style['accent-text']}>Discover  </span> Amazing Deals on Our Discounted Products
         </h1>
       </section>
       <div className={style['products-block']}>
@@ -81,7 +79,7 @@ export default function DiscountProduct(): JSX.Element {
               },
             }}
             watchSlidesProgress
-            slidesPerView = {5}
+            slidesPerView={5}
             slideActiveClass={style['active-class']}
             coverflowEffect={{
               rotate: 20,

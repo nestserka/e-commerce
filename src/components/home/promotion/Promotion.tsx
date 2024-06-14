@@ -5,6 +5,7 @@ import poster from '../../../assets/images/card/poster.png';
 import iconAllien from '../../../assets/images/icons/-icon-allien.svg';
 import { showModalMessage } from '../../../core/state/userState';
 import ModalMessage from '../../modalMessage/ModalMessage';
+import { currentCoupong } from '../../../constants/constants';
 
 const modalMessageSuccessUpdateProps = {
   type: 'success',
@@ -16,11 +17,10 @@ export default function HomePromotion(): JSX.Element {
   const { type, title, message } = modalMessageSuccessUpdateProps;
 
   const { isClipBoardShown, setIsClipShown } = showModalMessage();
-  const textToCopy = 'LUCKY_MARTIAN';
 
   const handleCopy = (): void => {
     navigator.clipboard
-      .writeText(textToCopy)
+      .writeText(currentCoupong)
       .then(() => {
         setIsClipShown(true);
       })
@@ -75,7 +75,7 @@ export default function HomePromotion(): JSX.Element {
           <div className={style['ufo-wrapper']} />
           <button type="button" className={style['promocode-clipper']} onClick={handleCopy}>
             <img src={iconAllien} alt="Button icon" />
-            <span>LUCKY MARTIAN</span>
+            <span>{currentCoupong}</span>
           </button>
           <p className={style['sub-text']}>Copy the promo by clicking on UFO icon on the left</p>
         </div>
