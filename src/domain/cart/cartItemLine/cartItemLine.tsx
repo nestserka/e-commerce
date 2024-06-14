@@ -130,7 +130,7 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
         </button>
         <input
           type="text"
-          value={itemQuantity === 0 ? '' : itemQuantity}
+          value={itemQuantity}
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           className={style['quantity-input']}

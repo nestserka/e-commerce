@@ -55,9 +55,9 @@ export const useCartData = create<CartState>((set, get) => ({
           cart = await createCustomerCart();
         }
 
+        set({ customerCartId: cart.id });
         get().updateCartState(cart);
-        const { customerCartId } = useCartData.getState();
-        localStorage.setItem(`customerCart-${LS_PREFIX}`, customerCartId);
+        localStorage.setItem(`customerCart-${LS_PREFIX}`, cart.id);
       } catch (err) {
         console.log('Failed to get or create customer cart', err);
       }
@@ -67,6 +67,7 @@ export const useCartData = create<CartState>((set, get) => ({
       try {
         const { anonymousCartId } = useCartData.getState();
         const cart = anonymousCartId ? await getAnonymousCart(anonymousCartId) : await createAnonymousCart();
+        set({ anonymousCartId: cart.id });
         get().updateCartState(cart);
         localStorage.setItem(`anonymousCartId-${LS_PREFIX}`, cart.id);
       } catch (err) {
@@ -102,6 +103,7 @@ export const useCartData = create<CartState>((set, get) => ({
       try {
         const { customerCartId, anonymousCartId } = useCartData.getState();
         const cartId = customerId ? customerCartId : anonymousCartId;
+        console.log('addProductToCart', customerCartId, anonymousCartId);
         const updatedCart = await addProductToCart(cartId, productId, version, quantity);
         get().updateCartState(updatedCart);
       } catch (err) {
