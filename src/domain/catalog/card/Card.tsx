@@ -14,7 +14,7 @@ import type { ProductProjection } from '@commercetools/platform-sdk';
 function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
   const [product] = useState<PropsCard>(createParamsFromCard(dataCard));
   const currentPage: keyof typeof PAGES = 'CATALOG';
-  const { resetAttributes } = useCatalogData();
+  const { resetAttributes,resetSort } = useCatalogData();
   const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   return (
@@ -22,6 +22,7 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
       to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`}
       onClick={() => {
         resetAttributes();
+        resetSort();
         resetAttributesList();
         resetCheckedStatesAttributesList();
       }}

@@ -37,6 +37,10 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
     get().setMaterialListDefault();
     get().setRefractorListDefault();
   },
+  resetSort: (): void => {
+    get().setSort('price asc');
+    get().setSearchValue('');
+  },
   setCurrentPage: (newPage: number): void => {
     set({ currentPage: newPage });
   },

@@ -96,6 +96,7 @@ export interface CatalogStateData {
   isDiscount: boolean;
   offset: number;
   resetAttributes: () => void;
+  resetSort: () => void;
   setCurrentPage: (quantity: number) => void;
   setTotal: (quantity: number) => void;
   setRefractorList: (nameRefractor: string, isStatus: boolean) => void;

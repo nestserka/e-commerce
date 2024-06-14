@@ -15,8 +15,15 @@ export interface SliderCatalogPageProps {
 }
 
 export default function SliderCatalogPage({ allCategories }: SliderCatalogPageProps): JSX.Element {
-  const { resetAttributes } = useCatalogData();
+  const { resetAttributes,resetSort } = useCatalogData();
   const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
+
+  const handelClickForSlide = ():void => {
+    resetAttributes();
+    resetSort()
+    resetAttributesList();
+    resetCheckedStatesAttributesList();
+  }
 
   return (
     <div className="slider-wrapper">
@@ -71,11 +78,7 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
               <NavLink
                 className="slider-item"
                 to={category.slug.en}
-                onClick={() => {
-                  resetAttributes();
-                  resetAttributesList();
-                  resetCheckedStatesAttributesList();
-                }}
+                onClick={handelClickForSlide}
                 key={category.slug.en}
               >
                 <h3 className="slider-title">{category.name.en}</h3>
