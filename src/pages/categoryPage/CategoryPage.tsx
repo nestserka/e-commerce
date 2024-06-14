@@ -111,8 +111,14 @@ export default function CategoryPage(): JSX.Element {
   };
 
   const handleClickForCategory = (): void => {
-    resetAttributesForCategory();
-    navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
+    if (nameSubtree) {
+      resetAttributesForCategory();
+      navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
+    } else {
+      resetAttributes();
+      resetCheckedStatesAttributesList();
+      getProductListFromCategory();
+    }
   };
 
   const handleClickForCatalog = (): void => {
@@ -178,7 +184,6 @@ export default function CategoryPage(): JSX.Element {
           selectedValue={selectedValue}
           getProductListFromCategory={getProductListFromCategory}
           handleClickForCategory={handleClickForCategory}
-          nameSubtree={nameSubtree}
         />
 
         <section className={styles.products}>

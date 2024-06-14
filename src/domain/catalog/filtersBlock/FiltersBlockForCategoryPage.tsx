@@ -23,7 +23,6 @@ export default function FiltersBlockForCategory({
   selectedValue,
   getProductListFromCategory,
   handleClickForCategory,
-  nameSubtree,
 }: FiltersBlockProps): JSX.Element {
   const navigation = useNavigate();
 
@@ -41,7 +40,6 @@ export default function FiltersBlockForCategory({
     setBrandListDefault,
     setMaterialListDefault,
     setRefractorListDefault,
-    resetAttributes,
   } = useCatalogData();
 
   const {
@@ -57,18 +55,8 @@ export default function FiltersBlockForCategory({
     setCheckedStatesBrandList,
     setCheckedStatesRefractorList,
     setCheckedStatesMaterialList,
-    resetCheckedStatesAttributesList,
   } = useCatalogCheckAttributeState();
 
-  const handleResetAllFilters = (): void => {
-    if (nameSubtree) {
-      handleClickForCategory();
-    } else {
-      resetAttributes();
-      resetCheckedStatesAttributesList();
-      getProductListFromCategory();
-    }
-  };
 
   const defaultPage = (): void => {
     setCurrentPage(1);
@@ -234,7 +222,7 @@ export default function FiltersBlockForCategory({
       />
 
       <div className={styles['filters-section']}>
-        <button className={styles['filters-button']} type="button" onClick={handleResetAllFilters}>
+        <button className={styles['filters-button']} type="button" onClick={handleClickForCategory}>
           <span className={styles['filters-button-span']}>Clear Filters</span>
           <img src={iconDelete} alt="delete" />
         </button>
