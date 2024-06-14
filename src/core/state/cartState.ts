@@ -22,14 +22,16 @@ interface CartState {
   isLoading: boolean;
   error: string;
   isInCart: (productId: string) => boolean;
-  addProductToCart: (productId: string, customerId: string) => Promise<void>;
+  addProductToCart: (productId: string, customerId: string, quantity?: number) => Promise<void>;
   removeProductFromCart: (items: MyCartRemoveLineItemAction[], customerId: string) => Promise<void>;
   getItemsIds: () => string[] | undefined;
   setCart: (customerId: string) => Promise<void>;
+  updateCartState: (cart: Cart) => void;
+  getTotalItemsDiscount: () => number;
   reset: () => void;
 }
 
-export const useCartData = create<CartState>((set) => ({
+export const useCartData = create<CartState>((set, get) => ({
   anonymousCartId: anonymousCartIdLocal,
   customerCartId: customerCartIdLocal,
   activeCart: undefined,
@@ -42,60 +44,54 @@ export const useCartData = create<CartState>((set) => ({
 
     return !!itemsInCart?.filter((item) => item.id === productId || item.productId === productId).length;
   },
-
   setCart: async (customerId): Promise<void> => {
     set({ isLoading: true, error: '' });
 
-    let { activeCart } = useCartData.getState();
-
-    if (customerId) {
+    const handleCustomerCart = async (): Promise<void> => {
       try {
-        activeCart = await getActiveCart();
-      } catch (err) {
-        console.log('Failed to get active customer cart', err);
-      }
+        let cart = await getActiveCart();
 
-      if (!activeCart) {
-        try {
-          activeCart = await createCustomerCart();
-        } catch (err) {
-          console.log('Failed to create active customer cart', err);
+        if (!cart) {
+          cart = await createCustomerCart();
         }
-      }
 
-      if (activeCart) {
-        set({ activeCart });
-        set({ version: activeCart.version });
-        set({ customerCartId: activeCart.id });
-        set({ itemsInCart: activeCart.lineItems });
-
+        get().updateCartState(cart);
         const { customerCartId } = useCartData.getState();
         localStorage.setItem(`customerCart-${LS_PREFIX}`, customerCartId);
+      } catch (err) {
+        console.log('Failed to get or create customer cart', err);
       }
+    };
 
-      set({ isLoading: false });
+    const handleAnonymousCart = async (): Promise<void> => {
+      try {
+        const { anonymousCartId } = useCartData.getState();
+        const cart = anonymousCartId ? await getAnonymousCart(anonymousCartId) : await createAnonymousCart();
+        get().updateCartState(cart);
+        localStorage.setItem(`anonymousCartId-${LS_PREFIX}`, cart.id);
+      } catch (err) {
+        console.log('Failed to get or create anonymous cart', err);
+      }
+    };
+
+    if (customerId) {
+      await handleCustomerCart();
     } else {
-      const { anonymousCartId } = useCartData.getState();
-
-      if (anonymousCartId) {
-        activeCart = await getAnonymousCart(anonymousCartId);
-      } else {
-        activeCart = await createAnonymousCart();
-      }
-
-      set({ activeCart });
-      set({ version: activeCart.version });
-      set({ anonymousCartId: activeCart.id });
-      set({ itemsInCart: activeCart.lineItems });
-
-      console.log('setCart', activeCart.id);
-      localStorage.setItem(`anonymousCartId-${LS_PREFIX}`, activeCart.id);
+      await handleAnonymousCart();
     }
 
     set({ isLoading: false });
   },
 
-  addProductToCart: async (productId, customerId): Promise<void> => {
+  updateCartState: (cart: Cart): void => {
+    set({
+      activeCart: cart,
+      version: cart.version,
+      itemsInCart: cart.lineItems,
+    });
+  },
+
+  addProductToCart: async (productId, customerId, quantity = 1): Promise<void> => {
     set({ isLoading: true, error: '' });
 
     const { activeCart } = useCartData.getState();
@@ -106,10 +102,8 @@ export const useCartData = create<CartState>((set) => ({
       try {
         const { customerCartId, anonymousCartId } = useCartData.getState();
         const cartId = customerId ? customerCartId : anonymousCartId;
-        const updatedCart = await addProductToCart(cartId, productId, version);
-        set({ version: updatedCart.version });
-        set({ activeCart: updatedCart });
-        set({ itemsInCart: updatedCart.lineItems });
+        const updatedCart = await addProductToCart(cartId, productId, version, quantity);
+        get().updateCartState(updatedCart);
       } catch (err) {
         console.log(err);
       }
@@ -129,9 +123,7 @@ export const useCartData = create<CartState>((set) => ({
         const { customerCartId, anonymousCartId } = useCartData.getState();
         const cartId = customerId ? customerCartId : anonymousCartId;
         const updatedCart = await removeProductFromCart(cartId, action, version);
-        set({ version: updatedCart.version });
-        set({ activeCart: updatedCart });
-        set({ itemsInCart: updatedCart.lineItems });
+        get().updateCartState(updatedCart);
       } catch (err) {
         console.log(err);
       }
@@ -145,12 +137,39 @@ export const useCartData = create<CartState>((set) => ({
 
     return arrIds;
   },
+  getTotalItemsDiscount: (): number => {
+    let totalDiscount = 0;
+
+    const { itemsInCart } = useCartData.getState();
+
+    if (itemsInCart) {
+      const diffArr = itemsInCart.map((item) => {
+        const value = item.price.discounted?.value.centAmount;
+        let diff = 0;
+
+        if (value) {
+          const discountedPrice = value;
+          const pricePerItem = item.price.value.centAmount;
+
+          if (typeof discountedPrice === 'number' && typeof pricePerItem === 'number') {
+            diff = (pricePerItem - discountedPrice) * item.quantity;
+          }
+        }
+
+        return diff;
+      });
+      totalDiscount = diffArr.reduce((acum, value) => acum + value, 0);
+    }
+
+    return totalDiscount / 100;
+  },
   reset: (): void => {
     set({
       anonymousCartId: '',
       customerCartId: '',
       activeCart: undefined,
       itemsInCart: null,
+      version: null,
       isLoading: false,
       error: '',
     });

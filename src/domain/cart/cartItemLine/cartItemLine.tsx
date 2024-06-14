@@ -1,16 +1,94 @@
+import { useEffect, useState } from 'react';
+
 import style from './_cartItemLine.module.scss';
 import iconDelete from '../../../assets/images/icons/icon-delete.svg';
 import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
+import { useDebounce } from '../../../utils/useDebounce';
 
+import type { ChangeEvent } from 'react';
 import type { CartItemLineProps } from '../../../utils/types';
 
 export default function CartItemLine(props: CartItemLineProps): JSX.Element {
-  const { imageUrl, productName, discountLabel, discountedPricePerItem, pricePerItem, quantity, totalPrice, id } =
-    props;
+  const {
+    imageUrl,
+    productName,
+    discountLabel,
+    discountedPricePerItem,
+    pricePerItem,
+    quantity,
+    totalPrice,
+    id,
+    productId,
+  } = props;
   const { customerId } = useLoginData();
-  const { removeProductFromCart } = useCartData();
+  const { addProductToCart, removeProductFromCart } = useCartData();
+  const [itemQuantity, setItemQuantity] = useState<number | string>(quantity);
+  const [totalItemCost, setTotalItemCost] = useState<string>(totalPrice);
+  const incrementPrice = discountedPricePerItem ? discountedPricePerItem.slice(1) : pricePerItem.slice(1);
+  const [prevQuantity, setPrevQuantity] = useState<number>(quantity);
+
+  const debouncedItemQuantity = useDebounce(itemQuantity);
+
+  useEffect(() => {
+    const updateCart = async (): Promise<void> => {
+      const diff = Number(debouncedItemQuantity) - prevQuantity;
+
+      try {
+        if (diff > 0) {
+          await addProductToCart(productId, customerId, diff);
+        } else if (diff < 0) {
+          const action = getLineItemsPropsToRemove([id], Math.abs(diff));
+          await removeProductFromCart(action, customerId);
+        }
+
+        setPrevQuantity(Number(debouncedItemQuantity));
+        setTotalItemCost(`$${(Number(debouncedItemQuantity) * Number(incrementPrice)).toFixed(2)}`);
+      } catch (err) {
+        console.log('failed to modify item quantity', err);
+      }
+    };
+
+    updateCart().catch((err) => {
+      console.log(err);
+    });
+  }, [
+    debouncedItemQuantity,
+    addProductToCart,
+    customerId,
+    id,
+    incrementPrice,
+    prevQuantity,
+    productId,
+    removeProductFromCart,
+  ]);
+
+  const handleIncrement = (): void => {
+    setItemQuantity(Number(itemQuantity) + 1);
+    setTotalItemCost(`$${(Number(totalPrice.slice(1)) + Number(incrementPrice)).toFixed(2)}`);
+  };
+
+  const handleDecrement = (): void => {
+    if (Number(itemQuantity) > 1) {
+      setItemQuantity(Number(itemQuantity) - 1);
+      setTotalItemCost(`$${(Number(totalPrice.slice(1)) - Number(incrementPrice)).toFixed(2)}`);
+    }
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { value } = event.target;
+
+    if (value === '' || value === '0') {
+      setItemQuantity(1);
+    }
+
+    const parsedValue = parseInt(value, 10);
+
+    if (!Number.isNaN(parsedValue) && parsedValue > 0) {
+      setItemQuantity(parsedValue);
+    }
+  };
 
   const handleRemoveClick = async (): Promise<void> => {
     try {
@@ -18,6 +96,18 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
       await removeProductFromCart(action, customerId);
     } catch (err) {
       console.log('Failed to remove product from the cart', err);
+    }
+  };
+
+  const handleInputBlur = (): void => {
+    if (itemQuantity === '' || itemQuantity === '0') {
+      setItemQuantity(1);
+    } else {
+      const parsedValue = parseInt(String(itemQuantity), 10);
+
+      if (!Number.isNaN(parsedValue) && parsedValue > 0) {
+        setItemQuantity(parsedValue);
+      }
     }
   };
 
@@ -35,21 +125,27 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
         {discountedPricePerItem && <p className={style['old-price-value']}>{pricePerItem}</p>}
       </section>
       <section className={style['quantity-input-wrapper']}>
-        <button type="button" className={style['quantity-input-control']}>
+        <button type="button" className={style['quantity-input-control']} onClick={handleDecrement}>
           –
         </button>
-        <p className={style['quantity-number']}>{quantity}</p>
-        <button type="button" className={style['quantity-input-control']}>
+        <input
+          type="text"
+          value={itemQuantity === 0 ? '' : itemQuantity}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
+          className={style['quantity-input']}
+        />
+        <button type="button" className={style['quantity-input-control']} onClick={handleIncrement}>
           +
         </button>
       </section>
-      <p className={style['total-price']} title={totalPrice}>
-        {totalPrice}
+      <p className={style['total-price']} title={totalItemCost}>
+        {totalItemCost}
       </p>
       <button
         type="button"
         className={style['remove-item-btn']}
-        aria-label="Rremove product from cart"
+        aria-label="Remove product from cart"
         onClick={handleRemoveClick}
       >
         <img src={iconDelete} alt="Edit" className={style['icon-delete']} />
