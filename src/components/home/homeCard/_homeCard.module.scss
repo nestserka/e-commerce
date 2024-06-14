@@ -3,62 +3,80 @@
 
 .card {
   @include flex-center-space-between;
-  flex-direction: column;
+
   cursor: pointer;
-  background-color: $bg-home-cards;
-  box-sizing: border-box;
-  color: $font-color-primary-20;
-  padding: 0 0.5em 2em;
-  border-radius: 1.5rem;
+
   position: relative;
+
+  flex-direction: column;
+
+  box-sizing: border-box;
   height: 100%;
+  padding: 0 0.8em 2em;
+
+  color: $font-color-primary-20;
+
+  background-color: $bg-home-cards;
+  border-radius: 1.5rem;
 
   .card-pic {
     position: relative;
     display: inline-block;
 
     .category {
-      text-align: center;
+      transform: translateY(-50%);
+
       font-size: 0.875em;
       line-height: 1.063em;
       color: $font-color-primary-80;
-      transform: translateY(-50%);
+      text-align: center;
     }
 
     .card-pic-img {
       width: auto;
-      height: 245px;
+      height: 15rem;
       object-fit: cover;
+
+      @media (width <= 1000px) {
+        height: 11rem;
+      }
     }
   }
 
   .card-title {
     @include font-arimo-bold;
+
+    z-index: 20;
+
     font-size: 1em;
+    line-height: 120%;
     color: $checkbox-color-checked;
     text-align: center;
-    z-index: 20;
-    line-height: 120%;
   }
 
   .block-price {
-    margin-top: 0.7em;
     @include flex-center-space-between;
+
+    z-index: 20;
+
     flex-direction: column;
+    gap: 0.5em;
+
+    width: 100%;
+    margin-top: 0.7em;
+
     font-family: Arimo, sans-serif;
     font-size: 1em;
     line-height: 1.5em;
     color: $font-color-primary;
-    gap: 0.5em;
-    width: 100%;
-    z-index: 20;
 
     .discount {
-      justify-self: end;
-      align-self: end;
-      font-size: 14px;
-      line-height: 16.8px;
+      place-self: end end;
+
+      font-size: 0.875em;
+      line-height: 1.05em;
       text-decoration: line-through;
+
       opacity: 0.6;
     }
   }

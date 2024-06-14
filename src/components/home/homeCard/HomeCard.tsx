@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import style from './_discountCard.module.scss';
+import style from './_homeCard.module.scss';
 import { createParamsfromCard } from '../../cards/card/utils';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import { useCatalogData } from '../../../core/state/homeState';
@@ -9,37 +9,27 @@ import { useCatalogData } from '../../../core/state/homeState';
 import type { PropsCard } from '../../cards/card/types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-export function DiscountCard({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
+export function HomeCard({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
   const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
-  const { setImages, setCategory } = useCatalogData();
-  const [newImage, setNewImage] = useState<string>();
+  const { setImages } = useCatalogData();
   const [newCommerceImage, setCommerseImage] = useState<number>();
-  const [category, setCategoryOfProduct] = useState<string>();
 
   useEffect(() => {
     const image = setImages(dataCard.key ?? '');
 
-    if (typeof image === 'string') {
-      setNewImage(image);
-    } else if (typeof image === 'number') {
+    if (typeof image === 'number') {
       setCommerseImage(image);
     }
-
-    const categoryName = setCategory(dataCard.categories[0].id);
-    setCategoryOfProduct(categoryName);
-  }, [dataCard.key, setImages, setCategory, dataCard.categories]);
+  }, [dataCard.key, setImages]);
 
   return (
     <Link to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`} className={style.card}>
       <div className={style['card-pic']}>
-        {newImage && <img className={style['card-pic-img']} src={newImage} alt={product.cardName} />}
-        {!newImage && newCommerceImage && (
+        {newCommerceImage ? (
           <img className={style['card-pic-img']} src={product.cardImages[newCommerceImage]} alt={product.cardName} />
-        )}
-        {!newImage && !newCommerceImage && (
+        ) : (
           <img className={style['card-pic-img']} src={product.cardImages[0]} alt={product.cardName} />
         )}
-        <p className={style.category}>{category}</p>
       </div>
 
       <h2 className={style['card-title']} id={product.cardName} title={product.cardName}>

@@ -8,8 +8,8 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import style from './_discountProduct.module.scss';
-import { DiscountCard } from '../discountCard/DiscountCard';
 import { useCatalogData } from '../../../core/state/homeState';
+import { HomeCard } from '../homeCard/HomeCard';
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
@@ -32,7 +32,7 @@ export default function DiscountProduct(): JSX.Element {
       <section className={style['welcome-section']}>
         <h1 className={style.title}>
           <span className={style['accent-text']}>Embark </span> on a journey with
-          <br />
+        
           our discounted products!
         </h1>
       </section>
@@ -46,10 +46,16 @@ export default function DiscountProduct(): JSX.Element {
             spaceBetween={20}
             breakpoints={{
               0: {
-                slidesPerView: 1,
+                slidesPerView: 1.5,
+              },
+              380: {
+                slidesPerView: 1.5,
               },
               400: {
-                slidesPerView: 1.2,
+                slidesPerView: 1.5,
+              },
+              480: {
+                slidesPerView: 1.8,
               },
               500: {
                 slidesPerView: 2,
@@ -61,10 +67,13 @@ export default function DiscountProduct(): JSX.Element {
                 slidesPerView: 3,
               },
               1150: {
+                slidesPerView: 3.5,
+              },
+              1300: {
                 slidesPerView: 4,
               },
               1440: {
-                slidesPerView: 5,
+                slidesPerView: 4.5,
               },
               1980: {
                 slidesPerView: 5,
@@ -72,6 +81,7 @@ export default function DiscountProduct(): JSX.Element {
               },
             }}
             watchSlidesProgress
+            slidesPerView = {5}
             slideActiveClass={style['active-class']}
             coverflowEffect={{
               rotate: 20,
@@ -81,7 +91,7 @@ export default function DiscountProduct(): JSX.Element {
           >
             {productsList.map((dataCard: ProductProjection) => (
               <SwiperSlide key={dataCard.name.en}>
-                <DiscountCard dataCard={dataCard} />
+                <HomeCard dataCard={dataCard} />
               </SwiperSlide>
             ))}
           </Swiper>

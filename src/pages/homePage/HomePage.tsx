@@ -3,7 +3,7 @@ import { showModalMessage, useCustomerInfo, useLoginData } from '../../core/stat
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 import icon from '../../../public/assets/icons/rocket-icon.svg';
 import HomeCategory from '../../components/home/homeCategory/HomeCategory';
-// import DiscountProduct from '../../components/home/discountProduct/DiscountProduct';
+import DiscountProduct from '../../components/home/discountProduct/DiscountProduct';
 import HomePromotion from '../../components/home/promotion/Promotion';
 
 const modalMessageSuccessRegistrationProps = {
@@ -54,7 +54,7 @@ export default function HomePage(): JSX.Element {
       </section>
       <HomeCategory />
       <HomePromotion />
-      {/* <DiscountProduct /> */}
+      <DiscountProduct />
     </section>
   );
 }

@@ -4,9 +4,7 @@ import withClientCredentialsFlow from '../../api/middlewareFlows/withClientCrede
 
 import type { ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 
-const categories = import.meta.env.VITE_APP_CATEGORIES;
-
-const Images: Record<string, string | number> = {
+const Images: Record<string, number> = {
   'pillars-of-creation-photo-print': 5,
   'supernova-1987a-print-poster': 3,
   'cracks-in-europa-print-poster': 1,
@@ -17,8 +15,7 @@ const Images: Record<string, string | number> = {
 export interface HometateData {
   getDiscountedProductsList: () => Promise<ProductProjectionPagedSearchResponse>;
   images: Record<string, string>;
-  setImages: (key: string) => string | number;
-  setCategory: (id: string) => string | undefined;
+  setImages: (key: string) => number | undefined;
 }
 
 export const useCatalogData = create<HometateData>(() => ({
@@ -40,21 +37,11 @@ export const useCatalogData = create<HometateData>(() => ({
       throw new Error('no product by attribute or filter found');
     }
   },
-  setImages: (key: string): string | number => {
+  setImages: (key: string): number | undefined => {
     if (key in Images) {
       return Images[key];
     }
 
-    return '';
-  },
-  setCategory: (categoryid: string): string | undefined => {
-    const categoryArray = categories.split(',').map((item) => {
-      const [id, name] = item.split(':').map((str) => str.trim());
-
-      return { id, name };
-    });
-    const categoryName = categoryArray.find((category) => category.id === categoryid);
-
-    return categoryName?.name;
+    return undefined;
   },
 }));
