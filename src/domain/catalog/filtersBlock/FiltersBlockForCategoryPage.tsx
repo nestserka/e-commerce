@@ -23,7 +23,7 @@ export default function FiltersBlockForCategory({
   selectedValue,
   getProductListFromCategory,
   handleClickForCategory,
-  nameSubtree
+  nameSubtree,
 }: FiltersBlockProps): JSX.Element {
   const navigation = useNavigate();
 
@@ -41,7 +41,7 @@ export default function FiltersBlockForCategory({
     setBrandListDefault,
     setMaterialListDefault,
     setRefractorListDefault,
-    resetAttributes
+    resetAttributes,
   } = useCatalogData();
 
   const {
@@ -57,17 +57,16 @@ export default function FiltersBlockForCategory({
     setCheckedStatesBrandList,
     setCheckedStatesRefractorList,
     setCheckedStatesMaterialList,
-    resetCheckedStatesAttributesList
+    resetCheckedStatesAttributesList,
   } = useCatalogCheckAttributeState();
 
   const handleResetAllFilters = (): void => {
-
-    if(nameSubtree){
+    if (nameSubtree) {
       handleClickForCategory();
-    }else{
+    } else {
       resetAttributes();
       resetCheckedStatesAttributesList();
-      getProductListFromCategory()
+      getProductListFromCategory();
     }
   };
 

@@ -199,7 +199,8 @@ export default function CategoryPage(): JSX.Element {
             ) : (
               <div className={styles['products-list-empty']}>
                 <div className={styles['products-list-empty-text']}>
-                  Looks like even the stars couldn&lsquo;t find anything here. Try searching again! 💫
+                  <div>Looks like even the stars couldn&lsquo;t find anything here.</div>
+                  <div>Try searching again! 💫</div>
                 </div>
               </div>
             )}
