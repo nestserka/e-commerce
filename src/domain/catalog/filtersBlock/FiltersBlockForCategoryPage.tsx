@@ -57,7 +57,6 @@ export default function FiltersBlockForCategory({
     setCheckedStatesMaterialList,
   } = useCatalogCheckAttributeState();
 
-
   const defaultPage = (): void => {
     setCurrentPage(1);
     setOffset(1);
