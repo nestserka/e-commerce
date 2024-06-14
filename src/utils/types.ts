@@ -72,3 +72,5 @@ export function isErrorType(value: unknown): value is HttpError {
     'error' in value
   );
 }
+
+export type QueryArgs = Record<string, string[]>;

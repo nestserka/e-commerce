@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import style from './_homeCard.module.scss';
 import { createParamsfromCard } from '../../cards/card/utils';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
-import { useCatalogData } from '../../../core/state/homeState';
+import { useHomeData } from '../../../core/state/homeState';
 
 import type { PropsCard } from '../../cards/card/types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 export function HomeCard({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
   const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
-  const { setImages } = useCatalogData();
+  const { setImages } = useHomeData();
   const [newCommerceImage, setCommerseImage] = useState<number>();
 
   useEffect(() => {

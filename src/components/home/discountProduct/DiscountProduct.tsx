@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, FreeMode, Navigation, Thumbs } from 'swiper/modules';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -8,34 +8,40 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import style from './_discountProduct.module.scss';
-import { useCatalogData } from '../../../core/state/homeState';
 import { HomeCard } from '../homeCard/HomeCard';
+import { useHomeData } from '../../../core/state/homeState';
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
+
 export default function DiscountProduct(): JSX.Element {
-  const [productsList, setProductsList] = useState<ProductProjection[]>([]);
-  const { getDiscountedProductsList } = useCatalogData();
+  const { setDiscountedProductList, discountedProducts } = useHomeData();
 
   useEffect(() => {
-    getDiscountedProductsList()
-      .then((response) => {
-        setProductsList(response.results);
-      })
-      .catch((error: Error) => {
+    const fetchDiscountedProducts = async () : Promise <void> => {
+      try {
+        await setDiscountedProductList();
+      } catch (error) {
+        console.error('Error fetching discounted products:', error);
+      }
+    };
+
+    if (discountedProducts.length === 0) {
+      fetchDiscountedProducts().catch((error: Error) => {
         console.log(error);
       });
-  }, [getDiscountedProductsList]);
+    }
+  }, [setDiscountedProductList, discountedProducts]);
 
   return (
     <section className={style['discount-section']}>
       <section className={style['welcome-section']}>
         <h1 className={style.title}>
-          <span className={style['accent-text']}>Discover  </span> Amazing Deals on Our Discounted Products
+          <span className={style['accent-text']}>Discover </span> Amazing Deals on Our Discounted Products
         </h1>
       </section>
       <div className={style['products-block']}>
-        {productsList.length ? (
+        {discountedProducts.length ? (
           <Swiper
             effect="coverflow"
             grabCursor
@@ -87,7 +93,7 @@ export default function DiscountProduct(): JSX.Element {
             modules={[FreeMode, Navigation, Thumbs, Autoplay, EffectCoverflow]}
             className={style['swiper-cont']}
           >
-            {productsList.map((dataCard: ProductProjection) => (
+            {discountedProducts.map((dataCard: ProductProjection) => (
               <SwiperSlide key={dataCard.name.en}>
                 <HomeCard dataCard={dataCard} />
               </SwiperSlide>
