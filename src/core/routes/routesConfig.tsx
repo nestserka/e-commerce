@@ -12,7 +12,6 @@ import {
   AboutPage,
   CartPage,
   CatalogPage,
-  CategoryPage,
   HomePage,
   LoginPage,
   NotFoundPage,
@@ -20,6 +19,7 @@ import {
   ProfilePage,
   RegistrationPage,
 } from './lazyConstant';
+import CategoryPage from '../../pages/categoryPage/CategoryPage';
 
 export const routesConfig: RouteObject[] = [
   {

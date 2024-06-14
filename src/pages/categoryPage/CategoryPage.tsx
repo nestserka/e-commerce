@@ -10,6 +10,7 @@ import BreadCrumbsCatalog from '../../domain/catalog/breadCrumbsCatalog/BreadCru
 import PaginationBlock from '../../components/pagination/Patination';
 import FiltersBlockForCategory from '../../domain/catalog/filtersBlock/FiltersBlockForCategoryPage';
 import HeaderCatalogPage from '../../domain/catalog/HeaderCatalog/HeaderCatalog';
+import Loader from '../../components/loader/Loader';
 
 import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
@@ -32,6 +33,7 @@ export default function CategoryPage(): JSX.Element {
     categoriesData,
     limit,
     total,
+    isLoading,
     setCurrentPage,
     setTotal,
     setOffset,
@@ -40,22 +42,10 @@ export default function CategoryPage(): JSX.Element {
     getProductsList,
     setSubtreesList,
     setSort,
-    setBrandListDefault,
-    setMaterialListDefault,
-    setRefractorListDefault,
-    setBestsellerStatus,
-    setDiscountStatus,
-    setPriceRange,
+    resetAttributes,
   } = useCatalogData();
 
-  const {
-    brandListAttribute,
-    refractorListAttribute,
-    materialListAttribute,
-    setCheckedStatesBrandList,
-    setCheckedStatesRefractorList,
-    setCheckedStatesMaterialList,
-  } = useCatalogCheckAttributeState();
+  const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   const getProductListFromCategory = useCallback(() => {
     if (category === 'all') {
@@ -114,30 +104,26 @@ export default function CategoryPage(): JSX.Element {
   };
 
   const resetAttributesForCategory = (): void => {
-    defaultPage();
     setSelectedValue('');
     setNameSubtree('');
-    setSubtreesList('', true);
-    setPriceRange([0, 1700000]);
-    setBestsellerStatus(false);
-    setDiscountStatus(false);
-    setBrandListDefault();
-    setMaterialListDefault();
-    setRefractorListDefault();
-    setCheckedStatesBrandList(Object.fromEntries(brandListAttribute.map((attribute) => [attribute.key, false])));
-    setCheckedStatesMaterialList(Object.fromEntries(materialListAttribute.map((attribute) => [attribute.key, false])));
-    setCheckedStatesRefractorList(
-      Object.fromEntries(refractorListAttribute.map((attribute) => [attribute.key, false])),
-    );
+    resetAttributes();
+    resetCheckedStatesAttributesList();
   };
 
   const handleClickForCategory = (): void => {
-    resetAttributesForCategory();
-    navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
+    if (nameSubtree) {
+      resetAttributesForCategory();
+      navigation(`${DYNAMIC_ROUTES.CATALOG}${category}`);
+    } else {
+      resetAttributes();
+      resetCheckedStatesAttributesList();
+      getProductListFromCategory();
+    }
   };
 
   const handleClickForCatalog = (): void => {
     resetAttributesForCategory();
+    resetAttributesList();
     navigation(ROUTES.CATALOG_ALL);
   };
 
@@ -207,10 +193,21 @@ export default function CategoryPage(): JSX.Element {
             handleChangeCapture={handleChangeCapture}
           />
           <div className={styles['products-block']}>
+            {isLoading && (
+              <div className={styles['products-loader']}>
+                <Loader />
+              </div>
+            )}
+
             {productsList.length ? (
               productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
             ) : (
-              <div className={styles['products-list-empty']}>No product by attribute or filter found</div>
+              <div className={styles['products-list-empty']}>
+                <div className={styles['products-list-empty-text']}>
+                  <div>Looks like even the stars couldn&lsquo;t find anything here.</div>
+                  <div>Try searching again! 💫</div>
+                </div>
+              </div>
             )}
           </div>
           <PaginationBlock

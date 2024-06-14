@@ -95,6 +95,8 @@ export interface CatalogStateData {
   isBestseller: boolean;
   isDiscount: boolean;
   offset: number;
+  resetAttributes: () => void;
+  resetSort: () => void;
   setCurrentPage: (quantity: number) => void;
   setTotal: (quantity: number) => void;
   setRefractorList: (nameRefractor: string, isStatus: boolean) => void;
@@ -125,6 +127,8 @@ export interface CatalogCheckAttributeState {
   checkedStatesBrandList: Record<string, boolean>;
   checkedStatesRefractorList: Record<string, boolean>;
   checkedStatesMaterialList: Record<string, boolean>;
+  resetAttributesList: () => void;
+  resetCheckedStatesAttributesList: () => void;
   setRefractorListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;
   setMaterialListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;
   setBrandListAttribute: (newArray: AttributeLocalizedEnumValue[]) => void;

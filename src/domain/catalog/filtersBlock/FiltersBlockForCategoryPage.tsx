@@ -57,10 +57,6 @@ export default function FiltersBlockForCategory({
     setCheckedStatesMaterialList,
   } = useCatalogCheckAttributeState();
 
-  const handleResetAllFilters = (): void => {
-    handleClickForCategory();
-  };
-
   const defaultPage = (): void => {
     setCurrentPage(1);
     setOffset(1);
@@ -225,7 +221,7 @@ export default function FiltersBlockForCategory({
       />
 
       <div className={styles['filters-section']}>
-        <button className={styles['filters-button']} type="button" onClick={handleResetAllFilters}>
+        <button className={styles['filters-button']} type="button" onClick={handleClickForCategory}>
           <span className={styles['filters-button-span']}>Clear Filters</span>
           <img src={iconDelete} alt="delete" />
         </button>

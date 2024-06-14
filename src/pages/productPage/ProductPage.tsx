@@ -10,6 +10,7 @@ import getProductById from '../../api/products/getProductById';
 import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 import Breadcrumbs from '../../components/breadCrumbs/breadCrumbs';
 import CartToggleButton from '../../domain/cart/сartToggleButton/cartToggleButton';
+import Loader from '../../components/loader/Loader';
 
 import type { PAGES } from '../../constants/constants';
 import type { AttributeBestseller, AttributeDiscount } from '../../utils/types';
@@ -62,7 +63,11 @@ export default function ProductPage(): JSX.Element {
   }, [productId]);
 
   if (loading) {
-    return <div className={style['layout-wrapper']}>Loading...</div>;
+    return (
+      <div className={style['layout-wrapper']}>
+        <Loader />
+      </div>
+    );
   }
 
   if (error) {

@@ -3,7 +3,7 @@ import imageForCard from '../../../assets/images/card/empty-state-img.jpg';
 import type { Attribute, Image, ProductProjection } from '@commercetools/platform-sdk';
 import type { DataDiscountedName, PropsCard } from './types';
 
-export function createParamsfromCard(params: ProductProjection): PropsCard {
+export function createParamsFromCard(params: ProductProjection): PropsCard {
   const cardImages: string[] = params.masterVariant.images?.length
     ? params.masterVariant.images.map((image: Image) => image.url)
     : [imageForCard];

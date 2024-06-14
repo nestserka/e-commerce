@@ -2,20 +2,32 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './_card.module.scss';
-import { createParamsfromCard } from './utils';
+import { createParamsFromCard } from './utils';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import CartToggleButton from '../../cart/сartToggleButton/cartToggleButton';
+import { useCatalogCheckAttributeState, useCatalogData } from '../../../core/state/catalogState';
 
 import type { PAGES } from '../../../constants/constants';
 import type { PropsCard } from './types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
-  const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
+  const [product] = useState<PropsCard>(createParamsFromCard(dataCard));
   const currentPage: keyof typeof PAGES = 'CATALOG';
+  const { resetAttributes, resetSort } = useCatalogData();
+  const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   return (
-    <Link to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`} className={styles.card}>
+    <Link
+      to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`}
+      onClick={() => {
+        resetAttributes();
+        resetSort();
+        resetAttributesList();
+        resetCheckedStatesAttributesList();
+      }}
+      className={styles.card}
+    >
       <div className={styles['card-pic']}>
         <div className={styles['information-block']}>
           {product.discountedName && <span className={styles['discount-name']}>{product.discountedName.label}</span>}

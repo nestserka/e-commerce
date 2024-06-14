@@ -7,11 +7,21 @@ import logo from '../../assets/images/ns-store-logo.svg';
 import { NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useLoginData } from '../../core/state/userState';
 import { logOut } from '../../utils/logOut';
+import { useCatalogCheckAttributeState, useCatalogData } from '../../core/state/catalogState';
 
 export default function Header(): JSX.Element {
   const { isAuth, customerId } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { resetAttributes, resetSort } = useCatalogData();
+  const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
   const navigate = useNavigate();
+
+  const defaultValues = (): void => {
+    resetAttributes();
+    resetSort();
+    resetAttributesList();
+    resetCheckedStatesAttributesList();
+  };
 
   const onClickButton = (): void => {
     logOut();
@@ -19,13 +29,18 @@ export default function Header(): JSX.Element {
   };
 
   const toggleNav = (): void => {
+    defaultValues();
     setIsNavOpen(!isNavOpen);
+  };
+  const toggleNavFalse = (): void => {
+    defaultValues();
+    setIsNavOpen(false);
   };
 
   return (
     <header className={styles.header} data-testid="header">
       <section className={styles['logo-wrapper']}>
-        <Link to={ROUTES.HOME}>
+        <Link to={ROUTES.HOME} onClick={defaultValues}>
           <img src={logo} className="ns-logo" alt="NASA Store logotype" />
         </Link>
       </section>
@@ -35,7 +50,7 @@ export default function Header(): JSX.Element {
         isStatus={isAuth}
         isNavOpen={isNavOpen}
         handleClickLogOut={onClickButton}
-        onClick={toggleNav}
+        onClick={toggleNavFalse}
         customerId={customerId}
       />
 
