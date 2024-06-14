@@ -7,7 +7,6 @@ import getActiveCart from '../../api/me/cart/getActiveCart';
 import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 import addProductToCart from '../../api/me/cart/addProductToCart';
 import removeProductFromCart from '../../api/me/cart/removeProductFromCart';
-import { getTotalDiscount } from '../../utils/utils';
 
 import type { Cart, LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
 
@@ -20,7 +19,6 @@ interface CartState {
   activeCart: Cart | undefined;
   version: number | null;
   itemsInCart: LineItem[] | null;
-  totalDiscount: number | null;
   isLoading: boolean;
   error: string;
   isInCart: (productId: string) => boolean;
@@ -29,6 +27,7 @@ interface CartState {
   getItemsIds: () => string[] | undefined;
   setCart: (customerId: string) => Promise<void>;
   updateCartState: (cart: Cart) => void;
+  getTotalItemsDiscount: () => number;
   reset: () => void;
 }
 
@@ -38,7 +37,6 @@ export const useCartData = create<CartState>((set, get) => ({
   activeCart: undefined,
   version: null,
   itemsInCart: null,
-  totalDiscount: null,
   isLoading: false,
   error: '',
   isInCart: (productId: string): boolean => {
@@ -90,7 +88,6 @@ export const useCartData = create<CartState>((set, get) => ({
       activeCart: cart,
       version: cart.version,
       itemsInCart: cart.lineItems,
-      totalDiscount: getTotalDiscount(cart.lineItems),
     });
   },
 
@@ -140,6 +137,32 @@ export const useCartData = create<CartState>((set, get) => ({
 
     return arrIds;
   },
+  getTotalItemsDiscount: (): number => {
+    let totalDiscount = 0;
+
+    const { itemsInCart } = useCartData.getState();
+
+    if (itemsInCart) {
+      const diffArr = itemsInCart.map((item) => {
+        const value = item.price.discounted?.value.centAmount;
+        let diff = 0;
+
+        if (value) {
+          const discountedPrice = value;
+          const pricePerItem = item.price.value.centAmount;
+
+          if (typeof discountedPrice === 'number' && typeof pricePerItem === 'number') {
+            diff = (pricePerItem - discountedPrice) * item.quantity;
+          }
+        }
+
+        return diff;
+      });
+      totalDiscount = diffArr.reduce((acum, value) => acum + value, 0);
+    }
+
+    return totalDiscount / 100;
+  },
   reset: (): void => {
     set({
       anonymousCartId: '',
@@ -147,7 +170,6 @@ export const useCartData = create<CartState>((set, get) => ({
       activeCart: undefined,
       itemsInCart: null,
       version: null,
-      totalDiscount: null,
       isLoading: false,
       error: '',
     });
