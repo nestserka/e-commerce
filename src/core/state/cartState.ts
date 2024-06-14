@@ -103,7 +103,6 @@ export const useCartData = create<CartState>((set, get) => ({
       try {
         const { customerCartId, anonymousCartId } = useCartData.getState();
         const cartId = customerId ? customerCartId : anonymousCartId;
-        console.log('addProductToCart', customerCartId, anonymousCartId);
         const updatedCart = await addProductToCart(cartId, productId, version, quantity);
         get().updateCartState(updatedCart);
       } catch (err) {

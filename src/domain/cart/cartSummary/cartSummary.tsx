@@ -11,9 +11,7 @@ export default function CartSummary(): JSX.Element {
 
   useEffect(() => {
     if (itemsInCart) {
-      setTimeout(() => {
-        setItemsInOrder(itemsInCart.reduce((acum, item) => acum + item.quantity, 0));
-      }, 0);
+      setItemsInOrder(itemsInCart.reduce((acum, item) => acum + item.quantity, 0));
     }
   }, [itemsInCart]);
 
