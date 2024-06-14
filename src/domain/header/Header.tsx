@@ -12,7 +12,7 @@ import { useCatalogCheckAttributeState, useCatalogData } from '../../core/state/
 export default function Header(): JSX.Element {
   const { isAuth, customerId } = useLoginData();
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const { resetAttributes,resetSort } = useCatalogData();
+  const { resetAttributes, resetSort } = useCatalogData();
   const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
   const navigate = useNavigate();
 

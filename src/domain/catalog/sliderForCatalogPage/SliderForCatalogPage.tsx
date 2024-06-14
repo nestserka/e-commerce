@@ -15,15 +15,15 @@ export interface SliderCatalogPageProps {
 }
 
 export default function SliderCatalogPage({ allCategories }: SliderCatalogPageProps): JSX.Element {
-  const { resetAttributes,resetSort } = useCatalogData();
+  const { resetAttributes, resetSort } = useCatalogData();
   const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
-  const handelClickForSlide = ():void => {
+  const handelClickForSlide = (): void => {
     resetAttributes();
-    resetSort()
+    resetSort();
     resetAttributesList();
     resetCheckedStatesAttributesList();
-  }
+  };
 
   return (
     <div className="slider-wrapper">
