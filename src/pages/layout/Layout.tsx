@@ -9,13 +9,7 @@ export default function Layout(): JSX.Element {
   return (
     <>
       <Header />
-      <Suspense
-        fallback={
-          <div className="loading">
-            <Loader />
-          </div>
-        }
-      >
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
       <Footer />

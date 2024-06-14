@@ -42,22 +42,10 @@ export default function CategoryPage(): JSX.Element {
     getProductsList,
     setSubtreesList,
     setSort,
-    setBrandListDefault,
-    setMaterialListDefault,
-    setRefractorListDefault,
-    setBestsellerStatus,
-    setDiscountStatus,
-    setPriceRange,
+    resetAttributes,
   } = useCatalogData();
 
-  const {
-    brandListAttribute,
-    refractorListAttribute,
-    materialListAttribute,
-    setCheckedStatesBrandList,
-    setCheckedStatesRefractorList,
-    setCheckedStatesMaterialList,
-  } = useCatalogCheckAttributeState();
+  const { resetAttributesList,resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   const getProductListFromCategory = useCallback(() => {
     if (category === 'all') {
@@ -116,21 +104,11 @@ export default function CategoryPage(): JSX.Element {
   };
 
   const resetAttributesForCategory = (): void => {
-    defaultPage();
     setSelectedValue('');
     setNameSubtree('');
-    setSubtreesList('', true);
-    setPriceRange([0, 1700000]);
-    setBestsellerStatus(false);
-    setDiscountStatus(false);
-    setBrandListDefault();
-    setMaterialListDefault();
-    setRefractorListDefault();
-    setCheckedStatesBrandList(Object.fromEntries(brandListAttribute.map((attribute) => [attribute.key, false])));
-    setCheckedStatesMaterialList(Object.fromEntries(materialListAttribute.map((attribute) => [attribute.key, false])));
-    setCheckedStatesRefractorList(
-      Object.fromEntries(refractorListAttribute.map((attribute) => [attribute.key, false])),
-    );
+    resetAttributes();
+    resetCheckedStatesAttributesList()
+    // resetAttributesList();
   };
 
   const handleClickForCategory = (): void => {
@@ -140,6 +118,7 @@ export default function CategoryPage(): JSX.Element {
 
   const handleClickForCatalog = (): void => {
     resetAttributesForCategory();
+    resetAttributesList();
     navigation(ROUTES.CATALOG_ALL);
   };
 

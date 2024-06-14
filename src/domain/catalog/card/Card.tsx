@@ -2,26 +2,28 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './_card.module.scss';
-import { createParamsfromCard } from './utils';
+import { createParamsFromCard } from './utils';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import CartToggleButton from '../../cart/сartToggleButton/cartToggleButton';
-import { useCatalogData } from '../../../core/state/catalogState';
+import { useCatalogCheckAttributeState, useCatalogData } from '../../../core/state/catalogState';
 
 import type { PAGES } from '../../../constants/constants';
 import type { PropsCard } from './types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
-  const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
+  const [product] = useState<PropsCard>(createParamsFromCard(dataCard));
   const currentPage: keyof typeof PAGES = 'CATALOG';
-  const { setCurrentPage, setOffset } = useCatalogData();
+  const { resetAttributes } = useCatalogData();
+  const { resetAttributesList,resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   return (
     <Link
       to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`}
       onClick={() => {
-        setCurrentPage(1);
-        setOffset(1);
+        resetAttributes();
+        resetAttributesList();
+        resetCheckedStatesAttributesList();
       }}
       className={styles.card}
     >

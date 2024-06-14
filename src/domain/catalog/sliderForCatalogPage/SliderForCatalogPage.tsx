@@ -5,7 +5,7 @@ import 'swiper/css/pagination';
 import './_sliderForCatalogPage.scss';
 import { NavLink } from 'react-router-dom';
 
-import { useCatalogData } from '../../../core/state/catalogState';
+import { useCatalogCheckAttributeState, useCatalogData } from '../../../core/state/catalogState';
 
 import type { CSSProperties } from 'react';
 import type { Category } from '@commercetools/platform-sdk';
@@ -15,7 +15,8 @@ export interface SliderCatalogPageProps {
 }
 
 export default function SliderCatalogPage({ allCategories }: SliderCatalogPageProps): JSX.Element {
-  const { setCurrentPage, setOffset } = useCatalogData();
+  const { resetAttributes } = useCatalogData();
+  const { resetAttributesList,resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   return (
     <div className="slider-wrapper">
@@ -71,8 +72,9 @@ export default function SliderCatalogPage({ allCategories }: SliderCatalogPagePr
                 className="slider-item"
                 to={category.slug.en}
                 onClick={() => {
-                  setCurrentPage(1);
-                  setOffset(1);
+                  resetAttributes();
+                  resetAttributesList();
+                  resetCheckedStatesAttributesList();
                 }}
                 key={category.slug.en}
               >
