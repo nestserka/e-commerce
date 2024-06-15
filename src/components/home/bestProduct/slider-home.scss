@@ -9,6 +9,11 @@
   &.right-slider {
     margin-top: 5.5em;
   }
+
+  @media (width <= 670px) {
+    width: 16em;
+    height: 21em;
+  }
 }
 
 .swiper-pagination-bullet {

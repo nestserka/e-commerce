@@ -83,12 +83,7 @@
 
   vertical-align: top;
 
-  background: linear-gradient(
-    180deg,
-    rgb(220 235 234 / 10%),
-    rgb(220 235 234 / 50%) 50%,
-    rgb(21 26 25 / 40%) 100%
-  );
+  background: linear-gradient(180deg, rgb(220 235 234 / 10%), rgb(220 235 234 / 50%) 50%, rgb(21 26 25 / 40%) 100%);
 }
 
 .bestseller-block {
@@ -96,6 +91,11 @@
 
   flex-direction: row;
   gap: 0.6em;
+
+  @media (width <= 670px) {
+    @include flex-justify-center;
+    flex-direction: column;
+  }
 }
 
 .progress {

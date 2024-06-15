@@ -76,7 +76,14 @@ export default function BestProduct(): JSX.Element {
             <Swiper
               grabCursor
               speed={800}
-              direction="vertical"
+              breakpoints={{
+                670: {
+                  direction: 'horizontal'
+                },
+                680: {
+                  direction: 'vertical'
+                }
+              }}  
               watchSlidesProgress
               spaceBetween={20}
               slidesPerGroup={2}
@@ -102,9 +109,16 @@ export default function BestProduct(): JSX.Element {
               grabCursor
               speed={800}
               slidesPerGroup={2}
-              direction="vertical"
+              breakpoints={{
+                670: {
+                  direction: 'horizontal'
+                },
+                680: {
+                  direction: 'vertical'
+                }
+              }}  
               watchSlidesProgress
-              spaceBetween={20}
+              spaceBetween={20}      
               slidesPerView={2}
               modules={[FreeMode, Navigation, Thumbs, Controller]}
               className="swiper-best-products right-slider"
