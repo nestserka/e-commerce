@@ -1,7 +1,5 @@
 import style from './_cartView.module.scss';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
-import Breadcrumbs from '../../../components/breadCrumbs/breadCrumbs';
-import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import BackButton from '../../../components/backButton/backButton';
 import { useCartData } from '../../../core/state/cartState';
 import CartItemLine from '../cartItemLine/cartItemLine';
@@ -9,13 +7,6 @@ import { getLineItemProps } from '../../../utils/utils';
 import EmptyCartState from '../emptyCartView/emptyCartState';
 import ClearButton from '../../../components/clearButton/clearButton';
 import CartSummary from '../cartSummary/cartSummary';
-
-const breadCrumbsProps = [
-  {
-    label: 'Cart',
-    route: `${DYNAMIC_ROUTES.CART}`,
-  },
-];
 
 const dateNow = new Date();
 
@@ -27,11 +18,8 @@ export default function CartView(): JSX.Element {
 
   return (
     <>
-      <Breadcrumbs links={[...breadCrumbsProps]} />
-      <header className={style.header}>
-        <BackButton />
-        <h1 className={style.title}>Shopping Cart</h1>
-      </header>
+      <BackButton />
+      <h1 className={style.title}>Shopping Cart</h1>
 
       {!itemsInCart || itemsInCart.length === 0 ? (
         <EmptyCartState />
@@ -41,10 +29,32 @@ export default function CartView(): JSX.Element {
             <FormSubTitle subTitle="Products" />
             <div className={style['products-wrapper']}>
               {itemsInCart.map((item) => {
-                const cartItemLineProps = getLineItemProps(item);
+                const {
+                  imageUrl,
+                  productName,
+                  discountLabel,
+                  discountedPricePerItem,
+                  pricePerItem,
+                  quantity,
+                  totalPrice,
+                  id,
+                  productId,
+                } = getLineItemProps(item);
 
-                // eslint-disable-next-line react/jsx-props-no-spreading
-                return <CartItemLine key={item.name.en} {...cartItemLineProps} />;
+                return (
+                  <CartItemLine
+                    key={item.name.en}
+                    imageUrl={imageUrl}
+                    productName={productName}
+                    discountLabel={discountLabel}
+                    discountedPricePerItem={discountedPricePerItem}
+                    pricePerItem={pricePerItem}
+                    quantity={quantity}
+                    totalPrice={totalPrice}
+                    id={id}
+                    productId={productId}
+                  />
+                );
               })}
             </div>
             <div className={style['clear-all-wrapper']}>
