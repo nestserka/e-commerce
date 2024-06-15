@@ -7,6 +7,7 @@ import getActiveCart from '../../api/me/cart/getActiveCart';
 import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 import addProductToCart from '../../api/me/cart/addProductToCart';
 import removeProductFromCart from '../../api/me/cart/removeProductFromCart';
+import addDiscountCodeToCart from '../../api/me/cart/addDiscountCode';
 
 import type { Cart, LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
 
@@ -28,6 +29,7 @@ interface CartState {
   setCart: (customerId: string) => Promise<void>;
   updateCartState: (cart: Cart) => void;
   getTotalItemsDiscount: () => number;
+  addDiscountCode: (customerId: string, codeStr: string) => Promise<void>;
   reset: () => void;
 }
 
@@ -163,6 +165,27 @@ export const useCartData = create<CartState>((set, get) => ({
     }
 
     return totalDiscount / 100;
+  },
+  addDiscountCode: async (customerId: string, codeStr: string): Promise<void> => {
+    set({ isLoading: true, error: '' });
+
+    const { activeCart } = useCartData.getState();
+
+    if (activeCart) {
+      const { version } = activeCart;
+      const code = codeStr.toLowerCase();
+
+      try {
+        const { customerCartId, anonymousCartId } = useCartData.getState();
+        const cartId = customerId ? customerCartId : anonymousCartId;
+        const updatedCart = await addDiscountCodeToCart(cartId, version, code);
+        get().updateCartState(updatedCart);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    set({ isLoading: false });
   },
   reset: (): void => {
     set({

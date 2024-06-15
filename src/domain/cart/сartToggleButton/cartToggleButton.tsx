@@ -9,13 +9,13 @@ import type { PAGES } from '../../../constants/constants';
 interface CartToggleButtonProps {
   productId: string | undefined;
   page: keyof typeof PAGES;
-  isProductInCartProps?: boolean ;
+  isProductInCartProps?: boolean;
 }
 
 export default function CartToggleButton({
   productId,
   page,
-  isProductInCartProps=undefined,
+  isProductInCartProps = undefined,
 }: CartToggleButtonProps): JSX.Element {
   const { customerId } = useLoginData();
   const { activeCart, setCart, addProductToCart, isInCart } = useCartData();
