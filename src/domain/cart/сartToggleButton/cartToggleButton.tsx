@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
@@ -15,6 +15,7 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
   const { customerId } = useLoginData();
   const { activeCart, setCart, addProductToCart, isInCart } = useCartData();
   const [localIsLoading, setLocalIsLoading] = useState<boolean>(false);
+  const [productInCart, setProductInCart] = useState<boolean>(false);
 
   const handleAddToCart = async (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     if (event) {
@@ -37,6 +38,8 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
       if (productId) {
         await addProductToCart(productId, customerId);
       }
+
+      setProductInCart(true);
     } catch (err) {
       console.log((err as Error).message);
     } finally {
@@ -44,7 +47,9 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
     }
   };
 
-  const productInCart = productId ? isInCart(productId) : false;
+  useEffect((): void => {
+    setProductInCart(productId ? isInCart(productId) : false)
+  },[isInCart, productId])
 
   return (
     <button

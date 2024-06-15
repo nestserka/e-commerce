@@ -17,6 +17,7 @@ function Card({ dataCard }: { dataCard: ProductProjection }): JSX.Element {
   const { resetAttributes, resetSort } = useCatalogData();
   const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
+
   return (
     <Link
       to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`}

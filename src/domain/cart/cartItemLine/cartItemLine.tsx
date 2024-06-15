@@ -6,6 +6,7 @@ import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
 import { useDebounce } from '../../../utils/useDebounce';
+import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 
 import type { CartItemLineProps } from '../../../utils/types';
 import type { ChangeEvent } from 'react';
@@ -28,6 +29,7 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
   const [totalItemCost, setTotalItemCost] = useState<string>(totalPrice);
   const incrementPrice = discountedPricePerItem ? discountedPricePerItem.slice(1) : pricePerItem.slice(1);
   const [prevQuantity, setPrevQuantity] = useState<number>(quantity);
+  const [error, setError] = useState<string>('');
 
   const debouncedItemQuantity = useDebounce(itemQuantity);
 
@@ -85,8 +87,11 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
 
     const parsedValue = parseInt(value, 10);
 
-    if (!Number.isNaN(parsedValue) && parsedValue > 0) {
+    if (!Number.isNaN(parsedValue) && parsedValue > 0 && parsedValue < 1001) {
       setItemQuantity(parsedValue);
+      setError('');
+    } else if (!Number.isNaN(parsedValue) && parsedValue > 0 && parsedValue > 1000) {
+      setError('Item quantity should be less than one thousand items');
     }
   };
 
@@ -112,44 +117,47 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
   };
 
   return (
-    <section className={style['item-line-wrapper']} data-testid="cart-item-line">
-      <img src={imageUrl} alt={productName} className={style['product-img']} />
-      <div className={style['title-discount-wrapper']}>
-        {discountLabel && <div className={style['discount-badge']}>{discountLabel}</div>}
-        <h3 className={style.title}>{productName}</h3>
-      </div>
-      <section className={style['price-wrapper']}>
-        <div className={style['current-price-wrapper']}>
-          <p className={style['current-price-value']}>{discountedPricePerItem ?? pricePerItem}</p>
+    <div className={style.wrapper}>
+      <section className={style['item-line-wrapper']} data-testid="cart-item-line">
+        <img src={imageUrl} alt={productName} className={style['product-img']} />
+        <div className={style['title-discount-wrapper']}>
+          {discountLabel && <div className={style['discount-badge']}>{discountLabel}</div>}
+          <h3 className={style.title}>{productName}</h3>
         </div>
-        {discountedPricePerItem && <p className={style['old-price-value']}>{pricePerItem}</p>}
-      </section>
-      <section className={style['quantity-input-wrapper']}>
-        <button type="button" className={style['quantity-input-control']} onClick={handleDecrement}>
-          –
+        <section className={style['price-wrapper']}>
+          <div className={style['current-price-wrapper']}>
+            <p className={style['current-price-value']}>{discountedPricePerItem ?? pricePerItem}</p>
+          </div>
+          {discountedPricePerItem && <p className={style['old-price-value']}>{pricePerItem}</p>}
+        </section>
+        <section className={style['quantity-input-wrapper']}>
+          <button type="button" className={style['quantity-input-control']} onClick={handleDecrement}>
+            –
+          </button>
+          <input
+            type="text"
+            value={itemQuantity}
+            onChange={handleInputChange}
+            onBlur={handleInputBlur}
+            className={style['quantity-input']}
+          />
+          <button type="button" className={style['quantity-input-control']} onClick={handleIncrement}>
+            +
+          </button>
+        </section>
+        <p className={style['total-price']} title={totalItemCost}>
+          {totalItemCost}
+        </p>
+        <button
+          type="button"
+          className={style['remove-item-btn']}
+          aria-label="Remove product from cart"
+          onClick={handleRemoveClick}
+        >
+          <img src={iconDelete} alt="Edit" className={style['icon-delete']} />
         </button>
-        <input
-          type="text"
-          value={itemQuantity === 0 ? '' : itemQuantity}
-          onChange={handleInputChange}
-          onBlur={handleInputBlur}
-          className={style['quantity-input']}
-        />
-        <button type="button" className={style['quantity-input-control']} onClick={handleIncrement}>
-          +
-        </button>
       </section>
-      <p className={style['total-price']} title={totalItemCost}>
-        {totalItemCost}
-      </p>
-      <button
-        type="button"
-        className={style['remove-item-btn']}
-        aria-label="Remove product from cart"
-        onClick={handleRemoveClick}
-      >
-        <img src={iconDelete} alt="Edit" className={style['icon-delete']} />
-      </button>
-    </section>
+      {error && <ErrorMessage message={error} />}
+    </div>
   );
 }

@@ -7,12 +7,9 @@
   width: 100%;
 }
 
-.header {
-  display: flex;
-}
-
 .title {
   flex-grow: 1;
+  font-family: DisplayMedium, sans-serif;
   text-align: center;
 }
 
@@ -24,7 +21,10 @@
 }
 
 .products-list-wrapper {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+  justify-content: space-between;
 }
 
 .products-list-wrapper,
