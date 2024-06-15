@@ -26,7 +26,6 @@ export default function CartPage(): JSX.Element {
 
   return (
     <section className={style.cart} data-testid="cart">
-      {/* {isLoading && <span>Loading...</span>} */}
       {activeCart && <CartView />}
       {activeCart && !itemsInCart && <span>Cart is empty</span>}
     </section>

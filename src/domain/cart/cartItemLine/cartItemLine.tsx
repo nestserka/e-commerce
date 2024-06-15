@@ -7,10 +7,10 @@ import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
 import { useDebounce } from '../../../utils/useDebounce';
 
-import type { ChangeEvent } from 'react';
 import type { CartItemLineProps } from '../../../utils/types';
+import type { ChangeEvent } from 'react';
 
-export default function CartItemLine(props: CartItemLineProps): JSX.Element {
+export default function CartItemLine({productData}: CartItemLineProps): JSX.Element {
   const {
     imageUrl,
     productName,
@@ -21,7 +21,7 @@ export default function CartItemLine(props: CartItemLineProps): JSX.Element {
     totalPrice,
     id,
     productId,
-  } = props;
+  } = productData;
   const { customerId } = useLoginData();
   const { addProductToCart, removeProductFromCart } = useCartData();
   const [itemQuantity, setItemQuantity] = useState<number | string>(quantity);

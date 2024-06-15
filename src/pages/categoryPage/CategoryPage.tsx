@@ -221,8 +221,8 @@ export default function CategoryPage(): JSX.Element {
           ) : (
             <div className={styles['products-block-empty']}>
               <div className={styles['products-loader']}>
-                  <Loader />
-                </div>
+                <Loader />
+              </div>
             </div>
           )}
           <PaginationBlock

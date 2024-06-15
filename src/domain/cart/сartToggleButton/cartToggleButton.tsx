@@ -14,9 +14,7 @@ interface CartToggleButtonProps {
 export default function CartToggleButton({ productId, page }: CartToggleButtonProps): JSX.Element {
   const { customerId } = useLoginData();
   const { activeCart, setCart, addProductToCart, isInCart } = useCartData();
-  const [localIsLoading, setLocalIsLoading]= useState<boolean>(false);
-
-
+  const [localIsLoading, setLocalIsLoading] = useState<boolean>(false);
 
   const handleAddToCart = async (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> => {
     if (event) {
@@ -41,10 +39,11 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
       }
     } catch (err) {
       console.log((err as Error).message);
-    }finally {
+    } finally {
       setLocalIsLoading(false);
     }
   };
+  
 
   const productInCart = productId ? isInCart(productId) : false;
 

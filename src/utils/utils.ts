@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 import type { LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
-import type { Address, AttributeDiscount, CartItemLineProps, InputProps } from './types';
+import type { Address, AttributeDiscount, CartItemLine, InputProps } from './types';
 
 export const getInputProps = (type: string, id: string, placeholder: string, autoComplete: string): InputProps => ({
   type,
@@ -80,7 +80,7 @@ export function formatPrice(num: number): string {
   return `$${(num / 100).toFixed(2)}`;
 }
 
-export function getLineItemProps(lineItem: LineItem): CartItemLineProps {
+export function getLineItemProps(lineItem: LineItem): CartItemLine {
   const { id } = lineItem;
   const { productId } = lineItem;
   const productName = lineItem.name.en;

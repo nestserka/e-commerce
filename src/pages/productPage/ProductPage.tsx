@@ -11,6 +11,8 @@ import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 import Breadcrumbs from '../../components/breadCrumbs/breadCrumbs';
 import CartToggleButton from '../../domain/cart/сartToggleButton/cartToggleButton';
 import Loader from '../../components/loader/Loader';
+import CartRemoveButton from '../../domain/cart/cartRemoveButton/CartRemoveButton';
+import { useCartData } from '../../core/state/cartState';
 
 import type { PAGES } from '../../constants/constants';
 import type { AttributeBestseller, AttributeDiscount } from '../../utils/types';
@@ -42,6 +44,9 @@ export default function ProductPage(): JSX.Element {
     }
   };
 
+  const [idProductCart, setIdProductCart] = useState<string | null>();
+  const { itemsInCart } = useCartData();
+
   useEffect(() => {
     if (productId) {
       setLoading(true);
@@ -49,6 +54,11 @@ export default function ProductPage(): JSX.Element {
         .then((response) => {
           setProduct(response);
           extractPrice(response);
+
+          if (itemsInCart) {
+            const uniqueIdProductCart = itemsInCart.find((productData) => productData.productId === response.id);
+            setIdProductCart(uniqueIdProductCart?.id);
+          }
         })
         .catch((err: Error) => {
           console.log(err.message);
@@ -60,7 +70,7 @@ export default function ProductPage(): JSX.Element {
     } else {
       setError('Product ID is missing');
     }
-  }, [productId]);
+  }, [itemsInCart, productId]);
 
   if (loading) {
     return (
@@ -142,7 +152,10 @@ export default function ProductPage(): JSX.Element {
               {discount && <span className={style.price}>{discount}</span>}
               <span className={discount ? style.discount : style.price}>{price}</span>
             </section>
-            <CartToggleButton productId={product.id} page={currentPage} />
+            <div className={style['product-buttons']}>
+              <CartToggleButton productId={product.id} page={currentPage} />
+              {idProductCart && <CartRemoveButton productId={product.id} id={idProductCart} />}
+            </div>
           </section>
         </section>
       </section>
