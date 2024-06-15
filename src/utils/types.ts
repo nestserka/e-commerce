@@ -88,7 +88,7 @@ export interface Discount {
   label: string;
 }
 
-export interface CartItemLineProps {
+export interface CartItemLine {
   id: string;
   imageUrl: string;
   productName: string;
@@ -98,4 +98,8 @@ export interface CartItemLineProps {
   quantity: number;
   totalPrice: string;
   productId: string;
+}
+
+export interface CartItemLineProps {
+  productData: CartItemLine;
 }

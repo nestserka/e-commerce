@@ -102,3 +102,7 @@
 .price-info {
   margin-bottom: 2rem;
 }
+
+.product-buttons {
+  @include flex-justify-start;
+}

@@ -29,32 +29,9 @@ export default function CartView(): JSX.Element {
             <FormSubTitle subTitle="Products" />
             <div className={style['products-wrapper']}>
               {itemsInCart.map((item) => {
-                const {
-                  imageUrl,
-                  productName,
-                  discountLabel,
-                  discountedPricePerItem,
-                  pricePerItem,
-                  quantity,
-                  totalPrice,
-                  id,
-                  productId,
-                } = getLineItemProps(item);
+                const cartItemLineProps = getLineItemProps(item);
 
-                return (
-                  <CartItemLine
-                    key={item.name.en}
-                    imageUrl={imageUrl}
-                    productName={productName}
-                    discountLabel={discountLabel}
-                    discountedPricePerItem={discountedPricePerItem}
-                    pricePerItem={pricePerItem}
-                    quantity={quantity}
-                    totalPrice={totalPrice}
-                    id={id}
-                    productId={productId}
-                  />
-                );
+                return <CartItemLine key={item.name.en} productData={cartItemLineProps} />;
               })}
             </div>
             <div className={style['clear-all-wrapper']}>

@@ -76,8 +76,11 @@ a:hover {
 .button-primary {
   cursor: pointer;
 
+  position: relative;
+
   display: block;
 
+  margin-right: 10px;
   padding: 1.5em;
 
   font-size: 1em;
@@ -89,6 +92,22 @@ a:hover {
   outline: none;
 
   transition: background-color 0.5s ease;
+
+  .wrapper-loader-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    backdrop-filter: blur(5px);
+    border-radius: 24px;
+  }
 
   &:disabled {
     cursor: not-allowed;
@@ -111,6 +130,8 @@ a:hover {
 .button-secondary {
   cursor: pointer;
 
+  position: relative;
+
   display: block;
 
   padding: 12px 16px;
@@ -124,6 +145,22 @@ a:hover {
   border-radius: 24px;
 
   transition: 300ms !important;
+
+  .wrapper-loader-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    backdrop-filter: blur(5px);
+    border-radius: 24px;
+  }
 }
 
 .button-secondary:disabled {
