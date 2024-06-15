@@ -26,6 +26,7 @@ export default function CategoryPage(): JSX.Element {
   const [namePosition, setNamePosition] = useState<string | undefined>();
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [nameSubtree, setNameSubtree] = useState<string | null>(null);
+  const [isFirstDownload, setIsFirstDownload] = useState<boolean>(false);
 
   const navigation = useNavigate();
   const {
@@ -56,6 +57,9 @@ export default function CategoryPage(): JSX.Element {
         })
         .catch((error: Error) => {
           console.log(error.message);
+        })
+        .finally(() => {
+          setIsFirstDownload(true);
         });
     }
 
@@ -69,6 +73,9 @@ export default function CategoryPage(): JSX.Element {
         })
         .catch((error: Error) => {
           console.log(error.message);
+        })
+        .finally(() => {
+          setIsFirstDownload(true);
         });
     }
   }, [categoriesData, category, getProductsList, setTotal]);
@@ -192,24 +199,32 @@ export default function CategoryPage(): JSX.Element {
             handleChangeSort={handleChangeSort}
             handleChangeCapture={handleChangeCapture}
           />
-          <div className={styles['products-block']}>
-            {isLoading && (
-              <div className={styles['products-loader']}>
-                <Loader />
-              </div>
-            )}
-
-            {productsList.length ? (
-              productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
-            ) : (
-              <div className={styles['products-list-empty']}>
-                <div className={styles['products-list-empty-text']}>
-                  <div>Looks like even the stars couldn&lsquo;t find anything here.</div>
-                  <div>Try searching again! 💫</div>
+          {isFirstDownload ? (
+            <div className={styles['products-block']}>
+              {isLoading && (
+                <div className={styles['products-loader']}>
+                  <Loader />
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+
+              {productsList.length ? (
+                productsList.map((dataCard: ProductProjection) => <Card dataCard={dataCard} key={dataCard.name.en} />)
+              ) : (
+                <div className={styles['products-list-empty']}>
+                  <div className={styles['products-list-empty-text']}>
+                    <div>Looks like even the stars couldn&lsquo;t find anything here.</div>
+                    <div>Try searching again! 💫</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className={styles['products-block-empty']}>
+              <div className={styles['products-loader']}>
+                  <Loader />
+                </div>
+            </div>
+          )}
           <PaginationBlock
             page={currentPage}
             total={total}
