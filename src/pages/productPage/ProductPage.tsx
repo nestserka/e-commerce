@@ -11,9 +11,9 @@ import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 import Breadcrumbs from '../../components/breadCrumbs/breadCrumbs';
 import CartToggleButton from '../../domain/cart/сartToggleButton/cartToggleButton';
 import Loader from '../../components/loader/Loader';
-import CartRemoveButton from '../../domain/cart/cartRemoveButton/CartRemoveButton';
 import { useCartData } from '../../core/state/cartState';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
+import CartRemoveButton from '../../domain/cart/cartRemoveButton/CartRemoveButton';
 
 import type { PAGES } from '../../constants/constants';
 import type { AttributeBestseller, AttributeDiscount } from '../../utils/types';
@@ -55,6 +55,7 @@ export default function ProductPage(): JSX.Element {
   const [idProductCart, setIdProductCart] = useState<string | null>(null);
   const [isShown, setIsShown] = useState<boolean>(false);
   const [uniqueProductId, setUniqueProductId] = useState<string>('');
+  const [productInCart, setProductInCart] = useState<boolean>(false);
   const { itemsInCart } = useCartData();
 
   useEffect(() => {
@@ -65,11 +66,6 @@ export default function ProductPage(): JSX.Element {
           setProduct(response);
           extractPrice(response);
           setUniqueProductId(response.id);
-
-          if (itemsInCart) {
-            const uniqueIdProductCart = itemsInCart.find((productData) => productData.productId === response.id);
-            setIdProductCart(uniqueIdProductCart?.id ? uniqueIdProductCart.id : null);
-          }
         })
         .catch((err: Error) => {
           console.log(err.message);
@@ -81,7 +77,15 @@ export default function ProductPage(): JSX.Element {
     } else {
       setError('Product ID is missing');
     }
-  }, [itemsInCart, productId]);
+  }, [productId]);
+
+  useEffect(() => {
+  if (itemsInCart) {
+    const uniqueIdProductCart = itemsInCart.find((productData) => productData.productId ===uniqueProductId);
+    setIdProductCart(uniqueIdProductCart?.id ? uniqueIdProductCart.id : null);
+    setProductInCart(true);
+  }
+}, [itemsInCart, uniqueProductId]);
 
   if (loading) {
     return (
@@ -165,14 +169,14 @@ export default function ProductPage(): JSX.Element {
               <span className={discount ? style.discount : style.price}>{price}</span>
             </section>
             <div className={style['product-buttons']}>
-              <CartToggleButton productId={uniqueProductId} page={currentPage} />
+              <CartToggleButton productId={uniqueProductId} page={currentPage} isProductInCartProps={productInCart} />
               {idProductCart && (
                 <CartRemoveButton
                   productId={uniqueProductId}
                   id={idProductCart}
                   setIsShow={setIsShown}
                   setIdProductCart={setIdProductCart}
-                  setUniqueProductId={setUniqueProductId}
+                  setProductInCart={setProductInCart}
                 />
               )}
             </div>

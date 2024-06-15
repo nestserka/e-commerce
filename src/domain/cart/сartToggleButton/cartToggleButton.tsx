@@ -9,9 +9,14 @@ import type { PAGES } from '../../../constants/constants';
 interface CartToggleButtonProps {
   productId: string | undefined;
   page: keyof typeof PAGES;
+  isProductInCartProps?: boolean ;
 }
 
-export default function CartToggleButton({ productId, page }: CartToggleButtonProps): JSX.Element {
+export default function CartToggleButton({
+  productId,
+  page,
+  isProductInCartProps=undefined,
+}: CartToggleButtonProps): JSX.Element {
   const { customerId } = useLoginData();
   const { activeCart, setCart, addProductToCart, isInCart } = useCartData();
   const [localIsLoading, setLocalIsLoading] = useState<boolean>(false);
@@ -48,8 +53,8 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
   };
 
   useEffect((): void => {
-    setProductInCart(productId ? isInCart(productId) : false)
-  },[isInCart, productId])
+    setProductInCart(productId ? isInCart(productId) : false);
+  }, [isInCart, productId]);
 
   return (
     <button
@@ -59,7 +64,7 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
           console.log(error.message);
         });
       }}
-      disabled={productInCart}
+      disabled={isProductInCartProps ?? productInCart}
       className={page === 'PRODUCT' ? 'button-primary' : 'button-secondary'}
     >
       {localIsLoading && (

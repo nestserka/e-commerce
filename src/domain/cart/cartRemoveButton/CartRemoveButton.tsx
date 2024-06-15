@@ -7,8 +7,9 @@ export interface CartRemoveButtonProps {
   productId: string;
   id: string;
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setProductInCart: React.Dispatch<React.SetStateAction<boolean>>;
   setIdProductCart: React.Dispatch<React.SetStateAction<string | null>>;
-  setUniqueProductId: React.Dispatch<React.SetStateAction<string>>;
+
 }
 
 export default function CartRemoveButton({
@@ -16,7 +17,7 @@ export default function CartRemoveButton({
   id,
   setIsShow,
   setIdProductCart,
-  setUniqueProductId,
+  setProductInCart
 }: CartRemoveButtonProps): JSX.Element {
   const { customerId } = useLoginData();
   const { activeCart, setCart, removeProductFromCart, isLoading } = useCartData();
@@ -50,7 +51,7 @@ export default function CartRemoveButton({
           .then(() => {
             setIsShow(true);
             setIdProductCart(null);
-            setUniqueProductId('');
+            setProductInCart(false);
           })
           .catch((error: Error) => {
             console.log(error.message);
