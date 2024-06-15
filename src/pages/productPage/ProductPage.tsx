@@ -13,14 +13,22 @@ import CartToggleButton from '../../domain/cart/сartToggleButton/cartToggleButt
 import Loader from '../../components/loader/Loader';
 import CartRemoveButton from '../../domain/cart/cartRemoveButton/CartRemoveButton';
 import { useCartData } from '../../core/state/cartState';
+import ModalMessage from '../../components/modalMessage/ModalMessage';
 
 import type { PAGES } from '../../constants/constants';
 import type { AttributeBestseller, AttributeDiscount } from '../../utils/types';
 import type { Params } from 'react-router';
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
+const modalMessageSuccessRegistrationProps = {
+  type: 'success',
+  title: 'Successful Removal',
+  message: 'You have successfully removed a product from your cart.',
+};
+
 export default function ProductPage(): JSX.Element {
   const { productId }: Readonly<Params<string>> = useParams();
+  const { type, title, message } = modalMessageSuccessRegistrationProps;
 
   const [product, setProduct] = useState<ProductProjection>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -44,7 +52,9 @@ export default function ProductPage(): JSX.Element {
     }
   };
 
-  const [idProductCart, setIdProductCart] = useState<string | null>();
+  const [idProductCart, setIdProductCart] = useState<string | null>(null);
+  const [isShown, setIsShown] = useState<boolean>(false);
+  const [uniqueProductId, setUniqueProductId] = useState<string>('');
   const { itemsInCart } = useCartData();
 
   useEffect(() => {
@@ -54,10 +64,11 @@ export default function ProductPage(): JSX.Element {
         .then((response) => {
           setProduct(response);
           extractPrice(response);
+          setUniqueProductId(response.id);
 
           if (itemsInCart) {
             const uniqueIdProductCart = itemsInCart.find((productData) => productData.productId === response.id);
-            setIdProductCart(uniqueIdProductCart?.id);
+            setIdProductCart(uniqueIdProductCart?.id ? uniqueIdProductCart.id : null);
           }
         })
         .catch((err: Error) => {
@@ -127,6 +138,7 @@ export default function ProductPage(): JSX.Element {
 
   return (
     <>
+      {isShown && <ModalMessage type={type} title={title} message={message} />}
       <Breadcrumbs links={breadCrumbsProps} />
       <section className={style['product-page']} data-testid="product-page">
         <section className={style['content-wrapper']}>
@@ -153,8 +165,16 @@ export default function ProductPage(): JSX.Element {
               <span className={discount ? style.discount : style.price}>{price}</span>
             </section>
             <div className={style['product-buttons']}>
-              <CartToggleButton productId={product.id} page={currentPage} />
-              {idProductCart && <CartRemoveButton productId={product.id} id={idProductCart} />}
+              <CartToggleButton productId={uniqueProductId} page={currentPage} />
+              {idProductCart && (
+                <CartRemoveButton
+                  productId={uniqueProductId}
+                  id={idProductCart}
+                  setIsShow={setIsShown}
+                  setIdProductCart={setIdProductCart}
+                  setUniqueProductId={setUniqueProductId}
+                />
+              )}
             </div>
           </section>
         </section>

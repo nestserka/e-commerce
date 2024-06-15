@@ -43,7 +43,6 @@ export default function CartToggleButton({ productId, page }: CartToggleButtonPr
       setLocalIsLoading(false);
     }
   };
-  
 
   const productInCart = productId ? isInCart(productId) : false;
 

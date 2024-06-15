@@ -1,16 +1,28 @@
-
 import LoaderForButton from '../../../components/loaderForButton/LoaderForButton';
 import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
 
-export default function CartRemoveButton({ productId, id }: { productId: string,id:string }): JSX.Element {
-  const { customerId } = useLoginData();
-  const { activeCart, setCart, removeProductFromCart, isLoading} = useCartData();
+export interface CartRemoveButtonProps {
+  productId: string;
+  id: string;
+  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setIdProductCart: React.Dispatch<React.SetStateAction<string | null>>;
+  setUniqueProductId: React.Dispatch<React.SetStateAction<string>>;
+}
 
+export default function CartRemoveButton({
+  productId,
+  id,
+  setIsShow,
+  setIdProductCart,
+  setUniqueProductId,
+}: CartRemoveButtonProps): JSX.Element {
+  const { customerId } = useLoginData();
+  const { activeCart, setCart, removeProductFromCart, isLoading } = useCartData();
 
   const handleRemoveClick = async (): Promise<void> => {
-        if (!activeCart) {
+    if (!activeCart) {
       try {
         await setCart(customerId);
       } catch (err) {
@@ -22,8 +34,8 @@ export default function CartRemoveButton({ productId, id }: { productId: string,
 
     try {
       if (productId) {
-      const action = getLineItemsPropsToRemove([id]);
-      await removeProductFromCart(action, customerId);
+        const action = getLineItemsPropsToRemove([id]);
+        await removeProductFromCart(action, customerId);
       }
     } catch (err) {
       console.log('Failed to remove product from the cart', err);
@@ -34,9 +46,20 @@ export default function CartRemoveButton({ productId, id }: { productId: string,
     <button
       type="button"
       onClick={() => {
-        handleRemoveClick().catch((error: Error) => {
-          console.log(error.message);
-        });
+        handleRemoveClick()
+          .then(() => {
+            setIsShow(true);
+            setIdProductCart(null);
+            setUniqueProductId('');
+          })
+          .catch((error: Error) => {
+            console.log(error.message);
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setIsShow(false);
+            }, 3000);
+          });
       }}
       className="button-primary"
     >

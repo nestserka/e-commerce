@@ -10,7 +10,7 @@ import { useDebounce } from '../../../utils/useDebounce';
 import type { CartItemLineProps } from '../../../utils/types';
 import type { ChangeEvent } from 'react';
 
-export default function CartItemLine({productData}: CartItemLineProps): JSX.Element {
+export default function CartItemLine({ productData }: CartItemLineProps): JSX.Element {
   const {
     imageUrl,
     productName,
