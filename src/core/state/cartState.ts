@@ -20,6 +20,7 @@ interface CartState {
   activeCart: Cart | undefined;
   version: number | null;
   itemsInCart: LineItem[] | null;
+  isPromocodeApplied: boolean;
   isLoading: boolean;
   error: string;
   isInCart: (productId: string) => boolean;
@@ -39,6 +40,7 @@ export const useCartData = create<CartState>((set, get) => ({
   activeCart: undefined,
   version: null,
   itemsInCart: null,
+  isPromocodeApplied: false,
   isLoading: false,
   error: '',
   isInCart: (productId: string): boolean => {
@@ -91,6 +93,7 @@ export const useCartData = create<CartState>((set, get) => ({
       activeCart: cart,
       version: cart.version,
       itemsInCart: cart.lineItems,
+      isPromocodeApplied: !!cart.discountOnTotalPrice,
     });
   },
 
@@ -173,12 +176,11 @@ export const useCartData = create<CartState>((set, get) => ({
 
     if (activeCart) {
       const { version } = activeCart;
-      const code = codeStr.toLowerCase();
 
       try {
         const { customerCartId, anonymousCartId } = useCartData.getState();
         const cartId = customerId ? customerCartId : anonymousCartId;
-        const updatedCart = await addDiscountCodeToCart(cartId, version, code);
+        const updatedCart = await addDiscountCodeToCart(cartId, version, codeStr);
         get().updateCartState(updatedCart);
       } catch (err) {
         console.log(err);

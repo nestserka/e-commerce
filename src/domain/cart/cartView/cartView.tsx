@@ -7,6 +7,7 @@ import { getLineItemProps } from '../../../utils/utils';
 import EmptyCartState from '../emptyCartView/emptyCartState';
 import ClearButton from '../../../components/clearButton/clearButton';
 import CartSummary from '../cartSummary/cartSummary';
+import Promocode from '../promocode/promocode';
 
 const dateNow = new Date();
 
@@ -45,6 +46,7 @@ export default function CartView(): JSX.Element {
             <CartSummary />
             <section className={style['promocode-wrapper']}>
               <FormSubTitle subTitle="Promocode" />
+              <Promocode />
             </section>
           </aside>
         </div>
