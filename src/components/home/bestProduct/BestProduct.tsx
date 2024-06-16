@@ -17,7 +17,6 @@ import arrowIcon from '../../../assets/images/icons/arrow-icon.png';
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-
 export default function BestProduct(): JSX.Element {
   const { setBestProductList, bestProducts, leftSlider, rightSlider } = useHomeData();
   const [leftSwiper, setLeftSwiper] = useState<SwiperProps | null>(null);
@@ -50,7 +49,7 @@ export default function BestProduct(): JSX.Element {
             </h1>
             <section className={style['progress-wrapper']}>
               <div className={style.progress}>
-              <span className={`${style.bar} ${style.wrapper}`} />
+                <span className={`${style.bar} ${style.wrapper}`} />
                 <div className={style.circle}>
                   <div className={`${style.title} ${style.meteorite}`}>exclusive meterite fragments</div>
                 </div>
@@ -66,9 +65,13 @@ export default function BestProduct(): JSX.Element {
                 </div>
                 <span className={`${style.bar} ${style.wrapper}`} />
               </div>
-              <button type="button" className={style['navigation-button']}  onClick={() => {
-            navigate(ROUTES.CATALOG_ALL);
-          }}>
+              <button
+                type="button"
+                className={style['navigation-button']}
+                onClick={() => {
+                  navigate(ROUTES.CATALOG_ALL);
+                }}
+              >
                 <span>Explore Catalog</span>
                 <img src={arrowIcon} alt="Arrow Icon" />
               </button>
@@ -79,22 +82,48 @@ export default function BestProduct(): JSX.Element {
               grabCursor
               speed={800}
               breakpoints={{
-                670: {
-                  direction: 'horizontal'
+                0: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:1, },
+                380: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:1.5,},
+                480: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:1.8, },
+                500: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:2,},
+                600: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:2.2},
+                690: { direction: 'horizontal',
+                slidesPerGroup: 2,
+                slidesPerView:2.5},
+                800: { direction: 'horizontal',
+                slidesPerGroup: 2,
+                slidesPerView:3},
+                900: { direction: 'horizontal',
+                slidesPerGroup: 2,
+                slidesPerView:3.2, },
+                960: {
+                  direction: 'horizontal',
+                  slidesPerGroup: 2,
+                  slidesPerView:3.5,
                 },
-                680: {
-                  direction: 'vertical'
-                }
-              }}  
+                1061: {
+                  direction: 'vertical',
+                  slidesPerGroup: 2,
+                  slidesPerView:2,
+                },
+              }}
               watchSlidesProgress
               spaceBetween={20}
-              slidesPerGroup={2}
               pagination={{
                 el: '.custom-pagination-div',
                 clickable: true,
                 renderBullet: (index, className) => `<span class="${className}  bullet-${index}"></span>`,
               }}
-              slidesPerView={2}
               modules={[FreeMode, Navigation, Thumbs, Pagination, Controller]}
               className="swiper-best-products"
               controller={{ control: rightSwiper, inverse: true }}
@@ -112,16 +141,43 @@ export default function BestProduct(): JSX.Element {
               speed={800}
               slidesPerGroup={2}
               breakpoints={{
-                670: {
-                  direction: 'horizontal'
+                0: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:1, },
+                380: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:1.5,},
+                480: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:1.8, },
+                500: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:2,},
+                600: { direction: 'horizontal',
+                slidesPerGroup: 1,
+                slidesPerView:2.2},
+                690: { direction: 'horizontal',
+                slidesPerGroup: 2,
+                slidesPerView:2.5},
+                800: { direction: 'horizontal',
+                slidesPerGroup: 2,
+                slidesPerView:3},
+                900: { direction: 'horizontal',
+                slidesPerGroup: 2,
+                slidesPerView:3.2, },
+                960: {
+                  direction: 'horizontal',
+                  slidesPerGroup: 2,
+                  slidesPerView:3.5,
                 },
-                680: {
-                  direction: 'vertical'
-                }
-              }}  
+                1061: {
+                  direction: 'vertical',
+                  slidesPerGroup: 2,
+                  slidesPerView:2,
+                },
+              }}
               watchSlidesProgress
-              spaceBetween={20}      
-              slidesPerView={2}
+              spaceBetween={20}
               modules={[FreeMode, Navigation, Thumbs, Controller]}
               className="swiper-best-products right-slider"
               controller={{ control: leftSwiper, inverse: true }}

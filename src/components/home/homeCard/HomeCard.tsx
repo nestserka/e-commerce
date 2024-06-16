@@ -9,7 +9,13 @@ import { useHomeData } from '../../../core/state/homeState';
 import type { PropsCard } from '../../cards/card/types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-export function HomeCard({ dataCard, isVertical=false }: { dataCard: ProductProjection, isVertical: boolean }): JSX.Element {
+export function HomeCard({
+  dataCard,
+  isVertical = false,
+}: {
+  dataCard: ProductProjection;
+  isVertical: boolean;
+}): JSX.Element {
   const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
   const { setImages } = useHomeData();
   const [newCommerceImage, setCommerseImage] = useState<number>();
@@ -23,7 +29,10 @@ export function HomeCard({ dataCard, isVertical=false }: { dataCard: ProductProj
   }, [dataCard.key, setImages]);
 
   return (
-    <Link to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`} className={`${style.card} ${isVertical ? style.vertical : ''}`}>
+    <Link
+      to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`}
+      className={`${style.card} ${isVertical ? style.vertical : ''}`}
+    >
       <div className={`${style['card-pic']} ${isVertical ? style.vertical : ''}`}>
         {newCommerceImage ? (
           <img className={style['card-pic-img']} src={product.cardImages[newCommerceImage]} alt={product.cardName} />

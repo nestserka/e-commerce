@@ -10,18 +10,40 @@
     margin-top: 5.5em;
   }
 
-  @media (width <= 670px) {
-    width: 16em;
-    height: 21em;
+  @media (width <= 1060px) {
+    width: 100%;
+    height: 25em;
+
+    &.right-slider {
+      margin-top: 1.5em;
+    }
   }
 }
 
 .swiper-pagination-bullet {
   position: relative;
   top: 28em;
-
+  background: $font-color-primary;
   width: 0.8em;
   height: 0.8em;
+  @media (width <= 1060px) {
+    top: 1em;
+    left: 45%;
+  }
 
-  background: $font-color-primary;
+  @media (width <= 689px) {
+    left: 35%;
+  }
+
+  @media (width <= 500px) {
+    left: 30%;
+  }
+
+  @media (width <= 449px) {
+    left: 26%;
+  }
+
+  @media (width <= 420px) {
+    left: 23%;
+  }
 }
