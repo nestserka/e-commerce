@@ -40,6 +40,7 @@ export default function BestProduct(): JSX.Element {
   }, [setBestProductList, bestProducts]);
 
   return (
+    <section className={style['moon-wrapper']}>
     <section className={style['best-product-section']}>
       {bestProducts.length > 0 && (
         <>
@@ -162,6 +163,7 @@ export default function BestProduct(): JSX.Element {
           </section>
         </>
       )}
+    </section>
     </section>
   );
 }
