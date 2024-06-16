@@ -18,14 +18,21 @@
       margin-top: 1.5em;
     }
   }
+
+  @media (width <= 900px) {
+    height: 21em;
+  }
 }
 
 .swiper-pagination-bullet {
   position: relative;
   top: 28em;
-  background: $font-color-primary;
+
   width: 0.8em;
   height: 0.8em;
+
+  background: $font-color-primary;
+
   @media (width <= 1060px) {
     top: 1em;
     left: 45%;

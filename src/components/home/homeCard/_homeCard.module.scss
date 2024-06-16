@@ -54,10 +54,18 @@
 
     z-index: 20;
 
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
     font-size: 1em;
     line-height: 120%;
     color: $checkbox-color-checked;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: normal;
+
+    -webkit-line-clamp: 3;
   }
 
   .block-price {
