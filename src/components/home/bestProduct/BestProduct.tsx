@@ -50,6 +50,7 @@ export default function BestProduct(): JSX.Element {
             </h1>
             <section className={style['progress-wrapper']}>
               <div className={style.progress}>
+              <span className={`${style.bar} ${style.wrapper}`} />
                 <div className={style.circle}>
                   <div className={`${style.title} ${style.meteorite}`}>exclusive meterite fragments</div>
                 </div>
@@ -63,6 +64,7 @@ export default function BestProduct(): JSX.Element {
                 <div className={style.circle}>
                   <span className={style.title}>Recordings from Deep space and Mission Conversations</span>
                 </div>
+                <span className={`${style.bar} ${style.wrapper}`} />
               </div>
               <button type="button" className={style['navigation-button']}  onClick={() => {
             navigate(ROUTES.CATALOG_ALL);
