@@ -2,7 +2,9 @@
 @import '../../../assets//styles/variables';
 
 .wrapper {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 input[type='text'] {

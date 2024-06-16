@@ -23,7 +23,6 @@
 .products-list-wrapper {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   justify-content: space-between;
 }
 
@@ -36,6 +35,7 @@
 }
 
 .products-wrapper {
+  flex-grow: 1;
   margin: 2rem 0;
 }
 

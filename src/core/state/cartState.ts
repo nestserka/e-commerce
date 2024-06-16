@@ -183,7 +183,8 @@ export const useCartData = create<CartState>((set, get) => ({
         const updatedCart = await addDiscountCodeToCart(cartId, version, codeStr);
         get().updateCartState(updatedCart);
       } catch (err) {
-        console.log(err);
+        set({ error: `Failed to add promocode to the cart. Check if the promocode ${codeStr} exists.` });
+        console.log(`Failed to add promocode to the cart. Check if the promocode ${codeStr} exists.`, err);
       }
     }
 
