@@ -12,7 +12,7 @@
 
   box-sizing: border-box;
   height: 100%;
-  padding: 0 0.8em 2em;
+  padding: 0.5em 0.8em 2em;
 
   color: $font-color-primary-20;
 
@@ -26,12 +26,8 @@
   .card-pic {
     position: relative;
     display: inline-block;
-    height: 68%;
-
-    &.vertical {
-      height: 60%;
-      max-height: 214px;
-    }
+    height: 60%;
+    max-height: 214px;
 
     .category {
       transform: translateY(-50%);

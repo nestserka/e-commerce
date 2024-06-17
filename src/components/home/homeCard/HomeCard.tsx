@@ -33,7 +33,7 @@ export function HomeCard({
       to={`${DYNAMIC_ROUTES.PRODUCT}${product.cardKey}`}
       className={`${style.card} ${isVertical ? style.vertical : ''}`}
     >
-      <div className={`${style['card-pic']} ${isVertical ? style.vertical : ''}`}>
+      <div className={style['card-pic']}>
         {newCommerceImage ? (
           <img className={style['card-pic-img']} src={product.cardImages[newCommerceImage]} alt={product.cardName} />
         ) : (

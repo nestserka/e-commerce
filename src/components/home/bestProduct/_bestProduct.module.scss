@@ -2,24 +2,26 @@
 @import '../../../assets/styles/variables';
 
 .moon-wrapper {
-  width: 100%;
   position: relative;
+  width: 100%;
 
   &::after {
     content: '';
+
     position: absolute;
     z-index: -1;
-    left: -3em;
-    right: -3em;
     top: 15rem;
-    bottom: -20rem;
-    width: 100%;
+    left: -3em;
+
+    width: calc(100% + 6rem);
+    height: calc(90vh + 15rem);
+
     background-image: url('../../../assets/images/bg/bg-home.jpg');
     background-position: center;
     background-size: cover;
-    width: calc(100% + 6rem);
   }
 }
+
 .best-product-section {
   @include flex-center-space-between;
 
@@ -74,8 +76,8 @@
   @media (width <= 1060px) {
     flex-wrap: wrap;
     gap: 6em;
-    padding: 5em 0 2em;
     justify-content: center;
+    padding: 5em 0 2em;
 
     .welcome-section {
       @include flex-justify-center;
@@ -118,8 +120,9 @@
 
   @media (width <= 1060px) {
     @include flex-justify-center;
-    width: 100%;
+
     flex-direction: column;
+    width: 100%;
   }
 }
 
