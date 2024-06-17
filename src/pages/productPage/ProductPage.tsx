@@ -82,8 +82,11 @@ export default function ProductPage(): JSX.Element {
   useEffect(() => {
     if (itemsInCart) {
       const uniqueIdProductCart = itemsInCart.find((productData) => productData.productId === uniqueProductId);
-      setIdProductCart(uniqueIdProductCart?.id ? uniqueIdProductCart.id : null);
-      setProductInCart(true);
+
+      if (uniqueIdProductCart?.id) {
+        setIdProductCart(uniqueIdProductCart.id);
+        setProductInCart(true);
+      }
     }
   }, [itemsInCart, uniqueProductId]);
 
