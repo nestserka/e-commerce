@@ -64,6 +64,11 @@ export const useCartData = create<CartState>((set, get) => ({
         localStorage.setItem(`customerCart-${LS_PREFIX}`, cart.id);
       } catch (err) {
         console.log('Failed to get or create customer cart', err);
+
+        const cart = await createCustomerCart();
+        get().updateCartState(cart);
+        set({ customerCartId: cart.id });
+        localStorage.setItem(`customerCart-${LS_PREFIX}`, cart.id);
       }
     };
 
@@ -76,6 +81,11 @@ export const useCartData = create<CartState>((set, get) => ({
         localStorage.setItem(`anonymousCartId-${LS_PREFIX}`, cart.id);
       } catch (err) {
         console.log('Failed to get or create anonymous cart', err);
+
+        const cart = await createAnonymousCart();
+        get().updateCartState(cart);
+        set({ anonymousCartId: cart.id });
+        localStorage.setItem(`anonymousCartId-${LS_PREFIX}`, cart.id);
       }
     };
 

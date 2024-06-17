@@ -14,6 +14,7 @@ import Loader from '../../components/loader/Loader';
 import { useCartData } from '../../core/state/cartState';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 import CartRemoveButton from '../../domain/cart/cartRemoveButton/CartRemoveButton';
+import { useLoginData } from '../../core/state/userState';
 
 import type { PAGES } from '../../constants/constants';
 import type { AttributeBestseller, AttributeDiscount } from '../../utils/types';
@@ -56,7 +57,8 @@ export default function ProductPage(): JSX.Element {
   const [isShown, setIsShown] = useState<boolean>(false);
   const [uniqueProductId, setUniqueProductId] = useState<string>('');
   const [productInCart, setProductInCart] = useState<boolean>(false);
-  const { itemsInCart } = useCartData();
+  const { itemsInCart, setCart } = useCartData();
+  const { customerId } = useLoginData();
 
   useEffect(() => {
     if (productId) {
@@ -66,6 +68,9 @@ export default function ProductPage(): JSX.Element {
           setProduct(response);
           extractPrice(response);
           setUniqueProductId(response.id);
+          setCart(customerId).catch((err) => {
+            console.log(err);
+          });
         })
         .catch((err: Error) => {
           console.log(err.message);
@@ -77,7 +82,7 @@ export default function ProductPage(): JSX.Element {
     } else {
       setError('Product ID is missing');
     }
-  }, [productId]);
+  }, [productId, customerId, setCart]);
 
   useEffect(() => {
     if (itemsInCart) {
