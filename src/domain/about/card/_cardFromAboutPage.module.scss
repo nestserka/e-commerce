@@ -1,0 +1,133 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.card-block {
+  transition: 1s;
+
+  .card,
+  .card2 {
+    cursor: pointer;
+
+    width: 318px;
+    height: 500px;
+    margin: 11px;
+    padding: 21.5px;
+
+    text-align: center;
+
+    appearance: none;
+    background-color: #1f212d;
+    border: 1px solid #1f212d;
+    border-radius: 500px;
+
+    transition: 1s;
+
+    .card-block-img {
+      @media (width <= 1080px) {
+        width: 228px;
+      }
+
+      @media (width <= 850px) {
+        display: block;
+        margin-right: 20px;
+      }
+    }
+
+    .card-block-list {
+      max-width: 110px;
+      margin: 0.9rem auto;
+      padding: 0.3rem;
+
+      font: inherit;
+      color: $checkbox-color-checked;
+
+      background: none;
+      border: 1px solid $border-color-default;
+      border-radius: 24px;
+
+      transition:
+        background-color 0.5s ease,
+        color 0.5s ease;
+    }
+
+    .card-block-git-hub {
+      cursor: pointer;
+
+      display: block;
+
+      width: 38px;
+      height: 38px;
+      margin: 2rem auto;
+
+      transition: 300ms;
+
+      img {
+        pointer-events: none;
+      }
+    }
+
+    .card-block-git-hub:hover {
+      box-shadow: 0 0 5px 5px $bg-color-discount;
+    }
+
+    @media (width <= 1080px) {
+      width: 250px;
+      height: 450px;
+      padding: 11.5px;
+    }
+
+    @media (width <= 850px) {
+      display: flex;
+      align-items: center;
+
+      width: 380px;
+      height: fit-content;
+      margin: 5px;
+    }
+  }
+
+  .card2 {
+    @media (width <= 850px) {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      align-self: flex-start;
+
+      margin: 20px 5px;
+    }
+  }
+
+  .card:hover {
+    border-color: $font-color-primary-80;
+    animation: flash-border 2s linear infinite;
+  }
+
+  .logo {
+    margin: 3.5rem auto 1rem;
+    text-align: center;
+
+    @media (width <= 850px) {
+      display: none;
+    }
+  }
+
+  @media (width <= 850px) {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+}
+
+@keyframes flash-border {
+  0% {
+    border-color: $font-color-primary-60;
+  }
+
+  50% {
+    border-color: $border-color-default;
+  }
+
+  100% {
+    border-color: $font-color-primary-80;
+  }
+}

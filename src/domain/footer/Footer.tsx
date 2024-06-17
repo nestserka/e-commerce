@@ -10,6 +10,8 @@ import nasaLogo from '../../assets/images/ns-store-logo.svg';
 export default function Footer(): JSX.Element {
   return (
     <footer className={style.footer} data-testid="footer">
+      <div className={style.stars} />
+      <div className={style.twinkling} />
       <section className={style.wrapper}>
         <section className={style['logo-wrapper']}>
           <Link to={ROUTES.HOME}>
@@ -105,12 +107,7 @@ export default function Footer(): JSX.Element {
           © 2024 All materials were used for non-commercial and educational purposes <br /> only and belong to it’s
           owners.
         </p>
-        <a
-          className={style['footer-section-rss']}
-          href="https://rs.school/courses/javascript-mentoring-program"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a className={style['footer-section-rss']} href="https://rs.school" target="_blank" rel="noreferrer">
           <img src={logo} className={style['rs-logo']} alt="RS School logotype" />
         </a>
       </section>
