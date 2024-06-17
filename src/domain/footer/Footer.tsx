@@ -107,12 +107,7 @@ export default function Footer(): JSX.Element {
           © 2024 All materials were used for non-commercial and educational purposes <br /> only and belong to it’s
           owners.
         </p>
-        <a
-          className={style['footer-section-rss']}
-          href="https://rs.school"
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a className={style['footer-section-rss']} href="https://rs.school" target="_blank" rel="noreferrer">
           <img src={logo} className={style['rs-logo']} alt="RS School logotype" />
         </a>
       </section>

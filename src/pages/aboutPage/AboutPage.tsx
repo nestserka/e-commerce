@@ -11,10 +11,10 @@ import AstronautLogo3 from '../../assets/images/icons/astronaut.png';
 import AstronautLogo1 from '../../assets/images/icons/astronaut2.png';
 import AstronautLogo2 from '../../assets/images/icons/astronaut3.png';
 import DescriptionBlock from '../../domain/about/descriptionBlock/DescriptionBlock';
-
-import type { CardFromAboutPageProps, DescriptionData } from '../../domain/about/card/types';
 import useToggleModal from '../../utils/useToggleModal';
 import ModalFromAboutPage from '../../domain/about/modalAbout/ModalAbout';
+
+import type { CardFromAboutPageProps, DescriptionData } from '../../domain/about/card/types';
 
 export default function AboutPage(): JSX.Element {
   const descriptionData: DescriptionData[] = [
@@ -39,17 +39,17 @@ export default function AboutPage(): JSX.Element {
   );
   const [isModal, openIsModal, closeIsModal] = useToggleModal();
 
-  const handleClickFirstCard = () => {
+  const handleClickFirstCard = (): void => {
     openIsModal();
     setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[0]} />);
   };
 
-  const handleClickSecondCard = () => {
+  const handleClickSecondCard = (): void => {
     openIsModal();
     setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[1]} />);
   };
 
-  const handleClickThreeCard = () => {
+  const handleClickThreeCard = (): void => {
     openIsModal();
     setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[2]} />);
   };
