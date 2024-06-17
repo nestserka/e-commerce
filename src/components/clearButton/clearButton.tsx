@@ -1,25 +1,29 @@
 import style from './_clearButton.module.scss';
 import removeIcon from '../../assets/images/icons/icon-delete.svg';
-import { useCartData } from '../../core/state/cartState';
-import { getLineItemsPropsToRemove } from '../../utils/utils';
-import { useLoginData } from '../../core/state/userState';
+// import { useCartData } from '../../core/state/cartState';
+// import { getLineItemsPropsToRemove } from '../../utils/utils';
+// import { useLoginData } from '../../core/state/userState';
 
-export default function ClearButton(): JSX.Element {
-  const { getItemsIds, removeProductFromCart } = useCartData();
-  const { customerId } = useLoginData();
+interface ClearButtonProps {
+  onClick: () => void;
+}
 
-  const handleClick = async (): Promise<void> => {
-    const id = getItemsIds();
+export default function ClearButton({ onClick }: ClearButtonProps): JSX.Element {
+  // const { getItemsIds, removeProductFromCart } = useCartData();
+  // const { customerId } = useLoginData();
 
-    if (id) {
-      const actionProps = getLineItemsPropsToRemove(id);
+  // const handleClick = async (): Promise<void> => {
+  //   const id = getItemsIds();
 
-      await removeProductFromCart(actionProps, customerId);
-    }
-  };
+  //   if (id) {
+  //     const actionProps = getLineItemsPropsToRemove(id);
+
+  //     await removeProductFromCart(actionProps, customerId);
+  //   }
+  // };
 
   return (
-    <button onClick={handleClick} type="button" className={`${style['clear-button']} button-secondary`}>
+    <button onClick={onClick} type="button" className={`${style['clear-button']} button-secondary`}>
       <span>Clear all</span>
       <img src={removeIcon} alt="" className={style.icon} />
     </button>

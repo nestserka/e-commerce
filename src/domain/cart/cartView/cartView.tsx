@@ -1,12 +1,17 @@
+import { useState } from 'react';
+
 import style from './_cartView.module.scss';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import BackButton from '../../../components/backButton/backButton';
 import { useCartData } from '../../../core/state/cartState';
 import CartItemLine from '../cartItemLine/cartItemLine';
-import { getLineItemProps } from '../../../utils/utils';
+import { getLineItemProps, getLineItemsPropsToRemove } from '../../../utils/utils';
 import EmptyCartState from '../emptyCartView/emptyCartState';
 import ClearButton from '../../../components/clearButton/clearButton';
 import CartSummary from '../cartSummary/cartSummary';
+import Promocode from '../promocode/promocode';
+import ModalClearCart from '../modalClearCart/modalClearCart';
+import { useLoginData } from '../../../core/state/userState';
 
 const dateNow = new Date();
 
@@ -15,9 +20,30 @@ const formattedDate = dateNow.toLocaleDateString('en-US', options);
 
 export default function CartView(): JSX.Element {
   const { itemsInCart } = useCartData();
+  const [isModalShown, setIsModalShown] = useState<boolean>(false);
+
+  const { getItemsIds, removeProductFromCart } = useCartData();
+  const { customerId } = useLoginData();
+
+  const clearCart = async (): Promise<void> => {
+    const id = getItemsIds();
+
+    if (id) {
+      const actionProps = getLineItemsPropsToRemove(id);
+
+      await removeProductFromCart(actionProps, customerId).then(() => {
+        setIsModalShown(false);
+      });
+    }
+  };
+
+  const cancelAndCloseModal = (): void => {
+    setIsModalShown(false);
+  };
 
   return (
     <>
+      {isModalShown && <ModalClearCart onConfirm={clearCart} onCancel={cancelAndCloseModal} />}
       <BackButton />
       <h1 className={style.title}>Shopping Cart</h1>
 
@@ -38,13 +64,18 @@ export default function CartView(): JSX.Element {
               <div className={style['date-wrapper']}>
                 <span>Nearest shipping date</span> <span className={style.date}>{formattedDate}</span>
               </div>
-              <ClearButton />
+              <ClearButton
+                onClick={() => {
+                  setIsModalShown(true);
+                }}
+              />
             </div>
           </section>
           <aside className={style['aside-wrapper']}>
             <CartSummary />
             <section className={style['promocode-wrapper']}>
               <FormSubTitle subTitle="Promocode" />
+              <Promocode />
             </section>
           </aside>
         </div>

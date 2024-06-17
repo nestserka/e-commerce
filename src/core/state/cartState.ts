@@ -7,6 +7,7 @@ import getActiveCart from '../../api/me/cart/getActiveCart';
 import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 import addProductToCart from '../../api/me/cart/addProductToCart';
 import removeProductFromCart from '../../api/me/cart/removeProductFromCart';
+import addDiscountCodeToCart from '../../api/me/cart/addDiscountCode';
 
 import type { Cart, LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
 
@@ -19,6 +20,7 @@ interface CartState {
   activeCart: Cart | undefined;
   version: number | null;
   itemsInCart: LineItem[] | null;
+  isPromocodeApplied: boolean;
   isLoading: boolean;
   error: string;
   isInCart: (productId: string) => boolean;
@@ -28,6 +30,7 @@ interface CartState {
   setCart: (customerId: string) => Promise<void>;
   updateCartState: (cart: Cart) => void;
   getTotalItemsDiscount: () => number;
+  addDiscountCode: (customerId: string, codeStr: string) => Promise<void>;
   reset: () => void;
 }
 
@@ -37,6 +40,7 @@ export const useCartData = create<CartState>((set, get) => ({
   activeCart: undefined,
   version: null,
   itemsInCart: null,
+  isPromocodeApplied: false,
   isLoading: false,
   error: '',
   isInCart: (productId: string): boolean => {
@@ -89,6 +93,7 @@ export const useCartData = create<CartState>((set, get) => ({
       activeCart: cart,
       version: cart.version,
       itemsInCart: cart.lineItems,
+      isPromocodeApplied: !!cart.discountOnTotalPrice,
     });
   },
 
@@ -163,6 +168,27 @@ export const useCartData = create<CartState>((set, get) => ({
     }
 
     return totalDiscount / 100;
+  },
+  addDiscountCode: async (customerId: string, codeStr: string): Promise<void> => {
+    set({ isLoading: true, error: '' });
+
+    const { activeCart } = useCartData.getState();
+
+    if (activeCart) {
+      const { version } = activeCart;
+
+      try {
+        const { customerCartId, anonymousCartId } = useCartData.getState();
+        const cartId = customerId ? customerCartId : anonymousCartId;
+        const updatedCart = await addDiscountCodeToCart(cartId, version, codeStr);
+        get().updateCartState(updatedCart);
+      } catch (err) {
+        set({ error: `Failed to add promocode to the cart. Check if the promocode ${codeStr} exists.` });
+        console.log(`Failed to add promocode to the cart. Check if the promocode ${codeStr} exists.`, err);
+      }
+    }
+
+    set({ isLoading: false });
   },
   reset: (): void => {
     set({

@@ -5,10 +5,13 @@
   display: flex;
   gap: 1.5rem;
   width: 100%;
+
+  @media (width <= 1366px) {
+    flex-direction: column;
+  }
 }
 
 .title {
-  flex-grow: 1;
   font-family: DisplayMedium, sans-serif;
   text-align: center;
 }
@@ -18,12 +21,26 @@
   flex-basis: 435px;
   flex-direction: column;
   gap: 1.5rem;
+
+  @media (width <= 1366px) {
+    flex-basis: auto;
+    flex-direction: row;
+    width: 100%;
+
+    .summary-wrapper,
+    .promocode-wrapper {
+      flex-grow: 1;
+    }
+  }
+
+  @media (width <= 900px) {
+    flex-direction: column;
+  }
 }
 
 .products-list-wrapper {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   justify-content: space-between;
 }
 
@@ -33,19 +50,32 @@
   padding: 2.25rem;
   background-color: $background-color-primary-two;
   border-radius: 1.5rem;
+
+  @media (width <= 640px) {
+    padding: 1.5rem;
+  }
 }
 
 .products-wrapper {
+  flex-grow: 1;
   margin: 2rem 0;
 }
 
 .clear-all-wrapper {
   @include flex-center-space-between;
+
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .date-wrapper {
   display: flex;
   gap: 0.6rem;
+
+  @media (width <= 480px) {
+    flex-grow: 1;
+    justify-content: space-between;
+  }
 }
 
 .date {

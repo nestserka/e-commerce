@@ -30,7 +30,7 @@ export default function HomePage(): JSX.Element {
         </h1>
         <div className={style['greeting-wrapper']}>
           <div className={style['rocket-icon']}>
-            <img src={icon} alt="" />
+            <img src={icon} alt="Rocket" />
           </div>
           <div>
             <h1 className={style.subtitle}>

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { formatDateOfBirth, formatPrice, getInputProps, handleLoginError } from '../../utils/utils';
+import { createBooleanState, formatDateOfBirth, formatPrice, getInputProps, handleLoginError } from '../../utils/utils';
 
 describe('getInputProps', () => {
   it('returns the correct input props', () => {
@@ -57,5 +57,24 @@ describe('formatPrice', () => {
   it('formats price correctly', () => {
     const formattedPrice = formatPrice(12345);
     expect(formattedPrice).toBe('$123.45');
+  });
+
+  describe('createBooleanState', () => {
+    it('should initialize with the provided initial value', () => {
+      const initialValue = true;
+      const booleanState = createBooleanState(initialValue);
+
+      expect(booleanState.get()).toEqual(initialValue);
+    });
+
+    it('should correctly update the boolean value', () => {
+      const booleanState = createBooleanState(true);
+
+      booleanState.set(false);
+      expect(booleanState.get()).toEqual(false);
+
+      booleanState.set(true);
+      expect(booleanState.get()).toEqual(true);
+    });
   });
 });
