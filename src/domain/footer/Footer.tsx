@@ -10,6 +10,8 @@ import nasaLogo from '../../assets/images/ns-store-logo.svg';
 export default function Footer(): JSX.Element {
   return (
     <footer className={style.footer} data-testid="footer">
+      <div className={style.stars} />
+      <div className={style.twinkling} />
       <section className={style.wrapper}>
         <section className={style['logo-wrapper']}>
           <Link to={ROUTES.HOME}>
