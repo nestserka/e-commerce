@@ -67,6 +67,10 @@ export const showModalMessage = create<IsShownModal>((set) => ({
   setIsShown: (isShown: boolean): void => {
     set(() => ({ isShown }));
   },
+  isClipBoardShown: false,
+  setIsClipShown: (isClipBoardShown: boolean): void => {
+    set(() => ({ isClipBoardShown }));
+  },
 }));
 
 export const useCustomerInfo = create<CustomerInfoState>((set) => ({

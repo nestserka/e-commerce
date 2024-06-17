@@ -1,24 +1,73 @@
 @use '../../assets/styles/mixins' as *;
 
+@import '../../assets/styles/variables';
+
 .footer {
   @include flex-center-space-between;
 
-  padding: 1em 0;
+  flex-direction: row;
+  gap: 4.313em;
+
+  margin-right: -3rem;
+  margin-left: -3rem;
+  padding: 3rem;
+
+  background-color: $bg-footer-color;
+
+  .wrapper {
+    @include flex-justify-start;
+
+    flex-direction: column;
+    gap: 1em;
+
+    &.contact {
+      @include flex-justify-start;
+
+      flex-direction: column;
+      gap: 0.5em;
+    }
+
+    .footer-section-rss,
+    .contact-title {
+      align-self: end;
+    }
+
+    .contact-information {
+      @include flex-justify-start;
+
+      flex-direction: row;
+      gap: 0.5rem;
+
+      .contact-logo {
+        width: 15px;
+        height: 15px;
+      }
+    }
+
+    .wrapper-text {
+      @include font-firs-regular;
+
+      font-size: 0.875em;
+      line-height: 1.125em;
+      color: $font-color-primary-40;
+    }
+
+    .address-text {
+      @include font-firs-regular;
+
+      font-size: 0.875em;
+      color: $font-color-primary-60;
+    }
+  }
+
+  @media (width <= 640px) {
+    margin-right: -1rem;
+    margin-left: -1rem;
+    padding: 1em;
+  }
 }
 
 .rs-logo {
   width: 80px;
   height: 40px;
-}
-
-.footer-section {
-  flex-basis: calc(100% / 3);
-}
-
-.footer .footer-section:last-child {
-  @include flex-right;
-}
-
-.footer .footer-section:nth-child(2) {
-  @include flex-justify-center;
 }

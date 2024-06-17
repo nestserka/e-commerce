@@ -200,31 +200,41 @@
 }
 
 .loader-button {
+  position: relative;
+
+  display: inline-block;
+
+  box-sizing: border-box;
   width: 22px;
   height: 22px;
+
+  background: linear-gradient(0deg, rgb(86 41 160 / 20%) 33%, $font-color-warning 100%);
   border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  background: linear-gradient(0deg, rgba(86, 41, 160, 0.2) 33%, $font-color-warning 100%);
-  box-sizing: border-box;
+
   animation: rotation 1s linear infinite;
 }
+
 .loader-button::after {
   content: '';
-  box-sizing: border-box;
+
   position: absolute;
-  left: 50%;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
+
+  box-sizing: border-box;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+
   background: #263238;
+  border-radius: 50%;
 }
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

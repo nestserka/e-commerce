@@ -1,0 +1,93 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.card {
+  @include flex-center-space-between;
+
+  cursor: pointer;
+
+  position: relative;
+
+  flex-direction: column;
+
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0.5em 0.8em 2em;
+
+  color: $font-color-primary-20;
+
+  background-color: $bg-home-cards;
+  border-radius: 1.5rem;
+
+  &.vertical {
+    padding: 2em 1em;
+  }
+
+  .card-pic {
+    position: relative;
+    display: inline-block;
+    height: 60%;
+    max-height: 214px;
+
+    .category {
+      transform: translateY(-50%);
+
+      font-size: 0.875em;
+      line-height: 1.063em;
+      color: $font-color-primary-80;
+      text-align: center;
+    }
+
+    .card-pic-img {
+      width: auto;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .card-title {
+    @include font-arimo-bold;
+
+    z-index: 20;
+
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
+    font-size: 1em;
+    line-height: 120%;
+    color: $checkbox-color-checked;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: normal;
+
+    -webkit-line-clamp: 3;
+  }
+
+  .block-price {
+    @include flex-center-space-between;
+
+    z-index: 20;
+
+    flex-direction: column;
+    gap: 0.5em;
+
+    width: 100%;
+    margin-top: 0.7em;
+
+    font-family: Arimo, sans-serif;
+    font-size: 1em;
+    line-height: 1.5em;
+    color: $font-color-primary;
+
+    .discount {
+      place-self: end end;
+
+      font-size: 0.875em;
+      line-height: 1.05em;
+      text-decoration: line-through;
+
+      opacity: 0.6;
+    }
+  }
+}

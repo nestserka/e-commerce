@@ -3,53 +3,69 @@
 @import '../../assets/styles/variables';
 
 .home {
-  @include page-layout-container;
+  @include page-home-layout-container;
 
   flex-direction: column;
-  gap: 2em;
   justify-content: center;
   width: 100%;
 
-  &::after {
-    content: '';
+  .welcome-section {
+    @include flex-center-space-between;
 
-    position: absolute;
-    z-index: -1;
-    inset: 0;
+    flex-direction: row;
+    gap: 1em;
 
-    background-image: url('../../assets/images/bg/bg-home.jpg');
-    background-position: center;
-    background-size: cover;
-  }
-}
+    .title {
+      @include font-firs-regular;
 
-.nav-wrapper {
-  display: flex;
-  gap: 3px;
+      font-size: 3.625em;
+      line-height: 100%;
+      color: $font-color-home-title;
+      text-transform: uppercase;
 
-  @media (width <= 1024px) {
-    flex-wrap: wrap;
-  }
-}
+      .accent-text {
+        color: $font-color-primary;
+      }
 
-.title {
-  margin: 0;
-  padding: 0;
+      @media (width <= 1300px) {
+        font-size: 3em;
+      }
 
-  font-family: DisplayRegular, sans-serif;
-  font-size: 56px;
-  line-height: 1.2;
-  color: $font-color-title-dark;
+      @media (width <= 440px) {
+        font-size: 2.4em;
+      }
+    }
 
-  .accent-text {
-    @include title-accent;
-  }
+    .greeting-wrapper {
+      @include flex-justify-center;
 
-  @media (width <= 680px) {
-    font-size: 48px;
-  }
+      flex-direction: row;
+      gap: 0.625em;
 
-  @media (width <= 480px) {
-    font-size: 36px;
+      .rocket-icon {
+        @include flex-justify-center;
+      }
+
+      .subtitle {
+        @include font-firs-medium;
+
+        font-size: 0.875em;
+        line-height: 140%;
+        color: $font-color-title-dark;
+
+        .accent-text {
+          @include title-accent;
+        }
+      }
+    }
+
+    @media (width <= 1024px) {
+      flex-direction: column-reverse;
+      gap: 2em;
+
+      .title {
+        text-align: center;
+      }
+    }
   }
 }

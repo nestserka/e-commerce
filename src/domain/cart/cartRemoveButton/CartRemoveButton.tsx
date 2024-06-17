@@ -9,7 +9,6 @@ export interface CartRemoveButtonProps {
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
   setProductInCart: React.Dispatch<React.SetStateAction<boolean>>;
   setIdProductCart: React.Dispatch<React.SetStateAction<string | null>>;
-
 }
 
 export default function CartRemoveButton({
@@ -17,7 +16,7 @@ export default function CartRemoveButton({
   id,
   setIsShow,
   setIdProductCart,
-  setProductInCart
+  setProductInCart,
 }: CartRemoveButtonProps): JSX.Element {
   const { customerId } = useLoginData();
   const { activeCart, setCart, removeProductFromCart, isLoading } = useCartData();

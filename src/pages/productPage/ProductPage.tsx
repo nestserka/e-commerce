@@ -80,12 +80,12 @@ export default function ProductPage(): JSX.Element {
   }, [productId]);
 
   useEffect(() => {
-  if (itemsInCart) {
-    const uniqueIdProductCart = itemsInCart.find((productData) => productData.productId ===uniqueProductId);
-    setIdProductCart(uniqueIdProductCart?.id ? uniqueIdProductCart.id : null);
-    setProductInCart(true);
-  }
-}, [itemsInCart, uniqueProductId]);
+    if (itemsInCart) {
+      const uniqueIdProductCart = itemsInCart.find((productData) => productData.productId === uniqueProductId);
+      setIdProductCart(uniqueIdProductCart?.id ? uniqueIdProductCart.id : null);
+      setProductInCart(true);
+    }
+  }, [itemsInCart, uniqueProductId]);
 
   if (loading) {
     return (

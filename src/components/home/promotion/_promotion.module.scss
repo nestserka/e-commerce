@@ -1,0 +1,323 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.promotion-section {
+  @include flex-justify-center;
+
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 4em auto 0;
+
+  .promotion-wrapper {
+    @include flex-center-space-between;
+
+    flex-direction: row;
+    gap: 1em;
+    align-items: start;
+
+    width: 100%;
+    padding: 4.375em 2.5em 0;
+
+    .information-block {
+      @include flex-justify-start;
+
+      flex-direction: column;
+      gap: 1em;
+      font-family: DisplayMedium, sans-serif;
+      font-size: 14px;
+
+      .discount-name {
+        margin-right: 4px;
+        padding: 6px 8px 5px;
+
+        color: $checkbox-color-checked;
+
+        background-color: rgb(86 41 160);
+        border-radius: 6px;
+      }
+
+      .title {
+        @include font-firs-medium;
+
+        font-size: 1.75rem;
+        line-height: 2.118rem;
+        color: $font-color-primary;
+
+        &.promocode-text {
+          max-width: 34.063rem;
+
+          @media (width <= 1170px) {
+            max-width: 28rem;
+          }
+        }
+
+        &.sub-text {
+          max-width: 7.5em;
+
+          @media (width <= 550px) {
+            max-width: 12em;
+          }
+        }
+      }
+
+      .description {
+        @include font-arimo-regular;
+
+        max-width: 24.688em;
+        font-size: 1em;
+        line-height: 1.2em;
+      }
+    }
+
+    @media (width <= 1140px) {
+      width: 80%;
+    }
+
+    @media (width <= 723px) {
+      width: 100%;
+    }
+  }
+
+  .double-layer {
+    gap: 1.25rem;
+    width: 100%;
+    padding: 0;
+
+    .product-container {
+      @include flex-justify-start;
+
+      flex-basis: 50%;
+      flex-direction: row;
+
+      padding: 4.375em 2.5em 0;
+
+      background-color: rgb(33 32 46 / 25500%);
+      border-radius: 20px;
+
+      &.sub {
+        background-image: url('../../../../public/assets/images/home/banner/bg-food.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      @media (width <= 1210px) {
+        flex-basis: 100%;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      @media (width <= 1140px) {
+        width: 80%;
+      }
+
+      @media (width <= 723px) {
+        width: 100%;
+      }
+
+      @media (width <= 550px) {
+        padding-bottom: 2em;
+      }
+    }
+
+    @media (width <= 1140px) {
+      @include flex-justify-center;
+
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  .eyewear {
+    height: 20em;
+    padding-right: 5.688em;
+
+    background-image: url('../../../../public/assets/images/home/banner/bg-binocular.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px;
+
+    .product {
+      width: 20.25em;
+      height: 13.188em;
+    }
+
+    @media (width <= 1140px) {
+      .product {
+        width: 10.25em;
+        height: 13.188em;
+      }
+    }
+
+    @media (width <= 940px) {
+      .product {
+        width: 6em;
+        height: 8em;
+      }
+    }
+
+    @media (width <= 700px) {
+      padding-right: 2.5em;
+
+      .product {
+        display: none;
+      }
+    }
+  }
+
+  .promocode {
+    @include flex-justify-start;
+    justify-content: space-between;
+    padding: 4.375em 9em 0 2.5em;
+    height: 20em;
+    background-image: url('../../../../public/assets/images/home/banner/bg-promocode.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 20px;
+
+    @media (width <= 1540px) {
+      padding-right: 8em;
+    }
+
+    @media (width <= 1140px) {
+      flex-direction: column;
+      gap: 6em;
+      height: auto;
+      padding-bottom: 5rem;
+    }
+
+    @media (width <= 723px) {
+      align-items: start;
+    }
+  }
+
+  .coupang {
+    position: relative;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      top: -4rem;
+      left: 43%;
+
+      width: 100%;
+      height: 8rem;
+
+      background-image: url('../../../assets/images/card/ufo.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+
+    .sub-text {
+      margin-top: 10px;
+      font-size: 0.5em;
+      text-align: center;
+      text-transform: lowercase;
+    }
+
+    .promocode-clipper {
+      @include flex-center-space-between;
+      @include font-firs-medium;
+      cursor: pointer;
+
+      gap: 0.875rem;
+
+      margin-top: 3.125rem;
+      padding: 0.7em 1em;
+      font-size: 1.75rem;
+      text-transform: uppercase;
+
+      background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
+      border-radius: 2em;
+
+      @media (width <= 500px) {
+        font-size: 1.25rem;
+      }
+    }
+
+    .ufo-wrapper {
+      position: relative;
+
+      &::after {
+        content: '';
+
+        position: absolute;
+        top: 1rem;
+        left: 3em;
+
+        width: 100%;
+        height: 13rem;
+
+        background-image: url('../../../assets/images/card/ufo-light.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+    }
+  }
+
+  @media (width >= 1800px) {
+    width: 80rem;
+  }
+
+  @media (width <= 1500px) {
+    width: calc(100% - 14em);
+  }
+
+  @media (width <= 1380px) {
+    width: calc(100% - 7em);
+  }
+
+  @media (width <= 1290px) {
+    width: 100%;
+  }
+}
+
+.poster {
+  width: 300px;
+  height: 300px;
+  margin-left: auto;
+
+  .display {
+    transform: translateY(-5%);
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+    &.art-picture {
+      transform: translate(20%, 0%);
+
+      @media (width <= 1210px) {
+        transform: translate(10%, 0%);
+      }
+    }
+
+    &.food-picture {
+      width: 255px;
+      height: 255px;
+
+      @media (width <= 1140px) {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  @media (width <= 770px) {
+    width: 250px;
+    height: 250px;
+  }
+
+  @media (width <= 550px) {
+    width: 150px;
+    height: 150px;
+  }
+
+  @media (width <= 440px) {
+    display: none;
+  }
+}
