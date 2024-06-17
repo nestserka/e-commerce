@@ -11,6 +11,8 @@ import PaginationBlock from '../../components/pagination/Patination';
 import FiltersBlockForCategory from '../../domain/catalog/filtersBlock/FiltersBlockForCategoryPage';
 import HeaderCatalogPage from '../../domain/catalog/HeaderCatalog/HeaderCatalog';
 import Loader from '../../components/loader/Loader';
+import { useLoginData } from '../../core/state/userState';
+import { useCartData } from '../../core/state/cartState';
 
 import type { SearchProps } from 'antd/es/input';
 import type { OptionsFromSelect, OptionsFromSelectSort } from './types';
@@ -27,6 +29,8 @@ export default function CategoryPage(): JSX.Element {
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const [nameSubtree, setNameSubtree] = useState<string | null>(null);
   const [isFirstDownload, setIsFirstDownload] = useState<boolean>(false);
+  const { customerId } = useLoginData();
+  const { setCart } = useCartData();
 
   const navigation = useNavigate();
   const {
@@ -49,6 +53,10 @@ export default function CategoryPage(): JSX.Element {
   const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
 
   const getProductListFromCategory = useCallback(() => {
+    setCart(customerId).catch((err) => {
+      console.log(err);
+    });
+
     if (category === 'all') {
       getProductsList()
         .then((productListData: ProductProjectionPagedSearchResponse) => {
@@ -78,7 +86,7 @@ export default function CategoryPage(): JSX.Element {
           setIsFirstDownload(true);
         });
     }
-  }, [categoriesData, category, getProductsList, setTotal]);
+  }, [categoriesData, category, getProductsList, setTotal, customerId, setCart]);
 
   const defaultPage = (): void => {
     setCurrentPage(1);

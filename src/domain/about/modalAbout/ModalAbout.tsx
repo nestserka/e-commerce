@@ -12,11 +12,14 @@ export default function ModalFromAboutPage({ isOpen, children }: ModalFromAboutP
   };
 
   return (
-    <section className={styles.modal}>
-      <button type="button" className={styles['modal-close-btn']} onClick={handleCloseModal}>
-        <img src={closeIcon} alt="Edit" />
-      </button>
-      {children}
-    </section>
+    <>
+      <div className={styles.overlay} />
+      <section className={styles.modal}>
+        <button type="button" className={styles['modal-close-btn']} onClick={handleCloseModal}>
+          <img src={closeIcon} alt="Edit" />
+        </button>
+        {children}
+      </section>
+    </>
   );
 }

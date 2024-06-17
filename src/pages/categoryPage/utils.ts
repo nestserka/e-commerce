@@ -58,3 +58,5 @@ export function createCategoriesList(categoriesData: Category[]): OptionsFromSel
 
   return optionsForSelect;
 }
+
+export const generateUniqueId = (): string => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;

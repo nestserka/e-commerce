@@ -12,7 +12,7 @@
 
   box-sizing: border-box;
   height: 100%;
-  padding: 0.5em 0.8em 2em;
+  padding: 0.5rem 2rem 2rem;
 
   color: $font-color-primary-20;
 
@@ -20,14 +20,19 @@
   border-radius: 1.5rem;
 
   &.vertical {
-    padding: 2em 1em;
+    padding: 2em;
   }
 
   .card-pic {
     position: relative;
-    display: inline-block;
+
+    overflow: hidden;
+    display: block;
+
     height: 60%;
     max-height: 214px;
+
+    border-radius: 16px;
 
     .category {
       transform: translateY(-50%);
@@ -54,14 +59,13 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
 
-    font-size: 1em;
-    line-height: 120%;
-    color: $checkbox-color-checked;
+    font-size: 1rem;
+    color: $font-color-primary;
     text-align: center;
     text-overflow: ellipsis;
     white-space: normal;
 
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
   }
 
   .block-price {

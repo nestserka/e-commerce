@@ -12,7 +12,7 @@
     @include flex-center-space-between;
 
     flex-direction: row;
-    gap: 1em;
+    gap: 1rem;
     align-items: start;
 
     width: 100%;
@@ -24,12 +24,12 @@
       flex-direction: column;
       gap: 1em;
       font-family: DisplayMedium, sans-serif;
-      font-size: 14px;
 
       .discount-name {
         margin-right: 4px;
         padding: 6px 8px 5px;
 
+        font-size: 14px;
         color: $checkbox-color-checked;
 
         background-color: rgb(86 41 160);
@@ -65,7 +65,6 @@
 
         max-width: 24.688em;
         font-size: 1em;
-        line-height: 1.2em;
       }
     }
 
@@ -168,9 +167,12 @@
 
   .promocode {
     @include flex-justify-start;
+
     justify-content: space-between;
-    padding: 4.375em 9em 0 2.5em;
+
     height: 20em;
+    padding: 4.375em 9em 0 2.5em;
+
     background-image: url('../../../../public/assets/images/home/banner/bg-promocode.jpg');
     background-repeat: no-repeat;
     background-position: center;
@@ -214,21 +216,23 @@
 
     .sub-text {
       margin-top: 10px;
-      font-size: 0.5em;
+      font-size: 0.8rem;
       text-align: center;
-      text-transform: lowercase;
     }
 
     .promocode-clipper {
       @include flex-center-space-between;
       @include font-firs-medium;
+
       cursor: pointer;
 
       gap: 0.875rem;
 
       margin-top: 3.125rem;
       padding: 0.7em 1em;
+
       font-size: 1.75rem;
+      color: $background-color-primary-one;
       text-transform: uppercase;
 
       background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);

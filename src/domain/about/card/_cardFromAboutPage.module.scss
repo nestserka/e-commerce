@@ -23,6 +23,8 @@
     transition: 1s;
 
     .card-block-img {
+      width: 100%;
+
       @media (width <= 1080px) {
         width: 228px;
       }
@@ -34,11 +36,11 @@
     }
 
     .card-block-list {
-      max-width: 110px;
+      width: fit-content;
       margin: 0.9rem auto;
-      padding: 0.3rem;
+      padding: 0.5rem 1rem;
 
-      font: inherit;
+      font-family: DisplayRegular, sans-serif;
       color: $checkbox-color-checked;
 
       background: none;
@@ -97,7 +99,8 @@
     }
   }
 
-  .card:hover {
+  .card:hover,
+  .card2:hover {
     border-color: $font-color-primary-80;
     animation: flash-border 2s linear infinite;
   }

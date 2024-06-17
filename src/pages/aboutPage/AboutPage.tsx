@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import styles from './_about.module.scss';
-import FotoSecondCard from '../../assets/images/card/Katerina.png';
-import FotoThereCard from '../../assets/images/card/Anna.png';
+import FotoSecondCard from '../../assets/images/card/Katsyarina.png';
+import FotoThereCard from '../../assets/images/card/ania.png';
 import FotoFirstCard from '../../assets/images/card/Tasha.png';
 import CardFromAboutPage from '../../domain/about/card/CardFromAboutPage';
 import Logo from '../../assets/images/rs-logo.svg';
-import AstronautLogo3 from '../../assets/images/icons/astronaut.png';
-import AstronautLogo1 from '../../assets/images/icons/astronaut2.png';
-import AstronautLogo2 from '../../assets/images/icons/astronaut3.png';
+import AstronautLogo3 from '../../assets/images/icons/astronaut-1.svg';
+import AstronautLogo1 from '../../assets/images/icons/astronaut-2.svg';
+import AstronautLogo2 from '../../assets/images/icons/astronaut-3.svg';
 import DescriptionBlock from '../../domain/about/descriptionBlock/DescriptionBlock';
 import { useToggleModal } from '../../utils/useToggleModal';
 import ModalFromAboutPage from '../../domain/about/modalAbout/ModalAbout';
@@ -20,8 +20,8 @@ export default function AboutPage(): JSX.Element {
   const descriptionData: DescriptionData[] = [
     {
       title: 'Natalia Grischenok',
-      bio: 'Natalia with enthusiasm and thirst for knowledge, started his/her journey in programming in 2022.  She immediately fell in love with frontend development, fascinated by the possibilities of creating beautiful and functional web interfaces.',
-      contribution: 'Catalog page, About us page,  Project routing and configuration, Team Leader',
+      bio: 'Natalia with enthusiasm and thirst for knowledge, started her journey in programming in 2022. She immediately fell in love with frontend development, fascinated by the possibilities of creating beautiful and functional web interfaces.',
+      contribution: 'Catalog page, About us page, Project routing and configuration, Team Leader',
     },
     {
       title: 'Katsiaryna Nestserava',
@@ -30,7 +30,7 @@ export default function AboutPage(): JSX.Element {
     },
     {
       title: 'Ania Chebysheva',
-      bio: 'Anna is a UI/UX designer with a passion for frontend development. To broaden her web knowledge and deepen her skills, she enrolled in the RS School JS/frontend course in the summer of 2023 and successfully completed it. Looking ahead, she aims to integrate web development and coding in JS/TS into her professional career, as she finds it fascinating and believes it holds a touch of magic.',
+      bio: 'Anna is a UX/UI designer with a passion for frontend development. To broaden her web knowledge and deepen her skills, she enrolled in the RS School JS/Frontend course in the summer of 2023 and successfully completed it. Looking ahead, she aims to integrate web development and coding in JS/TS into her professional career, as she finds it fascinating and believes it holds a touch of magic.',
       contribution: 'Product page, Cart page, Login page, Project design',
     },
   ];
@@ -74,8 +74,8 @@ export default function AboutPage(): JSX.Element {
     {
       key: '3',
       srcImg: FotoThereCard,
-      firstDescription: '/ design',
-      secondDescription: '/ frontend',
+      firstDescription: '/ frontend',
+      secondDescription: '/ design',
       linkForGitHub: 'https://github.com/marblehands',
       handleClickForCard: handleClickThreeCard,
     },
@@ -85,9 +85,10 @@ export default function AboutPage(): JSX.Element {
     <section className={styles.about} data-testid="about">
       <h1 className={styles.title}>
         <div className={styles['title-line']}>
-          <span className={styles['title-line-span']}>MEET</span>OUR
+          <span className={styles['title-line-span']}>MEET</span>
+          OUR <br />
+          DREAM TEAM
         </div>
-        <div className={styles['title-line']}>DREAM TEAM</div>
       </h1>
       <div className={styles['circle-block']}>
         <div className={styles.dot}>
@@ -118,8 +119,7 @@ export default function AboutPage(): JSX.Element {
       <div className={styles['desc-training-platform-block']}>
         <h3 className={styles.title2}>
           <div className={styles['title-line']}>
-            <span>OUR TEAM</span>
-            <span className={styles['title-line-span']}>BOOLEAN BABES</span>
+            <span className={styles['title-line-span']}>OUR TEAM BOOLEAN BABES</span>
           </div>
           <span className={styles['horizontal-line']} />
         </h3>
@@ -127,16 +127,17 @@ export default function AboutPage(): JSX.Element {
           <div className={styles.paragraph}>
             <h4 className={styles['paragraph-title']}>DREAM TEAM</h4>
             <div className={styles['paragraph-desc']}>
-              We are the POP team that designed the store for WE. We learned, enjoyed, coped with difficulties and
-              overcame them together, creating not just a website, but a whole spaceship, carrying on its boards dreams
-              and technologies of the future.
+              We are the Boolean Babes team that designed the e-commerce store for the NASA. We learned, enjoyed, coped
+              with difficulties and overcame them together, creating not just a website, but a whole spaceship, carrying
+              on its boards dreams and technologies of the future.
             </div>
           </div>
           <div className={styles.paragraph}>
             <h4 className={styles['paragraph-title']}>LEARNING PLATFORM</h4>
             <div className={styles['paragraph-desc']}>
-              This project is the final assignment of a learning platform RS-School, that prepares a highly qualified
-              Frontend of Developers.
+              This project is the final assignment of the learning platform RS School that prepares a highly qualified
+              Frontend Developers. We would like to express our endless gratitude to our best ever mentors who helped
+              and motivated us on this long challenging but unbelievable and fascinating journey 💙
             </div>
             <Link
               className={styles['paragraph-link']}

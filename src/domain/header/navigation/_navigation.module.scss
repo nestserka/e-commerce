@@ -58,6 +58,23 @@
         background-color: $bg-color-btn-default;
       }
     }
+  }
+
+  .nav-list-user {
+    @include flex-justify-center;
+
+    position: relative;
+    right: 0;
+
+    gap: 1.5em;
+
+    margin: 0;
+    padding: 12px;
+
+    list-style: none;
+
+    border: 1px solid $border-color-default;
+    border-radius: 36px;
 
     .nav-item-profile {
       @include flex-justify-center;
@@ -90,11 +107,6 @@
         border-radius: 50%;
       }
     }
-  }
-
-  .nav-list-user {
-    position: relative;
-    right: 0;
   }
 
   .nav-item-cart {
