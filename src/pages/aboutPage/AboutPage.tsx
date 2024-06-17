@@ -11,7 +11,7 @@ import AstronautLogo3 from '../../assets/images/icons/astronaut.png';
 import AstronautLogo1 from '../../assets/images/icons/astronaut2.png';
 import AstronautLogo2 from '../../assets/images/icons/astronaut3.png';
 import DescriptionBlock from '../../domain/about/descriptionBlock/DescriptionBlock';
-import useToggleModal from '../../utils/useToggleModal';
+import { useToggleModal } from '../../utils/useToggleModal';
 import ModalFromAboutPage from '../../domain/about/modalAbout/ModalAbout';
 
 import type { CardFromAboutPageProps, DescriptionData } from '../../domain/about/card/types';
