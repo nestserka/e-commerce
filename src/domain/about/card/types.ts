@@ -4,7 +4,7 @@ export interface CardFromAboutPageProps {
   firstDescription: string;
   secondDescription: string;
   linkForGitHub: string;
-  description?: DescriptionData;
+  handleClickForCard: () => void;
 }
 
 export interface DescriptionData {

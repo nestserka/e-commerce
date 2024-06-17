@@ -2,9 +2,7 @@
 @import '../../assets/styles/variables';
 
 .about {
-  // @include page-layout-container;
   flex-direction: column;
-  min-width: 1110px;
   margin: 2rem auto;
 
   // outline: 4px solid $background-color-secondary;
@@ -41,10 +39,28 @@
     }
   }
 
+  .title {
+    @media (width <= 950px) {
+      font-size: 2.5rem;
+    }
+
+    @media (width <= 550px) {
+      font-size: 1.9rem;
+    }
+  }
+
   .title2 {
     z-index: 1;
     margin-bottom: 2rem;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
+
+    @media (width <= 950px) {
+      font-size: 1rem;
+    }
+
+    @media (width <= 550px) {
+      font-size: 0.8rem;
+    }
   }
 
   .circle-block {
@@ -84,35 +100,67 @@
     }
 
     .dot:nth-child(1) {
-      top: 0%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      top: 14%;
+      right: 85%;
+
+      @media (width <= 850px) {
+        top: -0%;
+        left: 95%;
+      }
     }
 
     .dot:nth-child(2) {
-      top: 14%;
-      left: 85%;
+      top: 0%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      @media (width <= 850px) {
+        top: 35%;
+        left: 1%;
+        transform: translate(-50%, -50%);
+      }
     }
 
     .dot:nth-child(3) {
       top: 14%;
-      right: 85%;
+      left: 85%;
+
+      @media (width <= 850px) {
+        top: 70%;
+        left: 95%;
+        transform: translate(-50%, -50%);
+      }
     }
 
     .dot:nth-child(1) .dot-label {
-      top: -250%;
-      left: 100%;
-      transform: translate(-50%, -50%);
+      top: -400%;
+      right: -500%;
+
+      @media (width <= 850px) {
+        top: -30px;
+        left: -140px;
+      }
     }
 
     .dot:nth-child(2) .dot-label {
-      top: -400%;
-      left: 50%;
+      top: -250%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+
+      @media (width <= 850px) {
+        top: -15px;
+        left: 120px;
+      }
     }
 
     .dot:nth-child(3) .dot-label {
       top: -400%;
-      right: -500%;
+      left: 50%;
+
+      @media (width <= 850px) {
+        top: -30px;
+        left: -140px;
+      }
     }
 
     .card-blocks {
@@ -125,6 +173,15 @@
 
       width: 200%;
       height: 581px;
+
+      @media (width <= 1080px) {
+        height: 530px;
+      }
+
+      @media (width <= 850px) {
+        display: block;
+        height: fit-content;
+      }
     }
 
     .planet1,
@@ -148,6 +205,15 @@
 
       img {
         pointer-events: none;
+      }
+
+      @media (width <= 1080px) {
+        width: 64px;
+        height: 64px;
+      }
+
+      @media (width <= 850px) {
+        display: none;
       }
     }
 
@@ -183,81 +249,122 @@
         background-color: $bg-color-btn-default;
       }
     }
+
+    @media (width <= 1080px) {
+      width: 720px;
+      height: 750px;
+    }
+
+    @media (width <= 850px) {
+      width: 100%;
+      height: fit-content;
+
+      background-image: url("../../assets/images/bg/bg-home1.jpg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      border: none;
+      border-radius: 0;
+    }
   }
 
   .desc-training-platform-block {
     position: relative;
 
-    width: 100%;
-    height: 400px;
+    max-width: 1200px;
+    height: fit-content;
+    margin: 0 auto;
     padding: 2rem;
 
     background-color: #1f212d;
     border-radius: 20px;
+    box-shadow: 0 0 10px 10px rgb(39 39 39 / 46.3%);
 
-    // box-shadow: 0px 0px 10px 10px rgba(1, 1, 1, 0.463);
-  }
+    .paragraph-block {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
 
-  // .desc-training-platform-block::after {
-  //   content: '';
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   display: block;
-  //   width: 100%;
-  //   height: 100%;
-  //   border-radius: 20px;
-  //   background-image: url(../../assets/images/bg/1678394039_bogatyr-club-p-fon-planeta-zemlya-iz-kosmosa-foni-oboi-58.jpg);
-  //   background-color: rgba(17, 22, 51, 0.6);
-  //   background-blend-mode: overlay;
-  //   background-position: center;
-  //   background-repeat: no-repeat;
-  //   background-size: cover;
-  //   opacity: 0.4;
-  // }
+      .paragraph {
+        max-width: 50%;
 
-  .paragraph-block {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: space-around;
+        .paragraph-title {
+          margin: 1rem;
+          font-size: 21px;
 
-    .paragraph {
-      max-width: 380px;
+          @media (width <= 950px) {
+            font-size: 1rem;
+          }
 
-      .paragraph-title {
-        margin: 1rem;
-        font-size: 21px;
-      }
-
-      .paragraph-desc {
-        margin: 1rem;
-        font-size: 16px;
-        text-align: justify;
-      }
-
-      .paragraph-link {
-        cursor: pointer;
-
-        display: block;
-
-        width: 80px;
-        height: 40px;
-        margin: 1rem;
-
-        border-radius: 10px;
-
-        transition: 1s;
-
-        img {
-          pointer-events: none;
+          @media (width <= 550px) {
+            font-size: 0.8rem;
+          }
         }
 
-        &:hover {
-          box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
+        .paragraph-desc {
+          margin: 1rem;
+          font-size: 16px;
+          text-align: justify;
+
+          @media (width <= 950px) {
+            font-size: 1rem;
+          }
+
+          @media (width <= 550px) {
+            font-size: 0.8rem;
+          }
+        }
+
+        .paragraph-link {
+          cursor: pointer;
+
+          display: block;
+
+          width: 80px;
+          height: 40px;
+          margin: 1rem;
+
+          border-radius: 10px;
+
+          transition: 1s;
+
+          img {
+            pointer-events: none;
+          }
+
+          &:hover {
+            box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
+          }
         }
       }
     }
+
+    @media (width <= 550px) {
+      padding: 0.5rem;
+    }
+  }
+
+  .desc-training-platform-block::after {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0.4;
+    background-color: rgb(17 22 51 / 60%);
+    background-image: url("../../assets/images/bg/1678394039_bogatyr-club-p-fon-planeta-zemlya-iz-kosmosa-foni-oboi-58.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: overlay;
+    border-radius: 20px;
   }
 }
 

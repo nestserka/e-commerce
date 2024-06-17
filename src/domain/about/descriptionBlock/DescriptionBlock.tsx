@@ -2,9 +2,12 @@ import styles from './_descriptionBlock.module.scss';
 
 import type { DescriptionData } from '../card/types';
 
-
-export default function DescriptionBlock({propsDescriptionBlock}:{propsDescriptionBlock:DescriptionData }): JSX.Element {
-  const {title,bio,contribution} = propsDescriptionBlock;
+export default function DescriptionBlock({
+  propsDescriptionBlock,
+}: {
+  propsDescriptionBlock: DescriptionData;
+}): JSX.Element {
+  const { title, bio, contribution } = propsDescriptionBlock;
 
   return (
     <>
@@ -17,15 +20,11 @@ export default function DescriptionBlock({propsDescriptionBlock}:{propsDescripti
       <div className={styles['paragraph-block']}>
         <div className={styles.paragraph}>
           <h4 className={styles['paragraph-title']}>Bio</h4>
-          <div className={styles['paragraph-desc']}>
-            {bio}
-          </div>
+          <div className={styles['paragraph-desc']}>{bio}</div>
         </div>
         <div className={styles.paragraph}>
           <h4 className={styles['paragraph-title']}>Contribution</h4>
-          <div className={styles['paragraph-desc']}>
-            {contribution}
-          </div>
+          <div className={styles['paragraph-desc']}>{contribution}</div>
         </div>
       </div>
     </>

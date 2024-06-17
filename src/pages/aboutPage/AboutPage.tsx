@@ -10,21 +10,17 @@ import Logo from '../../assets/images/rs-logo.svg';
 import AstronautLogo3 from '../../assets/images/icons/astronaut.png';
 import AstronautLogo1 from '../../assets/images/icons/astronaut2.png';
 import AstronautLogo2 from '../../assets/images/icons/astronaut3.png';
-import ModalFromAboutPage from '../../domain/about/modalAbout/ModalAbout';
 import DescriptionBlock from '../../domain/about/descriptionBlock/DescriptionBlock';
 
 import type { CardFromAboutPageProps, DescriptionData } from '../../domain/about/card/types';
-
-
+import useToggleModal from '../../utils/useToggleModal';
+import ModalFromAboutPage from '../../domain/about/modalAbout/ModalAbout';
 
 export default function AboutPage(): JSX.Element {
-  const [description, setDescription] = useState<JSX.Element | undefined>();
-  const [isModal, setIsModal]=useState<boolean>(false);
-
-  const descriptionData:DescriptionData[] = [
+  const descriptionData: DescriptionData[] = [
     {
       title: 'Natalia Grischenok',
-      bio: 'pop',
+      bio: 'Natalia with enthusiasm and thirst for knowledge, started his/her journey in programming in 2022.  She immediately fell in love with frontend development, fascinated by the possibilities of creating beautiful and functional web interfaces.',
       contribution: 'Catalog page, About us page,  Project routing and configuration, Team Leader',
     },
     {
@@ -38,6 +34,25 @@ export default function AboutPage(): JSX.Element {
       contribution: 'Product page, Cart page, Login page, Project design',
     },
   ];
+  const [description, setDescription] = useState<JSX.Element>(
+    <DescriptionBlock propsDescriptionBlock={descriptionData[0]} />,
+  );
+  const [isModal, openIsModal, closeIsModal] = useToggleModal();
+
+  const handleClickFirstCard = () => {
+    openIsModal();
+    setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[0]} />);
+  };
+
+  const handleClickSecondCard = () => {
+    openIsModal();
+    setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[1]} />);
+  };
+
+  const handleClickThreeCard = () => {
+    openIsModal();
+    setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[2]} />);
+  };
 
   const dataDevelop: CardFromAboutPageProps[] = [
     {
@@ -46,7 +61,7 @@ export default function AboutPage(): JSX.Element {
       firstDescription: '/ team lead',
       secondDescription: '/ frontend',
       linkForGitHub: 'https://github.com/CRAFTSW0MAN',
-      description: descriptionData[0],
+      handleClickForCard: handleClickFirstCard,
     },
     {
       key: '2',
@@ -54,7 +69,7 @@ export default function AboutPage(): JSX.Element {
       firstDescription: '/ backend',
       secondDescription: '/ frontend',
       linkForGitHub: 'https://github.com/nestserka/',
-      description: descriptionData[1],
+      handleClickForCard: handleClickSecondCard,
     },
     {
       key: '3',
@@ -62,7 +77,7 @@ export default function AboutPage(): JSX.Element {
       firstDescription: '/ design',
       secondDescription: '/ frontend',
       linkForGitHub: 'https://github.com/marblehands',
-      description: descriptionData[2],
+      handleClickForCard: handleClickThreeCard,
     },
   ];
 
@@ -76,47 +91,26 @@ export default function AboutPage(): JSX.Element {
       </h1>
       <div className={styles['circle-block']}>
         <div className={styles.dot}>
+          <span className={styles['dot-label']}>Natalia Grischenok</span>
+        </div>
+        <div className={styles.dot}>
           <span className={styles['dot-label']}>Katsiaryna Nestserava</span>
         </div>
         <div className={styles.dot}>
           <span className={styles['dot-label']}>Ania Chebysheva</span>
-        </div>
-        <div className={styles.dot}>
-          <span className={styles['dot-label']}>Natalia Grischenok</span>
         </div>
         <div className={styles['card-blocks']}>
           {dataDevelop.map((dataCard) => (
             <CardFromAboutPage propsCard={dataCard} />
           ))}
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            setIsModal(true);
-            setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[0]}/>)
-          }}
-          className={styles.planet1}
-        >
+        <button type="button" onClick={handleClickFirstCard} className={styles.planet1}>
           <img src={AstronautLogo1} alt="AstronautLogo1" />
         </button>
-        <button
-          type="button"
-          className={styles.planet2}
-          onClick={() => {
-            setIsModal(true);
-            setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[1]}/>)
-          }}
-        >
+        <button type="button" className={styles.planet2} onClick={handleClickSecondCard}>
           <img src={AstronautLogo2} alt="AstronautLogo2" />
         </button>
-        <button
-          type="button"
-          className={styles.planet3}
-          onClick={() => {
-            setIsModal(true);
-            setDescription(<DescriptionBlock propsDescriptionBlock={descriptionData[2]}/>)
-          }}
-        >
+        <button type="button" className={styles.planet3} onClick={handleClickThreeCard}>
           <img src={AstronautLogo3} alt="AstronautLogo3" />
         </button>
       </div>
@@ -124,7 +118,8 @@ export default function AboutPage(): JSX.Element {
       <div className={styles['desc-training-platform-block']}>
         <h3 className={styles.title2}>
           <div className={styles['title-line']}>
-            OUR TEAM <span className={styles['title-line-span']}>BOOLEAN BABES</span>
+            <span>OUR TEAM</span>
+            <span className={styles['title-line-span']}>BOOLEAN BABES</span>
           </div>
           <span className={styles['horizontal-line']} />
         </h3>
@@ -155,7 +150,7 @@ export default function AboutPage(): JSX.Element {
           </div>
         </div>
       </div>
-      <ModalFromAboutPage isOpen={isModal} >{description}</ModalFromAboutPage>
+      {isModal && <ModalFromAboutPage isOpen={closeIsModal}>{description}</ModalFromAboutPage>}
     </section>
   );
 }
