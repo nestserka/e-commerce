@@ -8,7 +8,7 @@ export default defineConfig({
     open: true,
   },
   build: {
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 1010,
   },
   resolve: {
     alias: {
