@@ -105,4 +105,6 @@
 
 .product-buttons {
   @include flex-justify-start;
+
+  gap: 1rem;
 }
