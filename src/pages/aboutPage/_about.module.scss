@@ -130,15 +130,20 @@
     .planet1,
     .planet2,
     .planet3 {
+      cursor: pointer;
+
       position: absolute;
 
       width: 80px;
       height: 80px;
 
+      appearance: none;
+      background: none;
       border: 1px solid #dcebea;
       border-radius: 50%;
       box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
 
+      transition: 1s;
       animation: flash-dot 2s linear infinite;
     }
 
@@ -146,18 +151,33 @@
       bottom: -1%;
       left: 50%;
       transform: translate(-50%, -50%);
+
+      &:hover {
+        color: $font-color-primary;
+        background-color: $bg-color-btn-default;
+      }
     }
 
     .planet3 {
       bottom: 5%;
       left: 73.5%;
       transform: translate(-50%, -50%);
+
+      &:hover {
+        color: $font-color-primary;
+        background-color: $bg-color-btn-default;
+      }
     }
 
     .planet1 {
       right: 65%;
       bottom: 5%;
       transform: translate(-50%, -50%);
+
+      &:hover {
+        color: $font-color-primary;
+        background-color: $bg-color-btn-default;
+      }
     }
   }
 
@@ -165,7 +185,7 @@
     position: relative;
 
     width: 100%;
-    height: 500px;
+    height: 400px;
     padding: 2rem;
 
     background-color: #1f212d;
@@ -174,7 +194,7 @@
     // box-shadow: 0px 0px 10px 10px rgba(1, 1, 1, 0.463);
   }
 
-  // .desc-training-platform-block::after{
+  // .desc-training-platform-block::after {
   //   content: '';
   //   position: absolute;
   //   top: 0;
@@ -191,6 +211,49 @@
   //   background-size: cover;
   //   opacity: 0.4;
   // }
+
+  .paragraph-block {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: space-around;
+
+    .paragraph {
+      max-width: 380px;
+
+      .paragraph-title {
+        margin: 1rem;
+        font-size: 21px;
+      }
+
+      .paragraph-desc {
+        margin: 1rem;
+        font-size: 16px;
+      }
+
+      .paragraph-link {
+        cursor: pointer;
+
+        display: block;
+
+        width: 80px;
+        height: 40px;
+        margin: 1rem;
+
+        border-radius: 10px;
+
+        transition: 1s;
+
+        img {
+          pointer-events: none;
+        }
+
+        &:hover {
+          box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
+        }
+      }
+    }
+  }
 }
 
 @keyframes flash-dot {

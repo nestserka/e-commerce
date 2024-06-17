@@ -2,6 +2,8 @@
 @import '../../../assets/styles/variables';
 
 .card-block {
+  transition: 1s;
+
   .card {
     cursor: pointer;
 
@@ -17,7 +19,7 @@
     border: 1px solid #1f212d;
     border-radius: 500px;
 
-    transition: border-color 0.5s ease;
+    transition: 1s;
 
     .card-block-list {
       max-width: 110px;

@@ -30,14 +30,14 @@
 
   .stars {
     z-index: 0;
-    background: #000 url('../../assets/images/bg/1679614664_bogatyr-club-p-zvezdnii-fon-chernii-pinterest-8.jpg') top;
+    background: #000 url('../../assets/images/bg/1679614664_bogatyr-club-p-zvezdnii-fon-chernii-pinterest-8.jpg') bottom;
     background-color: rgb(31 33 45 / 60%);
     background-blend-mode: overlay;
   }
 
   .twinkling {
     background: url('../../assets/images/bg/twinkling.png');
-    animation: 4s twinkle infinite;
+    animation: 3s twinkle infinite;
     animation-timing-function: linear;
   }
 
