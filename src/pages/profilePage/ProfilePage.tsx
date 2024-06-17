@@ -10,6 +10,7 @@ import ModalMessage from '../../components/modalMessage/ModalMessage';
 import getUser from '../../api/me/getUser';
 import { tokenCache } from '../../api/token/MyTokenCache';
 import { ERROR_TYPES } from '../../constants/constants';
+import Loader from '../../components/loader/Loader';
 
 import type { Params } from 'react-router-dom';
 
@@ -83,7 +84,7 @@ export default function ProfilePage(): JSX.Element {
         <ProfileAvatar />
         {isShown && <ModalMessage type={type} title={title} message={message} />}
         {isErrorShown && <ModalMessage type={errorType} title={errorTitle} message={errorMessage} />}
-        {isSet ? <ProfileView /> : <div className="loading">Loading...</div>}
+        {isSet ? <ProfileView /> :  <Loader />}
       </div>
     </section>
   );

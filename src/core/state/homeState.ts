@@ -15,6 +15,7 @@ const Images: Record<string, number> = {
 
 export interface HomeStateData {
   discountedProducts: ProductProjection[];
+  isLoaded: boolean;
   bestProducts: ProductProjection[];
   leftSlider: ProductProjection[];
   rightSlider: ProductProjection[];
@@ -30,6 +31,7 @@ export const useHomeData = create<HomeStateData>((set) => ({
   images: {},
   leftSlider: [],
   rightSlider: [],
+  isLoaded: false,
   setDiscountedProductList: async (): Promise<void> => {
     try {
       const queryArgs: QueryArgs = {
@@ -43,6 +45,8 @@ export const useHomeData = create<HomeStateData>((set) => ({
     }
   },
   setBestProductList: async (): Promise<void> => {
+    set({ isLoaded: false });
+
     try {
       const queryArgs: QueryArgs = {
         'filter.query': [`variants.attributes.bestseller: "true"`],
@@ -52,7 +56,7 @@ export const useHomeData = create<HomeStateData>((set) => ({
       const midIndex = Math.ceil(bestProducts.length / 2);
       const firstHalf = bestProducts.slice(0, midIndex);
       const secondHalf = bestProducts.slice(midIndex);
-      set({ bestProducts: bestSellerList.results, leftSlider: firstHalf, rightSlider: secondHalf });
+      set({ bestProducts: bestSellerList.results, leftSlider: firstHalf, rightSlider: secondHalf, isLoaded: true });
     } catch {
       throw new Error('Currently no product has been found');
     }
