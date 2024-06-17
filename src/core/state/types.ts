@@ -32,7 +32,9 @@ export interface LoginState {
 
 export interface IsShownModal {
   isShown: boolean;
+  isClipBoardShown: boolean;
   setIsShown: (isSHown: boolean) => void;
+  setIsClipShown: (isClipBoardShown: boolean) => void;
 }
 
 export interface CustomerInfo {

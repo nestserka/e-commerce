@@ -1,0 +1,72 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.discount-section {
+  width: 80%;
+  max-width: 1440px;
+  margin: 7.225em auto 0;
+
+  .welcome-section {
+    max-width: 73.125em;
+
+    .title {
+      @include font-firs-regular;
+
+      font-size: 4.5rem;
+      line-height: 100%;
+      color: $font-color-home-title;
+      text-transform: uppercase;
+
+      .accent-text {
+        color: $font-color-primary;
+      }
+
+      @media (width <= 1300px) {
+        font-size: 3em;
+      }
+
+      @media (width <= 440px) {
+        font-size: 2.4em;
+      }
+    }
+  }
+
+  .products-block {
+    padding: 4.6rem 0;
+  }
+
+  @media (width <= 1536px) {
+    width: calc(100% - 4rem);
+  }
+
+  @media (width <= 640px) {
+    width: calc(100%);
+    margin: 7.225em 0 0;
+  }
+}
+
+.active-class {
+  &::after {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: linear-gradient(to top, rgb(62 69 230 / 100%) 0%, rgb(62 69 230 / 0%) 60%);
+    border-radius: 1.5rem;
+  }
+}
+
+.swiper-cont {
+  position: relative;
+  width: 100%;
+  height: 25.563em;
+
+  @media (width <= 1000px) {
+    height: 21em;
+  }
+}

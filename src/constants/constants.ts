@@ -381,6 +381,8 @@ export const ERROR_TYPES = {
   INVALID_TOKEN: 'invalid_token',
 } as const;
 
+export const currentCoupon = 'LUCKY_MARTIAN';
+
 export const PAGES = {
   PRODUCT: 'product',
   CATALOG: 'catalog',

@@ -13,7 +13,7 @@ import { getInputProps, handleLoginError } from '../../../utils/utils';
 import { EMAIL_VALIDATION_SCHEMA, LS_PREFIX, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../../constants/constants';
 import loginUser from '../../../api/me/loginUser';
 import getCustomerByEmail from '../../../api/customer/getCustomerByEmail';
-import { useLoginData } from '../../../core/state/userState';
+import { useCustomerInfo, useLoginData } from '../../../core/state/userState';
 
 import type { ErrorLoginForm } from '../../../utils/utils';
 import type { CustomerPagedQueryResponse } from '@commercetools/platform-sdk';
@@ -37,7 +37,7 @@ export default function LoginForm(): JSX.Element {
   const [formEmailError, setFormEmailError] = useState<string>('');
   const [formPasswordError, setFormPasswordError] = useState<string>('');
   const [formError, setFormError] = useState<string>('');
-
+  const { setUpdatedGeneraValues } = useCustomerInfo();
   const inputEmailProps = getInputProps('text', 'email', 'Enter your email', 'email');
   const inputPasswordProps = getInputProps('password', 'password', 'Enter your password', 'off');
 
@@ -64,6 +64,7 @@ export default function LoginForm(): JSX.Element {
           customerId: response.id,
         };
         setCustomerCredentials(customerCredentials);
+        setUpdatedGeneraValues({ firstName: response.firstName });
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
         localStorage.removeItem(`anonymousCartId-${LS_PREFIX}`);
