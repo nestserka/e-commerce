@@ -4,4 +4,11 @@ export interface CardFromAboutPageProps {
   firstDescription: string;
   secondDescription: string;
   linkForGitHub: string;
+  description?: DescriptionData;
+}
+
+export interface DescriptionData {
+  title: string;
+  bio: string;
+  contribution: string;
 }

@@ -145,6 +145,10 @@
 
       transition: 1s;
       animation: flash-dot 2s linear infinite;
+
+      img {
+        pointer-events: none;
+      }
     }
 
     .planet2 {
@@ -229,6 +233,7 @@
       .paragraph-desc {
         margin: 1rem;
         font-size: 16px;
+        text-align: justify;
       }
 
       .paragraph-link {
