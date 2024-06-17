@@ -7,7 +7,13 @@
 
   flex-direction: column;
   justify-content: center;
+
   width: 100%;
+
+  background-image: url('../../assets/images/bg/bg-home1.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 
   .welcome-section {
     @include flex-center-space-between;

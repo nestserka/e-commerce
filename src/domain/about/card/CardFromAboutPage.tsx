@@ -13,8 +13,8 @@ export default function CardFromAboutPage({ propsCard }: { propsCard: CardFromAb
   };
 
   return (
-    <div className={styles['card-block']} key={key} >
-      <button type="button"  className={styles.card} onClick={handleClickForCard}>
+    <div className={styles['card-block']} key={key}>
+      <button type="button" className={styles.card} onClick={handleClickForCard}>
         <img src={srcImg} alt="card" />
         <div className={styles['card-block-list']}>{firstDescription}</div>
         <div className={styles['card-block-list']}>{secondDescription}</div>
