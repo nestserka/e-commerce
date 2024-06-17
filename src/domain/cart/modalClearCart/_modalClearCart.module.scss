@@ -1,0 +1,89 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.overlay {
+  content: '';
+
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+
+  display: block;
+
+  width: 100vw;
+  height: 100vh;
+
+  opacity: 0.9;
+  background-color: #161720;
+}
+
+.modal {
+  position: fixed;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  margin: auto;
+  padding: 4rem 2.25rem 2.25rem;
+
+  background-color: $background-color-primary-two;
+  border: 1px solid $border-color-default;
+  border-radius: 24px;
+
+  .modal-close-btn {
+    cursor: pointer;
+
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+
+    padding: 0;
+
+    background: none;
+    border: none;
+    outline: none;
+  }
+
+  .confirm-text {
+    margin-bottom: 2rem;
+    font-family: DisplayMedium, sans-serif;
+    font-size: 1.2rem;
+    color: $font-color-primary;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .close-button,
+  .confirm-button {
+    flex-basis: 50%;
+  }
+
+  @media (width >= 1800px) {
+    width: 30%;
+  }
+
+  @media (width <= 1200px) {
+    width: 50%;
+    padding: 4em;
+  }
+
+  @media (width <= 1024px) {
+    width: 60%;
+    padding: 4em;
+  }
+
+  @media (width <= 900px) {
+    width: 70%;
+    padding: 3em;
+  }
+
+  @media (width <= 640px) {
+    width: 90%;
+    padding: 2em;
+  }
+}
