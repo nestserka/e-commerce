@@ -77,7 +77,7 @@ export default function HomePromotion(): JSX.Element {
             <img src={iconAllien} alt="Button icon" />
             <span>{currentCoupon}</span>
           </button>
-          <p className={style['sub-text']}>Copy the promo by clicking on UFO icon on the left</p>
+          <p className={style['sub-text']}>Copy the promo by clicking on the UFO icon on the left.</p>
         </div>
       </div>
     </section>

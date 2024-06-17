@@ -13,7 +13,6 @@ import style from './_bestProduct.module.scss';
 import { useHomeData } from '../../../core/state/homeState';
 import { HomeCard } from '../homeCard/HomeCard';
 import { ROUTES } from '../../../constants/constants';
-import arrowIcon from '../../../assets/images/icons/arrow-icon.png';
 import Loader from '../../loader/Loader';
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
@@ -52,29 +51,28 @@ export default function BestProduct(): JSX.Element {
               <div className={style.progress}>
                 <span className={`${style.bar} ${style.wrapper}`} />
                 <div className={style.circle}>
-                  <div className={`${style.title} ${style.meteorite}`}>exclusive meterite fragments</div>
+                  <div className={`${style.title} ${style.meteorite}`}>Exclusive meteorite fragments</div>
                 </div>
 
                 <span className={style.bar} />
 
                 <div className={style.circle}>
-                  <div className={style.title}>Hi-res Space Photos from current expeditions</div>
+                  <div className={style.title}>Hi-res space photos from current expeditions</div>
                 </div>
                 <span className={style.bar} />
                 <div className={style.circle}>
-                  <span className={style.title}>Recordings from Deep space and Mission Conversations</span>
+                  <span className={style.title}>Recordings from deep space and mission conversations</span>
                 </div>
                 <span className={`${style.bar} ${style.wrapper}`} />
               </div>
               <button
                 type="button"
-                className={style['navigation-button']}
+                className="button-primary"
                 onClick={() => {
                   navigate(ROUTES.CATALOG_ALL);
                 }}
               >
                 <span>Explore Catalog</span>
-                <img src={arrowIcon} alt="Arrow Icon" />
               </button>
             </section>
           </section>

@@ -12,6 +12,8 @@
     .title {
       @include font-firs-regular;
 
+      max-width: 80%;
+
       font-size: 3.625rem;
       line-height: 100%;
       color: $font-color-home-title;

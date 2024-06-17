@@ -127,7 +127,7 @@
 }
 
 .progress {
-  height: 10em;
+  height: 12rem;
   margin: 2em 1em 7em;
   text-align: center;
 
@@ -154,13 +154,13 @@
 
       width: 19em;
       padding-bottom: 2.813em;
-      padding-left: 2em;
+      padding-left: 3.5rem;
 
       font-size: 1.3em;
       line-height: 1.2em;
-      color: $font-color-primary-40;
+      color: $font-color-primary-60;
       text-align: start;
-      text-transform: capitalize;
+      text-transform: initial;
 
       &.meteorite {
         max-width: 11.5em;

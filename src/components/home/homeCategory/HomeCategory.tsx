@@ -3,6 +3,7 @@ import style from './_homeCategory.module.scss';
 import meteoryte1 from '../../../../public/assets/images/home/meteorite-1.png';
 import meteoryte2 from '../../../../public/assets/images/home/meteorite-2.png';
 import meteoryte3 from '../../../../public/assets/images/home/meteorite-3.png';
+import food1 from '../../../../public/assets/images/home/category/banner-food-img-2.png';
 
 export default function HomeCategory(): JSX.Element {
   return (
@@ -53,7 +54,7 @@ export default function HomeCategory(): JSX.Element {
         <div className={style['food-images']}>
           <img alt="Small Meteoryte 1" className={style['small-meteorite-image-1']} />
 
-          <img alt="Product Preview" className={style['space-food-image-1']} />
+          <img src={food1} alt="Product Preview" className={style['space-food-image-1']} />
         </div>
         <div className={style['gradient-wrapper']}>
           <img alt="Small Meteoryte 2" className={style['small-meteorite-image-2']} />
