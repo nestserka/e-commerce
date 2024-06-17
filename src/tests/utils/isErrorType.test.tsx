@@ -5,7 +5,7 @@ import { isErrorType } from '../../utils/types';
 const mockHttpError = {
   statusCode: 404,
   message: 'Not Found',
-  error: 'Resource not found'
+  error: 'Resource not found',
 };
 
 test('isErrorType correctly identifies HttpError', () => {

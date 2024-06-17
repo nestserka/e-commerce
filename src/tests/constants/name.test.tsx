@@ -12,7 +12,7 @@ describe('nameValidation', () => {
     });
 
     it('should not validate invalid first names', () => {
-      const invalidNames = ['', '123John', 'John Doe', '@John']; 
+      const invalidNames = ['', '123John', 'John Doe', '@John'];
       invalidNames.forEach((name) => {
         expect(FIRST_NAME_VALIDATION_SCHEMA.safeParse(name).success).toBe(false);
       });
@@ -21,14 +21,14 @@ describe('nameValidation', () => {
 
   describe('LAST_NAME_VALIDATION_SCHEMA', () => {
     it('should validate valid last names', () => {
-      const validNames = ['Doe', 'Smith', 'Johnson']; 
+      const validNames = ['Doe', 'Smith', 'Johnson'];
       validNames.forEach((name) => {
         expect(LAST_NAME_VALIDATION_SCHEMA.safeParse(name).success).toBe(true);
       });
     });
 
     it('should not validate invalid last names', () => {
-      const invalidNames = ['', 'Doe123', 'Doe@', 'Doe-Smith']; 
+      const invalidNames = ['', 'Doe123', 'Doe@', 'Doe-Smith'];
       invalidNames.forEach((name) => {
         expect(LAST_NAME_VALIDATION_SCHEMA.safeParse(name).success).toBe(false);
       });

@@ -6,8 +6,8 @@ import type { Cart } from '@commercetools/platform-sdk';
 import type { ClientResponse } from '@commercetools/sdk-client-v2';
 
 const body = {
-    currency: 'USD',
-  };
+  currency: 'USD',
+};
 
 describe('testing creating anonymous cart', () => {
   it('should create anonymous cart', async () => {

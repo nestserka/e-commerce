@@ -1,18 +1,17 @@
-
 import { assert, test } from 'vitest';
 
 import { isTokenInfo, isTokenStore } from '../../utils/types';
 
 const mockTokenStore = {
   token: 'mock_token',
-  expirationTime: 1234567890
+  expirationTime: 1234567890,
 };
 
 const mockTokenInfo = {
   access_token: 'mock_access_token',
   scope: 'mock_scope',
   token_type: 'bearer',
-  expires_in: 3600
+  expires_in: 3600,
 };
 
 test('isTokenStore correctly identifies TokenStore', () => {

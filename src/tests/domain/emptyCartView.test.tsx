@@ -1,10 +1,8 @@
-
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 import EmptyCartState from '../../domain/cart/emptyCartView/emptyCartState';
 import { ROUTES } from '../../constants/constants';
-
 
 describe('EmptyCartState component', () => {
   it('renders EmptyCartState component', () => {

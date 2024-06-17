@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { EMAIL_VALIDATION_SCHEMA } from "../../constants/constants";
+import { EMAIL_VALIDATION_SCHEMA } from '../../constants/constants';
 
 describe('Validation Schemas', () => {
   it('should validate correct email format', () => {

@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import Breadcrumbs from "../../../components/breadCrumbs/breadCrumbs";
+import Breadcrumbs from '../../../components/breadCrumbs/breadCrumbs';
 
 describe('Breadcrumbs component', () => {
   const mockLinks = [
@@ -14,7 +14,7 @@ describe('Breadcrumbs component', () => {
     const { getByAltText, getByText } = render(
       <Router>
         <Breadcrumbs links={mockLinks} />
-      </Router>
+      </Router>,
     );
 
     const homeIcon = getByAltText('NASA Store Homepage');
@@ -30,7 +30,7 @@ describe('Breadcrumbs component', () => {
     const { getAllByAltText } = render(
       <Router>
         <Breadcrumbs links={mockLinks} />
-      </Router>
+      </Router>,
     );
     const chevronIcons = getAllByAltText('');
     expect(chevronIcons.length).toBe(mockLinks.length);

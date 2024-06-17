@@ -1,7 +1,19 @@
-
-import { inputBillingCityProps, inputBillingPostalCodeProps, inputBillingStreetProps, inputConfirmPasswordProps, inputCurrentPasswordProps, inputEmailProps, inputFirstNameProps, inputLastNameProps, inputNewPasswordProps, inputPasswordProps, inputShippingCityProps, inputShippingPostalCodeProps, inputShippingStreetProps } from '../../utils/inputProps';
+import {
+  inputBillingCityProps,
+  inputBillingPostalCodeProps,
+  inputBillingStreetProps,
+  inputConfirmPasswordProps,
+  inputCurrentPasswordProps,
+  inputEmailProps,
+  inputFirstNameProps,
+  inputLastNameProps,
+  inputNewPasswordProps,
+  inputPasswordProps,
+  inputShippingCityProps,
+  inputShippingPostalCodeProps,
+  inputShippingStreetProps,
+} from '../../utils/inputProps';
 import { getInputProps } from '../../utils/utils';
-
 
 describe('Input props constants', () => {
   it('should match the expected structure and values for inputEmailProps', () => {

@@ -84,7 +84,7 @@ export default function ProfilePage(): JSX.Element {
         <ProfileAvatar />
         {isShown && <ModalMessage type={type} title={title} message={message} />}
         {isErrorShown && <ModalMessage type={errorType} title={errorTitle} message={errorMessage} />}
-        {isSet ? <ProfileView /> :  <Loader />}
+        {isSet ? <ProfileView /> : <Loader />}
       </div>
     </section>
   );

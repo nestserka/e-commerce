@@ -5,7 +5,6 @@ import { HomeCard } from '../../../components/home/homeCard/HomeCard';
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
-
 describe('HomeCard component', () => {
   const mockProduct: ProductProjection = {
     id: '863089c2-f1c6-442d-8562-028e832feb9d',
