@@ -74,6 +74,7 @@ export function isErrorType(value: unknown): value is HttpError {
 }
 
 export type QueryArgs = Record<string, string[]>;
+
 export interface AttributeBestseller {
   name: 'bestseller';
   value: boolean[];

@@ -13,7 +13,7 @@ import { getInputProps, handleLoginError } from '../../../utils/utils';
 import { EMAIL_VALIDATION_SCHEMA, LS_PREFIX, PASSWORD_VALIDATION_SCHEMA, ROUTES } from '../../../constants/constants';
 import loginUser from '../../../api/me/loginUser';
 import getCustomerByEmail from '../../../api/customer/getCustomerByEmail';
-import { useLoginData } from '../../../core/state/userState';
+import { useCustomerInfo, useLoginData } from '../../../core/state/userState';
 
 import type { ErrorLoginForm } from '../../../utils/utils';
 import type { CustomerPagedQueryResponse } from '@commercetools/platform-sdk';

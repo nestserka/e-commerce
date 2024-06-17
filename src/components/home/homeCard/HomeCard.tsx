@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import style from './_homeCard.module.scss';
-import { createParamsfromCard } from '../../cards/card/utils';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import { useHomeData } from '../../../core/state/homeState';
+import { createParamsFromCard } from '../../../domain/catalog/card/utils';
 
-import type { PropsCard } from '../../cards/card/types';
+import type { PropsCard } from '../../../domain/catalog/card/types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 export function HomeCard({
@@ -16,7 +16,7 @@ export function HomeCard({
   dataCard: ProductProjection;
   isVertical: boolean;
 }): JSX.Element {
-  const [product] = useState<PropsCard>(createParamsfromCard(dataCard));
+  const [product] = useState<PropsCard>(createParamsFromCard(dataCard));
   const { setImages } = useHomeData();
   const [newCommerceImage, setCommerseImage] = useState<number>();
 
