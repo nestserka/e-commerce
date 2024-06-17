@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import GitHubLogo from '../../../assets/images/card/github.png';
+import GitHubLogo from '../../../assets/images/card/github-icon.svg';
 import RSSLogo from '../../../assets/images/card/logo-rs.svg';
 import styles from './_cardFromAboutPage.module.scss';
 

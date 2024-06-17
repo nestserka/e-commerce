@@ -9,11 +9,12 @@
 
   margin-bottom: 1rem;
 
-  font-family: 'TT Firs Neue', sans-serif;
+  font-family: DisplayMedium, sans-serif;
   font-size: 1.5rem;
   font-weight: 400;
   line-height: 70px;
   color: $background-color-secondary;
+  text-transform: uppercase;
 
   .title-line {
     .title-line-span {
@@ -24,7 +25,8 @@
   }
 
   .horizontal-line {
-    width: 45%;
+    flex-grow: 1;
+
     height: 1px;
 
     color: $background-color-secondary;
@@ -42,20 +44,21 @@
   position: relative;
   z-index: 1;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   .paragraph {
-    max-width: 50%;
+    max-width: 45%;
 
     .paragraph-title {
-      margin: 0 1rem 1rem;
+      margin-bottom: 1rem;
       font-size: 16px;
+      text-transform: uppercase;
+      opacity: 0.8;
     }
 
     .paragraph-desc {
-      margin: 1rem 1rem 2rem;
       font-size: 16px;
-      text-align: justify;
+      opacity: 0.8;
     }
 
     .paragraph-link {
