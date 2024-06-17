@@ -36,7 +36,7 @@ import {
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ControllerLabel from '../../../components/ui/controllerLabel/label';
-import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
+import { useAddressAutoComplete } from '../../../utils/checkboxAutocomplete';
 import RegistrationData from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
 import { showModalMessage, useCustomerInfo, useLoginData } from '../../../core/state/userState';

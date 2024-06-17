@@ -1,0 +1,57 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.products-header {
+  @include flex-center-space-between;
+
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+
+  .products-sort {
+    .sort-title {
+      padding: 10px;
+      font-size: 1rem;
+    }
+  }
+
+  .category-search {
+    margin: 0 2rem;
+  }
+
+  .search input::placeholder {
+    color: $font-color-primary;
+  }
+
+  .search input,
+  .search input:focus,
+  .search input:focus-visible {
+    height: 56px;
+
+    color: $font-color-primary;
+
+    background: $background-color-secondary;
+    border: none;
+    border-start-start-radius: 0.5rem;
+    border-start-end-radius: 0;
+    border-end-start-radius: 0.5rem;
+    border-end-end-radius: 0;
+    outline: none;
+    box-shadow: none;
+  }
+
+  .search button {
+    height: 56px;
+
+    background: $background-color-primary-two;
+    border-start-start-radius: 0;
+    border-start-end-radius: 0.5rem;
+    border-end-start-radius: 0;
+    border-end-end-radius: 0.5rem;
+  }
+
+  .search button:hover {
+    color: $font-color-primary;
+    background-color: $bg-color-btn-default;
+  }
+}

@@ -371,3 +371,7 @@ export const ERROR_TYPES = {
 } as const;
 
 export const currentCoupon = 'LUCKY_MARTIAN';
+export const PAGES = {
+  PRODUCT: 'product',
+  CATALOG: 'catalog',
+} as const;

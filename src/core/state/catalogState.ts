@@ -2,49 +2,13 @@ import { create } from 'zustand';
 
 import withClientCredentialsFlow from '../../api/middlewareFlows/withClientCredentials';
 
-import type { Category, ProductProjectionPagedSearchResponse, ProductType } from '@commercetools/platform-sdk';
-
-export interface CatalogStateData {
-  categoryName: string;
-  brandList: string[];
-  materialList: string[];
-  refractorList: string[];
-  categoriesData: Category[];
-  priceRange: number[];
-  subtreesList: string;
-  parentsCategories: Category[];
-  productTypesAttributes: ProductType[];
-  isLoading: boolean;
-  limit: number;
-  fuzzyLevelValue: number;
-  sortValue: string;
-  searchValue: string;
-  isBestseller: boolean;
-  isDiscount: boolean;
-  offset: number;
-  setRefractorList: (nameRefractor: string, isStatus: boolean) => void;
-  setRefractorListDefault: () => void;
-  setBrandList: (nameBrand: string, isStatus: boolean) => void;
-  setBrandListDefault: () => void;
-  setMaterialList: (nameMaterial: string, isStatus: boolean) => void;
-  setMaterialListDefault: () => void;
-  setPriceRange: (newRange: number[]) => void;
-  setCategoryName: (newName: string) => void;
-  createFilterByCategoriesId: (category?: string) => string;
-  setOffset: (page: number) => void;
-  setSort: (newSort: string) => void;
-  setSubtreesList: (id: string, isStatus: boolean) => void;
-  setBestsellerStatus: (isStatus: boolean) => void;
-  setDiscountStatus: (iStatus: boolean) => void;
-  setSearchValue: (newSearch: string) => void;
-  setFuzzyLevel: () => number;
-  setCategoriesData: () => Promise<void>;
-  setProductTypesAttributes: () => Promise<void>;
-  getProductsList: (subtrees?: string) => Promise<ProductProjectionPagedSearchResponse>;
-}
+import type { CatalogCheckAttributeState, CatalogStateData } from './types';
+import type { Category, ProductProjectionPagedSearchResponse } from '@commercetools/platform-sdk';
 
 export const useCatalogData = create<CatalogStateData>((set, get) => ({
+  currentPage: 1,
   brandList: [],
+  total: 0,
   refractorList: [],
   materialList: [],
   categoryName: 'all',
@@ -54,54 +18,76 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
   parentsCategories: [],
   productTypesAttributes: [],
   isLoading: false,
-  limit: 100,
+  limit: 6,
   fuzzyLevelValue: 0,
   sortValue: 'price asc',
   searchValue: '',
   isBestseller: false,
   isDiscount: false,
   offset: 0,
+
+  resetAttributes: (): void => {
+    get().setCurrentPage(1);
+    get().setOffset(1);
+    get().setPriceRange([0, 1700000]);
+    get().setSubtreesList('', true);
+    get().setBestsellerStatus(false);
+    get().setDiscountStatus(false);
+    get().setBrandListDefault();
+    get().setMaterialListDefault();
+    get().setRefractorListDefault();
+  },
+  resetSort: (): void => {
+    get().setSort('price asc');
+    get().setSearchValue('');
+  },
+  setCurrentPage: (newPage: number): void => {
+    set({ currentPage: newPage });
+  },
+  setTotal: (quantity: number): void => {
+    set({ total: quantity });
+  },
   setRefractorList: (nameRefractor: string, isStatus: boolean): void => {
     if (isStatus) {
       get().refractorList.push(nameRefractor);
     } else {
-      set(() => ({ refractorList: get().refractorList.filter((refractorItem) => refractorItem !== nameRefractor) }));
+      set({ refractorList: get().refractorList.filter((refractorItem) => refractorItem !== nameRefractor) });
     }
   },
   setRefractorListDefault: (): void => {
-    set(() => ({ refractorList: [] }));
+    set({ refractorList: [] });
   },
   setBrandList: (nameBrand: string, isStatus: boolean): void => {
     if (isStatus) {
       get().brandList.push(nameBrand);
     } else {
-      set(() => ({ brandList: get().brandList.filter((brandItem) => brandItem !== nameBrand) }));
+      set({ brandList: get().brandList.filter((brandItem) => brandItem !== nameBrand) });
     }
   },
   setBrandListDefault: (): void => {
-    set(() => ({ brandList: [] }));
+    set({ brandList: [] });
   },
   setMaterialList: (nameMaterial: string, isStatus: boolean): void => {
     if (isStatus) {
       get().materialList.push(nameMaterial);
     } else {
-      set(() => ({ materialList: get().materialList.filter((materialItem) => materialItem !== nameMaterial) }));
+      set({ materialList: get().materialList.filter((materialItem) => materialItem !== nameMaterial) });
     }
   },
   setMaterialListDefault: (): void => {
-    set(() => ({ materialList: [] }));
+    set({ materialList: [] });
   },
   setPriceRange: (newRange: number[]): void => {
-    set(() => ({ priceRange: newRange }));
+    set({ priceRange: newRange });
   },
   setCategoryName: (newName: string): void => {
-    set(() => ({ categoryName: newName }));
+    set({ categoryName: newName });
   },
   setSubtreesList: (id: string, isStatus: boolean): void => {
     if (isStatus) {
-      set(() => ({ subtreesList: id }));
+      set({ subtreesList: id });
     } else {
-      set(() => ({ subtreesList: '' }));
+      set({ subtreesList: '' });
     }
   },
   createFilterByCategoriesId: (category?: string): string => {
@@ -116,35 +102,35 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
     return `categories.id: subtree("${category}")`;
   },
   setOffset: (page: number): void => {
-    set(() => ({ offset: page - 1 }));
+    set({ offset: page - 1 });
   },
   setSort: (newSort: string): void => {
-    set(() => ({ sortValue: newSort }));
+    set({ sortValue: newSort });
   },
   setBestsellerStatus: (isStatus: boolean): void => {
-    set(() => ({ isBestseller: isStatus }));
+    set({ isBestseller: isStatus });
   },
   setDiscountStatus: (isStatus: boolean): void => {
-    set(() => ({ isDiscount: isStatus }));
+    set({ isDiscount: isStatus });
   },
   setSearchValue: (newSearch: string): void => {
-    set(() => ({ searchValue: newSearch }));
+    set({ searchValue: newSearch });
   },
   setFuzzyLevel: (): number => {
     switch (get().searchValue.length) {
       case 1:
       case 2:
-        set(() => ({ fuzzyLevelValue: 0 }));
+        set({ fuzzyLevelValue: 0 });
 
         return 0;
       case 3:
       case 4:
       case 5:
-        set(() => ({ fuzzyLevelValue: 1 }));
+        set({ fuzzyLevelValue: 1 });
 
         return 1;
       default:
-        set(() => ({ fuzzyLevelValue: 2 }));
+        set({ fuzzyLevelValue: 2 });
 
         return 2;
     }
@@ -197,8 +183,8 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
           queryArgs: {
             sort: get().sortValue,
             limit: get().limit,
-            ...newSearch,
             offset: get().offset * get().limit,
+            ...newSearch,
             'filter.query': [
               ...(get().categoryName === 'all' ? [] : [get().createFilterByCategoriesId(category)]),
               ...(get().isBestseller ? ['variants.attributes.bestseller: "true"'] : []),
@@ -236,5 +222,48 @@ export const useCatalogData = create<CatalogStateData>((set, get) => ({
       set({ isLoading: false });
       throw new Error('no product by attribute or filter found');
     }
+  },
+}));
+
+export const useCatalogCheckAttributeState = create<CatalogCheckAttributeState>((set, get) => ({
+  brandListAttribute: [],
+  refractorListAttribute: [],
+  materialListAttribute: [],
+  checkedStatesBrandList: {},
+  checkedStatesRefractorList: {},
+  checkedStatesMaterialList: {},
+  resetCheckedStatesAttributesList: (): void => {
+    get().setCheckedStatesBrandList(
+      Object.fromEntries(get().brandListAttribute.map((attribute) => [attribute.key, false])),
+    );
+    get().setCheckedStatesMaterialList(
+      Object.fromEntries(get().materialListAttribute.map((attribute) => [attribute.key, false])),
+    );
+    get().setCheckedStatesRefractorList(
+      Object.fromEntries(get().refractorListAttribute.map((attribute) => [attribute.key, false])),
+    );
+  },
+  resetAttributesList: (): void => {
+    get().setRefractorListAttribute([]);
+    get().setMaterialListAttribute([]);
+    get().setBrandListAttribute([]);
+  },
+  setRefractorListAttribute: (newArray): void => {
+    set({ refractorListAttribute: newArray });
+  },
+  setMaterialListAttribute: (newArray): void => {
+    set({ materialListAttribute: newArray });
+  },
+  setBrandListAttribute: (newArray): void => {
+    set({ brandListAttribute: newArray });
+  },
+  setCheckedStatesBrandList: (newValue): void => {
+    set({ checkedStatesBrandList: newValue });
+  },
+  setCheckedStatesRefractorList: (newValue): void => {
+    set({ checkedStatesRefractorList: newValue });
+  },
+  setCheckedStatesMaterialList: (newValue): void => {
+    set({ checkedStatesMaterialList: newValue });
   },
 }));

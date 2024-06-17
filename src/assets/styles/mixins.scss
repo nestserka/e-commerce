@@ -50,6 +50,16 @@
   justify-content: space-between;
 }
 
+@mixin reset-button {
+  cursor: pointer;
+
+  display: block;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
 // Gradients
 
 @mixin form-background-gradient {

@@ -1,0 +1,53 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets//styles/variables';
+
+.wrapper {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.title {
+  flex-grow: 1;
+  font-family: DisplayMedium, sans-serif;
+  text-align: center;
+}
+
+.aside-wrapper {
+  display: flex;
+  flex-basis: 435px;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.products-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.products-list-wrapper,
+.summary-wrapper,
+.promocode-wrapper {
+  padding: 2.25rem;
+  background-color: $background-color-primary-two;
+  border-radius: 1.5rem;
+}
+
+.products-wrapper {
+  margin: 2rem 0;
+}
+
+.clear-all-wrapper {
+  @include flex-center-space-between;
+}
+
+.date-wrapper {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.date {
+  color: $font-color-primary;
+}
