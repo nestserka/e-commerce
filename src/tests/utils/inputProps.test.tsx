@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import {
   inputBillingCityProps,
   inputBillingPostalCodeProps,
@@ -14,7 +16,6 @@ import {
   inputShippingStreetProps,
 } from '../../utils/inputProps';
 import { getInputProps } from '../../utils/utils';
-import { describe, expect, it } from 'vitest';
 
 describe('Input props constants', () => {
   it('should match the expected structure and values for inputEmailProps', () => {
