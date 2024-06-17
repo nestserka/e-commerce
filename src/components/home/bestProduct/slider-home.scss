@@ -24,33 +24,35 @@
   }
 }
 
-.swiper-pagination-bullet {
-  position: relative;
-  top: 28em;
+.custom-pagination-div {
+  .swiper-pagination-bullet {
+    position: relative;
+    top: 28em;
 
-  width: 0.8em;
-  height: 0.8em;
+    width: 0.8em;
+    height: 0.8em;
 
-  background: $font-color-primary;
+    background: $font-color-primary;
 
-  @media (width <= 1060px) {
-    top: 1em;
-    left: 45%;
-  }
+    @media (width <= 1060px) {
+      top: 1em;
+      left: 45%;
+    }
 
-  @media (width <= 689px) {
-    left: 35%;
-  }
+    @media (width <= 689px) {
+      left: 35%;
+    }
 
-  @media (width <= 500px) {
-    left: 30%;
-  }
+    @media (width <= 500px) {
+      left: 30%;
+    }
 
-  @media (width <= 449px) {
-    left: 26%;
-  }
+    @media (width <= 449px) {
+      left: 26%;
+    }
 
-  @media (width <= 420px) {
-    left: 23%;
+    @media (width <= 420px) {
+      left: 23%;
+    }
   }
 }

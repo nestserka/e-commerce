@@ -32,7 +32,10 @@ export default function HomeCategory(): JSX.Element {
             Discover a stunning collection of unique spacesuits, featuring meticulously crafted replicas from iconic
             astronauts.
           </p>
-          <a className={`${style['category-button']} ${style.astronout} `} href={`${DYNAMIC_ROUTES.CATALOG}meteorite`}>
+          <a
+            className={`${style['category-button']} ${style.astronout} `}
+            href={`${DYNAMIC_ROUTES.CATALOG}space-suits`}
+          >
             Explore Now
           </a>
         </div>

@@ -58,13 +58,12 @@ export default function DiscountProduct(): JSX.Element {
                 1150: { slidesPerView: 3.5 },
                 1300: { slidesPerView: 4 },
                 1440: { slidesPerView: 5 },
-                1980: { slidesPerView: 5},
+                1980: { slidesPerView: 5 },
               }}
               watchSlidesProgress
               slidesPerView={5}
               slideActiveClass={style['active-class']}
-              coverflowEffect={{ rotate: 20, slideShadows:true
-               }}
+              coverflowEffect={{ rotate: 20, slideShadows: true }}
               modules={[FreeMode, Navigation, Thumbs, EffectCoverflow]}
               className={style['swiper-cont']}
             >
