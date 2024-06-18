@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 import styles from './_navigation.module.scss';
 import { DYNAMIC_ROUTES, ROUTES } from '../../../constants/constants';
 import icon from '../../../../public/assets/icons/astronaut-icon.jpg';
+import { useCartData } from '../../../core/state/cartState';
 
 import type { NavLinkProps, NavigationProps } from './types';
-import { useCartData } from '../../../core/state/cartState';
-import { useEffect, useState } from 'react';
 
 export default function Navigation({
   links,
@@ -65,7 +65,7 @@ export default function Navigation({
         <NavLink to={`${DYNAMIC_ROUTES.CART}`} onClick={onClick}>
           <li className={styles['nav-item-cart']}>
             <div className={styles['cart-wrapper']} />
-            <span className={styles['cart-items']}>{itemsInOrder ? itemsInOrder : 0}</span>
+            <span className={styles['cart-items']}>{itemsInOrder ?? 0}</span>
             <span className={styles['cart-title']}>Cart</span>
           </li>
         </NavLink>
