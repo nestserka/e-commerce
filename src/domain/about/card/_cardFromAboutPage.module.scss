@@ -33,6 +33,10 @@
         display: block;
         margin-right: 20px;
       }
+
+      @media (width <= 450px) {
+        display: none;
+      }
     }
 
     .card-block-list {
@@ -83,6 +87,16 @@
       align-items: center;
 
       width: 400px;
+      height: fit-content;
+      margin: 5px;
+    }
+
+    @media (width <= 450px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 300px;
       height: fit-content;
       margin: 5px;
     }

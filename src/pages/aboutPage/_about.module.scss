@@ -72,6 +72,7 @@
     width: 920px;
     height: 950px;
     margin: 7rem auto;
+
     background: linear-gradient(
       180deg,
       rgb(220 235 234 / 100%) 0%,
@@ -296,9 +297,9 @@
       width: 100%;
       height: fit-content;
 
-      background-image: url('../../assets/images/bg/bg-home1.jpg');
+      background-image: url('../../assets/images/bg/bg-home.jpg');
       background-repeat: no-repeat;
-      background-position: center;
+      background-position: right;
       background-size: cover;
       border: none;
       border-radius: 0;
