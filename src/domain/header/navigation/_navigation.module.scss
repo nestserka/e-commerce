@@ -114,6 +114,7 @@
 
     gap: 0.313em;
     padding: 0;
+    position: relative;
 
     .cart-wrapper {
       @include flex-justify-center;
@@ -130,6 +131,18 @@
       background-size: auto;
       border: 1px solid $border-color-default;
       border-radius: 50%;
+    }
+    .cart-items {
+      min-width: 25px;
+      position: absolute;
+      top: 0px;
+      left: 30px;
+      padding: 1px;
+      border-radius: 50%;
+      text-align: center;
+      background: $bg-color-btn-hover;
+      font-size: 14px;
+      box-shadow: 0 0 10px 2px rgb(255 255 255 / 40%);
     }
   }
 
