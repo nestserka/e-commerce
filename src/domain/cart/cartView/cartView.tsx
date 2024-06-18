@@ -58,9 +58,7 @@ export default function CartView(): JSX.Element {
               {itemsInCart.map((item) => {
                 const cartItemLineProps = getLineItemProps(item);
 
-                const id = generateUniqueId();
-
-                return <CartItemLine key={id} productData={cartItemLineProps} />;
+                return <CartItemLine key={item.id} productData={cartItemLineProps} />;
               })}
             </div>
             <div className={style['clear-all-wrapper']}>
