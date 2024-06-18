@@ -1,7 +1,7 @@
 import style from './_home.module.scss';
 import { showModalMessage, useCustomerInfo, useLoginData } from '../../core/state/userState';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
-import icon from "../../../public/assets/icons/rocket-icon.svg";
+import icon from '../../../public/assets/icons/rocket-icon.svg';
 import HomeCategory from '../../components/home/homeCategory/HomeCategory';
 import DiscountProduct from '../../components/home/discountProduct/DiscountProduct';
 import HomePromotion from '../../components/home/promotion/Promotion';
