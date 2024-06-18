@@ -12,7 +12,6 @@ import CartSummary from '../cartSummary/cartSummary';
 import Promocode from '../promocode/promocode';
 import ModalClearCart from '../modalClearCart/modalClearCart';
 import { useLoginData } from '../../../core/state/userState';
-import { generateUniqueId } from '../../../pages/categoryPage/utils';
 
 const dateNow = new Date();
 
