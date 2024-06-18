@@ -12,7 +12,6 @@ import CartSummary from '../cartSummary/cartSummary';
 import Promocode from '../promocode/promocode';
 import ModalClearCart from '../modalClearCart/modalClearCart';
 import { useLoginData } from '../../../core/state/userState';
-import { generateUniqueId } from '../../../pages/categoryPage/utils';
 
 const dateNow = new Date();
 
@@ -58,9 +57,7 @@ export default function CartView(): JSX.Element {
               {itemsInCart.map((item) => {
                 const cartItemLineProps = getLineItemProps(item);
 
-                const id = generateUniqueId();
-
-                return <CartItemLine key={id} productData={cartItemLineProps} />;
+                return <CartItemLine key={item.id} productData={cartItemLineProps} />;
               })}
             </div>
             <div className={style['clear-all-wrapper']}>
