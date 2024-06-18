@@ -149,7 +149,7 @@
       height: 100%;
 
       .small-meteorite-image-2 {
-        content: url('../../../../public/assets/images/home/category/small-meteorite-2.png');
+        content: url('/assets/images/home/category/small-meteorite-2.png');
 
         position: absolute;
         z-index: 0;
@@ -172,7 +172,7 @@
         border-radius: 50%;
 
         .space-food-image-2 {
-          content: url('../../../../public/assets/images/home/category/banner-food-img-1.png');
+          content: url('/assets/images/home/category/banner-food-img-1.png');
           width: 70%;
           background-position: center;
         }
@@ -183,7 +183,7 @@
       width: 15%;
 
       .small-meteorite-image-1 {
-        content: url('../../../../public/assets/images/home/category/small-meteorite-1.png');
+        content: url('/assets/images/home/category/small-meteorite-1.png');
         position: absolute;
         transform: translate(-100%, 70%);
       }

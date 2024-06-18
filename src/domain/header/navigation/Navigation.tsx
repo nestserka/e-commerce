@@ -16,14 +16,14 @@ export default function Navigation({
   onClick,
   customerId,
 }: NavigationProps): JSX.Element {
-  const {  itemsInCart } = useCartData();
+  const { itemsInCart } = useCartData();
   const [itemsInOrder, setItemsInOrder] = useState<number | undefined>(itemsInCart?.length);
 
-useEffect(() => {
-  if (itemsInCart) {
-    setItemsInOrder(itemsInCart.reduce((acum, item) => acum + item.quantity, 0));
-  }
-},[itemsInCart])
+  useEffect(() => {
+    if (itemsInCart) {
+      setItemsInOrder(itemsInCart.reduce((acum, item) => acum + item.quantity, 0));
+    }
+  }, [itemsInCart]);
 
   return (
     <nav className={`${styles.nav} ${isNavOpen ? styles['nav-open'] : ''}`} data-testid="navigation">

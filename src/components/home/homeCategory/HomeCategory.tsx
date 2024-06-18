@@ -1,9 +1,9 @@
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
 import style from './_homeCategory.module.scss';
-import meteoryte1 from '../../../../public/assets/images/home/meteorite-1.png';
-import meteoryte2 from '../../../../public/assets/images/home/meteorite-2.png';
-import meteoryte3 from '../../../../public/assets/images/home/meteorite-3.png';
-import food1 from '../../../../public/assets/images/home/category/banner-food-img-2.png';
+import meteoryte1 from '/assets/images/home/meteorite-1.png';
+import meteoryte2 from '/assets/images/home/meteorite-2.png';
+import meteoryte3 from '/assets/images/home/meteorite-3.png';
+import food1 from '/assets/images/home/category/banner-food-img-2.png';
 
 export default function HomeCategory(): JSX.Element {
   return (
