@@ -65,7 +65,7 @@ export default function Navigation({
         <NavLink to={`${DYNAMIC_ROUTES.CART}`} onClick={onClick}>
           <li className={styles['nav-item-cart']}>
             <div className={styles['cart-wrapper']} />
-            <span className={styles['cart-items']}>{itemsInOrder ?? 0}</span>
+            <span className={styles['cart-items']}>{itemsInOrder ?? ' '}</span>
             <span className={styles['cart-title']}>Cart</span>
           </li>
         </NavLink>
