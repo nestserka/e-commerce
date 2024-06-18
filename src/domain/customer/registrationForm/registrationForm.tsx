@@ -110,7 +110,6 @@ export default function RegistrationForm(): JSX.Element {
   const { setIsShown } = showModalMessage();
 
   const onSubmit = async (data: RegistrationFormValues): Promise<void> => {
-    setShippingCompleteChecked(false);
     const registrationData = new RegistrationData();
     registrationData.setEmail(data.email);
     registrationData.setPassword(data.password);
@@ -141,8 +140,9 @@ export default function RegistrationForm(): JSX.Element {
         setUpdatedGeneraValues({ firstName: data.firstName });
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-        reset();
         setIsShown(true);
+        setShippingCompleteChecked(false);
+        reset();
       })
       .catch((error: Error) => {
         setFormEmailError(error.message);
@@ -297,7 +297,13 @@ export default function RegistrationForm(): JSX.Element {
           />
         )}
       />
-      <InputCheckBox id="main" name="main" label="Bill to Shipping Address " onChange={handleShippingAutoComplete} />
+      <InputCheckBox
+        id="main"
+        name="main"
+        label="Bill to Shipping Address "
+        onChange={handleShippingAutoComplete}
+        isValue={isShippingCompleteChecked}
+      />
       <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
