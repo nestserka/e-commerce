@@ -19,6 +19,18 @@ export default function Navigation({
   const { itemsInCart } = useCartData();
   const [itemsInOrder, setItemsInOrder] = useState<number | undefined>(itemsInCart?.length);
 
+  const getDisplayValue = (items: number | undefined): string => {
+    if (items === undefined) {
+      return ' ';
+    }
+
+    if (items > 999) {
+      return '999+';
+    }
+
+    return items.toString();
+  };
+
   useEffect(() => {
     if (itemsInCart) {
       setItemsInOrder(itemsInCart.reduce((acum, item) => acum + item.quantity, 0));
@@ -62,10 +74,10 @@ export default function Navigation({
             </li>
           </NavLink>
         )}
-        <NavLink to={`${DYNAMIC_ROUTES.CART}`} onClick={onClick}>
+        <NavLink to={`${DYNAMIC_ROUTES.CART}`} onClick={onClick} className={styles['cart-link']}>
           <li className={styles['nav-item-cart']}>
             <div className={styles['cart-wrapper']} />
-            <span className={styles['cart-items']}>{itemsInOrder ?? 0}</span>
+            <span className={styles['cart-items']}>{getDisplayValue(itemsInOrder)}</span>{' '}
             <span className={styles['cart-title']}>Cart</span>
           </li>
         </NavLink>

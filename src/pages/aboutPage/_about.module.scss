@@ -42,10 +42,12 @@
   .title {
     @media (width <= 950px) {
       font-size: 2.5rem;
+      line-height: 45px;
     }
 
     @media (width <= 550px) {
       font-size: 1.9rem;
+      line-height: 35px;
     }
   }
 
@@ -53,9 +55,14 @@
     z-index: 1;
     margin-bottom: 2rem;
     font-size: 1.5rem;
+    line-height: 45px;
 
     @media (width <= 950px) {
       font-size: 1rem;
+    }
+
+    @media (width <= 850px) {
+      z-index: 0;
     }
 
     @media (width <= 550px) {
@@ -132,6 +139,10 @@
         font-size: 18px;
         line-height: 21.6px;
         color: #dcebea;
+      }
+
+      @media (width <= 850px) {
+        z-index: 0;
       }
     }
 
@@ -216,6 +227,7 @@
       }
 
       @media (width <= 850px) {
+        z-index: 0;
         display: block;
         height: fit-content;
       }
@@ -251,6 +263,7 @@
       }
 
       @media (width <= 850px) {
+        z-index: 0;
         display: none;
       }
     }
@@ -403,6 +416,10 @@
     background-size: cover;
     background-blend-mode: overlay;
     border-radius: 20px;
+  }
+
+  @media (width <= 950px) {
+    margin: 2rem auto;
   }
 }
 
