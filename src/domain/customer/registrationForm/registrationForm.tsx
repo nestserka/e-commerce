@@ -297,7 +297,13 @@ export default function RegistrationForm(): JSX.Element {
           />
         )}
       />
-      <InputCheckBox id="main" name="main" label="Bill to Shipping Address " onChange={handleShippingAutoComplete}  isValue={isShippingCompleteChecked}/>
+      <InputCheckBox
+        id="main"
+        name="main"
+        label="Bill to Shipping Address "
+        onChange={handleShippingAutoComplete}
+        isValue={isShippingCompleteChecked}
+      />
       <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
