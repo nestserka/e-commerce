@@ -5,6 +5,8 @@ import { DYNAMIC_ROUTES, ROUTES } from '../../../constants/constants';
 import icon from '../../../../public/assets/icons/astronaut-icon.jpg';
 
 import type { NavLinkProps, NavigationProps } from './types';
+import { useCartData } from '../../../core/state/cartState';
+import { useEffect, useState } from 'react';
 
 export default function Navigation({
   links,
@@ -14,6 +16,15 @@ export default function Navigation({
   onClick,
   customerId,
 }: NavigationProps): JSX.Element {
+  const {  itemsInCart } = useCartData();
+  const [itemsInOrder, setItemsInOrder] = useState<number | undefined>(itemsInCart?.length);
+
+useEffect(() => {
+  if (itemsInCart) {
+    setItemsInOrder(itemsInCart.reduce((acum, item) => acum + item.quantity, 0));
+  }
+},[itemsInCart])
+
   return (
     <nav className={`${styles.nav} ${isNavOpen ? styles['nav-open'] : ''}`} data-testid="navigation">
       <ul className={styles['nav-list']}>
@@ -54,6 +65,7 @@ export default function Navigation({
         <NavLink to={`${DYNAMIC_ROUTES.CART}`} onClick={onClick}>
           <li className={styles['nav-item-cart']}>
             <div className={styles['cart-wrapper']} />
+            <span className={styles['cart-items']}>{itemsInOrder ? itemsInOrder : 0}</span>
             <span className={styles['cart-title']}>Cart</span>
           </li>
         </NavLink>
