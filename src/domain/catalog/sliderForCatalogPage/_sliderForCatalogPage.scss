@@ -69,8 +69,8 @@
     }
 
     .active {
-      color: $font-color-primary !important;
-      background-color: #6f72b829;
+      color: $font-color-primary;
+      background-color: $bg-color-btn-default;
     }
 
     @media (width <= 480px) {
