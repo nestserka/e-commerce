@@ -9,12 +9,12 @@ import 'swiper/css/navigation';
 
 import style from './_discountProduct.module.scss';
 import { HomeCard } from '../homeCard/HomeCard';
-import { useHomeData } from '../../../core/state/homeState';
+import { useBoundStore } from '../../../core/state/boundState';
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 export default function DiscountProduct(): JSX.Element {
-  const { setDiscountedProductList, discountedProducts } = useHomeData();
+  const { setDiscountedProductList, discountedProducts } = useBoundStore();
 
   useEffect(() => {
     const fetchDiscountedProducts = async (): Promise<void> => {

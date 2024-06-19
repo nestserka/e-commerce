@@ -36,3 +36,15 @@ input[type='text'] {
   gap: 1rem;
   padding-top: 2rem;
 }
+
+.applied-promocodes {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.7em;
+  gap: 1em;
+
+  .applied-promo {
+    @include flex-start-space-between;
+    align-items: center;
+  }
+}

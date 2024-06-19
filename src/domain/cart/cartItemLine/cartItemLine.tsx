@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 import style from './_cartItemLine.module.scss';
 import iconDelete from '../../../assets/images/icons/icon-delete.svg';
-import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
 import { useDebounce } from '../../../utils/useDebounce';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
+import { useBoundStore } from '../../../core/state/boundState';
 
 import type { CartItemLineProps } from '../../../utils/types';
 import type { ChangeEvent } from 'react';
@@ -24,7 +24,7 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
     productId,
   } = productData;
   const { customerId } = useLoginData();
-  const { addProductToCart, removeProductFromCart } = useCartData();
+  const { addProductToCart, removeProductFromCart } =  useBoundStore();
   const [itemQuantity, setItemQuantity] = useState<number | string>(quantity);
   const [totalItemCost, setTotalItemCost] = useState<string>(totalPrice);
   const incrementPrice = discountedPricePerItem ? discountedPricePerItem.slice(1) : pricePerItem.slice(1);

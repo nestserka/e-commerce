@@ -10,15 +10,15 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import './slider-home.scss';
 import style from './_bestProduct.module.scss';
-import { useHomeData } from '../../../core/state/homeState';
 import { HomeCard } from '../homeCard/HomeCard';
 import { ROUTES } from '../../../constants/constants';
 import Loader from '../../loader/Loader';
+import { useBoundStore } from '../../../core/state/boundState';
 
 import type { ProductProjection } from '@commercetools/platform-sdk';
 
 export default function BestProduct(): JSX.Element {
-  const { setBestProductList, bestProducts, leftSlider, rightSlider, isLoaded } = useHomeData();
+  const { setBestProductList, bestProducts, leftSlider, rightSlider, isLoaded } = useBoundStore();
   const [leftSwiper, setLeftSwiper] = useState<SwiperProps | null>(null);
   const [rightSwiper, setRightSwiper] = useState<SwiperProps | null>(null);
   const navigate = useNavigate();

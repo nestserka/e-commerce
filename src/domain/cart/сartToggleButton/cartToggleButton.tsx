@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 import LoaderForButton from '../../../components/loaderForButton/LoaderForButton';
+import { useBoundStore } from '../../../core/state/boundState';
 
 import type { PAGES } from '../../../constants/constants';
 
@@ -18,7 +18,7 @@ export default function CartToggleButton({
   isProductInCartProps = undefined,
 }: CartToggleButtonProps): JSX.Element {
   const { customerId } = useLoginData();
-  const { activeCart, setCart, addProductToCart, isInCart } = useCartData();
+  const { activeCart, setCart, addProductToCart, isInCart } = useBoundStore();
   const [localIsLoading, setLocalIsLoading] = useState<boolean>(false);
   const [productInCart, setProductInCart] = useState<boolean>(false);
 

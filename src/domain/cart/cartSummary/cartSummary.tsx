@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
-import { useCartData } from '../../../core/state/cartState';
 import { formatPrice } from '../../../utils/utils';
 import style from './_cartSummary.module.scss';
+import { useBoundStore } from '../../../core/state/boundState';
 
 export default function CartSummary(): JSX.Element {
-  const { activeCart, itemsInCart, getTotalItemsDiscount, isPromocodeApplied } = useCartData();
+  const { activeCart, itemsInCart, getTotalItemsDiscount, isPromocodeApplied } = useBoundStore();
   const [itemsInOrder, setItemsInOrder] = useState<number | undefined>(itemsInCart?.length);
   const [promocodeDiscount, setPromocodeDiscount] = useState<string>('0');
   const [totalPriceBeforePromocode, setTotalPriceBeforePromocode] = useState<string>('');

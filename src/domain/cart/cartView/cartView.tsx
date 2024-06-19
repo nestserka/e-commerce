@@ -3,7 +3,6 @@ import { useState } from 'react';
 import style from './_cartView.module.scss';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import BackButton from '../../../components/backButton/backButton';
-import { useCartData } from '../../../core/state/cartState';
 import CartItemLine from '../cartItemLine/cartItemLine';
 import { getLineItemProps, getLineItemsPropsToRemove } from '../../../utils/utils';
 import EmptyCartState from '../emptyCartView/emptyCartState';
@@ -12,6 +11,7 @@ import CartSummary from '../cartSummary/cartSummary';
 import Promocode from '../promocode/promocode';
 import ModalClearCart from '../modalClearCart/modalClearCart';
 import { useLoginData } from '../../../core/state/userState';
+import { useBoundStore } from '../../../core/state/boundState';
 
 const dateNow = new Date();
 
@@ -19,10 +19,10 @@ const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', d
 const formattedDate = dateNow.toLocaleDateString('en-US', options);
 
 export default function CartView(): JSX.Element {
-  const { itemsInCart } = useCartData();
+  const { itemsInCart } = useBoundStore();
   const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
-  const { getItemsIds, removeProductFromCart } = useCartData();
+  const { getItemsIds, removeProductFromCart } = useBoundStore();
   const { customerId } = useLoginData();
 
   const clearCart = async (): Promise<void> => {
