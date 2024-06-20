@@ -24,7 +24,7 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
     productId,
   } = productData;
   const { customerId } = useLoginData();
-  const { addProductToCart, removeProductFromCart } =  useBoundStore();
+  const { addProductToCart, removeProductFromCart } = useBoundStore();
   const [itemQuantity, setItemQuantity] = useState<number | string>(quantity);
   const [totalItemCost, setTotalItemCost] = useState<string>(totalPrice);
   const incrementPrice = discountedPricePerItem ? discountedPricePerItem.slice(1) : pricePerItem.slice(1);

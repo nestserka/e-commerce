@@ -56,7 +56,7 @@ export default function ProductPage(): JSX.Element {
   const [isShown, setIsShown] = useState<boolean>(false);
   const [uniqueProductId, setUniqueProductId] = useState<string>('');
   const [productInCart, setProductInCart] = useState<boolean>(false);
-  const { itemsInCart } =  useBoundStore();
+  const { itemsInCart } = useBoundStore();
 
   useEffect(() => {
     if (productId) {

@@ -16,7 +16,7 @@ export default function Navigation({
   onClick,
   customerId,
 }: NavigationProps): JSX.Element {
-  const { itemsInCart } =  useBoundStore();
+  const { itemsInCart } = useBoundStore();
   const [itemsInOrder, setItemsInOrder] = useState<number | undefined>(itemsInCart?.length);
 
   const getDisplayValue = (items: number | undefined): string => {
