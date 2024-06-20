@@ -12,10 +12,10 @@ export default function CatalogPage(): JSX.Element {
   useEffect(() => {
     if (categoriesData.length === 0) {
       setCategoriesData().catch((error: Error) => {
-        console.log(error.message);
+        console.error(error.message);
       });
       setProductTypesAttributes().catch((error: Error) => {
-        console.log(error.message);
+        console.error(error.message);
       });
     }
   }, [categoriesData.length, setCategoriesData, setProductTypesAttributes]);

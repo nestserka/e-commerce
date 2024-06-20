@@ -47,15 +47,14 @@ export default function Promocode(): JSX.Element {
 
   const onSubmit = async (data: PromocodeFormValue): Promise<void> => {
     const hasCouponAdded = checkIfAlreadyExist(data.promocode);
-    console.log(hasCouponAdded);
-
+  
     if (data.promocode && !hasCouponAdded) {
       await addDiscountCode(customerId, data.promocode)
         .then(() => {
           reset();
         })
         .catch((err) => {
-          console.log('Failed to apply promocode to the cart', err);
+          console.error('Failed to apply promocode to the cart', err);
         });
     }
   };

@@ -56,7 +56,7 @@ export default function CategoryPage(): JSX.Element {
           setTotal(productListData.total ? productListData.total : 0);
         })
         .catch((error: Error) => {
-          console.log(error.message);
+          console.error(error.message);
         })
         .finally(() => {
           setIsFirstDownload(true);
@@ -72,7 +72,7 @@ export default function CategoryPage(): JSX.Element {
           setTotal(productListData.total ? productListData.total : 0);
         })
         .catch((error: Error) => {
-          console.log(error.message);
+          console.error(error.message);
         })
         .finally(() => {
           setIsFirstDownload(true);

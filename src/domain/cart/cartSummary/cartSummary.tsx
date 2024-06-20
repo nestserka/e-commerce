@@ -17,18 +17,25 @@ export default function CartSummary(): JSX.Element {
     }
 
     if (activeCart && isPromocodeApplied) {
-      const value = activeCart.discountOnTotalPrice?.discountedAmount.centAmount;
+      const value = activeCart.discountOnTotalPrice?.discountedAmount.centAmount ?? 0;
       const totalPrice = activeCart.totalPrice.centAmount;
 
-      if (value) {
-        const totalPriceBeforePromocodeNum = value + totalPrice;
+      const totalDiscountAmount = activeCart.lineItems.reduce((accum, item) => {
+        const discountAmount =
+          item.discountedPricePerQuantity[0]?.discountedPrice?.includedDiscounts?.reduce(
+            (sum, discount) => sum + discount.discountedAmount.centAmount,
+            0,
+          ) || 0;
 
-        const promocodeDiscountValue = (value / 100).toFixed(2);
-        setPromocodeDiscount(promocodeDiscountValue);
+        return accum + discountAmount;
+      }, 0);
 
-        const totalPriceBeforePromocodeValue = (totalPriceBeforePromocodeNum / 100).toFixed(2);
-        setTotalPriceBeforePromocode(totalPriceBeforePromocodeValue);
-      }
+      const totalPriceBeforePromocodeNum = value + totalPrice + totalDiscountAmount;
+      const promocodeDiscountValue = ((value + totalDiscountAmount) / 100).toFixed(2);
+      setPromocodeDiscount(promocodeDiscountValue);
+
+      const totalPriceBeforePromocodeValue = (totalPriceBeforePromocodeNum / 100).toFixed(2);
+      setTotalPriceBeforePromocode(totalPriceBeforePromocodeValue);
     }
   }, [itemsInCart, activeCart, isPromocodeApplied, setPromocodeDiscount, setTotalPriceBeforePromocode]);
 

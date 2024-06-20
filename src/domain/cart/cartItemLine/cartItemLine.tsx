@@ -48,12 +48,12 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
         setPrevQuantity(Number(debouncedItemQuantity));
         setTotalItemCost(`$${(Number(debouncedItemQuantity) * Number(incrementPrice)).toFixed(2)}`);
       } catch (err) {
-        console.log('failed to modify item quantity', err);
+        console.error('failed to modify item quantity', err);
       }
     };
 
     updateCart().catch((err) => {
-      console.log(err);
+      console.error(err);
     });
   }, [
     debouncedItemQuantity,
@@ -100,7 +100,7 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
       const action = getLineItemsPropsToRemove([id]);
       await removeProductFromCart(action, customerId);
     } catch (err) {
-      console.log('Failed to remove product from the cart', err);
+      console.error('Failed to remove product from the cart', err);
     }
   };
 

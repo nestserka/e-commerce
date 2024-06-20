@@ -34,7 +34,7 @@ export default function BestProduct(): JSX.Element {
 
     if (bestProducts.length === 0) {
       fetchDiscountedProducts().catch((error: Error) => {
-        console.log(error);
+        console.error(error);
       });
     }
   }, [setBestProductList, bestProducts, isLoaded]);

@@ -18,7 +18,7 @@ export default function CartPage(): JSX.Element {
     };
 
     fetchPromoCodes().catch((err) => {
-      console.log(err);
+      console.error(err);
     });
   }, [setPromoCodes, setCurrentUsedPromoCodes]);
 

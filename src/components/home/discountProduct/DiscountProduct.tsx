@@ -27,7 +27,7 @@ export default function DiscountProduct(): JSX.Element {
 
     if (discountedProducts.length === 0) {
       fetchDiscountedProducts().catch((error: Error) => {
-        console.log(error);
+        console.error(error);
       });
     }
   }, [setDiscountedProductList, discountedProducts]);

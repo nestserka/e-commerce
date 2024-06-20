@@ -39,7 +39,6 @@ export const useHomeData: StateCreator<HomeStateData> = (set) => ({
         'filter.query': ['variants.attributes.discount.key: "10%-off", "15%-off", "20%-off"'],
       };
       const productsList = await getHomeProductList(queryArgs);
-      console.log(productsList);
       set({ discountedProducts: productsList.results });
     } catch {
       throw new Error('There are no products on sales');

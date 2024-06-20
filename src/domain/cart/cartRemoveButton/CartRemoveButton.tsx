@@ -26,7 +26,7 @@ export default function CartRemoveButton({
       try {
         await setCart(customerId);
       } catch (err) {
-        console.log((err as Error).message);
+        console.error((err as Error).message);
 
         return;
       }
@@ -38,7 +38,7 @@ export default function CartRemoveButton({
         await removeProductFromCart(action, customerId);
       }
     } catch (err) {
-      console.log('Failed to remove product from the cart', err);
+      console.error('Failed to remove product from the cart', err);
     }
   };
 
@@ -53,7 +53,7 @@ export default function CartRemoveButton({
             setProductInCart(false);
           })
           .catch((error: Error) => {
-            console.log(error.message);
+            console.error(error.message);
           })
           .finally(() => {
             setTimeout(() => {

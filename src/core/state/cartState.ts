@@ -80,7 +80,7 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
         get().updateCartState(cart);
         localStorage.setItem(`customerCart-${LS_PREFIX}`, cart.id);
       } catch (err) {
-        console.log('Failed to get or create customer cart', err);
+        console.error('Failed to get or create customer cart', err);
 
         const cart = await createCustomerCart();
         get().updateCartState(cart);
@@ -97,7 +97,7 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
         get().updateCartState(cart);
         localStorage.setItem(`anonymousCartId-${LS_PREFIX}`, cart.id);
       } catch (err) {
-        console.log('Failed to get or create anonymous cart', err);
+        console.error('Failed to get or create anonymous cart', err);
 
         const cart = await createAnonymousCart();
         get().updateCartState(cart);
@@ -120,7 +120,8 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
       activeCart: cart,
       version: cart.version,
       itemsInCart: cart.lineItems,
-      isPromocodeApplied: !!cart.discountOnTotalPrice,
+      isPromocodeApplied:
+        !!cart.discountOnTotalPrice || !!cart.lineItems.some((item) => !!(item.discountedPricePerQuantity.length > 0)),
     });
   },
 
@@ -137,7 +138,7 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
         const updatedCart = await addProductToCart(cartId, productId, version, quantity);
         get().updateCartState(updatedCart);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
 
@@ -156,7 +157,7 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
         const updatedCart = await removeProductFromCart(cartId, action, version);
         get().updateCartState(updatedCart);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     }
 
@@ -217,6 +218,7 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
               break;
             case 'MatchesCart':
               get().updateCartState(response);
+
               get().setCurrentUsedPromoCodes();
               break;
             default:
@@ -235,13 +237,13 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
             get()
               .removeDiscountFromCard(body, response.version, response.id)
               .catch((err) => {
-                console.log(err);
+                console.error(err);
               });
           }
         });
       } catch (err) {
         set({ error: `Failed to add promocode to the cart. Check if the promocode ${codeStr} exists.` });
-        console.log(`Failed to add promocode to the cart. Check if the promocode ${codeStr} exists.`, err);
+        console.error(`Failed to add promocode to the cart. Check if the promocode ${codeStr} exists.`, err);
       }
     }
 
@@ -267,7 +269,7 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
         set({ appliedCoupons: updatedCoupns });
       })
       .catch((err) => {
-        console.log('Failed to set the cart: ', err);
+        console.error('Failed to set the cart: ', err);
       });
   },
   checkIfAlreadyExist: (promocode: string): boolean => {

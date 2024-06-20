@@ -68,7 +68,7 @@ export default function ProductPage(): JSX.Element {
           setUniqueProductId(response.id);
         })
         .catch((err: Error) => {
-          console.log(err.message);
+          console.error(err.message);
           setError('Failed to fetch product');
         })
         .finally(() => {

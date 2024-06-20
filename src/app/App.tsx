@@ -12,7 +12,7 @@ export default function App(): JSX.Element {
 
   useEffect(() => {
     setCart(customerId).catch((err) => {
-      console.log(err);
+      console.error(err);
     });
   }, [customerId, setCart]);
 
