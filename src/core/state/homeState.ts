@@ -1,9 +1,8 @@
 import getHomeProductList from '../../api/products/gettHomeProductList';
-import getCartDiscounts from '../../api/me/cart/cartDiscount';
 
 import type { StateCreator } from 'zustand';
 import type { QueryArgs } from '../../utils/types';
-import type { CartDiscount, ProductProjection } from '@commercetools/platform-sdk';
+import type { DiscountCode, ProductProjection } from '@commercetools/platform-sdk';
 
 const Images: Record<string, number> = {
   'pillars-of-creation-photo-print': 5,
@@ -19,12 +18,11 @@ export interface HomeStateData {
   bestProducts: ProductProjection[];
   leftSlider: ProductProjection[];
   rightSlider: ProductProjection[];
-  promocodes: CartDiscount[];
+  promocodes: DiscountCode[];
   setBestProductList: () => Promise<void>;
   setDiscountedProductList: () => Promise<void>;
   images: Record<string, string>;
   setImages: (key: string) => number | undefined;
-  setPromoCodes: () => Promise<void>;
 }
 
 export const useHomeData: StateCreator<HomeStateData> = (set) => ({
@@ -70,13 +68,5 @@ export const useHomeData: StateCreator<HomeStateData> = (set) => ({
     }
 
     return undefined;
-  },
-  setPromoCodes: async (): Promise<void> => {
-    try {
-      const promocode = await getCartDiscounts();
-      set({ promocodes: promocode?.results });
-    } catch {
-      throw new Error('Currently no product has been found');
-    }
   },
 });

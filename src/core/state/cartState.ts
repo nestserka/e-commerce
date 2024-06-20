@@ -12,7 +12,7 @@ import getDiscountCodes from '../../api/me/cart/discountCodes';
 import type { StateCreator } from 'zustand';
 import type {
   Cart,
-  CartDiscount,
+  DiscountCode,
   LineItem,
   MyCartRemoveDiscountCodeAction,
   MyCartRemoveLineItemAction,
@@ -30,7 +30,7 @@ export interface CartState {
   isPromocodeApplied: boolean;
   isLoading: boolean;
   error: string;
-  promocodes: CartDiscount[];
+  promocodes: DiscountCode[];
   appliedCoupons: AppliedCoupon[] | null;
   isInCart: (productId: string) => boolean;
   addProductToCart: (productId: string, customerId: string, quantity?: number) => Promise<void>;
@@ -41,8 +41,10 @@ export interface CartState {
   getTotalItemsDiscount: () => number;
   addDiscountCode: (customerId: string, codeStr: string) => Promise<void>;
   reset: () => void;
-  removeDiscountFromCard: (body: MyCartRemoveDiscountCodeAction[], version: number, id: string) => Promise<void>;
+  removeDiscountFromCard: (body: MyCartRemoveDiscountCodeAction, version: number, id: string) => Promise<void>;
   checkIfAlreadyExist: (promoCode: string) => boolean;
+  setCurrentUsedPromoCodes: () => void;
+  setPromoCodes: () => Promise<void>;
 }
 
 interface AppliedCoupon {
@@ -109,20 +111,6 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
     } else {
       await handleAnonymousCart();
     }
-
-    await getDiscountCodes().then((response) => {
-      if (get().activeCart?.discountCodes) {
-        const matchingCodes: AppliedCoupon[] = [];
-        get().activeCart?.discountCodes.forEach((cartCode) => {
-          const matchingCode = response?.results.find((discountCode) => discountCode.id === cartCode.discountCode.id);
-
-          if (matchingCode) {
-            matchingCodes.push({ id: matchingCode.id, name: matchingCode.code });
-          }
-        });
-        set({ appliedCoupons: matchingCodes });
-      }
-    });
 
     set({ isLoading: false });
   },
@@ -229,21 +217,20 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
               break;
             case 'MatchesCart':
               get().updateCartState(response);
+              get().setCurrentUsedPromoCodes();
               break;
             default:
               break;
           }
 
           if (message) {
-            const body: MyCartRemoveDiscountCodeAction[] = [
-              {
-                action: 'removeDiscountCode',
-                discountCode: {
-                  typeId: appliedPromoCode.discountCode.typeId,
-                  id: appliedPromoCode.discountCode.id,
-                },
+            const body: MyCartRemoveDiscountCodeAction = {
+              action: 'removeDiscountCode',
+              discountCode: {
+                typeId: appliedPromoCode.discountCode.typeId,
+                id: appliedPromoCode.discountCode.id,
               },
-            ];
+            };
             set({ error: message });
             get()
               .removeDiscountFromCard(body, response.version, response.id)
@@ -272,17 +259,15 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
       appliedCoupons: null,
     });
   },
-  removeDiscountFromCard: async (
-    body: MyCartRemoveDiscountCodeAction[],
-    version: number,
-    id: string,
-  ): Promise<void> => {
+  removeDiscountFromCard: async (body: MyCartRemoveDiscountCodeAction, version: number, id: string): Promise<void> => {
     await removeDiscountsFromCard(body, version, id)
       .then((response) => {
         get().updateCartState(response);
+        const updatedCoupns = get().appliedCoupons?.filter((coupon) => coupon.id !== body.discountCode.id);
+        set({ appliedCoupons: updatedCoupns });
       })
       .catch((err) => {
-        console.error('Failed to set the cart: ', err);
+        console.log('Failed to set the cart: ', err);
       });
   },
   checkIfAlreadyExist: (promocode: string): boolean => {
@@ -295,5 +280,26 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
     }
 
     return isPromoExist;
+  },
+  setCurrentUsedPromoCodes: (): void => {
+    if (get().activeCart?.discountCodes) {
+      const matchingCodes: AppliedCoupon[] = [];
+      get().activeCart?.discountCodes.forEach((cartCode) => {
+        const matchingCode = get().promocodes.find((discountCode) => discountCode.id === cartCode.discountCode.id);
+
+        if (matchingCode) {
+          matchingCodes.push({ id: matchingCode.id, name: matchingCode.code });
+        }
+      });
+      set({ appliedCoupons: matchingCodes });
+    }
+  },
+  setPromoCodes: async (): Promise<void> => {
+    try {
+      const promocode = await getDiscountCodes();
+      set({ promocodes: promocode?.results });
+    } catch {
+      throw new Error('Currently no product discounts has been found');
+    }
   },
 });

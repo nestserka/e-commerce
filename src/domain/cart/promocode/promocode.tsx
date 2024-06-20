@@ -9,6 +9,8 @@ import { PROMOCODE_VALIDATION_SCHEMA } from '../../../constants/constants';
 import { useBoundStore } from '../../../core/state/boundState';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 
+import type { MyCartRemoveDiscountCodeAction } from '@commercetools/platform-sdk';
+
 const schema = z.object({
   promocode: PROMOCODE_VALIDATION_SCHEMA,
 });
@@ -17,26 +19,31 @@ type PromocodeFormValue = z.infer<typeof schema>;
 
 export default function Promocode(): JSX.Element {
   const { customerId } = useLoginData();
-  const { addDiscountCode, error, checkIfAlreadyExist, appliedCoupons} = useBoundStore();
+  const { addDiscountCode, error, checkIfAlreadyExist, appliedCoupons, removeDiscountFromCard, activeCart } =
+    useBoundStore();
 
   const { register, handleSubmit, formState, reset } = useForm<PromocodeFormValue>({
     resolver: zodResolver(schema),
     mode: 'onChange',
   });
 
-  const { errors } = formState;
+  const removeCurrentPromoveCode = async (promoId: string): Promise<void> => {
+    const body: MyCartRemoveDiscountCodeAction = {
+      action: 'removeDiscountCode',
+      discountCode: {
+        typeId: 'discount-code',
+        id: promoId,
+      },
+    };
 
-  // const removeCurrentPromoveCode() => {
-  //   const body: MyCartRemoveDiscountCodeAction[] = [
-  //     {
-  //       action: 'removeDiscountCode',
-  //       discountCode: {
-  //         typeId: activeCart?.discountCodes
-  //         id: appliedPromoCode.discountCode.id,
-  //       },
-  //     },
-  //   ];
-  // }
+    if (activeCart && appliedCoupons) {
+      await removeDiscountFromCard(body, activeCart.version, activeCart.id).catch((err: Error) => {
+        console.error('Current coupon was not found', err);
+      });
+    }
+  };
+
+  const { errors } = formState;
 
   const onSubmit = async (data: PromocodeFormValue): Promise<void> => {
     const hasCouponAdded = checkIfAlreadyExist(data.promocode);
@@ -63,16 +70,20 @@ export default function Promocode(): JSX.Element {
         </button>
       </form>
       {error && <ErrorMessage message={error} />}
-      <FormSubTitle subTitle="Used Promocodes" />
       {appliedCoupons && appliedCoupons.length > 0 && (
-        <div className={style['applied-promocodes']}>
-          {appliedCoupons.map((promocode) => (
-           <div key={promocode.id} className={style['applied-promo']}>
-           {promocode.name}
-           <button type='button' className='button-primary'>Remove</button>
-         </div>
-          ))}
-        </div>
+        <>
+          <FormSubTitle subTitle="Used Promocodes" />
+          <div className={style['applied-promocodes']}>
+            {appliedCoupons.map((promocode) => (
+              <div key={promocode.id} className={style['applied-promo']}>
+                {promocode.name}
+                <button type="button" className="button-primary" onClick={() => removeCurrentPromoveCode(promocode.id)}>
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );

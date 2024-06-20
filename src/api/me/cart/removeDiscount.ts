@@ -4,11 +4,12 @@ import { tokenCache } from '../../token/MyTokenCache';
 import type { Cart, MyCartRemoveDiscountCodeAction } from '@commercetools/platform-sdk';
 
 export default async function removeDiscountsFromCard(
-  body: MyCartRemoveDiscountCodeAction[],
+  body: MyCartRemoveDiscountCodeAction,
   version: number,
   id: string,
 ): Promise<Cart> {
   const token = tokenCache.get().refreshToken;
+  const actions = Array.isArray(body) ? body : [body];
 
   const response = await withRefreshToken(token ?? '')
     .me()
@@ -19,7 +20,7 @@ export default async function removeDiscountsFromCard(
     .post({
       body: {
         version,
-        actions: [...body],
+        actions,
       },
     })
     .execute();
