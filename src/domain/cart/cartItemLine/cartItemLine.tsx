@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 import style from './_cartItemLine.module.scss';
 import iconDelete from '../../../assets/images/icons/icon-delete.svg';
-import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
 import { useDebounce } from '../../../utils/useDebounce';
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
+import { useBoundStore } from '../../../core/state/boundState';
 
 import type { CartItemLineProps } from '../../../utils/types';
 import type { ChangeEvent } from 'react';
@@ -24,7 +24,7 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
     productId,
   } = productData;
   const { customerId } = useLoginData();
-  const { addProductToCart, removeProductFromCart } = useCartData();
+  const { addProductToCart, removeProductFromCart } = useBoundStore();
   const [itemQuantity, setItemQuantity] = useState<number | string>(quantity);
   const [totalItemCost, setTotalItemCost] = useState<string>(totalPrice);
   const incrementPrice = discountedPricePerItem ? discountedPricePerItem.slice(1) : pricePerItem.slice(1);
@@ -48,12 +48,12 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
         setPrevQuantity(Number(debouncedItemQuantity));
         setTotalItemCost(`$${(Number(debouncedItemQuantity) * Number(incrementPrice)).toFixed(2)}`);
       } catch (err) {
-        console.log('failed to modify item quantity', err);
+        console.error('failed to modify item quantity', err);
       }
     };
 
     updateCart().catch((err) => {
-      console.log(err);
+      console.error(err);
     });
   }, [
     debouncedItemQuantity,
@@ -100,7 +100,7 @@ export default function CartItemLine({ productData }: CartItemLineProps): JSX.El
       const action = getLineItemsPropsToRemove([id]);
       await removeProductFromCart(action, customerId);
     } catch (err) {
-      console.log('Failed to remove product from the cart', err);
+      console.error('Failed to remove product from the cart', err);
     }
   };
 

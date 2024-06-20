@@ -74,7 +74,7 @@ export default function ProfilePage(): JSX.Element {
     };
 
     fetchCustomer().catch((error: Error) => {
-      console.log(error);
+      console.error(error);
     });
   }, [customerId, setCustomerInfo, setErrorIsShown]);
 

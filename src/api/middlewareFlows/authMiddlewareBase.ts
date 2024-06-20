@@ -103,7 +103,7 @@ async function executeRequest({
         requestState.set(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   } catch (error) {
     requestState.set(false);

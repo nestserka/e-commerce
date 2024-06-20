@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import style from './_homeCard.module.scss';
 import { DYNAMIC_ROUTES } from '../../../constants/constants';
-import { useHomeData } from '../../../core/state/homeState';
 import { createParamsFromCard } from '../../../domain/catalog/card/utils';
+import { useBoundStore } from '../../../core/state/boundState';
 
 import type { PropsCard } from '../../../domain/catalog/card/types';
 import type { ProductProjection } from '@commercetools/platform-sdk';
@@ -17,7 +17,7 @@ export function HomeCard({
   isVertical: boolean;
 }): JSX.Element {
   const [product] = useState<PropsCard>(createParamsFromCard(dataCard));
-  const { setImages } = useHomeData();
+  const { setImages } = useBoundStore();
   const [newCommerceImage, setCommerseImage] = useState<number>();
 
   useEffect(() => {

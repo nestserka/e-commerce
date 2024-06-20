@@ -1,9 +1,8 @@
-import { create } from 'zustand';
-
 import getHomeProductList from '../../api/products/gettHomeProductList';
 
+import type { StateCreator } from 'zustand';
 import type { QueryArgs } from '../../utils/types';
-import type { ProductProjection } from '@commercetools/platform-sdk';
+import type { DiscountCode, ProductProjection } from '@commercetools/platform-sdk';
 
 const Images: Record<string, number> = {
   'pillars-of-creation-photo-print': 5,
@@ -19,26 +18,27 @@ export interface HomeStateData {
   bestProducts: ProductProjection[];
   leftSlider: ProductProjection[];
   rightSlider: ProductProjection[];
+  promocodes: DiscountCode[];
   setBestProductList: () => Promise<void>;
   setDiscountedProductList: () => Promise<void>;
   images: Record<string, string>;
   setImages: (key: string) => number | undefined;
 }
 
-export const useHomeData = create<HomeStateData>((set) => ({
+export const useHomeData: StateCreator<HomeStateData> = (set) => ({
   discountedProducts: [],
   bestProducts: [],
   images: {},
   leftSlider: [],
   rightSlider: [],
   isLoaded: false,
+  promocodes: [],
   setDiscountedProductList: async (): Promise<void> => {
     try {
       const queryArgs: QueryArgs = {
         'filter.query': ['variants.attributes.discount.key: "10%-off", "15%-off", "20%-off"'],
       };
       const productsList = await getHomeProductList(queryArgs);
-      console.log(productsList);
       set({ discountedProducts: productsList.results });
     } catch {
       throw new Error('There are no products on sales');
@@ -68,4 +68,4 @@ export const useHomeData = create<HomeStateData>((set) => ({
 
     return undefined;
   },
-}));
+});

@@ -3,16 +3,16 @@ import { useEffect } from 'react';
 
 import { routeRender } from '../core/routes/routesConfig';
 import styles from './_app.module.scss';
-import { useCartData } from '../core/state/cartState';
 import { useLoginData } from '../core/state/userState';
+import { useBoundStore } from '../core/state/boundState';
 
 export default function App(): JSX.Element {
-  const { setCart } = useCartData();
+  const { setCart } = useBoundStore();
   const { customerId } = useLoginData();
 
   useEffect(() => {
     setCart(customerId).catch((err) => {
-      console.log(err);
+      console.error(err);
     });
   }, [customerId, setCart]);
 

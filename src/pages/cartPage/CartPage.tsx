@@ -1,28 +1,26 @@
-// import { useParams } from 'react-router';
-
 import { useEffect } from 'react';
 
 import style from './_cart.module.scss';
 import CartView from '../../domain/cart/cartView/cartView';
-import { useCartData } from '../../core/state/cartState';
-import { useLoginData } from '../../core/state/userState';
-
-// import type { Params } from 'react-router';
+import { useBoundStore } from '../../core/state/boundState';
 
 export default function CartPage(): JSX.Element {
-  // const { customerId }: Readonly<Params<string>> = useParams();
-  const { activeCart, setCart, itemsInCart } = useCartData();
-  const { customerId } = useLoginData();
+  const { activeCart, itemsInCart, setPromoCodes, setCurrentUsedPromoCodes } = useBoundStore();
 
   useEffect(() => {
-    const fetchCart = async (): Promise<void> => {
-      await setCart(customerId);
+    const fetchPromoCodes = async (): Promise<void> => {
+      try {
+        await setPromoCodes();
+        setCurrentUsedPromoCodes();
+      } catch (err) {
+        console.error('Error fetching promo codes:', err);
+      }
     };
 
-    fetchCart().catch((error: Error) => {
-      console.log(error);
+    fetchPromoCodes().catch((err) => {
+      console.error(err);
     });
-  }, [customerId, setCart]);
+  }, [setPromoCodes, setCurrentUsedPromoCodes]);
 
   return (
     <section className={style.cart} data-testid="cart">

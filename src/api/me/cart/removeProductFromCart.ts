@@ -22,8 +22,5 @@ export default async function removeProductFromCart(
     .post({ body })
     .execute();
 
-  console.log(`Product removed from cart with id ${cartId}`);
-  console.log('Updated cart:', response.body);
-
   return response.body;
 }
