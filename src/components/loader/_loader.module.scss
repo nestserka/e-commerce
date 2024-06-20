@@ -3,9 +3,12 @@
 
 .wrapper {
   overflow: hidden;
+  display: flex;
   flex-grow: 1;
   place-items: center;
+
   width: 100%;
+  margin: 4em auto 1em;
 
   .container {
     position: relative;

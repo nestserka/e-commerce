@@ -12,6 +12,6 @@ describe('Header component', () => {
       </BrowserRouter>,
     );
     expect(screen.getByAltText('NASA Store logotype')).toBeInTheDocument();
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
+    expect(screen.getByRole('presentation')).toBeInTheDocument();
   });
 });

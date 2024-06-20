@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './_header.module.scss';
@@ -8,10 +7,11 @@ import { NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useLoginData } from '../../core/state/userState';
 import { logOut } from '../../utils/logOut';
 import { useCatalogCheckAttributeState, useCatalogData } from '../../core/state/catalogState';
+import { useToggleModal } from '../../utils/useToggleModal';
 
 export default function Header(): JSX.Element {
   const { isAuth, customerId } = useLoginData();
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen, setIsNavClose] = useToggleModal();
   const { resetAttributes, resetSort } = useCatalogData();
   const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
   const navigate = useNavigate();
@@ -25,16 +25,27 @@ export default function Header(): JSX.Element {
 
   const onClickButton = (): void => {
     logOut();
+
+    if (isNavOpen) {
+      defaultValues();
+      setIsNavClose();
+    }
+
     navigate(ROUTES.HOME);
   };
 
-  const toggleNav = (): void => {
-    defaultValues();
-    setIsNavOpen(!isNavOpen);
+  const toggleNavTrue = (): void => {
+    if (isNavOpen) {
+      defaultValues();
+      setIsNavClose();
+    } else {
+      defaultValues();
+      setIsNavOpen();
+    }
   };
   const toggleNavFalse = (): void => {
     defaultValues();
-    setIsNavOpen(false);
+    setIsNavClose();
   };
 
   return (
@@ -57,7 +68,7 @@ export default function Header(): JSX.Element {
       <section className={styles['burger-wrapper']}>
         <button
           className={`${styles['burger-button']} ${styles.hidden}`}
-          onClick={toggleNav}
+          onClick={toggleNavTrue}
           aria-label="burger"
           type="button"
         >
