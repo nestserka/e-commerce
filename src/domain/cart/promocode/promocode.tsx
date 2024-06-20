@@ -64,7 +64,7 @@ export default function Promocode(): JSX.Element {
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <input type="text" placeholder="PROMOCODE" {...register('promocode')} className="" />
         {errors.promocode && <ErrorMessage message={errors.promocode.message} />}
-        <button type="submit" className="button-primary">
+        <button type="submit" className="button-secondary">
           Apply
         </button>
       </form>
