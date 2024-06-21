@@ -52,7 +52,6 @@ export default function withAnonymousFlow(): ByProjectKeyRequestBuilder {
     .withProjectKey(import.meta.env.VITE_APP_PROJECT_KEY)
     .withAnonymousSessionFlow(anonymousAuthMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
     .build();
 
   return createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: import.meta.env.VITE_APP_PROJECT_KEY });

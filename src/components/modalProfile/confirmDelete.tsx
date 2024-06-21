@@ -24,7 +24,6 @@ export default function DeleteAddressForm({ isOpen, onClose, addressId, addressT
     await updateCustomer(version, body)
       .then((response) => {
         if ((addressType === 'shipping' || addressType === 'billing') && typeof addressId === 'string') {
-          console.log(addressType);
           removeAddress(addressId, addressType, response.version);
         }
 

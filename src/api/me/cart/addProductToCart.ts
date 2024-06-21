@@ -29,8 +29,5 @@ export default async function addProductToCustomerCart(
     .post({ body })
     .execute();
 
-  console.log(`Product ${productId} added to cart with id ${cartId}`);
-  console.log('Updated cart:', response.body);
-
   return response.body;
 }

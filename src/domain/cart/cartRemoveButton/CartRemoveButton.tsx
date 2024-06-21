@@ -1,5 +1,5 @@
 import LoaderForButton from '../../../components/loaderForButton/LoaderForButton';
-import { useCartData } from '../../../core/state/cartState';
+import { useBoundStore } from '../../../core/state/boundState';
 import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
 
@@ -19,14 +19,14 @@ export default function CartRemoveButton({
   setProductInCart,
 }: CartRemoveButtonProps): JSX.Element {
   const { customerId } = useLoginData();
-  const { activeCart, setCart, removeProductFromCart, isLoading } = useCartData();
+  const { activeCart, setCart, removeProductFromCart, isLoading } = useBoundStore();
 
   const handleRemoveClick = async (): Promise<void> => {
     if (!activeCart) {
       try {
         await setCart(customerId);
       } catch (err) {
-        console.log((err as Error).message);
+        console.error((err as Error).message);
 
         return;
       }
@@ -38,7 +38,7 @@ export default function CartRemoveButton({
         await removeProductFromCart(action, customerId);
       }
     } catch (err) {
-      console.log('Failed to remove product from the cart', err);
+      console.error('Failed to remove product from the cart', err);
     }
   };
 
@@ -53,7 +53,7 @@ export default function CartRemoveButton({
             setProductInCart(false);
           })
           .catch((error: Error) => {
-            console.log(error.message);
+            console.error(error.message);
           })
           .finally(() => {
             setTimeout(() => {

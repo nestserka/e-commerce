@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import styles from './_navigation.module.scss';
 import { DYNAMIC_ROUTES, ROUTES } from '../../../constants/constants';
 import icon from '../../../../public/assets/icons/astronaut-icon.jpg';
-import { useCartData } from '../../../core/state/cartState';
+import { useBoundStore } from '../../../core/state/boundState';
 
 import type { NavLinkProps, NavigationProps } from './types';
 
@@ -16,7 +16,7 @@ export default function Navigation({
   onClick,
   customerId,
 }: NavigationProps): JSX.Element {
-  const { itemsInCart } = useCartData();
+  const { itemsInCart } = useBoundStore();
   const [itemsInOrder, setItemsInOrder] = useState<number | undefined>(itemsInCart?.length);
 
   const getDisplayValue = (items: number | undefined): string => {

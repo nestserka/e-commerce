@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import { useCartData } from '../../../core/state/cartState';
 import { useLoginData } from '../../../core/state/userState';
 import LoaderForButton from '../../../components/loaderForButton/LoaderForButton';
+import { useBoundStore } from '../../../core/state/boundState';
 
 import type { PAGES } from '../../../constants/constants';
 
@@ -18,7 +18,7 @@ export default function CartToggleButton({
   isProductInCartProps = undefined,
 }: CartToggleButtonProps): JSX.Element {
   const { customerId } = useLoginData();
-  const { activeCart, setCart, addProductToCart, isInCart } = useCartData();
+  const { activeCart, setCart, addProductToCart, isInCart } = useBoundStore();
   const [localIsLoading, setLocalIsLoading] = useState<boolean>(false);
   const [productInCart, setProductInCart] = useState<boolean>(false);
 
@@ -33,7 +33,7 @@ export default function CartToggleButton({
       try {
         await setCart(customerId);
       } catch (err) {
-        console.log((err as Error).message);
+        console.error((err as Error).message);
 
         return;
       }
@@ -46,7 +46,7 @@ export default function CartToggleButton({
 
       setProductInCart(true);
     } catch (err) {
-      console.log((err as Error).message);
+      console.error((err as Error).message);
     } finally {
       setLocalIsLoading(false);
     }
@@ -61,7 +61,7 @@ export default function CartToggleButton({
       type="button"
       onClick={(e) => {
         handleAddToCart(e).catch((error: Error) => {
-          console.log(error.message);
+          console.error(error.message);
         });
       }}
       disabled={isProductInCartProps ?? productInCart}

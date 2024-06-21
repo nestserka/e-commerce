@@ -11,9 +11,9 @@ import { DYNAMIC_ROUTES, ROUTES } from '../../constants/constants';
 import Breadcrumbs from '../../components/breadCrumbs/breadCrumbs';
 import CartToggleButton from '../../domain/cart/сartToggleButton/cartToggleButton';
 import Loader from '../../components/loader/Loader';
-import { useCartData } from '../../core/state/cartState';
 import ModalMessage from '../../components/modalMessage/ModalMessage';
 import CartRemoveButton from '../../domain/cart/cartRemoveButton/CartRemoveButton';
+import { useBoundStore } from '../../core/state/boundState';
 
 import type { PAGES } from '../../constants/constants';
 import type { AttributeBestseller, AttributeDiscount } from '../../utils/types';
@@ -56,7 +56,7 @@ export default function ProductPage(): JSX.Element {
   const [isShown, setIsShown] = useState<boolean>(false);
   const [uniqueProductId, setUniqueProductId] = useState<string>('');
   const [productInCart, setProductInCart] = useState<boolean>(false);
-  const { itemsInCart } = useCartData();
+  const { itemsInCart } = useBoundStore();
 
   useEffect(() => {
     if (productId) {
@@ -68,7 +68,7 @@ export default function ProductPage(): JSX.Element {
           setUniqueProductId(response.id);
         })
         .catch((err: Error) => {
-          console.log(err.message);
+          console.error(err.message);
           setError('Failed to fetch product');
         })
         .finally(() => {

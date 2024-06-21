@@ -33,7 +33,6 @@ export default function withRefreshToken(refreshToken: string): ByProjectKeyRequ
     .withProjectKey(import.meta.env.VITE_APP_PROJECT_KEY)
     .withAuthMiddleware(authMiddleware)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
     .build();
 
   return createApiBuilderFromCtpClient(ctpClient).withProjectKey({

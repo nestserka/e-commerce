@@ -23,8 +23,5 @@ export default async function addDiscountCodeToCart(cartId: string, version: num
     .post({ body })
     .execute();
 
-  console.log(`Promocode ${code} added to cart with id ${cartId}`);
-  console.log('Updated cart:', response.body);
-
   return response.body;
 }

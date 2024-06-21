@@ -54,7 +54,6 @@ export default function withPasswordFlow(
     .withProjectKey(import.meta.env.VITE_APP_PROJECT_KEY)
     .withPasswordFlow(options)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
     .build();
 
   return createApiBuilderFromCtpClient(ctpClient).withProjectKey({

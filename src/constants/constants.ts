@@ -136,6 +136,9 @@ export const PROMOCODE_VALIDATION_SCHEMA = z
   })
   .refine((value) => /^[A-Z_]+$/.test(value), {
     message: 'Promocode should contain only Latin characters in the upper case and may contain undescore (_).',
+  })
+  .refine((value) => !/\s/.test(value), {
+    message: 'Promocode must not contain whitespace.',
   });
 
 const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
