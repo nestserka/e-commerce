@@ -2,10 +2,12 @@
 @import '../../assets/styles/variables';
 
 .wrapper {
-  overflow: hidden;
-  flex-grow: 1;
+  // overflow: hidden;
+  // display: flex;
+  // flex-grow: 1;
   place-items: center;
   width: 100%;
+  margin: 4em auto 1em;
 
   .container {
     position: relative;
@@ -15,11 +17,11 @@
     justify-content: center;
 
     width: 100%;
-    height: 100%;
+    height: 57vh;
 
     .loader {
       position: absolute;
-      top: 30%;
+      top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
 

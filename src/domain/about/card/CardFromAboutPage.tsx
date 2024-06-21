@@ -10,7 +10,7 @@ export default function CardFromAboutPage({ propsCard }: { propsCard: CardFromAb
   const { key, srcImg, firstDescription, secondDescription, linkForGitHub, handleClickForCard } = propsCard;
 
   return (
-    <div className={styles['card-block']} key={key}>
+    <div className={styles['card-block']}>
       <button type="button" className={`${key === '2' ? styles.card2 : styles.card}`} onClick={handleClickForCard}>
         <img className={styles['card-block-img']} src={srcImg} alt="card" />
         <div>

@@ -20,7 +20,7 @@ export default function AboutPage(): JSX.Element {
   const descriptionData: DescriptionData[] = [
     {
       title: 'Natalia Grischenok',
-      bio: 'Natalia with enthusiasm and thirst for knowledge, started her journey in programming in 2022. She immediately fell in love with frontend development, fascinated by the possibilities of creating beautiful and functional web interfaces.',
+      bio: 'In 2022, Natalia embarked on her programming journey fueled by enthusiasm and an insatiable thirst for knowledge. She was captivated by frontend development, recognizing its potential to create stunning and functional web interfaces. Despite facing formidable challenges, Natalia unwavering determination propelled her forward. Balancing full-time work with relentless studies, her dedication and growing expertise earned her the pivotal role of team lead in the project. Here, amidst her demanding schedule, she continues to inspire and lead the team with her fervent passion for crafting impactful digital experiences.',
       contribution: 'Catalog page, About us page, Project routing and configuration, Team Leader',
     },
     {
@@ -102,7 +102,7 @@ export default function AboutPage(): JSX.Element {
         </div>
         <div className={styles['card-blocks']}>
           {dataDevelop.map((dataCard) => (
-            <CardFromAboutPage propsCard={dataCard} />
+            <CardFromAboutPage propsCard={dataCard} key={dataCard.key} />
           ))}
         </div>
         <button type="button" onClick={handleClickFirstCard} className={styles.planet1}>

@@ -38,7 +38,12 @@ export default function Navigation({
   }, [itemsInCart]);
 
   return (
-    <nav className={`${styles.nav} ${isNavOpen ? styles['nav-open'] : ''}`} data-testid="navigation">
+    <nav
+      className={`${styles.nav} ${isNavOpen ? styles['nav-open'] : ''}`}
+      data-testid="navigation"
+      onClick={onClick}
+      role="presentation"
+    >
       <ul className={styles['nav-list']}>
         {links
           .filter(

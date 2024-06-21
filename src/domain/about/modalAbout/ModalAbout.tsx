@@ -7,15 +7,11 @@ export interface ModalFromAboutPageProps {
 }
 
 export default function ModalFromAboutPage({ isOpen, children }: ModalFromAboutPageProps): JSX.Element {
-  const handleCloseModal = (): void => {
-    isOpen();
-  };
-
   return (
     <>
-      <div className={styles.overlay} />
+      <div role="presentation" className={styles.overlay} onClick={isOpen} aria-label="Close Modal" />
       <section className={styles.modal}>
-        <button type="button" className={styles['modal-close-btn']} onClick={handleCloseModal}>
+        <button type="button" className={styles['modal-close-btn']} onClick={isOpen}>
           <img src={closeIcon} alt="Edit" />
         </button>
         {children}
