@@ -34,9 +34,14 @@ In addition to its ecommerce functionalities, the NASA Ecommerce Project also of
   - 💻 Vite
   - ⚛️ React
   - ⚛️ React DOM
-  - 🔷 Typescript
-  - 🎨 SASS
+  - ⚛️ React Hook Form
+  - ⚛️ React Slider
+  - 🔷 TypeScript
+  - 🎨 SCSS
   - 🧩 Zustand
+  - 🛠️ Zod
+  - 🎨 Swiper
+  - 🎨 Ant Design
 
 - Backend:
 
