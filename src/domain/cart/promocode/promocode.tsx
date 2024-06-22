@@ -64,7 +64,7 @@ export default function Promocode(): JSX.Element {
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <input type="text" placeholder="PROMOCODE" {...register('promocode')} className="" />
         {errors.promocode && <ErrorMessage message={errors.promocode.message} />}
-        <button type="submit" className="button-secondary">
+        <button type="submit" className="button-primary">
           Apply
         </button>
       </form>
@@ -76,7 +76,11 @@ export default function Promocode(): JSX.Element {
             {appliedCoupons.map((promocode) => (
               <div key={promocode.id} className={style['applied-promo']}>
                 {promocode.name}
-                <button type="button" className="button-primary" onClick={() => removeCurrentPromoveCode(promocode.id)}>
+                <button
+                  type="button"
+                  className="button-secondary"
+                  onClick={() => removeCurrentPromoveCode(promocode.id)}
+                >
                   Remove
                 </button>
               </div>
