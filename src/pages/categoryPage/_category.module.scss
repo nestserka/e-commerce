@@ -72,6 +72,10 @@
       }
     }
 
+    &-block-empty {
+      min-height: 70%;
+    }
+
     @media (width <= 960px) {
       width: 100%;
     }

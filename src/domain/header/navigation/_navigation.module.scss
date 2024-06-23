@@ -3,10 +3,9 @@
 
 .nav {
   @include flex-center-space-between;
-
-  position: relative;
   flex-grow: 1;
   transition: right 1s ease-in-out;
+  position: relative;
 
   .nav-list,
   .nav-list-user {
@@ -60,22 +59,21 @@
     }
   }
 
-  .nav-list-user {
-    @include flex-justify-center;
-
+  .nav-list {
     position: relative;
-    right: 0;
+    top: 2.1em;
+    right: -25%;
+    transform: translate(-50%, -50%);
+    @media (width <= 1200px) {
+      right: -34%;
+    }
+    @media (width <= 1106px) {
+      position: static;
+      transform: translate(0, 0);
+    }
+  }
 
-    gap: 1.5em;
-
-    margin: 0;
-    padding: 12px;
-
-    list-style: none;
-
-    border: 1px solid $border-color-default;
-    border-radius: 36px;
-
+  .nav-list-user {
     .nav-item-profile {
       @include flex-justify-center;
 
@@ -156,7 +154,7 @@
     }
   }
 
-  @media (width <= 1024px) {
+  @media (width <= 1106px) {
     position: absolute;
     z-index: 10;
     top: 6em;
