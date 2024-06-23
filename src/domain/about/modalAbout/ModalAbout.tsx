@@ -1,10 +1,7 @@
 import styles from './_modalAbout.module.scss';
 import closeIcon from '../../../assets/images/icons/icon-close-model.svg';
 
-export interface ModalFromAboutPageProps {
-  isOpen: () => void;
-  children: React.ReactNode;
-}
+import type { ModalFromAboutPageProps } from './types';
 
 export default function ModalFromAboutPage({ isOpen, children }: ModalFromAboutPageProps): JSX.Element {
   return (

@@ -8,26 +8,12 @@ import {
 
 import type {
   AuthMiddlewareOptions,
-  ClientRequest,
-  JsonObject,
   MiddlewareRequest,
   Next,
   PasswordAuthMiddlewareOptions,
   Task,
   TokenInfo,
 } from '@commercetools/sdk-client-v2';
-
-export interface HttpErrorType {
-  name: string;
-  message: string;
-  code: number;
-  status: number;
-  statusCode: number;
-  originalRequest: ClientRequest;
-  body?: JsonObject;
-  retryCount?: number;
-  headers?: JsonObject<string>;
-}
 
 function mergeAuthHeader(token: string, req: MiddlewareRequest): MiddlewareRequest {
   return {

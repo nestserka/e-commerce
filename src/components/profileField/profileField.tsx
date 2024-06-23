@@ -5,14 +5,7 @@ import InputCheckBox from '../ui/checkbox/checkbox';
 import { useToggleModal } from '../../utils/useToggleModal';
 import DeleteAddressForm from '../modalProfile/confirmDelete';
 
-interface ProfileFieldProps {
-  title: string;
-  onEditClick: () => void;
-  inputVal: string;
-  isAddress: boolean;
-  isDefault: boolean;
-  id?: string;
-}
+import type { ProfileFieldProps } from './types';
 
 export default function ProfileField({
   title,

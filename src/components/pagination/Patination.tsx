@@ -3,16 +3,10 @@ import { Pagination } from 'antd';
 import IconPrev from '../../assets/images/icons/prev.png';
 import IconNext from '../../assets/images/icons/next.png';
 
-import './pagination.scss';
+import './_pagination.scss';
 
+import type { PaginationBlockProps } from './types';
 import type { PaginationProps } from 'antd';
-
-export interface PaginationBlockProps {
-  page: number;
-  total: number;
-  defaultPageSize: number;
-  handleChangePage: (pageNumber: number) => void;
-}
 
 export default function PaginationBlock({
   page,

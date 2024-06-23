@@ -1,8 +1,8 @@
 import getHomeProductList from '../../api/products/gettHomeProductList';
 
+import type { HomeStateData } from './types';
 import type { StateCreator } from 'zustand';
 import type { QueryArgs } from '../../utils/types';
-import type { DiscountCode, ProductProjection } from '@commercetools/platform-sdk';
 
 const Images: Record<string, number> = {
   'pillars-of-creation-photo-print': 5,
@@ -11,19 +11,6 @@ const Images: Record<string, number> = {
   'stars-orbiting-a-supermassive-black-hole-print-poster': 2,
   'the-bullet-cluster-print-poster': 3,
 };
-
-export interface HomeStateData {
-  discountedProducts: ProductProjection[];
-  isLoaded: boolean;
-  bestProducts: ProductProjection[];
-  leftSlider: ProductProjection[];
-  rightSlider: ProductProjection[];
-  promocodes: DiscountCode[];
-  setBestProductList: () => Promise<void>;
-  setDiscountedProductList: () => Promise<void>;
-  images: Record<string, string>;
-  setImages: (key: string) => number | undefined;
-}
 
 export const useHomeData: StateCreator<HomeStateData> = (set) => ({
   discountedProducts: [],
