@@ -3,9 +3,7 @@ import { Navigate, useParams } from 'react-router';
 import { ROUTES } from '../../constants/constants';
 import { useLoginData } from '../state/userState';
 
-export interface Protected {
-  children: JSX.Element;
-}
+import type { Protected } from './types';
 
 export function ProtectedRouteForAuth({ children }: Protected): JSX.Element {
   const { isAuth } = useLoginData();

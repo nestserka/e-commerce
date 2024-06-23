@@ -1,10 +1,7 @@
 import style from './_modalClearCart.module.scss';
 import closeIcon from '../../../assets/images/icons/close-icon.svg';
 
-interface ModalClearCartProps {
-  onConfirm: () => void;
-  onCancel: () => void;
-}
+import type { ModalClearCartProps } from './types';
 
 export default function ModalClearCart({ onConfirm, onCancel }: ModalClearCartProps): JSX.Element {
   return (

@@ -105,3 +105,17 @@ export interface CartItemLine {
 export interface CartItemLineProps {
   productData: CartItemLine;
 }
+
+export interface ErrorLoginForm {
+  error: {
+    isForm?: boolean;
+    isEmail?: boolean;
+    isPassword?: boolean;
+    message: string;
+  };
+}
+
+export interface BooleanStore {
+  get: () => boolean;
+  set: (hasValue: boolean) => void;
+}

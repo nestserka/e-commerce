@@ -3,13 +3,7 @@ import { useBoundStore } from '../../../core/state/boundState';
 import { useLoginData } from '../../../core/state/userState';
 import { getLineItemsPropsToRemove } from '../../../utils/utils';
 
-export interface CartRemoveButtonProps {
-  productId: string;
-  id: string;
-  setIsShow: React.Dispatch<React.SetStateAction<boolean>>;
-  setProductInCart: React.Dispatch<React.SetStateAction<boolean>>;
-  setIdProductCart: React.Dispatch<React.SetStateAction<string | null>>;
-}
+import type { CartRemoveButtonProps } from './types';
 
 export default function CartRemoveButton({
   productId,

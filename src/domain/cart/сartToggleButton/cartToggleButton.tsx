@@ -4,13 +4,7 @@ import { useLoginData } from '../../../core/state/userState';
 import LoaderForButton from '../../../components/loaderForButton/LoaderForButton';
 import { useBoundStore } from '../../../core/state/boundState';
 
-import type { PAGES } from '../../../constants/constants';
-
-interface CartToggleButtonProps {
-  productId: string | undefined;
-  page: keyof typeof PAGES;
-  isProductInCartProps?: boolean;
-}
+import type { CartToggleButtonProps } from './types';
 
 export default function CartToggleButton({
   productId,

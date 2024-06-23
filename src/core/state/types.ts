@@ -1,6 +1,12 @@
 import type {
   AttributeLocalizedEnumValue,
+  Cart,
   Category,
+  DiscountCode,
+  LineItem,
+  MyCartRemoveDiscountCodeAction,
+  MyCartRemoveLineItemAction,
+  ProductProjection,
   ProductProjectionPagedSearchResponse,
   ProductType,
 } from '@commercetools/platform-sdk';
@@ -137,4 +143,48 @@ export interface CatalogCheckAttributeState {
   setCheckedStatesBrandList: (newValue: Record<string, boolean>) => void;
   setCheckedStatesRefractorList: (newValue: Record<string, boolean>) => void;
   setCheckedStatesMaterialList: (newValue: Record<string, boolean>) => void;
+}
+
+export interface CartState {
+  anonymousCartId: string;
+  customerCartId: string;
+  activeCart: Cart | undefined;
+  version: number | null;
+  itemsInCart: LineItem[] | null;
+  isPromocodeApplied: boolean;
+  isLoading: boolean;
+  error: string;
+  promocodes: DiscountCode[];
+  appliedCoupons: AppliedCoupon[] | null;
+  isInCart: (productId: string) => boolean;
+  addProductToCart: (productId: string, customerId: string, quantity?: number) => Promise<void>;
+  removeProductFromCart: (items: MyCartRemoveLineItemAction[], customerId: string) => Promise<void>;
+  getItemsIds: () => string[] | undefined;
+  setCart: (customerId: string) => Promise<void>;
+  updateCartState: (cart: Cart) => void;
+  getTotalItemsDiscount: () => number;
+  addDiscountCode: (customerId: string, codeStr: string) => Promise<void>;
+  reset: () => void;
+  removeDiscountFromCard: (body: MyCartRemoveDiscountCodeAction, version: number, id: string) => Promise<void>;
+  checkIfAlreadyExist: (promoCode: string) => boolean;
+  setCurrentUsedPromoCodes: () => void;
+  setPromoCodes: () => Promise<void>;
+}
+
+export interface AppliedCoupon {
+  id: string;
+  name: string;
+}
+
+export interface HomeStateData {
+  discountedProducts: ProductProjection[];
+  bestProducts: ProductProjection[];
+  images: Record<string, string>;
+  leftSlider: ProductProjection[];
+  rightSlider: ProductProjection[];
+  isLoaded: boolean;
+  promocodes: DiscountCode[];
+  setBestProductList: () => Promise<void>;
+  setDiscountedProductList: () => Promise<void>;
+  setImages: (key: string) => number | undefined;
 }
