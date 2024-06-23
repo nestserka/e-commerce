@@ -5,9 +5,14 @@
 .header {
   @include flex-center-space-between;
 
+  position: relative;
   top: 1em;
   width: 100%;
   min-height: 70px;
+
+  @media (width <= 1106px) {
+    position: static;
+  }
 }
 
 .logo-wrapper {
@@ -44,7 +49,7 @@
   &.hidden {
     display: none;
 
-    @media (width <= 1024px) {
+    @media (width <= 1106px) {
       display: block;
     }
   }
