@@ -9,7 +9,6 @@ import { useBoundStore } from '../core/state/boundState';
 export default function App(): JSX.Element {
   const { setCart } = useBoundStore();
   const { customerId } = useLoginData();
-
   useEffect(() => {
     setCart(customerId).catch((err) => {
       console.error(err);
