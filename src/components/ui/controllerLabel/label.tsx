@@ -1,11 +1,6 @@
 import styles from '../input/_input.module.scss';
 
-import type { ReactNode } from 'react';
-
-interface ControllerLabelProps {
-  control: ReactNode;
-  label: string;
-}
+import type { ControllerLabelProps } from './types';
 
 export default function ControllerLabel({ control, label }: ControllerLabelProps): JSX.Element {
   return (

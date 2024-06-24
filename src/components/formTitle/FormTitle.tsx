@@ -1,10 +1,7 @@
 import style from './_formTitle.module.scss';
 import icon from '../../assets/images/icons/icon-login.svg';
 
-interface FormTitleProps {
-  title: string;
-  isIcon?: boolean;
-}
+import type { FormTitleProps } from './types';
 
 export default function FormTitle({ title, isIcon = true }: FormTitleProps): JSX.Element {
   return (

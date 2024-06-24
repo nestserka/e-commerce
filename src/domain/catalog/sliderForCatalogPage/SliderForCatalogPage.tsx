@@ -7,12 +7,9 @@ import { NavLink } from 'react-router-dom';
 
 import { useCatalogCheckAttributeState, useCatalogData } from '../../../core/state/catalogState';
 
-import type { CSSProperties } from 'react';
+import type { SliderCatalogPageProps } from './types';
 import type { Category } from '@commercetools/platform-sdk';
-
-export interface SliderCatalogPageProps {
-  allCategories: Category[];
-}
+import type { CSSProperties } from 'react';
 
 export default function SliderCatalogPage({ allCategories }: SliderCatalogPageProps): JSX.Element {
   const { resetAttributes, resetSort } = useCatalogData();

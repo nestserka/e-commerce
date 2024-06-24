@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 import type { LineItem, MyCartRemoveLineItemAction } from '@commercetools/platform-sdk';
-import type { Address, AttributeDiscount, CartItemLine, InputProps } from './types';
+import type { Address, AttributeDiscount, BooleanStore, CartItemLine, ErrorLoginForm, InputProps } from './types';
 
 export const getInputProps = (type: string, id: string, placeholder: string, autoComplete: string): InputProps => ({
   type,
@@ -9,15 +9,6 @@ export const getInputProps = (type: string, id: string, placeholder: string, aut
   placeholder,
   autoComplete,
 });
-
-export interface ErrorLoginForm {
-  error: {
-    isForm?: boolean;
-    isEmail?: boolean;
-    isPassword?: boolean;
-    message: string;
-  };
-}
 
 export function handleLoginError(count: number | undefined): ErrorLoginForm {
   if (count !== undefined && count === 0) {
@@ -59,11 +50,6 @@ export const extractShippingAddresses = (
       ...address,
       isDefault: defaultgAddressId !== undefined && address.id !== undefined && address.id === defaultgAddressId,
     }));
-
-export interface BooleanStore {
-  get: () => boolean;
-  set: (hasValue: boolean) => void;
-}
 
 export function createBooleanState(initialValue: boolean): BooleanStore {
   let hasValue: boolean = initialValue;

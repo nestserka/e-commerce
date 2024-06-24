@@ -386,6 +386,10 @@ export const ERROR_TYPES = {
 
 export const currentCoupon = 'LUCKY_MARTIAN';
 
+export const secondCoupon = 'VENUS_DEALS';
+
+export const thirdCoupon = 'ORIONS_BELT';
+
 export const PAGES = {
   PRODUCT: 'product',
   CATALOG: 'catalog',

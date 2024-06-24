@@ -47,7 +47,7 @@ export default function Promocode(): JSX.Element {
 
   const onSubmit = async (data: PromocodeFormValue): Promise<void> => {
     const hasCouponAdded = checkIfAlreadyExist(data.promocode);
-  
+
     if (data.promocode && !hasCouponAdded) {
       await addDiscountCode(customerId, data.promocode)
         .then(() => {

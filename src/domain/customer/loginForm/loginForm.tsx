@@ -15,7 +15,7 @@ import loginUser from '../../../api/me/loginUser';
 import getCustomerByEmail from '../../../api/customer/getCustomerByEmail';
 import { useCustomerInfo, useLoginData } from '../../../core/state/userState';
 
-import type { ErrorLoginForm } from '../../../utils/utils';
+import type { ErrorLoginForm } from '../../../utils/types';
 import type { CustomerPagedQueryResponse } from '@commercetools/platform-sdk';
 
 const schema = z.object({

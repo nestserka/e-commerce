@@ -1,15 +1,12 @@
-import { type InputHTMLAttributes, useId, useState } from 'react';
+import { useId, useState } from 'react';
 
 import stylesInput from '../input/_input.module.scss';
 import iconVisible from '../../../assets/images/icons/icon-visible.svg';
 import iconInvisible from '../../../assets/images/icons/icon-invisible.svg';
 
-interface InputProps {
-  inputProps: InputHTMLAttributes<HTMLInputElement>;
-  label: string;
-}
+import type { InputPropsPassword } from './types';
 
-export default function InputPassword({ inputProps, label }: InputProps): JSX.Element {
+export default function InputPassword({ inputProps, label }: InputPropsPassword): JSX.Element {
   const id = useId();
   const inputId = inputProps.id ?? id;
   const [show, setShow] = useState(false);

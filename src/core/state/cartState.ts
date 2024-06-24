@@ -9,48 +9,12 @@ import addDiscountCodeToCart from '../../api/me/cart/addDiscountCode';
 import removeDiscountsFromCard from '../../api/me/cart/removeDiscount';
 import getDiscountCodes from '../../api/me/cart/discountCodes';
 
+import type { AppliedCoupon, CartState } from './types';
 import type { StateCreator } from 'zustand';
-import type {
-  Cart,
-  DiscountCode,
-  LineItem,
-  MyCartRemoveDiscountCodeAction,
-  MyCartRemoveLineItemAction,
-} from '@commercetools/platform-sdk';
+import type { Cart, MyCartRemoveDiscountCodeAction } from '@commercetools/platform-sdk';
 
 const anonymousCartIdLocal = localStorage.getItem(`anonymousCartId-${LS_PREFIX}`) ?? '';
 const customerCartIdLocal = localStorage.getItem(`customerCart-${LS_PREFIX}`) ?? '';
-
-export interface CartState {
-  anonymousCartId: string;
-  customerCartId: string;
-  activeCart: Cart | undefined;
-  version: number | null;
-  itemsInCart: LineItem[] | null;
-  isPromocodeApplied: boolean;
-  isLoading: boolean;
-  error: string;
-  promocodes: DiscountCode[];
-  appliedCoupons: AppliedCoupon[] | null;
-  isInCart: (productId: string) => boolean;
-  addProductToCart: (productId: string, customerId: string, quantity?: number) => Promise<void>;
-  removeProductFromCart: (items: MyCartRemoveLineItemAction[], customerId: string) => Promise<void>;
-  getItemsIds: () => string[] | undefined;
-  setCart: (customerId: string) => Promise<void>;
-  updateCartState: (cart: Cart) => void;
-  getTotalItemsDiscount: () => number;
-  addDiscountCode: (customerId: string, codeStr: string) => Promise<void>;
-  reset: () => void;
-  removeDiscountFromCard: (body: MyCartRemoveDiscountCodeAction, version: number, id: string) => Promise<void>;
-  checkIfAlreadyExist: (promoCode: string) => boolean;
-  setCurrentUsedPromoCodes: () => void;
-  setPromoCodes: () => Promise<void>;
-}
-
-interface AppliedCoupon {
-  id: string;
-  name: string;
-}
 
 export const useCartData: StateCreator<CartState> = (set, get) => ({
   anonymousCartId: anonymousCartIdLocal,
