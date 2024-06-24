@@ -41,7 +41,7 @@ In addition to its ecommerce functionalities, the NASA Ecommerce Project also of
   - 🧩 Zustand
   - 🛠️ Zod
   - 🎨 Swiper
-  - 🎨 antd
+  - 🎨 Ant Design
 
 - Backend:
 
