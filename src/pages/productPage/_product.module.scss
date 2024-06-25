@@ -98,3 +98,13 @@
     opacity: 1;
   }
 }
+
+.price-info {
+  margin-bottom: 2rem;
+}
+
+.product-buttons {
+  @include flex-justify-start;
+
+  gap: 1rem;
+}

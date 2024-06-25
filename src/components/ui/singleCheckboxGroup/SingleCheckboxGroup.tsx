@@ -1,4 +1,4 @@
-import styles from './singleCheckboxGroup.module.scss';
+import styles from './_singleCheckboxGroup.module.scss';
 
 import type { OptionsFromSelect } from '../../../pages/categoryPage/types';
 

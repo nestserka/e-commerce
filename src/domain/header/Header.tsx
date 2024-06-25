@@ -1,31 +1,57 @@
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import style from './_header.module.scss';
+import styles from './_header.module.scss';
 import Navigation from './navigation/Navigation';
 import logo from '../../assets/images/ns-store-logo.svg';
 import { NAV_LINKS, ROUTES } from '../../constants/constants';
 import { useLoginData } from '../../core/state/userState';
 import { logOut } from '../../utils/logOut';
+import { useCatalogCheckAttributeState, useCatalogData } from '../../core/state/catalogState';
+import { useToggleModal } from '../../utils/useToggleModal';
 
 export default function Header(): JSX.Element {
   const { isAuth, customerId } = useLoginData();
-  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen, setIsNavClose] = useToggleModal();
+  const { resetAttributes, resetSort } = useCatalogData();
+  const { resetAttributesList, resetCheckedStatesAttributesList } = useCatalogCheckAttributeState();
   const navigate = useNavigate();
+
+  const defaultValues = (): void => {
+    resetAttributes();
+    resetSort();
+    resetAttributesList();
+    resetCheckedStatesAttributesList();
+  };
 
   const onClickButton = (): void => {
     logOut();
+
+    if (isNavOpen) {
+      defaultValues();
+      setIsNavClose();
+    }
+
     navigate(ROUTES.HOME);
   };
 
-  const toggleNav = (): void => {
-    setIsNavOpen(!isNavOpen);
+  const toggleNavTrue = (): void => {
+    if (isNavOpen) {
+      defaultValues();
+      setIsNavClose();
+    } else {
+      defaultValues();
+      setIsNavOpen();
+    }
+  };
+  const toggleNavFalse = (): void => {
+    defaultValues();
+    setIsNavClose();
   };
 
   return (
-    <header className={style.header} data-testid="header">
-      <section className={style['logo-wrapper']}>
-        <Link to={ROUTES.HOME}>
+    <header className={styles.header} data-testid="header">
+      <section className={styles['logo-wrapper']}>
+        <Link to={ROUTES.HOME} onClick={defaultValues}>
           <img src={logo} className="ns-logo" alt="NASA Store logotype" />
         </Link>
       </section>
@@ -35,18 +61,18 @@ export default function Header(): JSX.Element {
         isStatus={isAuth}
         isNavOpen={isNavOpen}
         handleClickLogOut={onClickButton}
-        onClick={toggleNav}
+        onClick={toggleNavFalse}
         customerId={customerId}
       />
 
-      <section className={style['burger-wrapper']}>
+      <section className={styles['burger-wrapper']}>
         <button
-          className={`${style['burger-button']} ${style.hidden}`}
-          onClick={toggleNav}
+          className={`${styles['burger-button']} ${styles.hidden}`}
+          onClick={toggleNavTrue}
           aria-label="burger"
           type="button"
         >
-          <span className={style.dot} />
+          <span className={styles.dot} />
         </button>
       </section>
     </header>

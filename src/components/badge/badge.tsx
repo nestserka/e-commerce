@@ -1,19 +1,16 @@
-import style from './_badge.module.scss';
+import styles from './_badge.module.scss';
 
-interface BadgeProps {
-  type: 'bestseller' | 'discount';
-  text: string;
-}
+import type { BadgeProps } from './types';
 
 export default function Badge({ type, text }: BadgeProps): JSX.Element {
-  let badgeClass = style.badge;
+  let badgeClass = styles.badge;
 
   if (type === 'bestseller') {
-    badgeClass += ` ${style['badge-bestseller']}`;
+    badgeClass += ` ${styles['badge-bestseller']}`;
   }
 
   if (type === 'discount') {
-    badgeClass += ` ${style['badge-discount']}`;
+    badgeClass += ` ${styles['badge-discount']}`;
   }
 
   return (

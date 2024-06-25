@@ -38,13 +38,23 @@
   }
 
   @media (width <= 1024px) {
-    width: 60%;
-    padding: 4em;
+    .modal {
+      width: 90%;
+      padding: 2rem;
+
+      .modal-close-btn {
+        top: 2rem;
+        right: 2rem;
+      }
+    }
   }
 
-  @media (width <= 900px) {
-    width: 70%;
-    padding: 3em;
+  @media (width <= 950px) {
+    .paragraph-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
   }
 
   @media (width <= 640px) {
@@ -54,5 +64,5 @@
 }
 
 .modal::backdrop {
-  background: hsl(240deg 10% 9% / 35%);
+  background: rgb(22 23 32 / 90%);
 }

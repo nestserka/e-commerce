@@ -1,12 +1,8 @@
-import { type InputHTMLAttributes, useId } from 'react';
+import { useId } from 'react';
 
 import styles from './_input.module.scss';
 
-interface InputProps {
-  inputProps: InputHTMLAttributes<HTMLInputElement>;
-  label: string;
-  isDisabled?: boolean;
-}
+import type { InputProps } from './types';
 
 export default function Input({ inputProps, label, isDisabled = false }: InputProps): JSX.Element {
   const id = useId();

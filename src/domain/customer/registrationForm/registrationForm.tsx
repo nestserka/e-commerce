@@ -36,10 +36,10 @@ import {
 import ErrorMessage from '../../../components/errorMessage/ErrorMessage';
 import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ControllerLabel from '../../../components/ui/controllerLabel/label';
-import { useAddressAutoComplete } from '../../../utils/checkbox-autocomplete';
+import { useAddressAutoComplete } from '../../../utils/checkboxAutocomplete';
 import RegistrationData from '../../../core/state/registrationState';
 import InputPassword from '../../../components/ui/inputPassword/inputPassword';
-import { showModalMessage, useLoginData } from '../../../core/state/userState';
+import { showModalMessage, useCustomerInfo, useLoginData } from '../../../core/state/userState';
 import createCustomer from '../../../api/customer/createCustomer';
 
 const schema = z.object({
@@ -66,6 +66,7 @@ export default function RegistrationForm(): JSX.Element {
   const [isShippingCompleteChecked, setShippingCompleteChecked] = useState(false);
   const [formEmailError, setFormEmailError] = useState<string>('');
   const { setCustomerCredentials } = useLoginData();
+  const { setUpdatedGeneraValues } = useCustomerInfo();
 
   const shippingAddress = useWatch({
     control,
@@ -109,7 +110,6 @@ export default function RegistrationForm(): JSX.Element {
   const { setIsShown } = showModalMessage();
 
   const onSubmit = async (data: RegistrationFormValues): Promise<void> => {
-    setShippingCompleteChecked(false);
     const registrationData = new RegistrationData();
     registrationData.setEmail(data.email);
     registrationData.setPassword(data.password);
@@ -137,10 +137,12 @@ export default function RegistrationForm(): JSX.Element {
           customerId: response.id,
         };
         setCustomerCredentials(customerCredentials);
+        setUpdatedGeneraValues({ firstName: data.firstName });
         localStorage.setItem(`isAuth-${LS_PREFIX}`, customerCredentials.isAuth.toString());
         localStorage.setItem(`customerId-${LS_PREFIX}`, customerCredentials.customerId.toString());
-        reset();
         setIsShown(true);
+        setShippingCompleteChecked(false);
+        reset();
       })
       .catch((error: Error) => {
         setFormEmailError(error.message);
@@ -285,11 +287,23 @@ export default function RegistrationForm(): JSX.Element {
       <Controller
         control={control}
         name="defaultShippingAddress"
-        render={({ field: { onChange } }) => (
-          <InputCheckBox onChange={onChange} id="shipping" name="shipping" label="Set Shipping Address as default" />
+        render={({ field: { onChange, value } }) => (
+          <InputCheckBox
+            onChange={onChange}
+            id="shipping"
+            name="shipping"
+            label="Set Shipping Address as default"
+            isValue={value}
+          />
         )}
       />
-      <InputCheckBox id="main" name="main" label="Bill to Shipping Address " onChange={handleShippingAutoComplete} />
+      <InputCheckBox
+        id="main"
+        name="main"
+        label="Bill to Shipping Address "
+        onChange={handleShippingAutoComplete}
+        isValue={isShippingCompleteChecked}
+      />
       <FormSubTitle subTitle="Billing Address" />
       <div className={style['form-group']}>
         <section className={style['input-section']}>
@@ -354,8 +368,14 @@ export default function RegistrationForm(): JSX.Element {
       <Controller
         control={control}
         name="defaultBillingAddress"
-        render={({ field: { onChange } }) => (
-          <InputCheckBox onChange={onChange} id="billing" name="billing" label="Set Billing Address as default" />
+        render={({ field: { onChange, value } }) => (
+          <InputCheckBox
+            onChange={onChange}
+            id="billing"
+            name="billing"
+            label="Set Billing Address as default"
+            isValue={value}
+          />
         )}
       />
       <button

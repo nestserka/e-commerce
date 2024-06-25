@@ -8,26 +8,12 @@ import {
 
 import type {
   AuthMiddlewareOptions,
-  ClientRequest,
-  JsonObject,
   MiddlewareRequest,
   Next,
   PasswordAuthMiddlewareOptions,
   Task,
   TokenInfo,
 } from '@commercetools/sdk-client-v2';
-
-export interface HttpErrorType {
-  name: string;
-  message: string;
-  code: number;
-  status: number;
-  statusCode: number;
-  originalRequest: ClientRequest;
-  body?: JsonObject;
-  retryCount?: number;
-  headers?: JsonObject<string>;
-}
 
 function mergeAuthHeader(token: string, req: MiddlewareRequest): MiddlewareRequest {
   return {
@@ -103,7 +89,7 @@ async function executeRequest({
         requestState.set(false);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   } catch (error) {
     requestState.set(false);

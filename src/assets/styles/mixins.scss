@@ -6,7 +6,13 @@
   display: flex;
   flex-grow: 1;
   max-width: 1400px;
-  margin: 4em auto 1em;
+  margin: 4em auto;
+}
+
+@mixin page-home-layout-container {
+  display: flex;
+  flex-grow: 1;
+  margin: 6.938em auto 1em;
 }
 
 @mixin flex-center-space-between {
@@ -42,6 +48,16 @@
   display: flex;
   align-items: start;
   justify-content: space-between;
+}
+
+@mixin reset-button {
+  cursor: pointer;
+
+  display: block;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 
 // Gradients
@@ -88,6 +104,18 @@
 
 @mixin font-display-medium {
   font-family: DisplayMedium, sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@mixin font-firs-regular {
+  font-family: 'TT Firs Neue', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@mixin font-firs-medium {
+  font-family: 'TT Firs NeueMedium', sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }

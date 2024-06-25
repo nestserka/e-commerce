@@ -1,0 +1,39 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+.wrapper {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.icon {
+  transform: scaleX(-1);
+  width: 20px;
+  height: 20px;
+}
+
+.back-button {
+  cursor: pointer;
+
+  display: inline-block;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: DisplayMedium, sans-serif;
+  font-size: 1rem;
+  line-height: 100%;
+  color: $font-color-primary;
+
+  opacity: 0.6;
+  background: transparent;
+  border: none;
+  outline: none;
+
+  transition: opacity 0.5s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}

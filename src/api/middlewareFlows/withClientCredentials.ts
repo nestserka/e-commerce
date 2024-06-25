@@ -45,7 +45,6 @@ export default function withClientCredentialsFlow(): ByProjectKeyRequestBuilder 
     .withProjectKey(import.meta.env.VITE_APP_PROJECT_KEY)
     .withClientCredentialsFlow(authMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
-    .withLoggerMiddleware()
     .build();
 
   return createApiBuilderFromCtpClient(ctpClient).withProjectKey({ projectKey: import.meta.env.VITE_APP_PROJECT_KEY });

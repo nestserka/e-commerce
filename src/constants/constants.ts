@@ -127,6 +127,20 @@ export const EMAIL_VALIDATION_SCHEMA = z
     },
   );
 
+export const PROMOCODE_VALIDATION_SCHEMA = z
+  .string()
+  .max(20, { message: 'Promocode must be no longer than 20 characters.' })
+  .min(1, { message: 'Promocode field should not be empty.' })
+  .refine((value) => !/\s/.test(value), {
+    message: 'Promocode must not contain whitespace.',
+  })
+  .refine((value) => /^[A-Z_]+$/.test(value), {
+    message: 'Promocode should contain only Latin characters in the upper case and may contain undescore (_).',
+  })
+  .refine((value) => !/\s/.test(value), {
+    message: 'Promocode must not contain whitespace.',
+  });
+
 const nameValidation = (fieldName: string): z.ZodEffects<z.ZodString, string, string> =>
   z
     .string()
@@ -368,4 +382,15 @@ export const ERROR_TYPES = {
   VERSION_ERROR: 'different version than expected',
   INVALID_JSON: 'JSON',
   INVALID_TOKEN: 'invalid_token',
+} as const;
+
+export const currentCoupon = 'LUCKY_MARTIAN';
+
+export const secondCoupon = 'VENUS_DEALS';
+
+export const thirdCoupon = 'ORIONS_BELT';
+
+export const PAGES = {
+  PRODUCT: 'product',
+  CATALOG: 'catalog',
 } as const;

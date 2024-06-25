@@ -1,13 +1,6 @@
 import styles from './_checkbox.module.scss';
 
-interface InputCheckboxProps {
-  name: string;
-  id: string;
-  label: string;
-  isCheckBoxDisabled?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isValue?: boolean;
-}
+import type { InputCheckboxProps } from './types';
 
 export default function InputCheckBox({
   name,
@@ -26,7 +19,7 @@ export default function InputCheckBox({
         className={styles.input}
         {...(isCheckBoxDisabled && { 'aria-disabled': 'true' })}
         onChange={onChange}
-        {...(isValue && { checked: true })}
+        checked={isValue}
       />
       <label htmlFor={id} className={styles.label}>
         {label} <span className={styles.required} />

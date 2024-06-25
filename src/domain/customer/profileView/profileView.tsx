@@ -4,7 +4,7 @@ import FormSubTitle from '../../../components/formSubTitle/formSubTitle';
 import ProfileField from '../../../components/profileField/profileField';
 import { useCustomerInfo } from '../../../core/state/userState';
 import InfoField from '../infoField/infoField';
-import style from './_profileView.module.scss';
+import styles from './_profileView.module.scss';
 import EmailForm from '../forms/emailForm/emailForm';
 import PasswordForm from '../forms/passwordForm/passwordForm';
 import { useToggleModal } from '../../../utils/useToggleModal';
@@ -36,9 +36,9 @@ export default function ProfileView(): JSX.Element {
   };
 
   return (
-    <div className={style.wrapper}>
-      <section className={style['personal-section']} data-testid="personal-section">
-        <section className={style['personal-section-wrapper']}>
+    <div className={styles.wrapper}>
+      <section className={styles['personal-section']} data-testid="personal-section">
+        <section className={styles['personal-section-wrapper']}>
           <FormSubTitle subTitle="confidential Info" />
           <ProfileField
             title="Email"
@@ -57,24 +57,24 @@ export default function ProfileView(): JSX.Element {
           />
           {isPasswordModalOpen && <PasswordForm isOpen={isPasswordModalOpen} onClose={closePasswordModal} />}
         </section>
-        <section className={style['personal-section-wrapper']}>
+        <section className={styles['personal-section-wrapper']}>
           <FormSubTitle subTitle="personal info" />
           <InfoField title="First Name" value={firstName} />
           <InfoField title="Last Name" value={lastName} />
           <InfoField title="Date of Birth" value={dateOfBirth} />
-          <button type="button" className={style['personal-section-button']} onClick={openGeneralModal}>
+          <button type="button" className={styles['personal-section-button']} onClick={openGeneralModal}>
             Edit Personal Info
           </button>
           {isGeneralModalOpen && <GeneralForm isOpen={isGeneralModalOpen} onClose={closeGeneralModal} />}
         </section>
       </section>
-      <section className={style['personal-section']} data-testid="personal-section">
-        <section className={style['personal-section-wrapper']}>
+      <section className={styles['personal-section']} data-testid="personal-section">
+        <section className={styles['personal-section-wrapper']}>
           <FormSubTitle subTitle="available addresses" />
-          <div className={style['personal-section-group']}>
-            <div className={style.wrapper}>
+          <div className={styles['personal-section-group']}>
+            <div className={styles.wrapper}>
               {shippingAddress.map((address: Address) => (
-                <div key={address.id} className={style.wrapper}>
+                <div key={address.id} className={styles.wrapper}>
                   <ProfileField
                     title="Shipping Address"
                     id={address.id ?? ''}
@@ -109,9 +109,9 @@ export default function ProfileView(): JSX.Element {
                 </>
               )}
             </div>
-            <div className={style.wrapper}>
+            <div className={styles.wrapper}>
               {billingAddress.map((address: Address) => (
-                <div key={address.id} className={style.wrapper}>
+                <div key={address.id} className={styles.wrapper}>
                   <ProfileField
                     title="Billing Address"
                     id={address.id ?? ''}
@@ -147,7 +147,7 @@ export default function ProfileView(): JSX.Element {
               )}
             </div>
           </div>
-          <button type="button" className={style['personal-section-button']} onClick={openNewAddressModal}>
+          <button type="button" className={styles['personal-section-button']} onClick={openNewAddressModal}>
             Add New Address
           </button>
           {isNewAddressModalOpen && <AddressForm isOpen={isNewAddressModalOpen} onClose={closeNewAddressModal} />}

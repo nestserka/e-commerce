@@ -1,10 +1,5 @@
+import type { IBuiltRequestParams } from './types';
 import type { RefreshAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';
-
-interface IBuiltRequestParams {
-  basicAuth: string;
-  url: string;
-  body: string;
-}
 
 export function buildRequestForRefreshTokenFlow(options: RefreshAuthMiddlewareOptions): IBuiltRequestParams {
   if (!options.host) throw new Error('Missing required option (host)');
