@@ -45,10 +45,6 @@
 
         &.promocode-text {
           max-width: 34.063rem;
-
-          @media (width <= 1170px) {
-            max-width: 28rem;
-          }
         }
 
         &.sub-text {
@@ -165,6 +161,10 @@
       }
     }
 
+    .half-layout-promo {
+      padding-top: 3rem;
+    }
+
     @media (width <= 1330px) {
       @include flex-justify-center;
 
@@ -193,20 +193,23 @@
     }
 
     @media (width <= 1210px) {
+      padding-right: 2.5em;
+
       .product {
-        width: 10.25em;
-        height: 13.188em;
+        width: 14em;
+        height: auto;
       }
     }
 
     @media (width <= 940px) {
       .product {
-        width: 6em;
-        height: 8em;
+        width: 10em;
+        height: auto;
       }
     }
 
     @media (width <= 700px) {
+      padding-top: 2.5rem;
       padding-right: 2.5em;
 
       .product {
@@ -236,8 +239,6 @@
     @media (width <= 1210px) {
       flex-direction: column;
       gap: 6em;
-      align-items: center;
-
       height: auto;
       padding: 4.375em 2.5em;
     }
@@ -314,7 +315,7 @@
   }
 
   .display {
-    transform: translateY(-5%);
+    transform: translateY(7%);
     width: 100%;
     height: 100%;
     object-fit: contain;

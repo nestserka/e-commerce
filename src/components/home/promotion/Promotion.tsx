@@ -43,7 +43,7 @@ export default function HomePromotion(): JSX.Element {
       </div>
 
       <div className={`${style['promotion-wrapper']} ${style['double-layer']}`}>
-        <div className={style['product-container']}>
+        <div className={`${style['product-container']} ${style['half-layout-promo']}`}>
           <div className={style['information-block']}>
             <span className={style['discount-name']}>PROMOCODE</span>
             <h2 className={`${style.title} ${style['sub-text']}`}>
@@ -51,17 +51,19 @@ export default function HomePromotion(): JSX.Element {
             </h2>
           </div>
           <div className={style.poster}>
-            <div className={style['clipper-wrapper']}>
-              <button type="button" className={style['promocode-clipper']} onClick={handleCopy}>
-                <img src={iconAllien} alt="Button icon" />
-                <span>{secondCoupon}</span>
-              </button>
-              <p className={style['sub-text']}>Copy the promo by clicking on the UFO icon on the left.</p>
-            </div>
+            <button
+              type="button"
+              className={style['promocode-clipper']}
+              onClick={handleCopy}
+              title="Click on the button to copy the promocode"
+            >
+              <img src={iconAllien} alt="Button icon" />
+              <span>{secondCoupon}</span>
+            </button>
           </div>
         </div>
 
-        <div className={`${style['product-container']} ${style.sub}`}>
+        <div className={`${style['product-container']} ${style['half-layout-promo']} ${style.sub}`}>
           <div className={style['information-block']}>
             <span className={style['discount-name']}>PROMOCODE</span>
             <h2 className={`${style.title} ${style['sub-text']}`}>
@@ -70,11 +72,15 @@ export default function HomePromotion(): JSX.Element {
           </div>
           <div className={style.poster}>
             <div>
-              <button type="button" className={style['promocode-clipper']} onClick={handleCopy}>
+              <button
+                type="button"
+                className={style['promocode-clipper']}
+                onClick={handleCopy}
+                title="Click on the button to copy the promocode"
+              >
                 <img src={iconAllien} alt="Button icon" />
                 <span>{thirdCoupon}</span>
               </button>
-              <p className={style['sub-text']}>Copy the promo by clicking on the UFO icon on the left.</p>
             </div>
             <img src={spaceFood} alt="SpaceFood" className={`${style.display} ${style['food-picture']}`} />
           </div>
@@ -85,16 +91,20 @@ export default function HomePromotion(): JSX.Element {
         <div className={style['information-block']}>
           <span className={style['discount-name']}>PROMOCODE</span>
           <h2 className={`${style.title} ${style['promocode-text']}`}>
-            Houston, We Have a Discount!Use our promo code LUCKY_MARTIAN for Stellar Savings!
+            Houston, We Have a Discount! Use our promo code LUCKY_MARTIAN for Stellar Savings!
           </h2>
         </div>
         <div className={style.coupang}>
           <div className={style['ufo-wrapper']} />
-          <button type="button" className={style['promocode-clipper']} onClick={handleCopy}>
+          <button
+            type="button"
+            className={style['promocode-clipper']}
+            onClick={handleCopy}
+            title="Click on the button to copy the promocode"
+          >
             <img src={iconAllien} alt="Button icon" />
             <span>{currentCoupon}</span>
           </button>
-          <p className={style['sub-text']}>Copy the promo by clicking on the UFO icon on the left.</p>
         </div>
       </div>
     </section>
