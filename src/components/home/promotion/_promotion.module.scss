@@ -45,18 +45,10 @@
 
         &.promocode-text {
           max-width: 34.063rem;
-
-          @media (width <= 1170px) {
-            max-width: 28rem;
-          }
         }
 
         &.sub-text {
           max-width: 7.5em;
-
-          @media (width <= 550px) {
-            max-width: 12em;
-          }
         }
       }
 
@@ -68,11 +60,11 @@
       }
     }
 
-    @media (width <= 1140px) {
+    @media (width <= 1210px) {
       width: 80%;
     }
 
-    @media (width <= 723px) {
+    @media (width <= 810px) {
       width: 100%;
     }
   }
@@ -83,15 +75,65 @@
     padding: 0;
 
     .product-container {
-      @include flex-justify-start;
-
+      display: block;
       flex-basis: 50%;
       flex-direction: row;
 
+      min-width: 48%;
       padding: 4.375em 2.5em 0;
 
       background-color: rgb(33 32 46 / 25500%);
+      background-image: url('../../../../public/assets/images/home/banner/promo-3000.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
       border-radius: 20px;
+
+      .information-block {
+        @include flex-justify-start;
+
+        flex-direction: column;
+        gap: 1em;
+        font-family: DisplayMedium, sans-serif;
+
+        .discount-name {
+          margin-right: 4px;
+          padding: 6px 8px 5px;
+
+          font-size: 14px;
+          color: $checkbox-color-checked;
+
+          background-color: rgb(86 41 160);
+          border-radius: 6px;
+        }
+
+        .title {
+          @include font-firs-medium;
+
+          font-size: 1.7rem;
+          line-height: 2.118rem;
+          color: $font-color-primary;
+
+          &.promocode-text {
+            max-width: 34.063rem;
+
+            @media (width <= 1170px) {
+              max-width: 28rem;
+            }
+          }
+
+          &.sub-text {
+            max-width: 100%;
+          }
+        }
+
+        .description {
+          @include font-arimo-regular;
+
+          max-width: 24.688em;
+          font-size: 1em;
+        }
+      }
 
       &.sub {
         background-image: url('/assets/images/home/banner/bg-food.jpg');
@@ -100,17 +142,17 @@
         background-size: cover;
       }
 
-      @media (width <= 1210px) {
+      @media (width <= 1330px) {
         flex-basis: 100%;
         justify-content: space-between;
         width: 100%;
       }
 
-      @media (width <= 1140px) {
+      @media (width <= 1210px) {
         width: 80%;
       }
 
-      @media (width <= 723px) {
+      @media (width <= 810px) {
         width: 100%;
       }
 
@@ -119,11 +161,19 @@
       }
     }
 
-    @media (width <= 1140px) {
+    .half-layout-promo {
+      padding-top: 3rem;
+    }
+
+    @media (width <= 1330px) {
       @include flex-justify-center;
 
       flex-direction: column;
       width: 100%;
+    }
+
+    @media (width <= 550px) {
+      padding-bottom: 2em;
     }
   }
 
@@ -142,21 +192,24 @@
       height: 13.188em;
     }
 
-    @media (width <= 1140px) {
+    @media (width <= 1210px) {
+      padding-right: 2.5em;
+
       .product {
-        width: 10.25em;
-        height: 13.188em;
+        width: 14em;
+        height: auto;
       }
     }
 
     @media (width <= 940px) {
       .product {
-        width: 6em;
-        height: 8em;
+        width: 10em;
+        height: auto;
       }
     }
 
     @media (width <= 700px) {
+      padding-top: 2.5rem;
       padding-right: 2.5em;
 
       .product {
@@ -183,14 +236,14 @@
       padding-right: 8em;
     }
 
-    @media (width <= 1140px) {
+    @media (width <= 1210px) {
       flex-direction: column;
       gap: 6em;
       height: auto;
-      padding-bottom: 5rem;
+      padding: 4.375em 2.5em;
     }
 
-    @media (width <= 723px) {
+    @media (width <= 810px) {
       align-items: start;
     }
   }
@@ -214,36 +267,8 @@
       background-size: cover;
     }
 
-    .sub-text {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      text-align: center;
-    }
-
-    .promocode-clipper {
-      @include flex-center-space-between;
-      @include font-firs-medium;
-
-      cursor: pointer;
-
-      gap: 0.875rem;
-
-      margin-top: 3.125rem;
-      padding: 0.7em 1em;
-
-      font-size: 1.75rem;
-      color: $background-color-primary-one;
-      text-transform: uppercase;
-
-      background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
-      border-radius: 2em;
-
-      @media (width <= 500px) {
-        font-size: 1.25rem;
-      }
-    }
-
     .ufo-wrapper {
+      pointer-events: none;
       position: relative;
 
       &::after {
@@ -264,15 +289,11 @@
     }
   }
 
-  @media (width >= 1800px) {
+  @media (width >= 1460px) {
     width: 80rem;
   }
 
-  @media (width <= 1500px) {
-    width: calc(100% - 14em);
-  }
-
-  @media (width <= 1380px) {
+  @media (width <= 1460px) {
     width: calc(100% - 7em);
   }
 
@@ -282,12 +303,19 @@
 }
 
 .poster {
-  width: 300px;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+
   height: 300px;
   margin-left: auto;
 
+  .clipper-wrapper {
+    padding-top: 1rem;
+  }
+
   .display {
-    transform: translateY(-5%);
+    transform: translateY(7%);
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -304,9 +332,8 @@
       width: 255px;
       height: 255px;
 
-      @media (width <= 1140px) {
-        width: 100%;
-        height: 100%;
+      @media (width <= 680px) {
+        display: none;
       }
     }
   }
@@ -314,14 +341,44 @@
   @media (width <= 770px) {
     width: 250px;
     height: 250px;
+    margin: 0;
   }
 
   @media (width <= 550px) {
     width: 150px;
     height: 150px;
   }
+}
 
-  @media (width <= 440px) {
-    display: none;
+.promocode-clipper {
+  @include flex-center-space-between;
+  @include font-firs-medium;
+
+  cursor: pointer;
+
+  gap: 0.875rem;
+
+  margin-top: 3.125rem;
+  padding: 0.5em 1em;
+
+  font-size: 1.75rem;
+  color: $background-color-primary-one;
+  text-transform: uppercase;
+
+  background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
+  border-radius: 2em;
+
+  @media (width <= 500px) {
+    font-size: 1.25rem;
+  }
+}
+
+.sub-text {
+  margin-top: 10px;
+  font-size: 0.7rem;
+  text-align: start;
+
+  @media (width <= 550px) {
+    font-size: 0.6rem;
   }
 }

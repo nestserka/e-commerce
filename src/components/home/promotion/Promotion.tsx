@@ -1,11 +1,10 @@
 import style from './_promotion.module.scss';
 import binocular from '../../../assets/images/card/binocular.png';
-import spaceFood from '../../../assets/images/card/food.png';
-import poster from '../../../assets/images/card/poster.png';
+import spaceFood from '../../../assets/images/card/promo-orion.png';
 import iconAllien from '../../../assets/images/icons/icon-allien.svg';
 import { showModalMessage } from '../../../core/state/userState';
 import ModalMessage from '../../modalMessage/ModalMessage';
-import { currentCoupon } from '../../../constants/constants';
+import { currentCoupon, secondCoupon, thirdCoupon } from '../../../constants/constants';
 
 const modalMessageSuccessUpdateProps = {
   type: 'success',
@@ -42,42 +41,70 @@ export default function HomePromotion(): JSX.Element {
         </div>
         <img src={binocular} alt="EyewearImage" className={style.product} />
       </div>
+
       <div className={`${style['promotion-wrapper']} ${style['double-layer']}`}>
-        <div className={style['product-container']}>
+        <div className={`${style['product-container']} ${style['half-layout-promo']}`}>
           <div className={style['information-block']}>
-            <span className={style['discount-name']}>15% OFF</span>
+            <span className={style['discount-name']}>PROMOCODE</span>
             <h2 className={`${style.title} ${style['sub-text']}`}>
-              15% discount on stunning space image canvas prints!
+              Use our promo code VENUS_DEALS on purchases over $3000 and get 20% off!
             </h2>
           </div>
           <div className={style.poster}>
-            <img src={poster} alt="poster" className={`${style.display} ${style['art-picture']}`} />
+            <button
+              type="button"
+              className={style['promocode-clipper']}
+              onClick={handleCopy}
+              title="Click on the button to copy the promocode"
+            >
+              <img src={iconAllien} alt="Button icon" />
+              <span>{secondCoupon}</span>
+            </button>
           </div>
         </div>
-        <div className={`${style['product-container']} ${style.sub}`}>
+
+        <div className={`${style['product-container']} ${style['half-layout-promo']} ${style.sub}`}>
           <div className={style['information-block']}>
-            <span className={style['discount-name']}>20% OFF</span>
-            <h2 className={`${style.title} ${style['sub-text']}`}>Unlock 20% off astronaut space food only today!</h2>
+            <span className={style['discount-name']}>PROMOCODE</span>
+            <h2 className={`${style.title} ${style['sub-text']}`}>
+              Feel the cosmic sweetness! when you buy 3 strawberry desserts you get 1 for free!
+            </h2>
           </div>
           <div className={style.poster}>
+            <div>
+              <button
+                type="button"
+                className={style['promocode-clipper']}
+                onClick={handleCopy}
+                title="Click on the button to copy the promocode"
+              >
+                <img src={iconAllien} alt="Button icon" />
+                <span>{thirdCoupon}</span>
+              </button>
+            </div>
             <img src={spaceFood} alt="SpaceFood" className={`${style.display} ${style['food-picture']}`} />
           </div>
         </div>
       </div>
+
       <div className={`${style['promotion-wrapper']} ${style.promocode}`}>
         <div className={style['information-block']}>
           <span className={style['discount-name']}>PROMOCODE</span>
           <h2 className={`${style.title} ${style['promocode-text']}`}>
-            Houston, We Have a Discount!Use our promo code LUCKY_MARTIAN for Stellar Savings!
+            Houston, We Have a Discount! Use our promo code LUCKY_MARTIAN for Stellar Savings!
           </h2>
         </div>
         <div className={style.coupang}>
           <div className={style['ufo-wrapper']} />
-          <button type="button" className={style['promocode-clipper']} onClick={handleCopy}>
+          <button
+            type="button"
+            className={style['promocode-clipper']}
+            onClick={handleCopy}
+            title="Click on the button to copy the promocode"
+          >
             <img src={iconAllien} alt="Button icon" />
             <span>{currentCoupon}</span>
           </button>
-          <p className={style['sub-text']}>Copy the promo by clicking on the UFO icon on the left.</p>
         </div>
       </div>
     </section>
