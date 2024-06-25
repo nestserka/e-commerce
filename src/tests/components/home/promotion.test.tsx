@@ -8,7 +8,7 @@ describe('HomePromotion component', () => {
     const { getByText, getByAltText } = render(<HomePromotion />);
     expect(getByText('The super eye for the night sky!')).toBeInTheDocument();
     expect(
-      getByText('Feel the cosmic sweetness! when you buy 3 strawberry desserts you get 1 for free!'),
+      getByText('Feel the cosmic sweetness! Buy 3 strawberry desserts for the price of 2!'),
     ).toBeInTheDocument();
     expect(getByText('Use our promo code VENUS_DEALS on purchases over $3000 and get 20% off!')).toBeInTheDocument();
     expect(getByAltText('EyewearImage')).toBeInTheDocument();
