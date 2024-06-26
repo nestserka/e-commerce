@@ -21,13 +21,15 @@ export default function CartSummary(): JSX.Element {
       const totalPrice = activeCart.totalPrice.centAmount;
 
       const totalDiscountAmount = activeCart.lineItems.reduce((accum, item) => {
+        const discountedPricePerQuantity = item.discountedPricePerQuantity[0];
         const discountAmount =
-          item.discountedPricePerQuantity[0]?.discountedPrice?.includedDiscounts?.reduce(
+          discountedPricePerQuantity.discountedPrice.includedDiscounts.reduce(
             (sum, discount) => sum + discount.discountedAmount.centAmount,
             0,
           ) || 0;
+        const totalItemDiscountAmount = discountAmount * (discountedPricePerQuantity.quantity || 1);
 
-        return accum + discountAmount;
+        return accum + totalItemDiscountAmount;
       }, 0);
 
       const totalPriceBeforePromocodeNum = value + totalPrice + totalDiscountAmount;
