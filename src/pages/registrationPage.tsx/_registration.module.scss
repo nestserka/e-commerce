@@ -1,0 +1,7 @@
+@import '../../assets/styles/mixins';
+
+.registration-content-wrapper {
+  @include flex-justify-center;
+
+  padding: 2em 0;
+}

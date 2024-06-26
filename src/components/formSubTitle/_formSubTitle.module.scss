@@ -1,0 +1,27 @@
+@import '../../assets/styles/variables';
+@import '../../assets/styles/mixins';
+
+.form-subtitle-wrapper {
+  @include flex-center-space-between;
+
+  gap: 1rem;
+
+  .form-subtitle {
+    @include font-arimo-bold;
+
+    font-size: 1em;
+    color: $border-color-active;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .form-horizontal-line {
+    width: 100%;
+    height: 1px;
+
+    color: $background-color-secondary;
+
+    background-color: $background-color-secondary;
+    border-bottom: 1px;
+  }
+}

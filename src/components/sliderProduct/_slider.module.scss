@@ -1,0 +1,156 @@
+.myswiper {
+  width: 600px;
+  height: 600px;
+  margin-bottom: 1em;
+  border-radius: 16px;
+
+  & img {
+    cursor: pointer;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  @media (width <= 1366px) {
+    width: 400px;
+    height: 400px;
+  }
+
+  @media (width <= 480px) {
+    width: calc(380px - 4em);
+    height: calc(380px - 4em);
+  }
+}
+
+.thumbs {
+  width: 600px;
+  height: calc((600px - 16px * 4) / 5);
+
+  & img {
+    cursor: pointer;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  @media (width <= 1366px) {
+    width: 400px;
+    height: calc((400px - 8px * 3) / 4);
+  }
+
+  @media (width <= 480px) {
+    width: calc(380px - 4em);
+    height: calc((380px - 4em - 8px * 3) / 4);
+  }
+}
+
+.modalswiper {
+  position: fixed;
+  inset: 0;
+
+  width: 800px;
+  height: 800px;
+  margin: 36px auto;
+
+  & img {
+    cursor: pointer;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+
+  @media (width <= 1024px) {
+    width: 600px;
+    height: 600px;
+  }
+
+  @media (width <= 800px) {
+    width: 500px;
+    height: 500px;
+  }
+
+  @media (width <= 700px) {
+    width: 400px;
+    height: 400px;
+    margin: 96px auto;
+  }
+
+  @media (width <= 480px) {
+    width: 320px;
+    height: 320px;
+  }
+
+  @media (height <= 800px) and (width >= 1024px) {
+    width: 700px;
+    height: 700px;
+  }
+}
+
+.modalopen {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  &::after {
+    content: '';
+
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgb(22 23 32 / 90%);
+  }
+}
+
+.modalhide {
+  display: none;
+}
+
+.close-button {
+  cursor: pointer;
+
+  position: fixed;
+  z-index: 5;
+  top: 36px;
+  right: 36px;
+
+  width: 24px;
+  height: 24px;
+
+  opacity: 0.6;
+  background-color: transparent;
+  background-image: url('../../assets/images/icons/close-icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border: none;
+
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}

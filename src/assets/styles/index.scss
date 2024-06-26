@@ -1,0 +1,287 @@
+@import '../node_modules/normalize-scss/sass/normalize';
+@import 'fonts';
+@import 'variables';
+@import 'mixins';
+
+html,
+body {
+  position: relative;
+
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  padding: 1.5em 3em 0;
+
+  @media (width <= 640px) {
+    padding: 1em 1em 0;
+  }
+}
+
+:root {
+  @include font-arimo-regular;
+
+  font-size: 1em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+  color: $font-color-primary-80;
+  text-rendering: optimizelegibility;
+
+  color-scheme: light dark;
+  background-color: $background-color-primary-one;
+
+  font-synthesis: none;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+a.active {
+  color: $font-color-primary !important;
+  background-color: rgb(69 73 115 / 30%);
+  border-radius: 24px;
+}
+
+.loading {
+  @include page-layout-container;
+}
+
+a:link,
+a:focus,
+a:active,
+a:visited {
+  color: $font-color-link-default;
+  text-decoration: none;
+  transition: color 0.5s ease;
+}
+
+a:hover {
+  color: $font-color-link-hover;
+}
+
+.button-primary {
+  cursor: pointer;
+
+  position: relative;
+
+  display: block;
+
+  padding: 1.5em;
+
+  font-size: 1em;
+  color: $font-color-primary;
+
+  background-color: $bg-color-btn-default;
+  border: none;
+  border-radius: 0.8em;
+  outline: none;
+
+  transition: background-color 0.5s ease;
+
+  .wrapper-loader-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    backdrop-filter: blur(5px);
+    border-radius: 24px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: $bg-color-btn-hover;
+  }
+}
+
+.button-primary-s {
+  max-width: 200px;
+}
+
+.button-registration {
+  max-width: 430px;
+}
+
+.button-secondary {
+  cursor: pointer;
+
+  position: relative;
+
+  display: block;
+
+  padding: 12px 16px;
+
+  font-size: inherit;
+  color: $font-color-primary !important;
+  text-decoration: none;
+
+  background-color: transparent;
+  border: 1px solid $border-color-default;
+  border-radius: 24px;
+
+  transition: 300ms !important;
+
+  .wrapper-loader-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    backdrop-filter: blur(5px);
+    border-radius: 24px;
+  }
+}
+
+.button-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.button-secondary:hover:not(:disabled) {
+  background-color: $bg-color-btn-default;
+  border: 1px solid $bg-color-btn-default;
+}
+
+// styles for selectors
+
+.ant-select {
+  height: 3.531em !important;
+  font: inherit !important;
+
+  .ant-select-arrow {
+    color: $font-color-primary-60 !important;
+  }
+}
+
+.ant-select-selector {
+  padding: 1.5em !important;
+
+  color: $font-color-primary-60 !important;
+
+  background-color: $background-color-secondary !important;
+  border: 1px solid $background-color-secondary !important;
+  border-radius: 0.5em !important;
+  outline: none;
+
+  &:focus,
+  &:active {
+    background-color: $background-color-secondary !important;
+    border: 1px solid $border-color-active !important;
+    border-radius: 0.5em !important;
+  }
+
+  .ant-select-selection-item {
+    min-width: 10em;
+  }
+}
+
+.ant-select-focused .ant-select-selector {
+  background-color: $background-color-secondary !important;
+  border-radius: 0.5em !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.ant-picker-focused {
+  background-color: $background-color-secondary !important;
+  outline: none !important;
+
+  .ant-picker-input input {
+    color: $font-color-primary-60 !important;
+  }
+}
+
+.ant-picker-input > input::placeholder {
+  color: $font-color-primary-60 !important;
+}
+
+.button-link {
+  cursor: pointer;
+
+  margin: 0;
+  padding: 0;
+
+  font: inherit;
+  line-height: inherit;
+  color: $font-color-link-default;
+
+  background-color: transparent;
+  border: none;
+
+  transition: color 0.5s ease;
+
+  &:hover {
+    color: $font-color-link-hover;
+  }
+}
+
+.ant-select-selection-placeholder {
+  color: $font-color-primary !important;
+}
+
+.horizontal-slider {
+  width: 100%;
+  height: 50px;
+  margin: 0.5em 0;
+}
+
+.horizontal-slider .example-track {
+  top: 20px;
+  height: 5px;
+}
+
+.example-track.example-track-0 {
+  background: $background-color-secondary;
+}
+
+.example-track.example-track-1 {
+  background: $bg-color-btn-default;
+}
+
+.example-track.example-track-2 {
+  background: $background-color-secondary;
+}
+
+.horizontal-slider .example-thumb {
+  cursor: pointer;
+
+  top: 13px;
+
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+
+  background-color: $bg-color-btn-default;
+  border: 4px solid $font-color-primary-60;
+  border-radius: 50%;
+}

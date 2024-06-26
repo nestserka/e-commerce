@@ -1,0 +1,71 @@
+@use '../../assets/styles/mixins' as *;
+
+@import '../../assets/styles/variables';
+
+.home {
+  @include page-home-layout-container;
+
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  .welcome-section {
+    @include flex-center-space-between;
+
+    flex-direction: row;
+    gap: 1em;
+
+    .title {
+      @include font-firs-regular;
+
+      font-size: 3.625em;
+      line-height: 100%;
+      color: $font-color-home-title;
+      text-transform: uppercase;
+
+      .accent-text {
+        color: $font-color-primary;
+      }
+
+      @media (width <= 1300px) {
+        font-size: 3em;
+      }
+
+      @media (width <= 440px) {
+        font-size: 2.4em;
+      }
+    }
+
+    .greeting-wrapper {
+      @include flex-justify-center;
+
+      flex-direction: row;
+      gap: 0.625em;
+
+      .rocket-icon {
+        @include flex-justify-center;
+      }
+
+      .subtitle {
+        @include font-firs-medium;
+
+        font-size: 0.875em;
+        line-height: 140%;
+        color: $font-color-title-dark;
+
+        .accent-text {
+          @include title-accent;
+        }
+      }
+    }
+
+    @media (width <= 1024px) {
+      flex-direction: column-reverse;
+      gap: 2em;
+
+      .title {
+        text-align: center;
+      }
+    }
+  }
+}

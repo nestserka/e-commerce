@@ -1,0 +1,438 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+.about {
+  flex-direction: column;
+  margin: 6rem auto;
+
+  .title,
+  .title2 {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    font-family: 'TT Firs Neue', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 400;
+    line-height: 70px;
+    color: $background-color-secondary;
+
+    .title-line {
+      .title-line-span {
+        display: inline-block;
+        padding-right: 10px;
+        color: #dcebea;
+      }
+    }
+
+    .horizontal-line {
+      display: block;
+      flex-grow: 1;
+
+      height: 1px;
+
+      color: $background-color-secondary;
+
+      background-color: $background-color-secondary;
+      border-bottom: 1px;
+    }
+  }
+
+  .title {
+    @media (width <= 950px) {
+      font-size: 2.5rem;
+      line-height: 45px;
+    }
+
+    @media (width <= 550px) {
+      font-size: 1.9rem;
+      line-height: 35px;
+    }
+  }
+
+  .title2 {
+    z-index: 1;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    line-height: 45px;
+
+    @media (width <= 950px) {
+      font-size: 1rem;
+    }
+
+    @media (width <= 850px) {
+      z-index: 0;
+    }
+
+    @media (width <= 550px) {
+      font-size: 0.8rem;
+    }
+  }
+
+  .circle-block {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+
+    width: 920px;
+    height: 950px;
+    margin: 7rem auto;
+
+    background: linear-gradient(
+      180deg,
+      rgb(220 235 234 / 100%) 0%,
+      rgb(220 235 234 / 77.5%) 6%,
+      rgb(220 235 234 / 35.8%) 13%,
+      rgb(220 235 234 / 0%) 32%,
+      rgb(220 235 234 / 0%) 50%,
+      rgb(220 235 234 / 0%) 68%,
+      rgb(220 235 234 / 35.5%) 84%,
+      rgb(220 235 234 / 66.3%) 92%,
+      rgb(220 235 234 / 100%) 100%
+    );
+    border: 1px solid $border-color-default;
+    border-radius: 50%;
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      background-color: #161720;
+      border-radius: 50%;
+
+      @media (width <= 850px) {
+        display: none;
+      }
+    }
+
+    .dot {
+      position: absolute;
+      z-index: 2;
+
+      width: 10px;
+      height: 10px;
+
+      background-color: #dcebea;
+      border-radius: 50%;
+      box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
+
+      animation: flash-dot 2s linear infinite;
+
+      .dot-label {
+        @include font-arimo-bold;
+
+        position: absolute;
+
+        width: 200px;
+
+        font-size: 18px;
+        line-height: 21.6px;
+        color: #dcebea;
+      }
+
+      @media (width <= 850px) {
+        z-index: 0;
+      }
+    }
+
+    .dot:nth-child(1) {
+      top: 14%;
+      right: 85%;
+
+      @media (width <= 850px) {
+        top: -0%;
+        left: 95%;
+      }
+    }
+
+    .dot:nth-child(2) {
+      top: 0%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      @media (width <= 850px) {
+        top: 35%;
+        left: 1%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .dot:nth-child(3) {
+      top: 14%;
+      left: 85%;
+
+      @media (width <= 850px) {
+        top: 70%;
+        left: 95%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .dot:nth-child(1) .dot-label {
+      top: -400%;
+      right: -500%;
+
+      @media (width <= 850px) {
+        top: -30px;
+        left: -140px;
+      }
+    }
+
+    .dot:nth-child(2) .dot-label {
+      top: -250%;
+      left: 100%;
+      transform: translate(-50%, -50%);
+
+      @media (width <= 850px) {
+        top: -15px;
+        left: 120px;
+      }
+    }
+
+    .dot:nth-child(3) .dot-label {
+      top: -400%;
+      left: 50%;
+
+      @media (width <= 850px) {
+        top: -30px;
+        left: -140px;
+      }
+    }
+
+    .card-blocks {
+      position: relative;
+      z-index: 2;
+      top: 13%;
+
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+
+      width: 200%;
+      height: 581px;
+
+      @media (width <= 1080px) {
+        height: 530px;
+      }
+
+      @media (width <= 850px) {
+        z-index: 0;
+        display: block;
+        height: fit-content;
+      }
+    }
+
+    .planet1,
+    .planet2,
+    .planet3 {
+      cursor: pointer;
+
+      position: absolute;
+      z-index: 2;
+
+      width: 80px;
+      height: 80px;
+
+      appearance: none;
+      background: none;
+      border: 1px solid #dcebea;
+      border-radius: 50%;
+      box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
+
+      transition: 1s;
+      animation: flash-dot 2s linear infinite;
+
+      img {
+        pointer-events: none;
+      }
+
+      @media (width <= 1080px) {
+        width: 64px;
+        height: 64px;
+      }
+
+      @media (width <= 850px) {
+        z-index: 0;
+        display: none;
+      }
+    }
+
+    .planet2 {
+      bottom: -1%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      &:hover {
+        color: $font-color-primary;
+        background-color: $bg-color-btn-default;
+      }
+    }
+
+    .planet3 {
+      bottom: 5%;
+      left: 73.5%;
+      transform: translate(-50%, -50%);
+
+      &:hover {
+        color: $font-color-primary;
+        background-color: $bg-color-btn-default;
+      }
+    }
+
+    .planet1 {
+      right: 65%;
+      bottom: 5%;
+      transform: translate(-50%, -50%);
+
+      &:hover {
+        color: $font-color-primary;
+        background-color: $bg-color-btn-default;
+      }
+    }
+
+    @media (width <= 1080px) {
+      width: 720px;
+      height: 750px;
+    }
+
+    @media (width <= 850px) {
+      width: 100%;
+      height: fit-content;
+
+      background-image: url('../../assets/images/bg/bg-home.jpg');
+      background-repeat: no-repeat;
+      background-position: right;
+      background-size: cover;
+      border: none;
+      border-radius: 0;
+    }
+  }
+
+  .desc-training-platform-block {
+    position: relative;
+
+    max-width: 1200px;
+    height: fit-content;
+    margin: 0 auto;
+    padding: 4rem;
+
+    background-color: #1f212d;
+    border: 1px solid $border-color-default;
+    border-radius: 24px;
+
+    .paragraph-block {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+
+      .paragraph {
+        max-width: 45%;
+
+        .paragraph-title {
+          margin-bottom: 1rem;
+          font-size: 18px;
+          opacity: 0.8;
+
+          @media (width <= 950px) {
+            font-size: 1rem;
+          }
+
+          @media (width <= 550px) {
+            font-size: 0.8rem;
+          }
+        }
+
+        .paragraph-desc {
+          font-size: 16px;
+          opacity: 0.8;
+
+          @media (width <= 950px) {
+            font-size: 1rem;
+          }
+
+          @media (width <= 550px) {
+            font-size: 0.8rem;
+          }
+        }
+
+        .paragraph-link {
+          cursor: pointer;
+
+          display: block;
+
+          width: 80px;
+          height: 40px;
+          margin-top: 1.5rem;
+
+          border-radius: 10px;
+
+          transition: 1s;
+
+          img {
+            pointer-events: none;
+          }
+
+          &:hover {
+            box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
+          }
+        }
+      }
+    }
+
+    @media (width <= 550px) {
+      padding: 0.5rem;
+    }
+  }
+
+  .desc-training-platform-block::after {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0.4;
+    background-color: rgb(17 22 51 / 60%);
+    background-image: url('../../assets/images/bg/1678394039_bogatyr-club-p-fon-planeta-zemlya-iz-kosmosa-foni-oboi-58.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: overlay;
+    border-radius: 20px;
+  }
+
+  @media (width <= 950px) {
+    margin: 2rem auto;
+  }
+}
+
+@keyframes flash-dot {
+  0% {
+    box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
+  }
+
+  50% {
+    box-shadow: 0 0 20px 10px rgb(255 255 255 / 0%);
+  }
+
+  100% {
+    box-shadow: 0 0 20px 10px rgb(255 255 255 / 40%);
+  }
+}

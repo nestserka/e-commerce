@@ -1,0 +1,127 @@
+@import './variables';
+
+// Layout
+
+@mixin page-layout-container {
+  display: flex;
+  flex-grow: 1;
+  max-width: 1400px;
+  margin: 4em auto;
+}
+
+@mixin page-home-layout-container {
+  display: flex;
+  flex-grow: 1;
+  margin: 6.938em auto 1em;
+}
+
+@mixin flex-center-space-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-justify-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@mixin flex-row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+@mixin flex-justify-start {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+@mixin flex-start-space-between {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+@mixin reset-button {
+  cursor: pointer;
+
+  display: block;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+// Gradients
+
+@mixin form-background-gradient {
+  background: linear-gradient(45deg, rgb(41 43 59 / 40%) 32%, rgb(41 43 59 / 100%) 100%);
+}
+
+@mixin title-accent {
+  background: linear-gradient(to right, #e0b9ff 0%, #a5a9ff 50%, #b2e3ff 100%);
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+// Typography
+
+@mixin font-arimo-regular {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin font-arimo-medium {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+@mixin font-arimo-bold {
+  font-family: Arimo, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+@mixin font-display-regular {
+  font-family: DisplayRegular, sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@mixin font-display-medium {
+  font-family: DisplayMedium, sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@mixin font-firs-regular {
+  font-family: 'TT Firs Neue', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+@mixin font-firs-medium {
+  font-family: 'TT Firs NeueMedium', sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+// Transitions
+
+@mixin background-color-on-hover {
+  transition: background-color 0.5 ease;
+}

@@ -1,0 +1,31 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.label {
+  cursor: pointer;
+  font: inherit;
+  color: $font-color-primary-80;
+}
+
+.checkbox-wrapper {
+  @include flex-row-center;
+
+  gap: 1em;
+
+  input[type='checkbox'] {
+    cursor: pointer;
+    width: 1.05em;
+    height: 1.05em;
+    accent-color: $background-color-secondary;
+
+    &[aria-disabled='true'] {
+      pointer-events: none;
+      accent-color: $background-color-secondary !important;
+
+      + .label {
+        pointer-events: none;
+        color: $font-color-primary-40;
+      }
+    }
+  }
+}

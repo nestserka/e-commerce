@@ -1,0 +1,177 @@
+@use '../../assets/styles/mixins' as *;
+
+@import '../../assets/styles/variables';
+
+.footer {
+  @include flex-justify-start;
+
+  flex-direction: column;
+
+  margin-right: -3rem;
+  margin-left: -3rem;
+  padding: 3rem;
+
+  background-color: $bg-footer-color;
+
+  .footer-title {
+    @include font-arimo-bold;
+
+    font-size: 0.75em;
+    line-height: 0.75em;
+    color: $footer-font-color;
+    text-transform: uppercase;
+  }
+
+  .footer-horizontal-line {
+    width: 100%;
+    height: 1px;
+    margin: 2.813em 0;
+
+    color: $background-color-secondary;
+
+    background-color: $background-color-secondary;
+    border-bottom: 1px;
+  }
+
+  .wrapper {
+    @include flex-justify-start;
+
+    flex-direction: row;
+    gap: 1em;
+    width: 100%;
+
+    .wrapper-text {
+      @include font-firs-regular;
+
+      font-size: 0.875em;
+      line-height: 1.125em;
+      color: $font-color-primary-40;
+    }
+
+    .footer-section-rss {
+      margin-left: auto;
+
+      @media (width <=800px) {
+        margin: 0;
+      }
+    }
+
+    .logo-wrapper {
+      min-width: calc(100% / 2.5);
+
+      .footer-section {
+        .address-text {
+          @include font-arimo-regular;
+
+          margin-top: 1.5em;
+
+          font-size: 0.875em;
+          line-height: 1.05em;
+          color: $footer-font-color;
+
+          opacity: 0.5;
+        }
+      }
+    }
+
+    .footer-navigation {
+      @include flex-justify-start;
+
+      flex-direction: row;
+      flex-grow: 1;
+      gap: 6.875rem;
+
+      h4 {
+        @include font-firs-medium;
+
+        font-size: 1em;
+        line-height: 1.29em;
+        color: $footer-font-color;
+      }
+
+      .links {
+        @include flex-justify-start;
+
+        flex-direction: column;
+        gap: 1.5em;
+
+        .footer-title {
+          margin-bottom: 0.688em;
+        }
+
+        .social-media-links {
+          @include flex-justify-start;
+
+          flex-direction: row;
+          gap: 1.5em;
+        }
+
+        .navigation {
+          @include flex-justify-start;
+
+          flex-direction: row;
+          gap: 3.125em;
+          color: $font-color-primary;
+
+          .footer-link {
+            @include font-arimo-bold;
+
+            font-size: 1em;
+            line-height: 1em;
+            color: $font-color-primary;
+            text-transform: uppercase;
+
+            opacity: 0.4;
+
+            transition: opacity 0.3s ease;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+      }
+
+      @media (width <=1268px) {
+        gap: 4em;
+      }
+    }
+  }
+
+  @media (width <=1050px) {
+    .wrapper {
+      .logo-wrapper {
+        min-width: calc(100% / 3);
+      }
+    }
+  }
+
+  @media (width <=960px) {
+    .wrapper {
+      flex-direction: column;
+      gap: 2em;
+    }
+  }
+
+  @media (width <= 640px) {
+    margin-right: -1rem;
+    margin-left: -1rem;
+    padding: 1em;
+
+    .wrapper {
+      .footer-navigation {
+        flex-wrap: wrap;
+
+        .links:nth-child(2) {
+          order: 1;
+        }
+      }
+    }
+  }
+}
+
+.rs-logo {
+  width: 80px;
+  height: 40px;
+  opacity: 0.5;
+}

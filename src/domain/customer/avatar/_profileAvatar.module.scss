@@ -1,0 +1,88 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.profile-avatar-wrapper {
+  position: relative;
+  width: 100%;
+  height: 8.625em;
+
+  .avatar-box {
+    position: relative;
+
+    width: 100%;
+    height: 7.188em;
+
+    background-color: $bg-color-btn-default;
+    border-radius: 1.25em;
+  }
+
+  .profile-wrapper {
+    @include flex-justify-center;
+
+    position: absolute;
+    z-index: 1;
+    top: 25%;
+    left: 5%;
+
+    width: 8.5em;
+    height: 8.5em;
+
+    border: 16px solid $background-color-primary-one;
+    border-radius: 50%;
+
+    .profile-icon {
+      box-sizing: border-box;
+      width: 7.5em;
+      height: 7.5em;
+      border-radius: 50%;
+    }
+  }
+
+  @media (width <=1240px) {
+    .avatar-box {
+      height: 6em;
+    }
+
+    .profile-wrapper {
+      width: 7.5em;
+      height: 7.5em;
+
+      .profile-icon {
+        width: 6.5em;
+        height: 6.5em;
+      }
+    }
+  }
+
+  @media (width <=900px) {
+    height: 6.5em;
+
+    .avatar-box {
+      height: 4.5em;
+    }
+
+    .profile-wrapper {
+      width: 6.5em;
+      height: 6.5em;
+      border: 0.65em solid $background-color-primary-one;
+
+      .profile-icon {
+        width: 5.5em;
+        height: 5.5em;
+      }
+    }
+  }
+
+  @media (width <= 640px) {
+    .profile-wrapper {
+      width: 5.5em;
+      height: 5.5em;
+      border: 0.55em solid $background-color-primary-one;
+
+      .profile-icon {
+        width: 4.5em;
+        height: 4.5em;
+      }
+    }
+  }
+}

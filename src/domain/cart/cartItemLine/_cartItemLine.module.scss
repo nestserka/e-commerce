@@ -1,0 +1,201 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item-line-wrapper {
+  @include flex-center-space-between;
+
+  flex-wrap: wrap;
+  gap: 1.5rem;
+
+  width: 100%;
+  padding: 1.5rem 1rem 1.5rem 0;
+
+  border-bottom: 1px solid $background-color-secondary;
+}
+
+.product-img {
+  display: block;
+  max-width: 80px;
+  max-height: 80px;
+  border-radius: 12px;
+}
+
+.title-discount-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.3rem;
+}
+
+.title {
+  @include font-arimo-bold;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  line-height: 1.5rem;
+  color: $font-color-primary;
+  text-overflow: ellipsis;
+
+  -webkit-line-clamp: 2;
+}
+
+.remove-item-btn {
+  @include reset-button;
+
+  width: 24px;
+  height: 24px;
+  color: $font-color-primary;
+}
+
+.quantity-input-wrapper {
+  @include flex-center-space-between;
+
+  gap: 0.1rem;
+  padding: 0.5rem;
+  border: 1px solid $border-color-default;
+  border-radius: 36px;
+
+  & .quantity-input {
+    width: 40px;
+    height: 24px;
+    padding: 0;
+
+    color: $font-color-primary;
+    text-align: center;
+
+    background-color: transparent;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+
+    transition: 0.3s background-color ease;
+
+    &:focus-visible {
+      background-color: $background-color-secondary;
+    }
+  }
+
+  & .quantity-input-control {
+    @include reset-button;
+
+    cursor: pointer;
+
+    width: 24px;
+    height: 24px;
+    padding: 0.2rem;
+
+    font-size: 0.7rem;
+    color: $font-color-primary;
+
+    border-radius: 50%;
+
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $background-color-secondary;
+    }
+  }
+}
+
+.total-price {
+  overflow: hidden;
+
+  width: 80px;
+
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.price-wrapper,
+.current-price-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+.current-price-wrapper {
+  flex-direction: column-reverse;
+  gap: 0.2rem;
+}
+
+.discount-badge {
+  @include font-arimo-bold;
+
+  display: flex;
+
+  width: max-content;
+  height: min-content;
+  padding: 4px;
+
+  font-size: 10px;
+  line-height: 100%;
+
+  background-color: $bg-color-discount;
+  border-radius: 4px;
+}
+
+.old-price-value {
+  font-size: 14px;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.left-aside,
+.right-aside {
+  display: flex;
+  flex-basis: calc(50% - 1rem);
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (width <= 900px) {
+    flex-basis: 100%;
+  }
+}
+
+.right-aside {
+  @media (width <= 900px) {
+    padding-left: calc(1rem + 80px);
+  }
+
+  @media (width <= 480px) {
+    flex-direction: column;
+    align-items: flex-end;
+
+    .price-wrapper {
+      flex-direction: row;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .quantity-input-wrapper,
+    .total-price {
+      width: 100%;
+    }
+
+    .total-price {
+      text-align: left;
+    }
+
+    .remove-item-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 44px;
+      height: 44px;
+
+      border: 1px solid $border-color-default;
+      border-radius: 8px;
+    }
+  }
+}

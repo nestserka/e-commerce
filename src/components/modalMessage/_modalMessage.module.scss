@@ -1,0 +1,85 @@
+@import '../../assets/styles/mixins';
+@import '../../assets/styles/variables';
+
+.wrapper {
+  position: fixed;
+  z-index: 1;
+  top: calc(90px + 2em);
+  right: 3em;
+  transform: translateX(0);
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+
+  min-width: 380px;
+  padding: 24px;
+
+  background-color: #1f212d;
+  border: 1px solid $border-color-default;
+  border-radius: 12px;
+
+  transition: transform 1s ease-in-out;
+
+  &.visible {
+    animation: open-modal 3s forwards;
+    animation-iteration-count: 1;
+  }
+
+  &.error {
+    animation: open-modal 6s forwards;
+    animation-iteration-count: 1;
+  }
+
+  @keyframes open-modal {
+    0% {
+      transform: translateX(0);
+    }
+
+    50% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(125%);
+    }
+  }
+
+  @media (width <= 640px) {
+    top: 90px;
+  }
+
+  @media (width <= 480px) {
+    min-width: 100%;
+  }
+}
+
+.title-wrapper {
+  display: flex;
+  gap: 0.8em;
+}
+
+.close-button {
+  cursor: pointer;
+
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
+  width: 12px;
+  height: 12px;
+
+  opacity: 0.6;
+  background-color: transparent;
+  background-image: url('../../assets/images/icons/close-icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border: none;
+
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+  }
+}

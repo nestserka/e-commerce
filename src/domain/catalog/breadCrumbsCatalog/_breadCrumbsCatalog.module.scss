@@ -1,0 +1,41 @@
+@import '../../../assets/styles/mixins';
+@import '../../../assets/styles/variables';
+
+.category-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  align-items: center;
+
+  margin-bottom: 1.5em;
+
+  color: $font-color-primary;
+
+  .category-header-link {
+    cursor: pointer;
+
+    display: inline-block;
+
+    margin: 0;
+    padding: 0;
+
+    font-family: DisplayMedium, sans-serif;
+    font-size: 1em;
+
+    opacity: 0.6;
+    background-color: transparent;
+    border: none;
+
+    transition: opacity 0.5s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    .home-icon {
+      display: block;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

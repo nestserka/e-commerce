@@ -1,0 +1,289 @@
+@import '../../../assets/styles/mixins';
+
+@import '../../../assets/styles/variables';
+
+.category-section {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  padding: 3.25em 0;
+
+  .category-container {
+    width: 67%;
+    height: 20em;
+    padding: 0 7.5em;
+
+    .title {
+      @include font-firs-regular;
+
+      font-size: 2.25em;
+      line-height: 100%;
+      color: $font-color-primary;
+      text-transform: uppercase;
+    }
+
+    .text-wrapper {
+      @include flex-justify-start;
+
+      flex-direction: column;
+      gap: 1.563em;
+      justify-content: center;
+
+      .product-description {
+        max-width: 12.813em;
+        line-height: 120%;
+        color: $checkbox-color-checked;
+        opacity: 0.6;
+      }
+
+      .category-button {
+        cursor: pointer;
+
+        padding: 0.625em 1em;
+
+        font: inherit;
+        color: $checkbox-color-checked;
+
+        background: none;
+        border: 1px solid $border-color-default;
+        border-radius: 24px;
+
+        transition:
+          background-color 0.5s ease,
+          border 0.5s ease,
+          color 0.5s ease;
+
+        &:hover {
+          color: $font-color-primary;
+          background-color: $bg-color-btn-default;
+          border: 1px solid $bg-color-btn-default;
+        }
+
+        &.astronout {
+          color: $background-color-primary-one;
+          border: 1px solid rgb(22 23 32 / 40%);
+
+          &:hover {
+            color: $checkbox-color-checked;
+            border: 1px solid $bg-color-btn-default;
+          }
+        }
+      }
+    }
+
+    @media (width <= 1400px) {
+      width: 80%;
+    }
+
+    @media (width <= 1165px) {
+      width: 100%;
+    }
+
+    @media (width <= 640px) {
+      margin-right: -1rem;
+      margin-left: -1rem;
+      padding-right: 2em;
+      padding-left: 4em;
+
+      .title {
+        font-size: 1.4em;
+      }
+    }
+  }
+
+  .astronaut {
+    @include flex-right;
+
+    align-self: flex-start;
+
+    margin-left: -3rem;
+
+    background-image: url('../../../assets/images/bg/bg-banner-2.jpg');
+    background-position: center;
+    background-size: cover;
+    border-top-right-radius: 12em;
+    border-bottom-right-radius: 12em;
+
+    .text-wrapper {
+      flex-basis: 40%;
+
+      .product-description {
+        max-width: 300px;
+        color: $background-color-primary-one;
+        opacity: 1;
+      }
+
+      @media (width <= 910px) {
+        flex-basis: 70%;
+      }
+    }
+
+    .title {
+      color: $background-color-primary-one;
+    }
+
+    @media (width <= 690px) {
+      padding-right: 2.5em;
+    }
+  }
+
+  .food {
+    @include flex-center-space-between;
+
+    gap: 0.3em;
+
+    margin-right: -3rem;
+
+    background-color: $bg-home-cards;
+    border-top-left-radius: 12em;
+    border-bottom-left-radius: 12em;
+
+    .text-wrapper {
+      position: relative;
+      flex-basis: 40%;
+    }
+
+    .gradient-wrapper {
+      position: relative;
+      width: 21.2em;
+      height: 100%;
+
+      .small-meteorite-image-2 {
+        content: url('/assets/images/home/category/small-meteorite-2.png');
+
+        position: absolute;
+        z-index: 0;
+        top: 40%;
+        right: 70%;
+      }
+
+      .image-wrapper {
+        @include flex-justify-center;
+
+        position: absolute;
+        z-index: 2;
+
+        aspect-ratio: 1 / 1;
+        height: 100%;
+
+        text-align: center;
+
+        background: linear-gradient(to left, #6b6279 0%, #7d94a7 100%);
+        border-radius: 50%;
+
+        .space-food-image-2 {
+          content: url('/assets/images/home/category/banner-food-img-1.png');
+          width: 70%;
+          background-position: center;
+        }
+      }
+    }
+
+    .food-images {
+      width: 15%;
+
+      .small-meteorite-image-1 {
+        content: url('/assets/images/home/category/small-meteorite-1.png');
+        position: absolute;
+        transform: translate(-100%, 70%);
+      }
+
+      .space-food-image-1 {
+        transform: translateX(-60%);
+        width: 28rem;
+      }
+
+      @media (width <= 1250px) {
+        .small-meteorite-image-1,
+        .space-food-image-1 {
+          display: none;
+        }
+      }
+    }
+
+    @media (width <= 1900px) {
+      width: 80%;
+    }
+
+    @media (width <= 1650px) {
+      width: 90%;
+    }
+
+    @media (width <= 1400px) {
+      width: 100%;
+      padding-right: 1rem;
+    }
+
+    @media (width <= 880px) {
+      justify-content: start;
+
+      .gradient-wrapper {
+        display: none;
+      }
+
+      .text-wrapper {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  .meteorites {
+    @include flex-center-space-between;
+
+    gap: 1em;
+
+    margin-right: -3rem;
+
+    background-image: url('../../../assets/images/bg/bg-banner-1.jpg');
+    background-position: center;
+    background-size: cover;
+    border-top-left-radius: 12em;
+    border-bottom-left-radius: 12em;
+
+    .meteorite-images {
+      display: flex;
+      flex-direction: column;
+
+      .meteorite-image-1 {
+        transform: translate(20%, 20%);
+      }
+
+      .meteorite-image-2 {
+        transform: translate(-10%, -5%);
+        width: 13em;
+        height: 9em;
+      }
+
+      .meteorite-image-3 {
+        transform: translate(80%, -75%);
+        width: 10em;
+        height: 10em;
+      }
+
+      @media (width <= 800px) {
+        .meteorite-image-2 {
+          display: none;
+        }
+
+        .meteorite-image-1 {
+          transform: translate(-10%, 10%);
+          width: 10em;
+          height: 10em;
+        }
+
+        .meteorite-image-3 {
+          transform: translate(-50%, 10%);
+          width: 10em;
+          height: 10em;
+        }
+      }
+
+      @media (width <= 460px) {
+        .meteorite-image-3,
+        .meteorite-image-1 {
+          display: none;
+        }
+      }
+    }
+  }
+}

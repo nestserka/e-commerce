@@ -1,0 +1,14 @@
+@use '../../assets/styles/mixins' as *;
+
+.catalog {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  width: 100%;
+  margin: 4rem auto;
+
+  @media (width <= 480px) {
+    margin: 2rem auto;
+  }
+}
