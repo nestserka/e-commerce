@@ -390,3 +390,9 @@ export const PAGES = {
 } as const;
 
 export const currentCoupons = ['LUCKY_MARTIAN', 'VENUS_DEALS', 'ORIONS_BELT'];
+
+export const PROMOCODE = {
+  DOES_NOT_MATCH: 'DoesNotMatchCart',
+  STOPPED_BY_PREVIOUS_COUPON: 'ApplicationStoppedByPreviousDiscount',
+  MATCHES_CART: 'MatchesCart',
+} as const;
