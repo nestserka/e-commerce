@@ -1,6 +1,6 @@
 import createCustomerCart from '../../api/me/cart/createCustomerCart';
 import createAnonymousCart from '../../api/me/cart/createAnonimousCart';
-import { LS_PREFIX } from '../../constants/constants';
+import { LS_PREFIX, PROMOCODE } from '../../constants/constants';
 import getActiveCart from '../../api/me/cart/getActiveCart';
 import getAnonymousCart from '../../api/me/cart/getAnonymousCart';
 import addProductToCart from '../../api/me/cart/addProductToCart';
@@ -174,13 +174,13 @@ export const useCartData: StateCreator<CartState> = (set, get) => ({
           let message = null;
 
           switch (appliedPromoCode.state) {
-            case 'DoesNotMatchCart':
+            case PROMOCODE.DOES_NOT_MATCH:
               message = `Failed to add promocode ${codeStr} to the cart. Check if all conditions met.`;
               break;
-            case 'ApplicationStoppedByPreviousDiscount':
+            case PROMOCODE.STOPPED_BY_PREVIOUS_COUPON:
               message = `You cannot apply this promocode ${codeStr} after adding previous coupon(s) on total discount.`;
               break;
-            case 'MatchesCart':
+            case PROMOCODE.MATCHES_CART:
               get().updateCartState(response);
 
               get().setCurrentUsedPromoCodes();

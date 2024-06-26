@@ -10,6 +10,14 @@ const Images: Record<string, number> = {
   'cracks-in-europa-print-poster': 1,
   'stars-orbiting-a-supermassive-black-hole-print-poster': 2,
   'the-bullet-cluster-print-poster': 3,
+  'cosmopit-space-mashed-potatoes-wit-chicken': 1,
+  'cosmopit-space-chicken-shawarma': 1,
+  'cosmopit-lumb-with-kebab': 1,
+  'cosmopit-space-burger-with-cheese': 1,
+  'cosmopit-space-french-fries': 1,
+  'cosmopit-space-pizza-with-ham-doi-pa': 1,
+  'cosmopit-space-ukha-king': 1,
+  'cosmopit-space-borscht': 1,
 };
 
 export const useHomeData: StateCreator<HomeStateData> = (set) => ({

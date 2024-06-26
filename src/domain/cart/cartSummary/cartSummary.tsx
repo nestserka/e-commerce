@@ -27,7 +27,11 @@ export default function CartSummary(): JSX.Element {
             0,
           ) || 0;
 
-        return accum + discountAmount;
+          const quantity = item.discountedPricePerQuantity[0]?.quantity ?? 0;
+
+          const totalDiscountedAmount = discountAmount * quantity;
+
+        return accum + totalDiscountedAmount;
       }, 0);
 
       const totalPriceBeforePromocodeNum = value + totalPrice + totalDiscountAmount;
